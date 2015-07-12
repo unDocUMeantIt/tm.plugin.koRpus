@@ -23,8 +23,8 @@
 #' \code{\link[koRpus:treetag]{treetag}}.
 #' 
 #' The result, if succeeded, is a single object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-#' which includes all read texts in a \code{tm} style VCorpus format, as well as in
-#' \code{koRpus} style \code{\link[koRpus]{kRp.taggedText-class}} format.
+#' which includes all read texts in a \code{tm} style \code{VCorpus} format, as well as in
+#' \code{koRpus} style \code{kRp.taggedText} class format.
 #' 
 #' @param dir Character vector with path names to search for text files.
 #'    See \code{\link[tm:DirSource]{DirSource}} for details.
@@ -43,11 +43,13 @@
 #'    See \code{\link[tm:DirSource]{DirSource}} for details.
 #' @param mode Character string defining the reading mode.
 #'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#' @param source Character string, naming the source of the corpus.
+#' @param topic Character string, a topic this corpus deals with.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
 #' @return An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}}.
 #' @import koRpus tm
 #' @export
-kRp.Corpus <- function(
+simpleCorpus <- function(
                 dir=".",
                 lang="kRp.env",
                 tagger="kRp.env",
@@ -56,15 +58,15 @@ kRp.Corpus <- function(
                 recursive=FALSE,
                 ignore.case=FALSE,
                 mode="text",
+                source="",
+                topic="",
                 ...
               ) {
 
-  if(identical(tagger, "tokenize")){
-    taggerFunction <- function(text, lang, tagger="tokenize", ...) {
+  taggerFunction <- function(text, lang, tagger=tagger, ...) {
+    if(identical(tagger, "tokenize")){
       return(tokenize(txt=text, format="obj", lang=lang, ...))
-    }
-  } else {
-    taggerFunction <- function(text, lang, tagger, ...) {
+    } else {
       return(treetag(file=text, treetagger=tagger, format="obj", lang=lang, ...))
     }
   }
@@ -76,9 +78,14 @@ kRp.Corpus <- function(
   newCorpus <- new("kRp.corpus",
     raw=list(VCorpus(DirSource(dir), readerControl=list(language=lang)))
   )
-
   names(slot(newCorpus, "raw")) <- "tm"
-  corpusTagged <- lapply(slot(newCorpus, "raw")[["tm"]], function(thisText){
+  numTexts <- length(corpusTm(newCorpus))
+  nameNum <- sprintf("%02d", 1:numTexts)
+  meta(corpusTm(newCorpus), tag="textID") <- textID(src=source, topic=topic, nameNum=nameNum)
+  corpusMeta(newCorpus, "topic") <- topic
+  corpusMeta(newCorpus, "source") <- source
+
+  corpusTagged <- lapply(corpusTm(newCorpus), function(thisText){
     taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, ...)
   })
   slot(newCorpus, "tagged") <- corpusTagged

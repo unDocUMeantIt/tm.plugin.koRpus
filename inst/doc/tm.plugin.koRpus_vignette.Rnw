@@ -1,0 +1,95 @@
+\documentclass[a4paper,10pt]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage{lmodern}
+% \usepackage[apaciteclassic]{apacite}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+
+\newcommand{\kRp}{\texttt{koRpus}}
+\newcommand{\tmkRp}{\texttt{tm.plugin.koRpus}}
+
+%opening
+\title{Using the koRpus Package for Corpus Analysis}
+%\VignetteIndexEntry{Using the koRpus Package for Text Analysis}
+\author{m.eik michalke}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The R package \tmkRp{} is an extension to the \kRp{} package, enhancing its usability for actual corpus analysis. It adds new classes and methods to \kRp{},
+which are designed to work with complete text corpora in both \kRp{} and \texttt{tm} formats. This vignette gives you a quick overview.
+\end{abstract}
+
+\section{What is tm.plugin.koRpus?}
+While the \kRp{} package focusses mostly on analysis steps of individual texts, \tmkRp{} adds several new object classes and respective methods, which can be used
+to analyse complete text corpora in a single step. These classes are also a first step to combine object classes of both, the \kRp{} and \texttt{tm} packages.
+
+There are three basic classes, which are hierarchically nested:
+
+\begin{itemize}
+  \item class \texttt{kRp.topicCorpus} holds a list (named by topics) of objects of
+  \begin{itemize}
+    \item class \texttt{kRp.sourcesCorpus}, which in its \texttt{sources} slot holds a list of objects of
+    \begin{itemize}
+      \item class \texttt{kRp.Corpus}, which in turn contains objects of both \kRp{} and \texttt{tm} classes.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+The idea behind this is to be able to categorize corpora on at least two levels. The default assumes that these levels are different \textit{sources}
+and different \textit{topics}, but apart from this naming (which is coded into the classes) you can actually use this for whatever levels you like.
+
+If you don't need these levels, you can just use the function \texttt{simpleCorpus()} to create objects of class \texttt{kRp.Corpus}. It represents a flat
+corpus of texts. To distinguish texts which came from different sources, use the function \texttt{sourcesCorpus()}, which will generate sub-corpora for each source
+given. And one level higher up, use the function \texttt{topicCorpus()}, to sort \texttt{kRp.sourcesCorpus} objects by different topics. Objects of this class will only be valid if there are texts of each topic from each source.
+
+\section{Tokenizing corpora}
+
+As with \kRp{}, the first step for text analysis is tokenizing and possibly POS tagging. This step is performed by the functions mentioned above, \texttt{simpleCorpus()}, \texttt{sourcesCorpus()}, or \texttt{topicCorpus()}, respectively. The package includes four sample texts taken from Wikipedia\footnote{see the file \texttt{tests/testthat/samples/License\_of\_sample\_texts.txt} for details} in its \texttt{tests} directory we can use for an elaborate  demonstration:
+
+\begin{Schunk}
+  \begin{Sinput}
+> library(tm.plugin.koRpus)
+> # set tha root path to the sample files
+> sampleRoot <- file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples")
+> # now we can define the topics (names of the vector elements)
+> # and their main path
+> samplePaths <- c(
+>   C3S=file.path(sampleRoot, "C3S"),
+>   GEMA=file.path(sampleRoot, "GEMA")
+> )
+> # we also define the sources
+> sampleSources <- c(
+>   wpa="Wikipedia_alt",
+>   wpn="Wikipedia_neu"
+> )
+> # and finally, we can tokenize all texts
+> sampleTexts <- topicCorpus(paths=samplePaths, sources=sampleSources, tagger="tokenize", lang="de")
+  \end{Sinput}
+  \begin{Soutput}
+processing topic "C3S", source "Wikipedia_alt", 1 texts...
+processing topic "C3S", source "Wikipedia_neu", 1 texts...
+processing topic "GEMA", source "Wikipedia_alt", 1 texts...
+processing topic "GEMA", source "Wikipedia_neu", 1 texts...
+  \end{Soutput}
+\end{Schunk}
+
+\section{Analysing corpora}
+
+After this, we can analyse the corpus by calling the provided methods, for instance lexical diversity:
+
+\begin{Schunk}
+  \begin{Sinput}
+> sampleTexts <- lex.div(sampleTexts, char=FALSE, quiet=TRUE)
+> corpusSummary(sampleTexts)
+  \end{Sinput}
+%   \begin{Soutput}
+%   \end{Soutput}
+\end{Schunk}
+
+% \bibliographystyle{apacite}
+% \addcontentsline{toc}{chapter}{\bibname}
+% \bibliography{koRpus_lit}
+\end{document}

@@ -2,14 +2,22 @@ Source: r-other-reaktanz-tm.plugin.korpus
 Section: math
 Priority: optional
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Build-Depends-Indep: debhelper (>> 7.0.0), r-base-dev (>= 3.2.0), cdbs, r-cran-korpus | r-other-reaktanz-korpus, r-cran-tm
+Build-Depends-Indep: debhelper (>> 7.0.0), r-base-dev (>= 3.2.0), cdbs,
+ r-cran-korpus (>= 0.06-1) | r-other-reaktanz-korpus (>= 0.06-1),
+ r-cran-tm
 Standards-Version: 3.9.3.1
 Homepage: http://reaktanz.de/?c=hacking&s=koRpus
 
 Package: r-other-reaktanz-tm.plugin.korpus
 Architecture: all
 Section: math
-Depends: r-base-core (>= 3.2.0), r-cran-korpus | r-other-reaktanz-korpus, r-cran-tm
-Description: GNU R package: This package provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages.
+Depends: r-base-core (>= 3.2.0), r-cran-korpus (>= 0.06-1) |
+ r-other-reaktanz-korpus (>= 0.06-1), r-cran-tm
+Description: GNU R package: This package provides classes and methods
+ to enhance the ability to use the 'koRpus' package together with the
+ 'tm' package. It is in its early stages.  To ask for help, report
+ bugs, suggest feature improvements, or discuss the global development
+ of the package, please subscribe to the koRpus-dev mailing list:
+ https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de
 Homepage: http://reaktanz.de/?c=hacking&s=koRpus
 Suggests: r-cran-testthat

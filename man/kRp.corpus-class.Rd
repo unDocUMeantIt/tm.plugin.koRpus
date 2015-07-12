@@ -10,23 +10,30 @@ Objects of this class can contain multiple texts simultaneously. It supports bot
 \code{\link[tm]{Corpus}} class and \code{koRpus}' own object classes and stores them in separated slots.
 }
 \details{
-Objects can be created using the \code{\link[tm.plugin.koRpus:kRp.Corpus]{kRp.Corpus}} function.
+Objects can be created using the \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} function.
 }
 \section{Slots}{
 
 \describe{
+\item{\code{summary}}{A summary data frame for the full corpus.}
+
 \item{\code{meta}}{A named list. Can be used to store meta information. Currently,
       no particular format is defined.}
 
 \item{\code{raw}}{A list of objects of class \code{\link[tm]{Corpus}}.}
 
-\item{\code{tagged}}{A list of objects of class \code{\link[koRpus]{kRp.taggedText-class}}.}
+\item{\code{tagged}}{A list of objects of class \code{kRp.taggedText-class} (a class union for tagged text objects).}
 
 \item{\code{hyphen}}{A list of objects of class \code{\link[koRpus]{kRp.hyphen-class}}.}
 
 \item{\code{TTR}}{A list of objects of class \code{\link[koRpus]{kRp.TTR-class}}.}
 
 \item{\code{readability}}{A list of objects of class \code{\link[koRpus]{kRp.readability-class}}.}
+
+\item{\code{freq}}{A list with two elements,
+      \code{texts} and \code{corpus}. Both hold objects of class \code{\link[koRpus]{kRp.corp.freq-class}},
+where \code{texts} is a list of these objects (one for each text),
+      and \code{corpus} is a single object for the full corpus.}
 }}
 \note{
 There is also methods to transform get the lists of all particular slots from objects of this class.

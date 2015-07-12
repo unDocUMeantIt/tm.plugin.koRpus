@@ -3,23 +3,34 @@ Type: Package
 Title: A Compatibility Plugin Package for 'tm' and 'koRpus'
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Depends: R (>= 2.10.0),methods,koRpus,tm
+Depends: R (>= 2.10.0),methods,koRpus (>= 0.06-1),tm
 Suggests: testthat
-Description: This package provides classes and methods to enhance the ability
-    to use the 'koRpus' package together with the 'tm' package. It is in its early
-    stages.
+Description: This package provides classes and methods to enhance the
+    ability to use the 'koRpus' package together with the 'tm'
+    package. It is in its early stages.  To ask for help, report
+    bugs, suggest feature improvements, or discuss the global
+    development of the package, please subscribe to the koRpus-dev
+    mailing list:
+    https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://reaktanz.de/?c=hacking&s=koRpus
-Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
-Version: 0.01-1
-Date: 2015-06-29
-Collate: '01_class_01_kRp.corpus.R'
-        '02_method_01_kRp.corpus-class_readability.corpus.R'
-        '02_method_02_kRp.corpus-class_hyphen.corpus.R'
-        '02_method_03_kRp.corpus-class_lex.div.corpus.R'
-        '02_method_20_kRp.corpus_get_set_is.R' 'kRp.Corpus.R'
-        'kRpSource.R' 'tm.plugin.koRpus-package.R'
+Authors@R: c(person(given="m.eik", family="michalke",
+        email="meik.michalke@hhu.de", role=c("aut", "cre")))
+Version: 0.01-2
+Date: 2015-07-08
+Collate: '01_class_01_kRp.corpus.R' '01_class_02_kRp.sourcesCorpus.R'
+        '01_class_03_kRp.topicCorpus.R'
+        '02_method_01_kRp.corpus-class_readability.R'
+        '02_method_02_kRp.corpus-class_hyphen.R'
+        '02_method_03_kRp.corpus-class_lex.div.R'
+        '02_method_04_kRp.corpus-class_read.corp.custom.R'
+        '02_method_05_kRp.corpus-class_freq.analysis.R'
+        '02_method_06_kRp.corpus-class_summary.R'
+        '02_method_20_kRp.corpus_get_set_is.R' 'kRpSource.R'
+        'simpleCorpus.R' 'sourcesCorpus.R'
+        'tm.plugin.koRpus-internal.R' 'tm.plugin.koRpus-package.R'
+        'topicCorpus.R'
 NeedsCompilation: no
-Packaged: 2015-06-29 19:23:59 UTC; m
+Packaged: 2015-07-08 19:40:39 UTC; m

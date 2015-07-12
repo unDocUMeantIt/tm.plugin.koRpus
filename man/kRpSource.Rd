@@ -7,7 +7,7 @@
 kRpSource(obj, encoding = "UTF-8")
 }
 \arguments{
-\item{obj}{An object of class \code{\link[koRpus]{kRp.taggedText-class}}.}
+\item{obj}{An object of class \code{kRp.taggedText-class} (a class union for tagged text objects).}
 
 \item{encoding}{Character string, defining the character encoding of the object.}
 }

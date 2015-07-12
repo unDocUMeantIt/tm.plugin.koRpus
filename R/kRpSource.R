@@ -23,7 +23,7 @@
 #' 
 #' Also provided are the methods \code{getElem} and \code{pGetElem} for S3 class \code{kRpSource}.
 #' 
-#' @param obj An object of class \code{\link[koRpus]{kRp.taggedText-class}}.
+#' @param obj An object of class \code{kRp.taggedText-class} (a class union for tagged text objects).
 #' @param encoding Character string, defining the character encoding of the object.
 #' @return An object of class \code{\link[tm:Source]{Source}}, also inheriting class \code{kRpSource}.
 #' @import tm
