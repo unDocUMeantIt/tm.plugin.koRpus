@@ -26,6 +26,7 @@
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param ... options to pass through to \code{\link[koRpus:readability]{readability}}.
+#' @return An object of the same class as \code{txt.file}.
 #' @export
 #' @docType methods
 #' @aliases readability,kRp.corpus-method
@@ -78,12 +79,12 @@ setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, su
 #' @rdname readability-methods
 #' @export
 setMethod("readability", signature(txt.file="kRp.sourcesCorpus"), function(txt.file, summary=TRUE, ...){
-    all.corpora <- slot(txt.file, "sources")
+    all.corpora <- corpusSources(txt.file)
 
     for (thisCorpus in names(all.corpora)){
       all.corpora[[thisCorpus]] <- readability(all.corpora[[thisCorpus]], summary=summary, ...)
     }
-    slot(txt.file, "sources") <- all.corpora
+    corpusSources(txt.file) <- all.corpora
 
     if(isTRUE(summary)){
       txt.file <- summary(txt.file)
@@ -98,12 +99,12 @@ setMethod("readability", signature(txt.file="kRp.sourcesCorpus"), function(txt.f
 #' @rdname readability-methods
 #' @export
 setMethod("readability", signature(txt.file="kRp.topicCorpus"), function(txt.file, summary=TRUE, ...){
-    all.topics <- slot(txt.file, "topics")
+    all.topics <- corpusTopics(txt.file)
 
     for (thisTopic in names(all.topics)){
       all.topics[[thisTopic]] <- readability(all.topics[[thisTopic]], summary=summary, ...)
     }
-    slot(txt.file, "topics") <- all.topics
+    corpusTopics(txt.file) <- all.topics
 
     if(isTRUE(summary)){
       txt.file <- summary(txt.file)

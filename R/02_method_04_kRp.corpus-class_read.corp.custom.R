@@ -25,6 +25,7 @@
 #'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
 #' @param ... options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.
+#' @return An object of the same class as \code{corpus}.
 #' @export
 #' @docType methods
 #' @aliases read.corp.custom read.corp.custom,kRp.corpus-method
@@ -78,11 +79,11 @@
 #' @import koRpus
 setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, ...){
     # individual tests
-    slot(corpus, "freq")[["texts"]] <- lapply(slot(corpus, "tagged"), function(thisText){
+    corpusFreq(corpus)[["texts"]] <- lapply(corpusTagged(corpus), function(thisText){
       read.corp.custom(thisText, ...)
     })
     # analysis on full corpus
-    slot(corpus, "freq")[["corpus"]] <- read.corp.custom(slot(corpus, "tagged"), ...)
+    corpusFreq(corpus)[["corpus"]] <- read.corp.custom(corpusTagged(corpus), ...)
     return(corpus)
   }
 )

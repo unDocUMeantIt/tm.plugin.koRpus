@@ -25,6 +25,7 @@
 #'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
 #' @param ... options to pass through to \code{\link[koRpus:freq.analysis]{freq.analysis}}.
+#' @return An object of the same class as \code{txt.file}.
 #' @export
 #' @docType methods
 #' @aliases freq.analysis,kRp.corpus-method
@@ -37,7 +38,7 @@
 #' @include 01_class_01_kRp.corpus.R
 #' @import koRpus
 setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, ...){
-    slot(txt.file, "tagged") <- lapply(slot(txt.file, "tagged"), function(thisText){
+    corpusTagged(txt.file) <- lapply(corpusTagged(txt.file), function(thisText){
       freq.analysis(thisText, ...)
     })
     return(txt.file)
@@ -49,12 +50,12 @@ setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, 
 #' @rdname freq.analysis-methods
 #' @export
 setMethod("freq.analysis", signature(txt.file="kRp.sourcesCorpus"), function(txt.file, ...){
-    all.corpora <- slot(txt.file, "sources")
+    all.corpora <- corpusSources(txt.file)
 
     for (thisCorpus in names(all.corpora)){
       all.corpora[[thisCorpus]] <- freq.analysis(all.corpora[[thisCorpus]], ...)
     }
-    slot(txt.file, "sources") <- all.corpora
+    corpusSources(txt.file) <- all.corpora
 
     return(txt.file)
   }
@@ -65,12 +66,12 @@ setMethod("freq.analysis", signature(txt.file="kRp.sourcesCorpus"), function(txt
 #' @rdname freq.analysis-methods
 #' @export
 setMethod("freq.analysis", signature(txt.file="kRp.topicCorpus"), function(txt.file, ...){
-    all.topics <- slot(txt.file, "topics")
+    all.topics <- corpusTopics(txt.file)
 
     for (thisTopic in names(all.topics)){
       all.topics[[thisTopic]] <- freq.analysis(all.topics[[thisTopic]], ...)
     }
-    slot(txt.file, "topics") <- all.topics
+    corpusTopics(txt.file) <- all.topics
 
     return(txt.file)
   }

@@ -25,6 +25,7 @@
 #'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
 #' @param ... options to pass through to \code{\link[koRpus:hyphen]{hyphen}}.
+#' @return An object of the same class as \code{words}.
 #' @export
 #' @docType methods
 #' @aliases hyphen,kRp.corpus-method
@@ -37,7 +38,7 @@
 #' @include 01_class_01_kRp.corpus.R
 #' @import koRpus
 setMethod("hyphen", signature(words="kRp.corpus"), function(words, ...){
-    slot(words, "hyphen") <- lapply(slot(words, "tagged"), function(thisText){
+    corpusHyphen(words) <- lapply(corpusTagged(words), function(thisText){
       hyphen(thisText, ...)
     })
     return(words)
@@ -49,12 +50,12 @@ setMethod("hyphen", signature(words="kRp.corpus"), function(words, ...){
 #' @rdname hyphen-methods
 #' @export
 setMethod("hyphen", signature(words="kRp.sourcesCorpus"), function(words, ...){
-    all.corpora <- slot(words, "sources")
+    all.corpora <- corpusSources(words)
 
     for (thisCorpus in names(all.corpora)){
       all.corpora[[thisCorpus]] <- hyphen(all.corpora[[thisCorpus]], ...)
     }
-    slot(words, "sources") <- all.corpora
+    corpusSources(words) <- all.corpora
 
     return(words)
   }
@@ -65,12 +66,12 @@ setMethod("hyphen", signature(words="kRp.sourcesCorpus"), function(words, ...){
 #' @rdname hyphen-methods
 #' @export
 setMethod("hyphen", signature(words="kRp.topicCorpus"), function(words, ...){
-    all.topics <- slot(words, "topics")
+    all.topics <- corpusTopics(words)
 
     for (thisTopic in names(all.topics)){
       all.topics[[thisTopic]] <- hyphen(all.topics[[thisTopic]], ...)
     }
-    slot(words, "topics") <- all.topics
+    corpusTopics(words) <- all.topics
 
     return(words)
   }

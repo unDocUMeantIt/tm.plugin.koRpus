@@ -23,6 +23,9 @@ updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result
 
 \item{...}{options to pass through to \code{\link[koRpus:readability]{readability}}.}
 }
+\value{
+An object of the same class as \code{txt.file}.
+}
 \description{
 This method calls \code{\link[koRpus:readability]{readability}} on all tagged text objects
 inside the given \code{txt.file} object (using \code{lapply}).

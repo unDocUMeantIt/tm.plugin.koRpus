@@ -55,6 +55,9 @@ corpusSummary(obj) <- value
 
 \item{value}{The new value to replace the current with.}
 }
+\value{
+An object of the same class as \code{object}.
+}
 \description{
 This method performs a \code{summary} call on all text objects
 inside the given \code{object} object (using \code{lapply}). Contrary to what

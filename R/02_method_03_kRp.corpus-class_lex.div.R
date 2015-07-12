@@ -27,6 +27,7 @@
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param ... options to pass through to \code{\link[koRpus:lex.div]{lex.div}}.
+#' @return An object of the same class as \code{txt}.
 #' @export
 #' @docType methods
 #' @aliases lex.div,kRp.corpus-method
@@ -39,7 +40,7 @@
 #' @include 01_class_01_kRp.corpus.R
 #' @import koRpus
 setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, ...){
-    slot(txt, "TTR") <- lapply(slot(txt, "tagged"), function(thisText){
+    corpusTTR(txt) <- lapply(corpusTagged(txt), function(thisText){
       lex.div(thisText, ...)
     })
     # store meta-information on the maximum of available indices.
@@ -68,12 +69,12 @@ setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, ..
 #' @rdname lex.div-methods
 #' @export
 setMethod("lex.div", signature(txt="kRp.sourcesCorpus"), function(txt, summary=TRUE, ...){
-    all.corpora <- slot(txt, "sources")
+    all.corpora <- corpusSources(txt)
 
     for (thisCorpus in names(all.corpora)){
       all.corpora[[thisCorpus]] <- lex.div(all.corpora[[thisCorpus]], summary=summary, ...)
     }
-    slot(txt, "sources") <- all.corpora
+    corpusSources(txt) <- all.corpora
 
     if(isTRUE(summary)){
       txt <- summary(txt)
@@ -88,12 +89,12 @@ setMethod("lex.div", signature(txt="kRp.sourcesCorpus"), function(txt, summary=T
 #' @rdname lex.div-methods
 #' @export
 setMethod("lex.div", signature(txt="kRp.topicCorpus"), function(txt, summary=TRUE, ...){
-    all.topics <- slot(txt, "topics")
+    all.topics <- corpusTopics(txt)
 
     for (thisTopic in names(all.topics)){
       all.topics[[thisTopic]] <- lex.div(all.topics[[thisTopic]], summary=summary, ...)
     }
-    slot(txt, "topics") <- all.topics
+    corpusTopics(txt) <- all.topics
 
     if(isTRUE(summary)){
       txt <- summary(txt)

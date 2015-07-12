@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
+\section{Changes in tm.plugin.koRpus version 0.01-3 (2015-07-10)}{
+  \subsection{unreleased}{
+    \itemize{
+      \item this release is under development
+    }
+  }
+}
 \section{Changes in tm.plugin.koRpus version 0.01-2 (2015-07-08)}{
   \subsection{changed}{
     \itemize{

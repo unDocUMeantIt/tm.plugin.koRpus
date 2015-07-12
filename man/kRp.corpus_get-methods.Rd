@@ -4,10 +4,12 @@
 \name{corpusTagged}
 \alias{corpusFreq}
 \alias{corpusFreq,-methods}
+\alias{corpusFreq,kRp.corpus-method}
 \alias{corpusFreq,kRp.sourcesCorpus-method}
 \alias{corpusFreq,kRp.topicCorpus-method}
 \alias{corpusFreq<-}
 \alias{corpusFreq<-,-methods}
+\alias{corpusFreq<-,kRp.corpus-method}
 \alias{corpusFreq<-,kRp.sourcesCorpus-method}
 \alias{corpusFreq<-,kRp.topicCorpus-method}
 \alias{corpusHyphen}
@@ -127,11 +129,15 @@ corpusTopics(obj, topic = NULL) <- value
 
 corpusFreq(obj)
 
+\S4method{corpusFreq}{kRp.corpus}(obj)
+
 \S4method{corpusFreq}{kRp.sourcesCorpus}(obj)
 
 \S4method{corpusFreq}{kRp.topicCorpus}(obj)
 
 corpusFreq(obj, topic) <- value
+
+\S4method{corpusFreq}{kRp.corpus}(obj) <- value
 
 \S4method{corpusFreq}{kRp.sourcesCorpus}(obj) <- value
 

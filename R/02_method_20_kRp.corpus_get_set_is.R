@@ -412,6 +412,21 @@ setGeneric("corpusFreq", function(obj) standardGeneric("corpusFreq"))
 #' @export
 #' @aliases
 #'    corpusFreq,-methods
+#'    corpusFreq,kRp.corpus-method
+#' @include 01_class_01_kRp.corpus.R
+setMethod("corpusFreq",
+  signature=signature(obj="kRp.corpus"),
+  function (obj){
+    result <- slot(obj, name="freq")
+    return(result)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusFreq,-methods
 #'    corpusFreq,kRp.sourcesCorpus-method
 #' @include 01_class_02_kRp.sourcesCorpus.R
 setMethod("corpusFreq",
@@ -442,6 +457,21 @@ setMethod("corpusFreq",
 #' @docType methods
 # @param value The new value to replace the current with.
 setGeneric("corpusFreq<-", function(obj, topic, value) standardGeneric("corpusFreq<-"))
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusFreq<-,-methods
+#'    corpusFreq<-,kRp.corpus-method
+#' @include 01_class_01_kRp.corpus.R
+setMethod("corpusFreq<-",
+  signature=signature(obj="kRp.corpus"),
+  function (obj, value){
+    slot(obj, name="freq") <- value
+    return(obj)
+  }
+)
+
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods

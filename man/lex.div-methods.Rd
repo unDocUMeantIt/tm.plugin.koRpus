@@ -23,6 +23,9 @@ updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result
 
 \item{...}{options to pass through to \code{\link[koRpus:lex.div]{lex.div}}.}
 }
+\value{
+An object of the same class as \code{txt}.
+}
 \description{
 This method calls \code{\link[koRpus:lex.div]{lex.div}} on all tagged text objects
 inside the given \code{txt} object (using \code{lapply}).

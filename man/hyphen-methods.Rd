@@ -20,6 +20,9 @@
 
 \item{...}{options to pass through to \code{\link[koRpus:hyphen]{hyphen}}.}
 }
+\value{
+An object of the same class as \code{words}.
+}
 \description{
 This method calls \code{\link[koRpus:hyphen]{hyphen}} on all tagged text objects
 inside the given \code{words} object (using \code{lapply}).

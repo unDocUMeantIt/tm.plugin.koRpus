@@ -21,6 +21,9 @@
 
 \item{...}{options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.}
 }
+\value{
+An object of the same class as \code{corpus}.
+}
 \description{
 This method calls \code{\link[koRpus:read.corp.custom]{read.corp.custom}} on all tagged text objects
 inside the given \code{corpus} object (using \code{lapply}).

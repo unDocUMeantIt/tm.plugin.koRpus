@@ -40,6 +40,7 @@
 # @param available.TTR Like \code{available.rdb}, only for lexical diversity measures.
 #' @param missing Character string to use for missing values.
 #' @param ... Used for internal processes.
+#' @return An object of the same class as \code{object}.
 #' @export
 #' @docType methods
 #' @aliases summary summary,kRp.corpus-method

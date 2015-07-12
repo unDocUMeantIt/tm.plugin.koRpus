@@ -20,6 +20,9 @@
 
 \item{...}{options to pass through to \code{\link[koRpus:freq.analysis]{freq.analysis}}.}
 }
+\value{
+An object of the same class as \code{txt.file}.
+}
 \description{
 This method calls \code{\link[koRpus:freq.analysis]{freq.analysis}} on all tagged text objects
 inside the given \code{txt.file} object (using \code{lapply}).
