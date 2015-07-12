@@ -1,0 +1,86 @@
+# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+#
+# This file is part of the R package tm.plugin.koRpus.
+#
+# tm.plugin.koRpus is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# tm.plugin.koRpus is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
+
+
+#' Function to create kRp.corpus objects from directory content
+#' 
+#' This function is a combined wrapper that calls \code{\link[tm:DirSource]{DirSource}},
+#' \code{\link[tm:VCorpus]{VCorpus}} and \code{\link[koRpus:tokenize]{tokenize}} or
+#' \code{\link[koRpus:treetag]{treetag}}.
+#' 
+#' The result, if succeeded, is a single object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
+#' which includes all read texts in a \code{tm} style VCorpus format, as well as in
+#' \code{koRpus} style \code{\link[koRpus]{kRp.taggedText-class}} format.
+#' 
+#' @param dir Character vector with path names to search for text files.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#' @param lang A character string naming the language of the analyzed corpus. See \code{\link[koRpus:kRp.POS.tags]{kRp.POS.tags}} for all supported languages.
+#'    If set to \code{"kRp.env"} this is got from \code{\link[koRpus:get.kRp.env]{get.kRp.env}}. This information will also be passed to
+#'    the \code{readerControl} list of the \code{VCorpus} call.
+#' @param tagger A character string pointing to the tokenizer/tagger command you want to use for basic text analysis. Defaults to \code{tagger="kRp.env"} to get the settings by
+#'    \code{\link[koRpus:get.kRp.env]{get.kRp.env}}. Set to \code{"tokenize"} to use \code{\link[koRpus:tokenize]{tokenize}}.
+#' @param encoding Character string describing the current encoding.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#' @param pattern A regular expression for file matching.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#' @param recursive Logical, indicates whether directories should be read recursively.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#' @param ignore.case Logical, indicates whether \code{pattern} is matched case sensitive.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#' @param mode Character string defining the reading mode.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#' @param ... Additional options which are passed through to the defined \code{tagger}.
+#' @return An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}}.
+#' @import koRpus tm
+#' @export
+kRp.Corpus <- function(
+                dir=".",
+                lang="kRp.env",
+                tagger="kRp.env",
+                encoding="",
+                pattern=NULL,
+                recursive=FALSE,
+                ignore.case=FALSE,
+                mode="text",
+                ...
+              ) {
+
+  if(identical(tagger, "tokenize")){
+    taggerFunction <- function(text, lang, tagger="tokenize", ...) {
+      return(tokenize(txt=text, format="obj", lang=lang, ...))
+    }
+  } else {
+    taggerFunction <- function(text, lang, tagger, ...) {
+      return(treetag(file=text, treetagger=tagger, format="obj", lang=lang, ...))
+    }
+  }
+  
+  if(identical(lang, "kRp.env")){
+    lang <- get.kRp.env(lang=TRUE)
+  } else {}
+
+  newCorpus <- new("kRp.corpus",
+    raw=list(VCorpus(DirSource(dir), readerControl=list(language=lang)))
+  )
+
+  names(slot(newCorpus, "raw")) <- "tm"
+  corpusTagged <- lapply(slot(newCorpus, "raw")[["tm"]], function(thisText){
+    taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, ...)
+  })
+  slot(newCorpus, "tagged") <- corpusTagged
+  return(newCorpus)
+}
