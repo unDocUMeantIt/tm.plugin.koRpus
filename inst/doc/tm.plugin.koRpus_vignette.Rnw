@@ -139,6 +139,33 @@ wpnC3S01  0.82  0.76 123.01      NA     9.65   0.92 0.73      36.46    54.88
 There are quite a number of \texttt{corpus*()} getter/setter methods for slots of these objects, e.g.,
 \texttt{corpusReadability()} to get the \texttt{readability()} results from objects of class \texttt{kRp.corpus}.
 
+Using the summary data.frame, you could now perform ANOVAs or plot interactions:
+
+\begin{Schunk}
+  \begin{Sinput}
+> library(sciplot)
+> lineplot.CI(
++   x.factor=corpusSummary(sampleTexts)[["source"]],
++   response=corpusSummary(sampleTexts)[["MTLD"]],
++   group=corpusSummary(sampleTexts)[["topic"]],
++   type="l",
++   main="MTLD",
++   xlab="Media source",
++   ylab="Lexical diversity score",
++   col=c("grey", "black"),
++   lwd=2
++ )
+  \end{Sinput}
+%   \begin{Soutput}
+%   \end{Soutput}
+\end{Schunk}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{lineplot.pdf}
+  \caption{Well, the example texts aren't so impressive here, as there's not much variance in one text per source and topic.}
+\end{figure}
+
 \subsection{Frequency analysis}
 
 The object classes make it quite comfortable to analyse type frequencies of corpora. There is a method
@@ -195,9 +222,11 @@ word clouds:
 %   \end{Soutput}
 \end{Schunk}
 
-\begin{center}
- \includegraphics[width=\textwidth]{wordcloud.pdf}
-\end{center}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{wordcloud.pdf}
+  \caption{The 200 most frequent words in the example corpus}
+\end{figure}
 
 
 % \bibliographystyle{apacite}
