@@ -4,7 +4,7 @@
 #' Package: \tab tm.plugin.koRpus\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.01-3\cr
-#' Date: \tab 2015-07-10\cr
+#' Date: \tab 2016-01-07\cr
 #' Depends: \tab R (>= 2.10.0),methods,koRpus (>= 0.06-1),tm\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr

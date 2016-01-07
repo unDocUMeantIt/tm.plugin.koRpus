@@ -1,8 +1,16 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.01-3 (2015-07-10)
+changes in version 0.01-3 (2016-01-07)
 unreleased:
   - this release is under development
+fixed:
+  - the arguments that simpleCorpus() was supposed to pipe to DirSource()
+    weren't used
+changed:
+  - the "paths" argument of topicCorpus() now expects a list, not a vector
+added:
+  - new argument "format" for simpleCorpus(), sourceCorpus(), and topicCorpus(),
+    to be able to work with text objects directly, instead of files
 
 changes in version 0.01-2 (2015-07-08)
 changed:

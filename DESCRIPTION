@@ -21,7 +21,8 @@ URL: http://reaktanz.de/?c=hacking&s=koRpus
 Authors@R: c(person(given="m.eik", family="michalke",
         email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-3
-Date: 2015-07-10
+Date: 2016-01-07
+RoxygenNote: 5.0.1
 Collate:
     '01_class_01_kRp.corpus.R'
     '01_class_02_kRp.sourcesCorpus.R'

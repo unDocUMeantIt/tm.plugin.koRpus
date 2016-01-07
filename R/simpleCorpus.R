@@ -26,25 +26,28 @@
 #' which includes all read texts in a \code{tm} style \code{VCorpus} format, as well as in
 #' \code{koRpus} style \code{kRp.taggedText} class format.
 #' 
-#' @param dir Character vector with path names to search for text files.
-#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#' @param dir Character vector with path names to search for text files, or the actual texts to be analyzed if \code{format="obj"}.
+#'    See \code{\link[tm:DirSource]{DirSource}} and \code{\link[tm:VectorSource]{VectorSource}} for details.
 #' @param lang A character string naming the language of the analyzed corpus. See \code{\link[koRpus:kRp.POS.tags]{kRp.POS.tags}} for all supported languages.
 #'    If set to \code{"kRp.env"} this is got from \code{\link[koRpus:get.kRp.env]{get.kRp.env}}. This information will also be passed to
 #'    the \code{readerControl} list of the \code{VCorpus} call.
 #' @param tagger A character string pointing to the tokenizer/tagger command you want to use for basic text analysis. Defaults to \code{tagger="kRp.env"} to get the settings by
 #'    \code{\link[koRpus:get.kRp.env]{get.kRp.env}}. Set to \code{"tokenize"} to use \code{\link[koRpus:tokenize]{tokenize}}.
 #' @param encoding Character string describing the current encoding.
-#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details, omitted if \code{format="obj"}.
 #' @param pattern A regular expression for file matching.
-#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details, omitted if \code{format="obj"}.
 #' @param recursive Logical, indicates whether directories should be read recursively.
-#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details, omitted if \code{format="obj"}.
 #' @param ignore.case Logical, indicates whether \code{pattern} is matched case sensitive.
-#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details, omitted if \code{format="obj"}.
 #' @param mode Character string defining the reading mode.
-#'    See \code{\link[tm:DirSource]{DirSource}} for details.
+#'    See \code{\link[tm:DirSource]{DirSource}} for details, omitted if \code{format="obj"}.
 #' @param source Character string, naming the source of the corpus.
 #' @param topic Character string, a topic this corpus deals with.
+#' @param format Either "file" or "obj", depending on whether you want to scan files or analyze the text in a given object, like
+#'    a character vector. If the latter and \code{\link[koRpus:treetag]{treetag}} is used as the \cdoe{tagger},
+#'    texts will be written to temporary files for the process (see \code{dir}).
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
 #' @return An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}}.
 #' @import koRpus tm
@@ -60,6 +63,7 @@ simpleCorpus <- function(
                 mode="text",
                 source="",
                 topic="",
+                format="file",
                 ...
               ) {
 
@@ -75,19 +79,33 @@ simpleCorpus <- function(
     lang <- get.kRp.env(lang=TRUE)
   } else {}
 
-  newCorpus <- new("kRp.corpus",
-    raw=list(VCorpus(
-      DirSource(
-        dir,
-        encoding=encoding,
-        pattern=pattern,
-        recursive=recursive,
-        ignore.case=ignore.case,
-        mode=mode
-      ),
-      readerControl=list(language=lang)
-    )
-  ))
+  if(identical(format, "file")){
+    newCorpus <- new("kRp.corpus",
+      raw=list(VCorpus(
+        DirSource(
+          dir,
+          encoding=encoding,
+          pattern=pattern,
+          recursive=recursive,
+          ignore.case=ignore.case,
+          mode=mode
+        ),
+        readerControl=list(language=lang)
+      )
+    ))
+  } else if(identical(format, "obj")){
+    newCorpus <- new("kRp.corpus",
+      raw=list(VCorpus(
+        VectorSource(
+          dir
+        ),
+        readerControl=list(language=lang)
+      )
+    ))
+  } else {
+    stop(simpleError(paste0("invalid value for \"format\":\n  \"", format, "\"")))
+  }
+
   names(slot(newCorpus, "raw")) <- "tm"
   numTexts <- length(corpusTm(newCorpus))
   nameNum <- sprintf("%02d", 1:numTexts)
