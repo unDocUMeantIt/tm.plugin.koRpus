@@ -76,8 +76,18 @@ simpleCorpus <- function(
   } else {}
 
   newCorpus <- new("kRp.corpus",
-    raw=list(VCorpus(DirSource(dir), readerControl=list(language=lang)))
-  )
+    raw=list(VCorpus(
+      DirSource(
+        dir,
+        encoding=encoding,
+        pattern=pattern,
+        recursive=recursive,
+        ignore.case=ignore.case,
+        mode=mode
+      ),
+      readerControl=list(language=lang)
+    )
+  ))
   names(slot(newCorpus, "raw")) <- "tm"
   numTexts <- length(corpusTm(newCorpus))
   nameNum <- sprintf("%02d", 1:numTexts)
