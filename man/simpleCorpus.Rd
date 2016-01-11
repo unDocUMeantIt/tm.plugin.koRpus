@@ -41,7 +41,7 @@ See \code{\link[tm:DirSource]{DirSource}} for details, omitted if \code{format="
 
 \item{format}{Either "file" or "obj",
       depending on whether you want to scan files or analyze the text in a given object, like
-a character vector. If the latter and \code{\link[koRpus:treetag]{treetag}} is used as the \cdoe{tagger},
+a character vector. If the latter and \code{\link[koRpus:treetag]{treetag}} is used as the \code{tagger},
 texts will be written to temporary files for the process (see \code{dir}).}
 
 \item{...}{Additional options which are passed through to the defined \code{tagger}.}
