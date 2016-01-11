@@ -16,9 +16,10 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Function to create kRp.corpus objects from directory content
+#' Function to create kRp.corpus objects from directory or object content
 #' 
-#' This function is a combined wrapper that calls \code{\link[tm:DirSource]{DirSource}},
+#' This function is a combined wrapper that calls \code{\link[tm:DirSource]{DirSource}}
+#' (or \code{\link[tm:VectorSource]{VectorSource}}, if \code{format="obj"}),
 #' \code{\link[tm:VCorpus]{VCorpus}} and \code{\link[koRpus:tokenize]{tokenize}} or
 #' \code{\link[koRpus:treetag]{treetag}}.
 #' 

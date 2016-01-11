@@ -15,9 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Function to create kRp.sourcesCorpus objects from directory content
+#' Function to create kRp.sourcesCorpus objects from directory or object content
 #' 
-#' Can also be used with the texts tot analyze directly.
+#' Internally, this is a wrapper for \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} you can use
+#' to analyze texts from more than one source.
 #'
 #' @param path Usually a charcter vector with the path to the texts to analyse. Below this path, texts
 #'    must be ordered into subfolders named exactly like defined by \code{sources}. However, if \code{format="obj"},

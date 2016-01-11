@@ -15,9 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Function to create kRp.topicCorpus objects from directory content
+#' Function to create kRp.topicCorpus objects from directory or object content
 #' 
-#' Can also be used with the texts tot analyze directly.
+#' Internally, this is a wrapper for \code{\link[tm.plugin.koRpus:sourcesCorpus]{sourcesCorpus}} you can use
+#' to analyze texts both from more than one source, and on different topics.
 #' 
 #' @param paths A named list, usually with the paths to the texts to analyze. Each named list element
 #'    will define one topic. Below this path, texts must be ordered into subfolders named exactly like defined
