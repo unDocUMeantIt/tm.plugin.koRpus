@@ -11,7 +11,7 @@ A Compatibility Plugin Package for 'tm' and 'koRpus'.
 \tabular{ll}{
 Package: \tab tm.plugin.koRpus\cr
 Type: \tab Package\cr
-Version: \tab 0.01-3\cr
+Version: \tab 0.01-4\cr
 Date: \tab 2016-07-12\cr
 Depends: \tab R (>= 2.10.0),methods,parallel,koRpus (>= 0.07-1),tm\cr
 Encoding: \tab UTF-8\cr
