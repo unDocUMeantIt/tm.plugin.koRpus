@@ -1,12 +1,7 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
-\section{Changes in tm.plugin.koRpus version 0.01-3 (2016-01-07)}{
-  \subsection{unreleased}{
-    \itemize{
-      \item this release is under development
-    }
-  }
+\section{Changes in tm.plugin.koRpus version 0.01-3 (2016-07-12)}{
   \subsection{fixed}{
     \itemize{
       \item the arguments that \code{simpleCorpus()} was supposed to pipe to \code{DirSource()}
@@ -16,12 +11,13 @@
   \subsection{changed}{
     \itemize{
       \item the \code{"paths"} argument of \code{topicCorpus()} now expects a list, not a vector
+      \item using the parallel package to be able to use more CPU cores
     }
   }
   \subsection{added}{
     \itemize{
-      \item new argument \code{"format"} for \code{simpleCorpus()}, \code{sourceCorpus()}, and \code{topicCorpus()},
-        to be able to work with text objects directly, instead of files
+      \item new argument \code{"format"} for \code{simpleCorpus()}, \code{sourceCorpus()}, and
+        \code{topicCorpus()}, to be able to work with text objects directly, instead of files
     }
   }
 }

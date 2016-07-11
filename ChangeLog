@@ -1,14 +1,12 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.01-3 (2016-07-11)
-unreleased:
-  - this release is under development
+changes in version 0.01-3 (2016-07-12)
 fixed:
   - the arguments that simpleCorpus() was supposed to pipe to DirSource()
     weren't used
 changed:
   - the "paths" argument of topicCorpus() now expects a list, not a vector
-  - using the prallel package to be able to use more CPU cores
+  - using the parallel package to be able to use more CPU cores
 added:
   - new argument "format" for simpleCorpus(), sourceCorpus(), and
     topicCorpus(), to be able to work with text objects directly, instead of files

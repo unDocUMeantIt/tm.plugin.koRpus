@@ -19,7 +19,7 @@ LazyLoad: yes
 URL: http://reaktanz.de/?c=hacking&s=koRpus
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-3
-Date: 2016-07-11
+Date: 2016-07-12
 RoxygenNote: 5.0.1
 Collate:
     '01_class_01_kRp.corpus.R'
