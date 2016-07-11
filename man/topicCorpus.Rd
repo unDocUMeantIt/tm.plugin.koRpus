@@ -26,7 +26,8 @@ internally for the sources.}
 a character vector. See \code{\link[tm.plugin.koRpus:sourcesCorpus]{sourcesCorpus}} for more information.}
 
 \item{mc.cores}{The number of cores to use for parallelization,
-      see \code{\link[parallel:mclapply]{mclapply}}.}
+      see \code{\link[parallel:mclapply]{mclapply}}.
+This value is passed through to simpleCorpus.}
 
 \item{...}{Additional options, passed through to \code{sourcesCorpus}.}
 }

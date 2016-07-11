@@ -8,16 +8,22 @@
 \alias{read.corp.custom,kRp.topicCorpus-method}
 \title{Apply read.corp.custom() to all texts in kRp.corpus objects}
 \usage{
-\S4method{read.corp.custom}{kRp.corpus}(corpus, ...)
+\S4method{read.corp.custom}{kRp.corpus}(corpus,
+  mc.cores = getOption("mc.cores", 1L), ...)
 
-\S4method{read.corp.custom}{kRp.sourcesCorpus}(corpus, ...)
+\S4method{read.corp.custom}{kRp.sourcesCorpus}(corpus,
+  mc.cores = getOption("mc.cores", 1L), ...)
 
-\S4method{read.corp.custom}{kRp.topicCorpus}(corpus, ...)
+\S4method{read.corp.custom}{kRp.topicCorpus}(corpus,
+  mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
 \item{corpus}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
 \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.}
+
+\item{mc.cores}{The number of cores to use for parallelization,
+      see \code{\link[parallel:mclapply]{mclapply}}.}
 
 \item{...}{options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.}
 }

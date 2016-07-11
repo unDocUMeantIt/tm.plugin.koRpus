@@ -24,6 +24,7 @@
 #' @param corpus An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
 #'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
+#' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.
 #' @return An object of the same class as \code{corpus}.
 #' @export
@@ -77,11 +78,11 @@
 #' }
 #' @include 01_class_01_kRp.corpus.R
 #' @import koRpus
-setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, ...){
+setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
     # individual tests
-    corpusFreq(corpus)[["texts"]] <- lapply(corpusTagged(corpus), function(thisText){
+    corpusFreq(corpus)[["texts"]] <- mclapply(corpusTagged(corpus), function(thisText){
       read.corp.custom(thisText, ...)
-    })
+    }, mc.cores=mc.cores)
     # analysis on full corpus
     corpusFreq(corpus)[["corpus"]] <- read.corp.custom(corpusTagged(corpus), ...)
     return(corpus)
@@ -92,14 +93,14 @@ setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, .
 #' @docType methods
 #' @rdname read.corp.custom-methods
 #' @export
-setMethod("read.corp.custom", signature(corpus="kRp.sourcesCorpus"), function(corpus, ...){
+setMethod("read.corp.custom", signature(corpus="kRp.sourcesCorpus"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
     all.corpora <- slot(corpus, "sources")
 
     all.tagged <- list()
     # iterate through all texts indivudually
     for (thisCorpus in names(all.corpora)){
       all.tagged <- append(all.tagged, slot(all.corpora[[thisCorpus]], "tagged"))
-      all.corpora[[thisCorpus]] <- read.corp.custom(all.corpora[[thisCorpus]], ...)
+      all.corpora[[thisCorpus]] <- read.corp.custom(all.corpora[[thisCorpus]], mc.cores=mc.cores, ...)
     }
     slot(corpus, "sources") <- all.corpora
     # analysis on full corpus
@@ -113,7 +114,7 @@ setMethod("read.corp.custom", signature(corpus="kRp.sourcesCorpus"), function(co
 #' @docType methods
 #' @rdname read.corp.custom-methods
 #' @export
-setMethod("read.corp.custom", signature(corpus="kRp.topicCorpus"), function(corpus, ...){
+setMethod("read.corp.custom", signature(corpus="kRp.topicCorpus"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
     all.topics <- slot(corpus, "topics")
 
     all.tagged <- list()
@@ -123,7 +124,7 @@ setMethod("read.corp.custom", signature(corpus="kRp.topicCorpus"), function(corp
       for (thisCorpus in names(sub.corpora)){
         all.tagged <- append(all.tagged, slot(sub.corpora[[thisCorpus]], "tagged"))
       }
-      all.topics[[thisTopic]] <- read.corp.custom(all.topics[[thisTopic]], ...)
+      all.topics[[thisTopic]] <- read.corp.custom(all.topics[[thisTopic]], mc.cores=mc.cores, ...)
     }
     slot(corpus, "topics") <- all.topics
     # analysis on full corpus

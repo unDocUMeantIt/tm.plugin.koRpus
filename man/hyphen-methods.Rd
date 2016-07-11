@@ -7,16 +7,22 @@
 \alias{hyphen,kRp.topicCorpus-method}
 \title{Apply hyphen() to all texts in kRp.corpus objects}
 \usage{
-\S4method{hyphen}{kRp.corpus}(words, ...)
+\S4method{hyphen}{kRp.corpus}(words, mc.cores = getOption("mc.cores", 1L),
+  ...)
 
-\S4method{hyphen}{kRp.sourcesCorpus}(words, ...)
+\S4method{hyphen}{kRp.sourcesCorpus}(words, mc.cores = getOption("mc.cores",
+  1L), ...)
 
-\S4method{hyphen}{kRp.topicCorpus}(words, ...)
+\S4method{hyphen}{kRp.topicCorpus}(words, mc.cores = getOption("mc.cores",
+  1L), ...)
 }
 \arguments{
 \item{words}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
 \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.}
+
+\item{mc.cores}{The number of cores to use for parallelization,
+      see \code{\link[parallel:mclapply]{mclapply}}.}
 
 \item{...}{options to pass through to \code{\link[koRpus:hyphen]{hyphen}}.}
 }

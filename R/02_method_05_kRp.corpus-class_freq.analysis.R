@@ -24,6 +24,7 @@
 #' @param txt.file An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
 #'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
+#' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:freq.analysis]{freq.analysis}}.
 #' @return An object of the same class as \code{txt.file}.
 #' @export
@@ -37,10 +38,10 @@
 #' }
 #' @include 01_class_01_kRp.corpus.R
 #' @import koRpus
-setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, ...){
-    corpusTagged(txt.file) <- lapply(corpusTagged(txt.file), function(thisText){
+setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, mc.cores=getOption("mc.cores", 1L), ...){
+    corpusTagged(txt.file) <- mclapply(corpusTagged(txt.file), function(thisText){
       freq.analysis(thisText, ...)
-    })
+    }, mc.cores=mc.cores)
     return(txt.file)
   }
 )
@@ -49,11 +50,11 @@ setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, 
 #' @docType methods
 #' @rdname freq.analysis-methods
 #' @export
-setMethod("freq.analysis", signature(txt.file="kRp.sourcesCorpus"), function(txt.file, ...){
+setMethod("freq.analysis", signature(txt.file="kRp.sourcesCorpus"), function(txt.file, mc.cores=getOption("mc.cores", 1L), ...){
     all.corpora <- corpusSources(txt.file)
 
     for (thisCorpus in names(all.corpora)){
-      all.corpora[[thisCorpus]] <- freq.analysis(all.corpora[[thisCorpus]], ...)
+      all.corpora[[thisCorpus]] <- freq.analysis(all.corpora[[thisCorpus]], mc.cores=mc.cores, ...)
     }
     corpusSources(txt.file) <- all.corpora
 
@@ -65,11 +66,11 @@ setMethod("freq.analysis", signature(txt.file="kRp.sourcesCorpus"), function(txt
 #' @docType methods
 #' @rdname freq.analysis-methods
 #' @export
-setMethod("freq.analysis", signature(txt.file="kRp.topicCorpus"), function(txt.file, ...){
+setMethod("freq.analysis", signature(txt.file="kRp.topicCorpus"), function(txt.file, mc.cores=getOption("mc.cores", 1L), ...){
     all.topics <- corpusTopics(txt.file)
 
     for (thisTopic in names(all.topics)){
-      all.topics[[thisTopic]] <- freq.analysis(all.topics[[thisTopic]], ...)
+      all.topics[[thisTopic]] <- freq.analysis(all.topics[[thisTopic]], mc.cores=mc.cores, ...)
     }
     corpusTopics(txt.file) <- all.topics
 

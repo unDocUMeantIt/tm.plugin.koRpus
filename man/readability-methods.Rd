@@ -7,11 +7,14 @@
 \alias{readability,kRp.topicCorpus-method}
 \title{Apply readability() to all texts in kRp.corpus objects}
 \usage{
-\S4method{readability}{kRp.corpus}(txt.file, summary = TRUE, ...)
+\S4method{readability}{kRp.corpus}(txt.file, summary = TRUE,
+  mc.cores = getOption("mc.cores", 1L), ...)
 
-\S4method{readability}{kRp.sourcesCorpus}(txt.file, summary = TRUE, ...)
+\S4method{readability}{kRp.sourcesCorpus}(txt.file, summary = TRUE,
+  mc.cores = getOption("mc.cores", 1L), ...)
 
-\S4method{readability}{kRp.topicCorpus}(txt.file, summary = TRUE, ...)
+\S4method{readability}{kRp.topicCorpus}(txt.file, summary = TRUE,
+  mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
 \item{txt.file}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
@@ -20,6 +23,9 @@
 
 \item{summary}{Logical, determines if the \code{summary} slot should automatically be
 updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.}
+
+\item{mc.cores}{The number of cores to use for parallelization,
+      see \code{\link[parallel:mclapply]{mclapply}}.}
 
 \item{...}{options to pass through to \code{\link[koRpus:readability]{readability}}.}
 }

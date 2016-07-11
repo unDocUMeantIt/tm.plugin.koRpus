@@ -26,6 +26,7 @@
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
+#' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:lex.div]{lex.div}}.
 #' @return An object of the same class as \code{txt}.
 #' @export
@@ -39,19 +40,19 @@
 #' }
 #' @include 01_class_01_kRp.corpus.R
 #' @import koRpus
-setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, ...){
-    corpusTTR(txt) <- lapply(corpusTagged(txt), function(thisText){
+setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), ...){
+    corpusTTR(txt) <- mclapply(corpusTagged(txt), function(thisText){
       lex.div(thisText, ...)
-    })
+    }, mc.cores=mc.cores)
     # store meta-information on the maximum of available indices.
     # a mere summary() will simply omit NA values which can later cause
     # problems when we want to aggregate all summaries into one data.frame
     corpusMeta(txt, "TTR") <- list(index=c())
     corpusMeta(txt, "TTR")[["index"]] <- sort(
       unique(
-        unlist(lapply(corpusTTR(txt), function(thisText){
+        unlist(mclapply(corpusTTR(txt), function(thisText){
             summary(thisText)[["index"]]
-          })
+          }, mc.cores=mc.cores)
         )
       )
     )
@@ -68,11 +69,11 @@ setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, ..
 #' @docType methods
 #' @rdname lex.div-methods
 #' @export
-setMethod("lex.div", signature(txt="kRp.sourcesCorpus"), function(txt, summary=TRUE, ...){
+setMethod("lex.div", signature(txt="kRp.sourcesCorpus"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), ...){
     all.corpora <- corpusSources(txt)
 
     for (thisCorpus in names(all.corpora)){
-      all.corpora[[thisCorpus]] <- lex.div(all.corpora[[thisCorpus]], summary=summary, ...)
+      all.corpora[[thisCorpus]] <- lex.div(all.corpora[[thisCorpus]], summary=summary, mc.cores=mc.cores, ...)
     }
     corpusSources(txt) <- all.corpora
 
@@ -88,11 +89,11 @@ setMethod("lex.div", signature(txt="kRp.sourcesCorpus"), function(txt, summary=T
 #' @docType methods
 #' @rdname lex.div-methods
 #' @export
-setMethod("lex.div", signature(txt="kRp.topicCorpus"), function(txt, summary=TRUE, ...){
+setMethod("lex.div", signature(txt="kRp.topicCorpus"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), ...){
     all.topics <- corpusTopics(txt)
 
     for (thisTopic in names(all.topics)){
-      all.topics[[thisTopic]] <- lex.div(all.topics[[thisTopic]], summary=summary, ...)
+      all.topics[[thisTopic]] <- lex.div(all.topics[[thisTopic]], summary=summary, mc.cores=mc.cores, ...)
     }
     corpusTopics(txt) <- all.topics
 

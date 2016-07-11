@@ -24,6 +24,7 @@
 #' @param words An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
 #'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
+#' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:hyphen]{hyphen}}.
 #' @return An object of the same class as \code{words}.
 #' @export
@@ -37,10 +38,10 @@
 #' }
 #' @include 01_class_01_kRp.corpus.R
 #' @import koRpus
-setMethod("hyphen", signature(words="kRp.corpus"), function(words, ...){
-    corpusHyphen(words) <- lapply(corpusTagged(words), function(thisText){
+setMethod("hyphen", signature(words="kRp.corpus"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
+    corpusHyphen(words) <- mclapply(corpusTagged(words), function(thisText){
       hyphen(thisText, ...)
-    })
+    }, mc.cores=mc.cores)
     return(words)
   }
 )
@@ -49,11 +50,11 @@ setMethod("hyphen", signature(words="kRp.corpus"), function(words, ...){
 #' @docType methods
 #' @rdname hyphen-methods
 #' @export
-setMethod("hyphen", signature(words="kRp.sourcesCorpus"), function(words, ...){
+setMethod("hyphen", signature(words="kRp.sourcesCorpus"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
     all.corpora <- corpusSources(words)
 
     for (thisCorpus in names(all.corpora)){
-      all.corpora[[thisCorpus]] <- hyphen(all.corpora[[thisCorpus]], ...)
+      all.corpora[[thisCorpus]] <- hyphen(all.corpora[[thisCorpus]], mc.cores=mc.cores, ...)
     }
     corpusSources(words) <- all.corpora
 
@@ -65,11 +66,11 @@ setMethod("hyphen", signature(words="kRp.sourcesCorpus"), function(words, ...){
 #' @docType methods
 #' @rdname hyphen-methods
 #' @export
-setMethod("hyphen", signature(words="kRp.topicCorpus"), function(words, ...){
+setMethod("hyphen", signature(words="kRp.topicCorpus"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
     all.topics <- corpusTopics(words)
 
     for (thisTopic in names(all.topics)){
-      all.topics[[thisTopic]] <- hyphen(all.topics[[thisTopic]], ...)
+      all.topics[[thisTopic]] <- hyphen(all.topics[[thisTopic]], mc.cores=mc.cores, ...)
     }
     corpusTopics(words) <- all.topics
 
