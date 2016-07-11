@@ -2,9 +2,10 @@
 % Please edit documentation in R/topicCorpus.R
 \name{topicCorpus}
 \alias{topicCorpus}
-\title{Function to create kRp.topicCorpus objects from directory content}
+\title{Function to create kRp.topicCorpus objects from directory or object content}
 \usage{
-topicCorpus(paths, sources, format = "file", ...)
+topicCorpus(paths, sources, format = "file",
+  mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
 \item{paths}{A named list,
@@ -24,10 +25,15 @@ internally for the sources.}
       depending on whether you want to scan files or analyze the text in a given object, like
 a character vector. See \code{\link[tm.plugin.koRpus:sourcesCorpus]{sourcesCorpus}} for more information.}
 
+\item{mc.cores}{The number of cores to use for parallelization,
+      see \code{\link[parallel:mclapply]{mclapply}}.}
+
 \item{...}{Additional options, passed through to \code{sourcesCorpus}.}
 }
 \description{
-Can also be used with the texts tot analyze directly.
+Internally,
+      this is a wrapper for \code{\link[tm.plugin.koRpus:sourcesCorpus]{sourcesCorpus}} you can use
+to analyze texts both from more than one source, and on different topics.
 }
 \examples{
 \dontrun{

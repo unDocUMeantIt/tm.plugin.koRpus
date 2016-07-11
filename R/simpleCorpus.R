@@ -49,9 +49,10 @@
 #' @param format Either "file" or "obj", depending on whether you want to scan files or analyze the text in a given object, like
 #'    a character vector. If the latter and \code{\link[koRpus:treetag]{treetag}} is used as the \code{tagger},
 #'    texts will be written to temporary files for the process (see \code{dir}).
+#' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
 #' @return An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}}.
-#' @import koRpus tm
+#' @import koRpus tm parallel
 #' @export
 simpleCorpus <- function(
                 dir=".",
@@ -65,6 +66,7 @@ simpleCorpus <- function(
                 source="",
                 topic="",
                 format="file",
+                mc.cores=getOption("mc.cores", 1L),
                 ...
               ) {
 
@@ -114,9 +116,13 @@ simpleCorpus <- function(
   corpusMeta(newCorpus, "topic") <- topic
   corpusMeta(newCorpus, "source") <- source
 
-  corpusTagged <- lapply(corpusTm(newCorpus), function(thisText){
-    taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, ...)
-  })
+  corpusTagged <- mclapply(
+    corpusTm(newCorpus),
+    function(thisText){
+      taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, ...)
+    },
+    mc.cores=mc.cores
+  )
   slot(newCorpus, "tagged") <- corpusTagged
   return(newCorpus)
 }

@@ -29,7 +29,10 @@
 #'    internally for the sources.
 #' @param format Either "file" or "obj", depending on whether you want to scan files or analyze the text in a given object, like
 #'    a character vector. See \code{\link[tm.plugin.koRpus:sourcesCorpus]{sourcesCorpus}} for more information.
+#' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
+#'    This value is passed through to simpleCorpus.
 #' @param ... Additional options, passed through to \code{sourcesCorpus}.
+#' @import parallel
 #' @export
 #' @examples
 #' \dontrun{
@@ -62,11 +65,18 @@
 #' )
 #' }
 
-topicCorpus <- function(paths, sources, format="file", ...){
+topicCorpus <- function(
+                paths,
+                sources,
+                format="file",
+                mc.cores=getOption("mc.cores", 1L),
+                ...
+              ){
+
   all.texts <- new("kRp.topicCorpus")
 
   for (topic in names(paths)) {
-    slot(all.texts, "topics")[[topic]] <- sourcesCorpus(path=paths[[topic]], sources=sources, topic=topic, format=format, ...)
+    slot(all.texts, "topics")[[topic]] <- sourcesCorpus(path=paths[[topic]], sources=sources, topic=topic, format=format, mc.cores=mc.cores, ...)
   }
   
   return(all.texts)

@@ -2,11 +2,12 @@
 % Please edit documentation in R/simpleCorpus.R
 \name{simpleCorpus}
 \alias{simpleCorpus}
-\title{Function to create kRp.corpus objects from directory content}
+\title{Function to create kRp.corpus objects from directory or object content}
 \usage{
 simpleCorpus(dir = ".", lang = "kRp.env", tagger = "kRp.env",
   encoding = "", pattern = NULL, recursive = FALSE, ignore.case = FALSE,
-  mode = "text", source = "", topic = "", format = "file", ...)
+  mode = "text", source = "", topic = "", format = "file",
+  mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
 \item{dir}{Character vector with path names to search for text files,
@@ -44,13 +45,17 @@ See \code{\link[tm:DirSource]{DirSource}} for details, omitted if \code{format="
 a character vector. If the latter and \code{\link[koRpus:treetag]{treetag}} is used as the \code{tagger},
 texts will be written to temporary files for the process (see \code{dir}).}
 
+\item{mc.cores}{The number of cores to use for parallelization,
+      see \code{\link[parallel:mclapply]{mclapply}}.}
+
 \item{...}{Additional options which are passed through to the defined \code{tagger}.}
 }
 \value{
 An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}}.
 }
 \description{
-This function is a combined wrapper that calls \code{\link[tm:DirSource]{DirSource}},
+This function is a combined wrapper that calls \code{\link[tm:DirSource]{DirSource}}
+(or \code{\link[tm:VectorSource]{VectorSource}}, if \code{format="obj"}),
 \code{\link[tm:VCorpus]{VCorpus}} and \code{\link[koRpus:tokenize]{tokenize}} or
 \code{\link[koRpus:treetag]{treetag}}.
 }

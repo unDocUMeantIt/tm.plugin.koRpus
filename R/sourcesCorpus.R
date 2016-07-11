@@ -29,6 +29,8 @@
 #' @param topic A character string naming the topic covered.
 #' @param format Either "file" or "obj", depending on whether you want to scan files or analyze the text in a given object, like
 #'    a character vector. See \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} for more information.
+#' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
+#'    This value is passed through to simpleCorpus.
 #' @param ... Additional options, passed through to \code{simpleCorpus}.
 #' @import tm
 #' @export
@@ -51,7 +53,14 @@
 #' )
 #' }
 
-sourcesCorpus <- function(path, sources, topic="", format="file", ...){
+sourcesCorpus <- function(
+                  path,
+                  sources,
+                  topic="",
+                  format="file",
+                  mc.cores=getOption("mc.cores", 1L),
+                  ...
+                ){
 
     all.texts <- new("kRp.sourcesCorpus")
 
@@ -66,7 +75,7 @@ sourcesCorpus <- function(path, sources, topic="", format="file", ...){
         
         slot(all.texts, "summary")[[src]] <- list()
 
-        slot(all.texts, "sources")[[src]] <- simpleCorpus(dir=file.path(path,sources[src]), source=src, topic=topic, ...)
+        slot(all.texts, "sources")[[src]] <- simpleCorpus(dir=file.path(path,sources[src]), source=src, topic=topic, mc.cores=mc.cores, ...)
       }
     } else if(identical(format, "obj")){
       for (src in names(sources)){
@@ -78,7 +87,7 @@ sourcesCorpus <- function(path, sources, topic="", format="file", ...){
         
         slot(all.texts, "summary")[[src]] <- list()
 
-        slot(all.texts, "sources")[[src]] <- simpleCorpus(dir=path[[src]], source=src, topic=topic, format=format, ...)
+        slot(all.texts, "sources")[[src]] <- simpleCorpus(dir=path[[src]], source=src, topic=topic, format=format, mc.cores=mc.cores, ...)
       }
     } else {
       stop(simpleError(paste0("invalid value for \"format\":\n  \"", format, "\"")))

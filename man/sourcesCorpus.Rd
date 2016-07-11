@@ -2,9 +2,10 @@
 % Please edit documentation in R/sourcesCorpus.R
 \name{sourcesCorpus}
 \alias{sourcesCorpus}
-\title{Function to create kRp.sourcesCorpus objects from directory content}
+\title{Function to create kRp.sourcesCorpus objects from directory or object content}
 \usage{
-sourcesCorpus(path, sources, topic = "", format = "file", ...)
+sourcesCorpus(path, sources, topic = "", format = "file",
+  mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
 \item{path}{Usually a charcter vector with the path to the texts to analyse. Below this path,
@@ -24,10 +25,15 @@ internally for the sources.}
       depending on whether you want to scan files or analyze the text in a given object, like
 a character vector. See \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} for more information.}
 
+\item{mc.cores}{The number of cores to use for parallelization,
+      see \code{\link[parallel:mclapply]{mclapply}}.}
+
 \item{...}{Additional options, passed through to \code{simpleCorpus}.}
 }
 \description{
-Can also be used with the texts tot analyze directly.
+Internally,
+      this is a wrapper for \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} you can use
+to analyze texts from more than one source.
 }
 \examples{
 \dontrun{
