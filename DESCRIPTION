@@ -4,7 +4,7 @@ Title: A Compatibility Plugin Package for 'tm' and 'koRpus'
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
-    R (>= 2.10.0),methods,parallel,koRpus (>= 0.06-1),tm
+    R (>= 2.10.0),methods,parallel,koRpus (>= 0.07-1),tm
 Suggests:
     testthat
 Description: This package provides classes and methods to enhance the ability

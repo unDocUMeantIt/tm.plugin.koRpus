@@ -5,7 +5,7 @@
 #' Type: \tab Package\cr
 #' Version: \tab 0.01-3\cr
 #' Date: \tab 2016-07-11\cr
-#' Depends: \tab R (>= 2.10.0),methods,parallel,koRpus (>= 0.06-1),tm\cr
+#' Depends: \tab R (>= 2.10.0),methods,parallel,koRpus (>= 0.07-1),tm\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
 #' LazyLoad: \tab yes\cr
