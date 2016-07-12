@@ -6,7 +6,7 @@ This package provides classes and methods to enhance the ability to use the 'koR
 package together with the 'tm' package. It is in its early stages. To ask for help, report
 bugs, suggest feature improvements, or discuss the global development of the package, please
 subscribe to the koRpus-dev mailing list:
-https://ml06.ispgateway.de/mailman/listinfo/korpus- dev_r.reaktanz.de
+https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de
 
 More information on tm.plugin.koRpus is available on the [project homepage](http://reaktanz.de/?c=hacking&s=koRpus).
 
