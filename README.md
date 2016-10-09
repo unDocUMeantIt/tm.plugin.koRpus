@@ -8,9 +8,23 @@ bugs, suggest feature improvements, or discuss the global development of the pac
 subscribe to the koRpus-dev mailing list:
 https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de
 
-More information on tm.plugin.koRpus is available on the [project homepage](http://reaktanz.de/?c=hacking&s=koRpus).
+More information on tm.plugin.koRpus is available on the [project homepage](https://reaktanz.de/?c=hacking&s=koRpus).
 
 ## Installation
+
+### Development releases via the project repository
+
+Installation of tha latest stable release is fairly easy, it's available from the project's own repository:
+
+```
+install.packages("tm.plugin.koRpus", repo="https://reaktanz.de/R")
+```
+
+To automatically get updates, consider adding the repository to your R configuration. You might also
+want to subscribe to the package's [RSS feed](https://reaktanz.de/R/pckg/tm.plugin.koRpus/RSS.xml) to get notified of new releases.
+
+If you're running a Debian based operating system, you might be interested in the
+[precompiled *.deb packages](https://reaktanz.de/R/pckg/tm.plugin.koRpus/deb_repo.html).
 
 ### Installation via GitHub
 

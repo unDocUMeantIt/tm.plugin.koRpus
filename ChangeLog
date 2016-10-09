@@ -3,6 +3,8 @@ ChangeLog for package tm.plugin.koRpus
 changes in version 0.01-4 (2016-07-12)
 unreleased:
   - this release is under development
+changed:
+  - reaktanz.de supports HTTPS now, updated references
 
 changes in version 0.01-3 (2016-07-12)
 fixed:
