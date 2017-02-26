@@ -32,17 +32,23 @@ To install the package directly from GitHub, you can use `install_github()` from
 
 ```
 library(devtools)
-install_github("unDocUMeantIt/tm.plugin.koRpus")
+install_github("unDocUMeantIt/tm.plugin.koRpus") # stable release
+install_github("unDocUMeantIt/tm.plugin.koRpus", ref="develop") # development release
 ```
 
 ## License
 
-tm.plugin.koRpus Copyright (C) 2016 m.eik michalke, released under the
-GNU General Public License (GPL) version 3 or (at your option) any later version.
+Copyright 2015-2017 Meik Michalke <meik.michalke@hhu.de>
 
-This software is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-or FITNESS FOR A PARTICULAR PURPOSE.
+tm.plugin.koRpus is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-You should have received a copy of the license with the
-source package as the file COPYING or LICENSE.
+tm.plugin.koRpus is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
