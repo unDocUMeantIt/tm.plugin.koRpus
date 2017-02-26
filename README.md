@@ -36,6 +36,16 @@ install_github("unDocUMeantIt/tm.plugin.koRpus") # stable release
 install_github("unDocUMeantIt/tm.plugin.koRpus", ref="develop") # development release
 ```
 
+## Contributing
+
+To ask for help, report bugs, suggest feature improvements, or discuss the global
+development of the package, please use the issue tracker on GitHub.
+
+### Branches
+
+Please note that all development happens in the `develop` branch. Pull requests against the `master`
+branch will be rejected, as it is reserved for the current stable release.
+
 ## License
 
 Copyright 2015-2017 Meik Michalke <meik.michalke@hhu.de>
