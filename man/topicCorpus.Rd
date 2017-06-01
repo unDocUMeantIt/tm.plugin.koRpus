@@ -67,4 +67,3 @@ myOrderedCorpus <- topicCorpus(
 )
 }
 }
-

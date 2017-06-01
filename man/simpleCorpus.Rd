@@ -65,4 +65,3 @@ The result, if succeeded,
 which includes all read texts in a \code{tm} style \code{VCorpus} format, as well as in
 \code{koRpus} style \code{kRp.taggedText} class format.
 }
-

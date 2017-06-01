@@ -39,4 +39,3 @@ myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
 myTexts <- hyphen(myTexts)
 }
 }
-

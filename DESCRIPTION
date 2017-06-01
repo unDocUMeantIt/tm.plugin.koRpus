@@ -3,25 +3,26 @@ Type: Package
 Title: A Compatibility Plugin Package for 'tm' and 'koRpus'
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Depends:
-    R (>= 2.10.0),methods,parallel,koRpus (>= 0.07-1),tm
-Suggests:
-    testthat
-Description: This package provides classes and methods to enhance the ability
-    to use the 'koRpus' package together with the 'tm' package. It is in its
-    early stages. To ask for help, report bugs, suggest feature improvements,
-    or discuss the global development of the package, please subscribe to the
-    koRpus-dev mailing list: https://ml06.ispgateway.de/mailman/listinfo/korpus-
-    dev_r.reaktanz.de
+Depends: R (>= 2.10.0),methods,parallel,koRpus (>= 0.07-1),tm
+Suggests: testthat
+Description: This package provides classes and methods to enhance the
+        ability to use the 'koRpus' package together with the 'tm'
+        package. It is in its early stages. To ask for help, report
+        bugs, suggest feature improvements, or discuss the global
+        development of the package, please subscribe to the koRpus-dev
+        mailing list:
+        https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
-URL: http://reaktanz.de/?c=hacking&s=koRpus
-Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
+URL: https://reaktanz.de/?c=hacking&s=koRpus
+BugReports: https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues
+Authors@R: c(person(given="m.eik", family="michalke",
+        email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-4
-Date: 2016-07-12
-RoxygenNote: 5.0.1
-Collate:
+Date: 2017-06-01
+RoxygenNote: 6.0.1
+Collate: 
     '01_class_01_kRp.corpus.R'
     '01_class_02_kRp.sourcesCorpus.R'
     '01_class_03_kRp.topicCorpus.R'

@@ -12,12 +12,12 @@ A Compatibility Plugin Package for 'tm' and 'koRpus'.
 Package: \tab tm.plugin.koRpus\cr
 Type: \tab Package\cr
 Version: \tab 0.01-4\cr
-Date: \tab 2016-07-12\cr
+Date: \tab 2017-06-01\cr
 Depends: \tab R (>= 2.10.0),methods,parallel,koRpus (>= 0.07-1),tm\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
-URL: \tab http://reaktanz.de/?c=hacking&s=koRpus\cr
+URL: \tab https://reaktanz.de/?c=hacking&s=koRpus\cr
 }
 
 This package provides classes and methods to enhance the ability to use the 'koRpus'
@@ -31,4 +31,3 @@ https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de
 m.eik michalke
 }
 \keyword{package}
-

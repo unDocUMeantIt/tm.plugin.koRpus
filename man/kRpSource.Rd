@@ -22,4 +22,3 @@ Supposed to be used to translate tagged \code{koRpus} objects into \code{tm} obj
 \details{
 Also provided are the methods \code{getElem} and \code{pGetElem} for S3 class \code{kRpSource}.
 }
-

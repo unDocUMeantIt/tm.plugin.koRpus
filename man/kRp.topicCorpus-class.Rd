@@ -29,5 +29,5 @@ For each combination of topic and source,
 information on the full corpus if this object was analysed with
 \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.}
 }}
-\keyword{classes}
 
+\keyword{classes}

@@ -2,8 +2,8 @@
 % Please edit documentation in R/02_method_07_kRp.corpus-class_correct.R
 \docType{methods}
 \name{correct.hyph,kRp.corpus-method}
-\alias{correct.hyph}
 \alias{correct.hyph,kRp.corpus-method}
+\alias{correct.hyph}
 \title{Methods to correct kRp.copus objects}
 \usage{
 \S4method{correct.hyph}{kRp.corpus}(obj, word = NULL, hyphen = NULL,
@@ -37,4 +37,3 @@ For details on what these methods do on a per text object basis, please refer to
 documentation of \code{\link[koRpus:correct.hyph]{correct.hyph}} in the \code{koRpus}
 package.
 }
-

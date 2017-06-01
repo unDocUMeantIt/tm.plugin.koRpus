@@ -42,4 +42,3 @@ myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
 myTexts <- lex.div(myTexts)
 }
 }
-

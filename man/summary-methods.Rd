@@ -2,20 +2,24 @@
 % Please edit documentation in R/02_method_06_kRp.corpus-class_summary.R
 \docType{methods}
 \name{summary,kRp.corpus-method}
-\alias{corpusSummary}
-\alias{corpusSummary,-methods}
-\alias{corpusSummary,kRp.corpus-method}
-\alias{corpusSummary,kRp.sourcesCorpus-method}
-\alias{corpusSummary,kRp.topicCorpus-method}
-\alias{corpusSummary<-}
-\alias{corpusSummary<-,-methods}
-\alias{corpusSummary<-,kRp.corpus-method}
-\alias{corpusSummary<-,kRp.sourcesCorpus-method}
-\alias{corpusSummary<-,kRp.topicCorpus-method}
-\alias{summary}
 \alias{summary,kRp.corpus-method}
+\alias{summary}
 \alias{summary,kRp.sourcesCorpus-method}
 \alias{summary,kRp.topicCorpus-method}
+\alias{corpusSummary}
+\alias{corpusSummary,kRp.corpus-method}
+\alias{corpusSummary,-methods}
+\alias{corpusSummary,kRp.sourcesCorpus-method}
+\alias{corpusSummary,-methods}
+\alias{corpusSummary,kRp.topicCorpus-method}
+\alias{corpusSummary,-methods}
+\alias{corpusSummary<-}
+\alias{corpusSummary<-,kRp.corpus-method}
+\alias{corpusSummary<-,-methods}
+\alias{corpusSummary<-,kRp.sourcesCorpus-method}
+\alias{corpusSummary<-,-methods}
+\alias{corpusSummary<-,kRp.topicCorpus-method}
+\alias{corpusSummary<-,-methods}
 \title{Apply summary() to all texts in kRp.corpus objects}
 \usage{
 \S4method{summary}{kRp.corpus}(object, missing = NA, ...)
@@ -80,4 +84,3 @@ myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
 summary(myTexts)
 }
 }
-

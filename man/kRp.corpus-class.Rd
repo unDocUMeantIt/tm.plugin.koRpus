@@ -35,8 +35,8 @@ Objects can be created using the \code{\link[tm.plugin.koRpus:simpleCorpus]{simp
 where \code{texts} is a list of these objects (one for each text),
       and \code{corpus} is a single object for the full corpus.}
 }}
+
 \note{
 There is also methods to transform get the lists of all particular slots from objects of this class.
 }
 \keyword{classes}
-

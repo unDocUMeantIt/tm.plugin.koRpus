@@ -56,4 +56,3 @@ myTopic <- sourcesCorpus(
 )
 }
 }
-
