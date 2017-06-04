@@ -28,7 +28,9 @@
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:readability]{readability}}.
 #' @return An object of the same class as \code{txt.file}.
-#' @export
+#' @importFrom utils modifyList
+#' @importFrom parallel mclapply
+#' @importMethodsFrom koRpus readability summary
 #' @docType methods
 #' @aliases readability,kRp.corpus-method
 #' @rdname readability-methods
@@ -38,7 +40,6 @@
 #' myTexts <- readability(myTexts)
 #' }
 #' @include 01_class_01_kRp.corpus.R
-#' @import koRpus
 #' @export
 setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), ...){
     corpusReadability(txt.file) <- mclapply(names(corpusTagged(txt.file)), function(thisText){

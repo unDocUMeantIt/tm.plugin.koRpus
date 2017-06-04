@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2017 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -41,6 +41,7 @@
 #' @param missing Character string to use for missing values.
 #' @param ... Used for internal processes.
 #' @return An object of the same class as \code{object}.
+#' @importFrom NLP meta
 #' @export
 #' @docType methods
 #' @aliases summary summary,kRp.corpus-method
@@ -51,9 +52,9 @@
 #' summary(myTexts)
 #' }
 #' @include 01_class_01_kRp.corpus.R
-#' @export
-setMethod("summary", signature(object="kRp.corpus"), function(object,
-        missing=NA, ...){
+setMethod("summary", signature(object="kRp.corpus"), function(
+  object, missing=NA, ...
+){
     # initialize the data.frame
     summary.info <- data.frame(
       text=meta(corpusTm(object))[["textID"]],

@@ -34,6 +34,6 @@ e.g., wrong hyphenation.
 }
 \details{
 For details on what these methods do on a per text object basis, please refer to the
-documentation of \code{\link[koRpus:correct.hyph]{correct.hyph}} in the \code{koRpus}
+documentation of \code{\link[sylly:correct.hyph]{correct.hyph}} in the \code{sylly}
 package.
 }

@@ -29,6 +29,9 @@
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:lex.div]{lex.div}}.
 #' @return An object of the same class as \code{txt}.
+#' @importFrom parallel mclapply
+#' @importMethodsFrom koRpus summary lex.div
+#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @docType methods
 #' @aliases lex.div,kRp.corpus-method
@@ -38,8 +41,6 @@
 #' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
 #' myTexts <- lex.div(myTexts)
 #' }
-#' @include 01_class_01_kRp.corpus.R
-#' @import koRpus
 setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), ...){
     corpusTTR(txt) <- mclapply(corpusTagged(txt), function(thisText){
       lex.div(thisText, ...)
@@ -51,12 +52,11 @@ setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc
     corpusMeta(txt, "TTR")[["index"]] <- sort(
       unique(
         unlist(mclapply(corpusTTR(txt), function(thisText){
-            names(summary(thisText, flat=TRUE))
+            return(names(summary(thisText, flat=TRUE)))
           }, mc.cores=mc.cores)
         )
       )
     )
-    
     if(isTRUE(summary)){
       txt <- summary(txt)
     } else {}

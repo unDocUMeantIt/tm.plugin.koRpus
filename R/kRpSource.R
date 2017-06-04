@@ -26,12 +26,12 @@
 #' @param obj An object of class \code{kRp.taggedText-class} (a class union for tagged text objects).
 #' @param encoding Character string, defining the character encoding of the object.
 #' @return An object of class \code{\link[tm:Source]{Source}}, also inheriting class \code{kRpSource}.
-#' @import tm
+#' @importFrom tm SimpleSource
 #' @export
 kRpSource <- function(obj, encoding="UTF-8"){
   thisText <- kRp.text.paste(obj)
-  s <- Source(
-    defaultReader=readPlain,
+  s <- SimpleSource(
+    reader=readPlain,
     encoding=encoding,
     length=length(thisText),
     names=names(thisText),

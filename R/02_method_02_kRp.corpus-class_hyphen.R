@@ -27,6 +27,8 @@
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[sylly:hyphen]{hyphen}}.
 #' @return An object of the same class as \code{words}.
+#' @importFrom parallel mclapply
+#' @importFrom koRpus hyphen
 #' @export
 #' @docType methods
 #' @aliases hyphen,kRp.corpus-method

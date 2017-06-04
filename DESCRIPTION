@@ -3,11 +3,11 @@ Type: Package
 Title: A Compatibility Plugin Package for 'tm' and 'koRpus'
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Depends: R (>= 2.10.0),methods,parallel,koRpus (>= 0.11-1),tm
+Depends: R (>= 2.10.0),methods,parallel,koRpus (>= 0.11-1),tm,sylly,NLP
 Suggests: testthat
-Description: This package provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages. To ask for
-                    help, report bugs, suggest feature improvements, or discuss the global development of the package, please subscribe to the koRpus-dev mailing list:
-                    https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de
+Description: Provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages. To ask for help, report
+                    bugs, suggest feature improvements, or discuss the global development of the package, please subscribe to the koRpus-dev mailing list
+                    (<http://korpusml.reaktanz.de>).
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes

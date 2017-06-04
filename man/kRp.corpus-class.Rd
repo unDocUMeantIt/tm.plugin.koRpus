@@ -24,7 +24,7 @@ Objects can be created using the \code{\link[tm.plugin.koRpus:simpleCorpus]{simp
 
 \item{\code{tagged}}{A list of objects of class \code{kRp.taggedText-class} (a class union for tagged text objects).}
 
-\item{\code{hyphen}}{A list of objects of class \code{\link[koRpus]{kRp.hyphen-class}}.}
+\item{\code{hyphen}}{A list of objects of class \code{\link[sylly]{kRp.hyphen-class}}.}
 
 \item{\code{TTR}}{A list of objects of class \code{\link[koRpus]{kRp.TTR-class}}.}
 

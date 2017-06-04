@@ -5,18 +5,17 @@
 #' Type: \tab Package\cr
 #' Version: \tab 0.01-4\cr
 #' Date: \tab 2017-06-04\cr
-#' Depends: \tab R (>= 2.10.0),methods,parallel,koRpus (>= 0.11-1),tm\cr
+#' Depends: \tab R (>= 2.10.0),methods,parallel,koRpus (>= 0.11-1),tm,sylly,NLP\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
 #' LazyLoad: \tab yes\cr
 #' URL: \tab https://reaktanz.de/?c=hacking&s=koRpus\cr
 #' }
 #'
-#' This package provides classes and methods to enhance the ability to use the 'koRpus'
-#' package together with the 'tm' package. It is in its early stages. To ask for help, report
-#' bugs, suggest feature improvements, or discuss the global development of the package, please
-#' subscribe to the koRpus-dev mailing list:
-#' https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de
+#' Provides classes and methods to enhance the ability to use the 'koRpus' package together
+#' with the 'tm' package. It is in its early stages. To ask for help, report bugs, suggest
+#' feature improvements, or discuss the global development of the package, please subscribe to
+#' the koRpus-dev mailing list (<http://korpusml.reaktanz.de>).
 #'
 #' @aliases tm.plugin.koRpus-package
 #' @name tm.plugin.koRpus-package

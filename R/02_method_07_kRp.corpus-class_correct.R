@@ -21,7 +21,7 @@
 #' e.g., wrong hyphenation.
 #' 
 #' For details on what these methods do on a per text object basis, please refer to the
-#' documentation of \code{\link[koRpus:correct.hyph]{correct.hyph}} in the \code{koRpus}
+#' documentation of \code{\link[sylly:correct.hyph]{correct.hyph}} in the \code{sylly}
 #' package.
 #' 
 #' @param obj An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
@@ -45,6 +45,7 @@
 #' @docType methods
 #' @rdname correct-methods
 #' @aliases correct.hyph correct.hyph,kRp.corpus-method
+#' @importFrom sylly correct.hyph
 #' @export
 #' @include 01_class_01_kRp.corpus.R
 setMethod("correct.hyph",

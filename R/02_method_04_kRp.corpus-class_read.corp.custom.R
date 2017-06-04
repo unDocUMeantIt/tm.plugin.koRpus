@@ -28,6 +28,8 @@
 #' @param ... options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.
 #' @return An object of the same class as \code{corpus}.
 #' @export
+#' @importFrom parallel mclapply
+#' @importFrom koRpus read.corp.custom
 #' @docType methods
 #' @aliases read.corp.custom read.corp.custom,kRp.corpus-method
 #' @rdname read.corp.custom-methods
@@ -77,7 +79,6 @@
 #' 
 #' }
 #' @include 01_class_01_kRp.corpus.R
-#' @import koRpus
 setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
     # individual tests
     corpusFreq(corpus)[["texts"]] <- mclapply(corpusTagged(corpus), function(thisText){

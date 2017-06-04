@@ -27,6 +27,8 @@
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:freq.analysis]{freq.analysis}}.
 #' @return An object of the same class as \code{txt.file}.
+#' @importFrom parallel mclapply
+#' @importFrom koRpus freq.analysis
 #' @export
 #' @docType methods
 #' @aliases freq.analysis,kRp.corpus-method
@@ -37,7 +39,6 @@
 #' myTexts <- freq.analysis(myTexts)
 #' }
 #' @include 01_class_01_kRp.corpus.R
-#' @import koRpus
 setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, mc.cores=getOption("mc.cores", 1L), ...){
     corpusTagged(txt.file) <- mclapply(corpusTagged(txt.file), function(thisText){
       freq.analysis(thisText, ...)
