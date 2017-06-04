@@ -27,7 +27,7 @@
 #' @slot meta A named list. Can be used to store meta information. Currently, no particular format is defined.
 #' @slot raw A list of objects of class \code{\link[tm]{Corpus}}.
 #' @slot tagged A list of objects of class \code{kRp.taggedText-class} (a class union for tagged text objects).
-#' @slot hyphen A list of objects of class \code{\link[koRpus]{kRp.hyphen-class}}.
+#' @slot hyphen A list of objects of class \code{\link[sylly]{kRp.hyphen-class}}.
 #' @slot TTR A list of objects of class \code{\link[koRpus]{kRp.TTR-class}}.
 #' @slot readability A list of objects of class \code{\link[koRpus]{kRp.readability-class}}.
 #' @slot freq A list with two elements, \code{texts} and \code{corpus}. Both hold objects of class \code{\link[koRpus]{kRp.corp.freq-class}},

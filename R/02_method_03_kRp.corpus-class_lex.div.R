@@ -51,7 +51,7 @@ setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc
     corpusMeta(txt, "TTR")[["index"]] <- sort(
       unique(
         unlist(mclapply(corpusTTR(txt), function(thisText){
-            summary(thisText)[["index"]]
+            names(summary(thisText, flat=TRUE))
           }, mc.cores=mc.cores)
         )
       )

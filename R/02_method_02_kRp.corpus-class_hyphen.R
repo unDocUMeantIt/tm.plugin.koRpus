@@ -18,14 +18,14 @@
 
 #' Apply hyphen() to all texts in kRp.corpus objects
 #' 
-#' This method calls \code{\link[koRpus:hyphen]{hyphen}} on all tagged text objects
+#' This method calls \code{\link[sylly:hyphen]{hyphen}} on all tagged text objects
 #' inside the given \code{words} object (using \code{lapply}).
 #' 
 #' @param words An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
 #'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
-#' @param ... options to pass through to \code{\link[koRpus:hyphen]{hyphen}}.
+#' @param ... options to pass through to \code{\link[sylly:hyphen]{hyphen}}.
 #' @return An object of the same class as \code{words}.
 #' @export
 #' @docType methods

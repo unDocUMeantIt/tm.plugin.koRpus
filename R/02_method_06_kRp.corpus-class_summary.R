@@ -83,9 +83,7 @@ setMethod("summary", signature(object="kRp.corpus"), function(object,
     if(!is.null(available.TTR)){
       if(length(available.TTR[["index"]]) > 0){
         summary.lexdiv <- t(as.data.frame(sapply(names(corpusTTR(object)), function(thisText){
-            thisSummary.df <- summary(corpusTTR(object)[[thisText]])
-            thisSummary <- as.numeric(thisSummary.df[["value"]])
-            names(thisSummary) <- thisSummary.df[["index"]]
+            thisSummary <- summary(corpusTTR(object)[[thisText]], flat=TRUE)
             return(fixMissingIndices(have=thisSummary, want=available.TTR[["index"]], missing=missing))
         }, simplify=FALSE)))
         # suppress a second TTR
@@ -134,8 +132,6 @@ setMethod("summary", signature(object="kRp.sourcesCorpus"), function(object, ...
       allSummary <- rbind(allSummary, corpusSummary(thisSummary))
     }
     corpusSummary(object) <- allSummary
-
-#       file=all.texts[[topic]][["files"]][[outl]],
 
     return(object)
   }

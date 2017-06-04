@@ -12,8 +12,8 @@ A Compatibility Plugin Package for 'tm' and 'koRpus'.
 Package: \tab tm.plugin.koRpus\cr
 Type: \tab Package\cr
 Version: \tab 0.01-4\cr
-Date: \tab 2017-06-01\cr
-Depends: \tab R (>= 2.10.0),methods,parallel,koRpus (>= 0.07-1),tm\cr
+Date: \tab 2017-06-04\cr
+Depends: \tab R (>= 2.10.0),methods,parallel,koRpus (>= 0.11-1),tm\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
