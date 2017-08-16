@@ -9,8 +9,8 @@
 \newcommand{\tmkRp}{\texttt{tm.plugin.koRpus}}
 
 %opening
-\title{Using the koRpus Package for Corpus Analysis}
-%\VignetteIndexEntry{Using the koRpus Package for Text Analysis}
+\title{Using the tm.plugin.koRpus Package for Corpus Analysis}
+%\VignetteIndexEntry{Using the tm.plugin.koRpus Package for Text Analysis}
 \author{m.eik michalke}
 
 \begin{document}
