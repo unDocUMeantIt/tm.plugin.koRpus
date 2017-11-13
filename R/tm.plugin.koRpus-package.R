@@ -4,8 +4,8 @@
 #' Package: \tab tm.plugin.koRpus\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.01-4\cr
-#' Date: \tab 2017-06-04\cr
-#' Depends: \tab R (>= 2.10.0),methods,parallel,koRpus (>= 0.11-1),tm,sylly,NLP\cr
+#' Date: \tab 2017-11-13\cr
+#' Depends: \tab R (>= 2.10.0),koRpus (>= 0.11-1),sylly\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
 #' LazyLoad: \tab yes\cr
