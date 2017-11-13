@@ -7,6 +7,7 @@ changed:
   - adjusted package to support koRpus >= 0.11, especially
     with regards to summary() and hyphen()
   - reaktanz.de supports HTTPS now, updated references
+  - vignette is now in RMarkdown/HTML format; the SWeave/PDF version was dropped
 added:
   - README.md
 
