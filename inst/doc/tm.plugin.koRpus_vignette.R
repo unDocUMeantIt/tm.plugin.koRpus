@@ -1,3 +1,8 @@
+## ----setup, include=FALSE------------------------------------------------
+header_con <- file("vignette_header.html")
+writeLines('<meta name="flattr:id" content="4zdzgd" />', header_con)
+close(header_con)
+
 ## ---- eval=FALSE---------------------------------------------------------
 #  library(tm.plugin.koRpus)
 #  # set tha root path to the sample files

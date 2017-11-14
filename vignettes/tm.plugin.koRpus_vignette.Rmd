@@ -11,6 +11,8 @@ output:
       collapsed: false
       smooth_scroll: false
     toc_depth: 3
+    includes: 
+      in_header: vignette_header.html
 abstract: >
   The R package \tmkRp{} is an extension to the \kRp{} package, enhancing its usability for actual corpus analysis. It adds new classes and methods to \kRp{},
   which are designed to work with complete text corpora in both \kRp{} and `tm` formats. This vignette gives you a quick overview.
@@ -22,6 +24,11 @@ vignette: >
   % \usepackage[apaciteclassic]{apacite}
 ---
 
+```{r setup, include=FALSE}
+header_con <- file("vignette_header.html")
+writeLines('<meta name="flattr:id" content="4zdzgd" />', header_con)
+close(header_con)
+```
 
 
 # What is tm.plugin.koRpus?
