@@ -28,7 +28,7 @@
 #' @param ... options to pass through to \code{\link[sylly:hyphen]{hyphen}}.
 #' @return An object of the same class as \code{words}.
 #' @importFrom parallel mclapply
-#' @importFrom koRpus hyphen
+#' @importFrom sylly hyphen
 #' @export
 #' @docType methods
 #' @aliases hyphen,kRp.corpus-method
@@ -39,7 +39,6 @@
 #' myTexts <- hyphen(myTexts)
 #' }
 #' @include 01_class_01_kRp.corpus.R
-#' @import koRpus
 setMethod("hyphen", signature(words="kRp.corpus"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
     corpusHyphen(words) <- mclapply(corpusTagged(words), function(thisText){
       hyphen(thisText, ...)

@@ -7,8 +7,9 @@ Depends: R (>= 2.10.0),koRpus (>= 0.11-1),sylly
 Imports: methods,parallel,tm,NLP
 Suggests: testthat,knitr,rmarkdown
 VignetteBuilder: knitr
-Description: Provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages. To ask for help, report bugs, suggest feature improvements, or discuss
-                         the global development of the package, please subscribe to the koRpus-dev mailing list (<http://korpusml.reaktanz.de>).
+Description: Provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages. To ask for help, report
+                    bugs, suggest feature improvements, or discuss the global development of the package, please subscribe to the koRpus-dev mailing list
+                    (<http://korpusml.reaktanz.de>).
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
@@ -16,8 +17,7 @@ URL: https://reaktanz.de/?c=hacking&s=koRpus
 BugReports: https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-4
-Date: 2017-11-13
-RoxygenNote: 6.0.1
+Date: 2018-02-17
 Collate: 
     '01_class_01_kRp.corpus.R'
     '01_class_02_kRp.sourcesCorpus.R'
@@ -36,3 +36,4 @@ Collate:
     'tm.plugin.koRpus-internal.R'
     'tm.plugin.koRpus-package.R'
     'topicCorpus.R'
+RoxygenNote: 6.0.1

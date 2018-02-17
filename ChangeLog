@@ -1,10 +1,10 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.01-4 (2017-07-14)
+changes in version 0.01-4 (2018-02-17)
 unreleased:
   - this release is under development
 changed:
-  - adjusted package to support koRpus >= 0.11, especially
+  - adjusted package to support koRpus >= 0.11 and sylly, especially
     with regards to summary() and hyphen()
   - reaktanz.de supports HTTPS now, updated references
   - vignette is now in RMarkdown/HTML format; the SWeave/PDF version was dropped
