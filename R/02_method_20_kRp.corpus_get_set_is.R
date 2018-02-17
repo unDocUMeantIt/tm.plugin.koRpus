@@ -508,3 +508,160 @@ setMethod("corpusFreq<-",
 is.corpus <- function(obj){
   inherits(obj, "kRp.corpus")
 }
+
+#' @rdname kRp.corpus_get-methods
+#' @param x See \code{obj}.
+#' @param i Defines the row selector (\code{[}) or the name to match (\code{[[}) in the summary slot.
+#' @param j Defines the column selector in the summary slot.
+#' @export
+#' @docType methods
+#' @aliases
+#'    [,-methods
+#'    [,kRp.corpus,ANY,ANY-method
+setMethod("[",
+  signature=signature(x="kRp.corpus"),
+  function (x, i, j){
+    return(corpusSummary(x)[i, j])
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [,-methods
+#'    [,kRp.sourcesCorpus,ANY,ANY,ANY-method
+setMethod("[",
+  signature=signature(x="kRp.sourcesCorpus"),
+  function (x, i, j){
+    return(corpusSummary(x)[i, j])
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [,-methods
+#'    [,kRp.topicCorpus,ANY,ANY,ANY-method
+setMethod("[",
+  signature=signature(x="kRp.topicCorpus"),
+  function (x, i, j){
+    return(corpusSummary(x)[i, j])
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [<-,-methods
+#'    [<-,kRp.corpus,ANY,ANY,ANY-method
+setMethod("[<-",
+  signature=signature(x="kRp.corpus"),
+  function (x, i, j, value){
+    corpusSummary(x)[i, j] <- value
+    return(x)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [<-,-methods
+#'    [<-,kRp.sourcesCorpus,ANY,ANY,ANY-method
+setMethod("[<-",
+  signature=signature(x="kRp.sourcesCorpus"),
+  function (x, i, j, value){
+    corpusSummary(x)[i, j] <- value
+    return(x)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [<-,-methods
+#'    [<-,kRp.topicCorpus,ANY,ANY,ANY-method
+setMethod("[<-",
+  signature=signature(x="kRp.topicCorpus"),
+  function (x, i, j, value){
+    corpusSummary(x)[i, j] <- value
+    return(x)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [[,-methods
+#'    [[,kRp.corpus,ANY-method
+setMethod("[[",
+  signature=signature(x="kRp.corpus"),
+  function (x, i){
+    return(corpusSummary(x)[[i]])
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [[,-methods
+#'    [[,kRp.sourcesCorpus,ANY-method
+setMethod("[[",
+  signature=signature(x="kRp.sourcesCorpus"),
+  function (x, i){
+    return(corpusSummary(x)[[i]])
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [[,-methods
+#'    [[,kRp.topicCorpus,ANY-method
+setMethod("[[",
+  signature=signature(x="kRp.topicCorpus"),
+  function (x, i){
+    return(corpusSummary(x)[[i]])
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [[<-,-methods
+#'    [[<-,kRp.corpus,ANY,ANY-method
+setMethod("[[<-",
+  signature=signature(x="kRp.corpus"),
+  function (x, i, value){
+    corpusSummary(x)[[i]] <- value
+    return(x)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [[<-,-methods
+#'    [[<-,kRp.sourcesCorpus,ANY,ANY-method
+setMethod("[[<-",
+  signature=signature(x="kRp.sourcesCorpus"),
+  function (x, i, value){
+    corpusSummary(x)[[i]] <- value
+    return(x)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [[<-,-methods
+#'    [[<-,kRp.topicCorpus,ANY,ANY-method
+setMethod("[[<-",
+  signature=signature(x="kRp.topicCorpus"),
+  function (x, i, value){
+    corpusSummary(x)[[i]] <- value
+    return(x)
+  }
+)

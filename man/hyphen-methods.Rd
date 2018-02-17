@@ -8,13 +8,13 @@
 \title{Apply hyphen() to all texts in kRp.corpus objects}
 \usage{
 \S4method{hyphen}{kRp.corpus}(words, mc.cores = getOption("mc.cores", 1L),
-  ...)
+  quiet = TRUE, ...)
 
 \S4method{hyphen}{kRp.sourcesCorpus}(words, mc.cores = getOption("mc.cores",
-  1L), ...)
+  1L), quiet = TRUE, ...)
 
 \S4method{hyphen}{kRp.topicCorpus}(words, mc.cores = getOption("mc.cores",
-  1L), ...)
+  1L), quiet = TRUE, ...)
 }
 \arguments{
 \item{words}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
@@ -23,6 +23,9 @@
 
 \item{mc.cores}{The number of cores to use for parallelization,
       see \code{\link[parallel:mclapply]{mclapply}}.}
+
+\item{quiet}{Logical,
+      if \code{FALSE} shows a status bar for the hyphenation process of each text.}
 
 \item{...}{options to pass through to \code{\link[sylly:hyphen]{hyphen}}.}
 }

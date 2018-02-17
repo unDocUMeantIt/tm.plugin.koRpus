@@ -8,13 +8,13 @@
 \title{Apply readability() to all texts in kRp.corpus objects}
 \usage{
 \S4method{readability}{kRp.corpus}(txt.file, summary = TRUE,
-  mc.cores = getOption("mc.cores", 1L), ...)
+  mc.cores = getOption("mc.cores", 1L), quiet = TRUE, ...)
 
 \S4method{readability}{kRp.sourcesCorpus}(txt.file, summary = TRUE,
-  mc.cores = getOption("mc.cores", 1L), ...)
+  mc.cores = getOption("mc.cores", 1L), quiet = TRUE, ...)
 
 \S4method{readability}{kRp.topicCorpus}(txt.file, summary = TRUE,
-  mc.cores = getOption("mc.cores", 1L), ...)
+  mc.cores = getOption("mc.cores", 1L), quiet = TRUE, ...)
 }
 \arguments{
 \item{txt.file}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
@@ -26,6 +26,10 @@ updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result
 
 \item{mc.cores}{The number of cores to use for parallelization,
       see \code{\link[parallel:mclapply]{mclapply}}.}
+
+\item{quiet}{Logical,
+      if \code{FALSE} shows a status bar for some calculations of each text, see
+\code{\link[koRpus:readability]{readability}} for details.}
 
 \item{...}{options to pass through to \code{\link[koRpus:readability]{readability}}.}
 }

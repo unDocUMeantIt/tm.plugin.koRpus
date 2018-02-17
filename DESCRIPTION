@@ -17,7 +17,8 @@ URL: https://reaktanz.de/?c=hacking&s=koRpus
 BugReports: https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-4
-Date: 2018-02-17
+Date: 2018-02-18
+RoxygenNote: 6.0.1
 Collate: 
     '01_class_01_kRp.corpus.R'
     '01_class_02_kRp.sourcesCorpus.R'
@@ -36,4 +37,3 @@ Collate:
     'tm.plugin.koRpus-internal.R'
     'tm.plugin.koRpus-package.R'
     'topicCorpus.R'
-RoxygenNote: 6.0.1

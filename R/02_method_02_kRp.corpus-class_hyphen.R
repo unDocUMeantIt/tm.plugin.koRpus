@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -25,6 +25,7 @@
 #'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
+#' @param quiet Logical, if \code{FALSE} shows a status bar for the hyphenation process of each text.
 #' @param ... options to pass through to \code{\link[sylly:hyphen]{hyphen}}.
 #' @return An object of the same class as \code{words}.
 #' @importFrom parallel mclapply
@@ -39,9 +40,9 @@
 #' myTexts <- hyphen(myTexts)
 #' }
 #' @include 01_class_01_kRp.corpus.R
-setMethod("hyphen", signature(words="kRp.corpus"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
+setMethod("hyphen", signature(words="kRp.corpus"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     corpusHyphen(words) <- mclapply(corpusTagged(words), function(thisText){
-      hyphen(thisText, ...)
+      hyphen(thisText, quiet=quiet, ...)
     }, mc.cores=mc.cores)
     return(words)
   }
@@ -51,11 +52,11 @@ setMethod("hyphen", signature(words="kRp.corpus"), function(words, mc.cores=getO
 #' @docType methods
 #' @rdname hyphen-methods
 #' @export
-setMethod("hyphen", signature(words="kRp.sourcesCorpus"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
+setMethod("hyphen", signature(words="kRp.sourcesCorpus"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     all.corpora <- corpusSources(words)
 
     for (thisCorpus in names(all.corpora)){
-      all.corpora[[thisCorpus]] <- hyphen(all.corpora[[thisCorpus]], mc.cores=mc.cores, ...)
+      all.corpora[[thisCorpus]] <- hyphen(all.corpora[[thisCorpus]], mc.cores=mc.cores, quiet=quiet, ...)
     }
     corpusSources(words) <- all.corpora
 
@@ -67,11 +68,11 @@ setMethod("hyphen", signature(words="kRp.sourcesCorpus"), function(words, mc.cor
 #' @docType methods
 #' @rdname hyphen-methods
 #' @export
-setMethod("hyphen", signature(words="kRp.topicCorpus"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
+setMethod("hyphen", signature(words="kRp.topicCorpus"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     all.topics <- corpusTopics(words)
 
     for (thisTopic in names(all.topics)){
-      all.topics[[thisTopic]] <- hyphen(all.topics[[thisTopic]], mc.cores=mc.cores, ...)
+      all.topics[[thisTopic]] <- hyphen(all.topics[[thisTopic]], mc.cores=mc.cores, quiet=quiet, ...)
     }
     corpusTopics(words) <- all.topics
 

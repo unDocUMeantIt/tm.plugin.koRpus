@@ -8,8 +8,12 @@ changed:
     with regards to summary() and hyphen()
   - reaktanz.de supports HTTPS now, updated references
   - vignette is now in RMarkdown/HTML format; the SWeave/PDF version was dropped
+  - hyphen()/lex.div()/readability(): 'quiet' is now TRUE by default
+  - lex.div(): 'char' is now an emtpy string by default; computing all
+    characteristics was not a useful default for large text corpora
 added:
   - README.md
+  - new [, [<-, [[ and [[<- methods added for corpus object classes
 
 changes in version 0.01-3 (2016-07-12)
 fixed:

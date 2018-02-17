@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -26,6 +26,8 @@
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
+#' @param quiet Logical, if \code{FALSE} shows a status bar for some calculations of each text, see
+#'    \code{\link[koRpus:readability]{readability}} for details.
 #' @param ... options to pass through to \code{\link[koRpus:readability]{readability}}.
 #' @return An object of the same class as \code{txt.file}.
 #' @importFrom utils modifyList
@@ -41,7 +43,7 @@
 #' }
 #' @include 01_class_01_kRp.corpus.R
 #' @export
-setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), ...){
+setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     corpusReadability(txt.file) <- mclapply(names(corpusTagged(txt.file)), function(thisText){
       if(thisText %in% names(corpusHyphen(txt.file)) & is.null(list(...)[["hyphen"]])){
         # we probably need to drop one of two hyphen arguments of
@@ -50,7 +52,7 @@ setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, su
         args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
         rdb <- do.call(readability, args)
       } else {
-        rdb <- readability(corpusTagged(txt.file)[[thisText]], ...)
+        rdb <- readability(corpusTagged(txt.file)[[thisText]], quiet=quiet, ...)
       }
       return(rdb)
     }, mc.cores=mc.cores)
@@ -80,11 +82,11 @@ setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, su
 #' @docType methods
 #' @rdname readability-methods
 #' @export
-setMethod("readability", signature(txt.file="kRp.sourcesCorpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), ...){
+setMethod("readability", signature(txt.file="kRp.sourcesCorpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     all.corpora <- corpusSources(txt.file)
 
     for (thisCorpus in names(all.corpora)){
-      all.corpora[[thisCorpus]] <- readability(all.corpora[[thisCorpus]], summary=summary, mc.cores=mc.cores, ...)
+      all.corpora[[thisCorpus]] <- readability(all.corpora[[thisCorpus]], summary=summary, mc.cores=mc.cores, quiet=quiet, ...)
     }
     corpusSources(txt.file) <- all.corpora
 
@@ -100,11 +102,11 @@ setMethod("readability", signature(txt.file="kRp.sourcesCorpus"), function(txt.f
 #' @docType methods
 #' @rdname readability-methods
 #' @export
-setMethod("readability", signature(txt.file="kRp.topicCorpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), ...){
+setMethod("readability", signature(txt.file="kRp.topicCorpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     all.topics <- corpusTopics(txt.file)
 
     for (thisTopic in names(all.topics)){
-      all.topics[[thisTopic]] <- readability(all.topics[[thisTopic]], summary=summary, mc.cores=mc.cores, ...)
+      all.topics[[thisTopic]] <- readability(all.topics[[thisTopic]], summary=summary, mc.cores=mc.cores, quiet=quiet, ...)
     }
     corpusTopics(txt.file) <- all.topics
 

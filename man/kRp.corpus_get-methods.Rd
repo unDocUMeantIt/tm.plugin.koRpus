@@ -65,6 +65,42 @@
 \alias{corpusFreq<-,kRp.topicCorpus-method}
 \alias{corpusFreq<-,-methods}
 \alias{is.corpus}
+\alias{[,kRp.corpus-method}
+\alias{[,-methods}
+\alias{[,kRp.corpus,ANY,ANY-method}
+\alias{[,kRp.sourcesCorpus-method}
+\alias{[,-methods}
+\alias{[,kRp.sourcesCorpus,ANY,ANY,ANY-method}
+\alias{[,kRp.topicCorpus-method}
+\alias{[,-methods}
+\alias{[,kRp.topicCorpus,ANY,ANY,ANY-method}
+\alias{[<-,kRp.corpus-method}
+\alias{[<-,-methods}
+\alias{[<-,kRp.corpus,ANY,ANY,ANY-method}
+\alias{[<-,kRp.sourcesCorpus-method}
+\alias{[<-,-methods}
+\alias{[<-,kRp.sourcesCorpus,ANY,ANY,ANY-method}
+\alias{[<-,kRp.topicCorpus-method}
+\alias{[<-,-methods}
+\alias{[<-,kRp.topicCorpus,ANY,ANY,ANY-method}
+\alias{[[,kRp.corpus-method}
+\alias{[[,-methods}
+\alias{[[,kRp.corpus,ANY-method}
+\alias{[[,kRp.sourcesCorpus-method}
+\alias{[[,-methods}
+\alias{[[,kRp.sourcesCorpus,ANY-method}
+\alias{[[,kRp.topicCorpus-method}
+\alias{[[,-methods}
+\alias{[[,kRp.topicCorpus,ANY-method}
+\alias{[[<-,kRp.corpus-method}
+\alias{[[<-,-methods}
+\alias{[[<-,kRp.corpus,ANY,ANY-method}
+\alias{[[<-,kRp.sourcesCorpus-method}
+\alias{[[<-,-methods}
+\alias{[[<-,kRp.sourcesCorpus,ANY,ANY-method}
+\alias{[[<-,kRp.topicCorpus-method}
+\alias{[[<-,-methods}
+\alias{[[<-,kRp.topicCorpus,ANY,ANY-method}
 \title{Getter/setter methods for kRp.corpus objects}
 \usage{
 corpusTagged(obj)
@@ -148,6 +184,30 @@ corpusFreq(obj, topic) <- value
 \S4method{corpusFreq}{kRp.topicCorpus}(obj) <- value
 
 is.corpus(obj)
+
+\S4method{[}{kRp.corpus}(x, i, j)
+
+\S4method{[}{kRp.sourcesCorpus}(x, i, j)
+
+\S4method{[}{kRp.topicCorpus}(x, i, j)
+
+\S4method{[}{kRp.corpus}(x, i, j) <- value
+
+\S4method{[}{kRp.sourcesCorpus}(x, i, j) <- value
+
+\S4method{[}{kRp.topicCorpus}(x, i, j) <- value
+
+\S4method{[[}{kRp.corpus}(x, i)
+
+\S4method{[[}{kRp.sourcesCorpus}(x, i)
+
+\S4method{[[}{kRp.topicCorpus}(x, i)
+
+\S4method{[[}{kRp.corpus}(x, i) <- value
+
+\S4method{[[}{kRp.sourcesCorpus}(x, i) <- value
+
+\S4method{[[}{kRp.topicCorpus}(x, i) <- value
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
@@ -167,6 +227,12 @@ If set to \code{FALSE}, returns \code{invisible(NULL)} instead.}
 
 \item{topic}{Character value, name of a topic in this object. If given,
       you get/set only the value of this topic.}
+
+\item{x}{See \code{obj}.}
+
+\item{i}{Defines the row selector (\code{[}) or the name to match (\code{[[}) in the summary slot.}
+
+\item{j}{Defines the column selector in the summary slot.}
 }
 \description{
 These methods should be used to get or set values of text objects
