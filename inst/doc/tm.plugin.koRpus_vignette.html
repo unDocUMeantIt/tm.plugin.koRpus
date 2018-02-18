@@ -11,7 +11,7 @@
 
 <meta name="author" content="m.eik michalke" />
 
-<meta name="date" content="2018-02-18" />
+<meta name="date" content="2018-02-19" />
 
 <title>Using the tm.plugin.koRpus Package for Corpus Analysis</title>
 
@@ -261,7 +261,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Using the tm.plugin.koRpus Package for Corpus Analysis</h1>
 <h4 class="author"><em>m.eik michalke</em></h4>
-<h4 class="date"><em>2018-02-18</em></h4>
+<h4 class="date"><em>2018-02-19</em></h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>The R package <code>tm.plugin.koRpus</code> is an extension to the <code>koRpus</code> package, enhancing its usability for actual corpus analysis. It adds new classes and methods to <code>koRpus</code>, which are designed to work with complete text corpora in both <code>koRpus</code> and <code>tm</code> formats. This vignette gives you a quick overview.</p>
@@ -293,18 +293,23 @@ div.tocify {
 <span class="co"># set the root path to the sample files</span>
 sampleRoot &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">path.package</span>(<span class="st">&quot;tm.plugin.koRpus&quot;</span>), <span class="st">&quot;tests&quot;</span>, <span class="st">&quot;testthat&quot;</span>, <span class="st">&quot;samples&quot;</span>)
 <span class="co"># now we can define the topics (names of the vector elements)</span>
-<span class="co"># and their main path</span>
+<span class="co"># and their main path; i.e., these are subdirectories below sampleRoot</span>
 samplePaths &lt;-<span class="st"> </span><span class="kw">c</span>(
   <span class="dt">C3S=</span><span class="kw">file.path</span>(sampleRoot, <span class="st">&quot;C3S&quot;</span>),
   <span class="dt">GEMA=</span><span class="kw">file.path</span>(sampleRoot, <span class="st">&quot;GEMA&quot;</span>)
 )
-<span class="co"># we also define the sources</span>
+<span class="co"># we also define the sources; again, these are subdirectories, this time</span>
+<span class="co"># below the topic directories, and they contain all texts to analyze</span>
 sampleSources &lt;-<span class="st"> </span><span class="kw">c</span>(
   <span class="dt">wpa=</span><span class="st">&quot;Wikipedia_alt&quot;</span>,
   <span class="dt">wpn=</span><span class="st">&quot;Wikipedia_neu&quot;</span>
 )
 <span class="co"># and finally, we can tokenize all texts</span>
 sampleTexts &lt;-<span class="st"> </span><span class="kw">topicCorpus</span>(<span class="dt">paths=</span>samplePaths, <span class="dt">sources=</span>sampleSources, <span class="dt">tagger=</span><span class="st">&quot;tokenize&quot;</span>, <span class="dt">lang=</span><span class="st">&quot;de&quot;</span>)</code></pre></div>
+<pre><code>processing topic &quot;C3S&quot;, source &quot;Wikipedia_alt&quot;, 1 text...
+processing topic &quot;C3S&quot;, source &quot;Wikipedia_neu&quot;, 1 text...
+processing topic &quot;GEMA&quot;, source &quot;Wikipedia_alt&quot;, 1 text...
+processing topic &quot;GEMA&quot;, source &quot;Wikipedia_neu&quot;, 1 text...</code></pre>
 <p>Should you need to get hold of the nested objects inside <code>kRp.sourcesCorpus</code> or <code>kRp.topicCorpus</code> class objects, or replace them with updated ones, you can do so by using the methods <code>corpusTagged()</code>, <code>corpusSources()</code>, or <code>corpusTopics()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">allC3SSources &lt;-<span class="st"> </span><span class="kw">corpusSources</span>(<span class="kw">corpusTopics</span>(sampleTexts, <span class="st">&quot;C3S&quot;</span>))
 <span class="kw">names</span>(allC3SSources)</code></pre></div>
@@ -326,7 +331,7 @@ wpaC3S01   0.81  0.79 100.16     NA  8.68 0.93 0.78 39.92
 wpnC3S01   0.82  0.76 123.01     NA  9.65 0.92 0.73 36.46
 wpaGEMA01  0.80  0.78 106.94    192 10.00 0.92 0.71 35.96
 wpnGEMA01  0.81  0.79 111.64     NA 10.08 0.92 0.73 37.47</code></pre>
-<p>As you can see, <code>corpusSummary()</code> returns a <code>data.frame</code> object with the summarised results of all texts below the given object level. That is, if wou are only interested in the results for texts of the first topic, simply apply <code>corpusSummary()</code> on the result of <code>corpusTopics()</code>:</p>
+<p>As you can see, <code>corpusSummary()</code> returns a <code>data.frame</code> object with the summarised results of all texts below the given object level. That is, if you are only interested in the results for texts of the first topic, simply apply <code>corpusSummary()</code> on the result of <code>corpusTopics()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">corpusSummary</span>(<span class="kw">corpusTopics</span>(sampleTexts, <span class="st">&quot;C3S&quot;</span>))</code></pre></div>
 <pre><code>           doc_id topic source stopwords    a    C CTTR   HDD     K lgV0 MATTR
 wpaC3S01 wpaC3S01   C3S    wpa        NA 0.16 0.95 6.13 38.14 49.92 6.21  0.81

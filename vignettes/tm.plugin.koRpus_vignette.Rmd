@@ -69,18 +69,25 @@ library(koRpus.lang.de)
 # set the root path to the sample files
 sampleRoot <- file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples")
 # now we can define the topics (names of the vector elements)
-# and their main path
+# and their main path; i.e., these are subdirectories below sampleRoot
 samplePaths <- c(
   C3S=file.path(sampleRoot, "C3S"),
   GEMA=file.path(sampleRoot, "GEMA")
 )
-# we also define the sources
+# we also define the sources; again, these are subdirectories, this time
+# below the topic directories, and they contain all texts to analyze
 sampleSources <- c(
   wpa="Wikipedia_alt",
   wpn="Wikipedia_neu"
 )
 # and finally, we can tokenize all texts
 sampleTexts <- topicCorpus(paths=samplePaths, sources=sampleSources, tagger="tokenize", lang="de")
+```
+```
+processing topic "C3S", source "Wikipedia_alt", 1 text...
+processing topic "C3S", source "Wikipedia_neu", 1 text...
+processing topic "GEMA", source "Wikipedia_alt", 1 text...
+processing topic "GEMA", source "Wikipedia_neu", 1 text...
 ```
 
 Should you need to get hold of the nested objects inside `kRp.sourcesCorpus` or `kRp.topicCorpus` class objects, or replace them
@@ -119,7 +126,7 @@ wpnGEMA01  0.81  0.79 111.64     NA 10.08 0.92 0.73 37.47
 ```
 
 As you can see, `corpusSummary()` returns a `data.frame` object with the summarised results of all
-texts below the given object level. That is, if wou are only interested in the results for texts of the first topic,
+texts below the given object level. That is, if you are only interested in the results for texts of the first topic,
 simply apply `corpusSummary()` on the result of `corpusTopics()`:
 
 ```{r, eval=FALSE}

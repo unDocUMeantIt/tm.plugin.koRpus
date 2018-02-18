@@ -13,12 +13,13 @@ library(knitr)
 #  # set the root path to the sample files
 #  sampleRoot <- file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples")
 #  # now we can define the topics (names of the vector elements)
-#  # and their main path
+#  # and their main path; i.e., these are subdirectories below sampleRoot
 #  samplePaths <- c(
 #    C3S=file.path(sampleRoot, "C3S"),
 #    GEMA=file.path(sampleRoot, "GEMA")
 #  )
-#  # we also define the sources
+#  # we also define the sources; again, these are subdirectories, this time
+#  # below the topic directories, and they contain all texts to analyze
 #  sampleSources <- c(
 #    wpa="Wikipedia_alt",
 #    wpn="Wikipedia_neu"

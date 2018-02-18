@@ -21,7 +21,7 @@ BugReports: https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues
 Authors@R: c(person(given="m.eik", family="michalke",
         email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-4
-Date: 2018-02-18
+Date: 2018-02-19
 RoxygenNote: 6.0.1
 Collate: 
     '01_class_01_kRp.corpus.R'

@@ -1,8 +1,10 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.01-4 (2018-02-18)
+changes in version 0.01-4 (2018-02-19)
 unreleased:
   - this release is under development
+fixed:
+  - sourcesCorpus(): speak of "text" instead of "texts" if it's only one
 changed:
   - adjusted package to support koRpus >= 0.11 and sylly, especially
     with regards to summary() and hyphen()

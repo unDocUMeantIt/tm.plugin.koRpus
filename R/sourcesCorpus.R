@@ -71,7 +71,8 @@ sourcesCorpus <- function(
         numTexts <- length(slot(all.texts, "paths")[[src]])
 
         topicText <- ifelse(identical(topic, ""), "", paste0("topic \"", topic, "\", "))
-        message(paste0("processing ", topicText, "source \"", sources[src], "\", ", numTexts, " texts..."))
+        texts_desc <- ifelse(numTexts > 1, " texts...", " text...")
+        message(paste0("processing ", topicText, "source \"", sources[src], "\", ", numTexts, texts_desc))
         
         slot(all.texts, "summary")[[src]] <- list()
 
@@ -83,7 +84,8 @@ sourcesCorpus <- function(
         slot(all.texts, "paths")[[src]] <- slot(all.texts, "files")[[src]] <- rep("", numTexts)
 
         topicText <- ifelse(identical(topic, ""), "", paste0("topic \"", topic, "\", "))
-        message(paste0("processing ", topicText, "source \"", sources[src], "\", ", numTexts, " texts..."))
+        texts_desc <- ifelse(numTexts > 1, " texts...", " text...")
+        message(paste0("processing ", topicText, "source \"", sources[src], "\", ", numTexts, texts_desc))
         
         slot(all.texts, "summary")[[src]] <- list()
 
