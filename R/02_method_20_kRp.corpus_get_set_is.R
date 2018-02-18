@@ -681,6 +681,7 @@ setMethod("tif_as_tokens_df",
   signature=signature(tokens="kRp.corpus"),
   function(tokens){
     result <- do.call(rbind.data.frame, lapply(corpusTagged(tokens), tif_as_tokens_df))
+    rownames(result) <- NULL
     return(result)
   }
 )
@@ -694,6 +695,7 @@ setMethod("tif_as_tokens_df",
   signature=signature(tokens="kRp.sourcesCorpus"),
   function(tokens){
     result <- do.call(rbind.data.frame, lapply(corpusSources(tokens), tif_as_tokens_df))
+    rownames(result) <- NULL
     return(result)
   }
 )
@@ -707,6 +709,7 @@ setMethod("tif_as_tokens_df",
   signature=signature(tokens="kRp.topicCorpus"),
   function(tokens){
     result <- do.call(rbind.data.frame, lapply(corpusTopics(tokens), tif_as_tokens_df))
+    rownames(result) <- NULL
     return(result)
   }
 )
