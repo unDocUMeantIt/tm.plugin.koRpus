@@ -3,9 +3,14 @@ header_con <- file("vignette_header.html")
 writeLines('<meta name="flattr:id" content="4zdzgd" />', header_con)
 close(header_con)
 
+## ---- include=FALSE, cache=FALSE-----------------------------------------
+# load knitr for better graphics support
+library(knitr)
+
 ## ---- eval=FALSE---------------------------------------------------------
 #  library(tm.plugin.koRpus)
-#  # set tha root path to the sample files
+#  library(koRpus.lang.de)
+#  # set the root path to the sample files
 #  sampleRoot <- file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples")
 #  # now we can define the topics (names of the vector elements)
 #  # and their main path
@@ -26,7 +31,7 @@ close(header_con)
 #  names(allC3SSources)
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  sampleTexts <- lex.div(sampleTexts, char=FALSE, quiet=TRUE)
+#  sampleTexts <- lex.div(sampleTexts)
 #  corpusSummary(sampleTexts)
 
 ## ---- eval=FALSE---------------------------------------------------------
@@ -35,9 +40,9 @@ close(header_con)
 ## ---- eval=FALSE---------------------------------------------------------
 #  library(sciplot)
 #  lineplot.CI(
-#    x.factor=corpusSummary(sampleTexts)[["source"]],
-#    response=corpusSummary(sampleTexts)[["MTLD"]],
-#    group=corpusSummary(sampleTexts)[["topic"]],
+#    x.factor=sampleTexts[["source"]],
+#    response=sampleTexts[["MTLD"]],
+#    group=sampleTexts[["topic"]],
 #    type="l",
 #    main="MTLD",
 #    xlab="Media source",
@@ -48,7 +53,11 @@ close(header_con)
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  sampleTexts <- read.corp.custom(sampleTexts, caseSens=FALSE)
-#  sampleTextsWordFreq <- query(corpusFreq(sampleTexts), var="wclass", query=kRp.POS.tags(lang="de", list.classes=TRUE, tags="words"))
+#  sampleTextsWordFreq <- query(
+#    corpusFreq(sampleTexts),
+#    var="wclass",
+#    query=kRp.POS.tags(lang="de", list.classes=TRUE, tags="words")
+#  )
 #  head(sampleTextsWordFreq, 10)
 
 ## ---- eval=FALSE---------------------------------------------------------

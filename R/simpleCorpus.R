@@ -128,6 +128,7 @@ simpleCorpus <- function(
     },
     mc.cores=mc.cores
   )
+  names(corpusTagged) <- text_ID
   corpusMeta(newCorpus, "stopwords") <- unlist(mclapply(
     corpusTagged,
     function(thisTaggedText){

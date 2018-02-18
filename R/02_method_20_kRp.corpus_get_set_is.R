@@ -27,12 +27,17 @@
 #'   \item{\code{corpusMeta()} }{returns the list with meta information.}
 #'   \item{\code{corpusHyphen()} }{returns the list of \code{kRp.hyphen} objects.}
 #'   \item{\code{corpusTTR()} }{returns the list of \code{kRp.TTR} objects.}
+#'   \item{\code{[}/\code{[[} }{Can be used as a shortcut to index the results of \code{corpusSummary()}.}
+#'   \item{\code{tif_as_tokens_df} }{returns the \code{TT.res} slots of all texts in a single TIF[1] compliant
+#'      data.frame, i.e., \code{doc_id} is not a factor but a character vector.}
 #' }
 #' @param obj An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
 #'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
 #'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
+#' @references
+#'    [1] Text Interchange Formats (\url{https://github.com/ropensci/tif})
 #' @export
 #' @examples
 #' \dontrun{
