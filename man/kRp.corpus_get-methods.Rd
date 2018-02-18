@@ -101,6 +101,13 @@
 \alias{[[<-,kRp.topicCorpus-method}
 \alias{[[<-,-methods}
 \alias{[[<-,kRp.topicCorpus,ANY,ANY-method}
+\alias{tif_as_tokens_df}
+\alias{tif_as_tokens_df,kRp.corpus-method}
+\alias{tif_as_tokens_df,-methods}
+\alias{tif_as_tokens_df,kRp.sourcesCorpus-method}
+\alias{tif_as_tokens_df,-methods}
+\alias{tif_as_tokens_df,kRp.topicCorpus-method}
+\alias{tif_as_tokens_df,-methods}
 \title{Getter/setter methods for kRp.corpus objects}
 \usage{
 corpusTagged(obj)
@@ -208,6 +215,14 @@ is.corpus(obj)
 \S4method{[[}{kRp.sourcesCorpus}(x, i) <- value
 
 \S4method{[[}{kRp.topicCorpus}(x, i) <- value
+
+tif_as_tokens_df(tokens)
+
+\S4method{tif_as_tokens_df}{kRp.corpus}(tokens)
+
+\S4method{tif_as_tokens_df}{kRp.sourcesCorpus}(tokens)
+
+\S4method{tif_as_tokens_df}{kRp.topicCorpus}(tokens)
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
@@ -233,6 +248,8 @@ If set to \code{FALSE}, returns \code{invisible(NULL)} instead.}
 \item{i}{Defines the row selector (\code{[}) or the name to match (\code{[[}) in the summary slot.}
 
 \item{j}{Defines the column selector in the summary slot.}
+
+\item{tokens}{See \code{obj}.}
 }
 \description{
 These methods should be used to get or set values of text objects

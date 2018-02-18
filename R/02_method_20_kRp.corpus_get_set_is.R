@@ -665,3 +665,48 @@ setMethod("[[<-",
     return(x)
   }
 )
+
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+setGeneric("tif_as_tokens_df", function(tokens) standardGeneric("tif_as_tokens_df"))
+#' @rdname kRp.corpus_get-methods
+#' @param tokens See \code{obj}.
+#' @export
+#' @docType methods
+#' @aliases
+#'    tif_as_tokens_df,-methods
+#'    tif_as_tokens_df,kRp.corpus-method
+setMethod("tif_as_tokens_df",
+  signature=signature(tokens="kRp.corpus"),
+  function(tokens){
+    result <- do.call(rbind.data.frame, lapply(corpusTagged(tokens), tif_as_tokens_df))
+    return(result)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    tif_as_tokens_df,-methods
+#'    tif_as_tokens_df,kRp.sourcesCorpus-method
+setMethod("tif_as_tokens_df",
+  signature=signature(tokens="kRp.sourcesCorpus"),
+  function(tokens){
+    result <- do.call(rbind.data.frame, lapply(corpusSources(tokens), tif_as_tokens_df))
+    return(result)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    tif_as_tokens_df,-methods
+#'    tif_as_tokens_df,kRp.topicCorpus-method
+setMethod("tif_as_tokens_df",
+  signature=signature(tokens="kRp.topicCorpus"),
+  function(tokens){
+    result <- do.call(rbind.data.frame, lapply(corpusTopics(tokens), tif_as_tokens_df))
+    return(result)
+  }
+)

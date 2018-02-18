@@ -1,11 +1,13 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.01-4 (2018-02-17)
+changes in version 0.01-4 (2018-02-18)
 unreleased:
   - this release is under development
 changed:
   - adjusted package to support koRpus >= 0.11 and sylly, especially
     with regards to summary() and hyphen()
+  - summary(): for more coherence with the koRpus package the "text" column in
+    the summary slot was renamed into "doc_id"
   - reaktanz.de supports HTTPS now, updated references
   - vignette is now in RMarkdown/HTML format; the SWeave/PDF version was dropped
   - hyphen()/lex.div()/readability(): 'quiet' is now TRUE by default
@@ -14,6 +16,9 @@ changed:
 added:
   - README.md
   - new [, [<-, [[ and [[<- methods added for corpus object classes
+  - new methods tif_as_tokens_df() to export corpus objects as a single
+    data.frame in fully TIF compliant format
+  - summary(): now also includes the total number of stopwords (if available)
 
 changes in version 0.01-3 (2016-07-12)
 fixed:

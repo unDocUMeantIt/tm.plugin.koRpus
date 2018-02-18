@@ -73,11 +73,11 @@ simpleCorpus <- function(
                 ...
               ) {
 
-  taggerFunction <- function(text, lang, tagger=tagger, ...) {
+  taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
     if(identical(tagger, "tokenize")){
-      return(tokenize(txt=text, format="obj", lang=lang, ...))
+      return(tokenize(txt=text, format="obj", lang=lang, doc_id=doc_id, ...))
     } else {
-      return(treetag(file=text, treetagger=tagger, format="obj", lang=lang, ...))
+      return(treetag(file=text, treetagger=tagger, format="obj", lang=lang, doc_id=doc_id, ...))
     }
   }
   
@@ -115,17 +115,26 @@ simpleCorpus <- function(
   names(slot(newCorpus, "raw")) <- "tm"
   numTexts <- length(corpusTm(newCorpus))
   nameNum <- sprintf("%02d", 1:numTexts)
-  meta(corpusTm(newCorpus), tag="textID") <- textID(src=source, topic=topic, nameNum=nameNum)
+  text_ID <- textID(src=source, topic=topic, nameNum=nameNum)
+  meta(corpusTm(newCorpus), tag="textID") <- text_ID
   corpusMeta(newCorpus, "topic") <- topic
   corpusMeta(newCorpus, "source") <- source
 
   corpusTagged <- mclapply(
-    corpusTm(newCorpus),
-    function(thisText){
-      taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, ...)
+    1:numTexts,
+    function(thisTextNum){
+      thisText <- corpusTm(newCorpus)[[thisTextNum]]
+      taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=text_ID[thisTextNum], ...)
     },
     mc.cores=mc.cores
   )
+  corpusMeta(newCorpus, "stopwords") <- unlist(mclapply(
+    corpusTagged,
+    function(thisTaggedText){
+      sum(thisTaggedText[["stop"]])
+    },
+    mc.cores=mc.cores
+  ))
   slot(newCorpus, "tagged") <- corpusTagged
   return(newCorpus)
 }

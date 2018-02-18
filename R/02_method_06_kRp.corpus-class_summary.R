@@ -1,4 +1,4 @@
-# Copyright 2015-2017 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -57,9 +57,10 @@ setMethod("summary", signature(object="kRp.corpus"), function(
 ){
     # initialize the data.frame
     summary.info <- data.frame(
-      text=meta(corpusTm(object))[["textID"]],
+      doc_id=meta(corpusTm(object))[["textID"]],
       topic=corpusMeta(object, "topic"),
-      source=corpusMeta(object, "source")
+      source=corpusMeta(object, "source"),
+      stopwords=corpusMeta(object, "stopwords")
     )
 
     summary.rdb <- summary.lexdiv <- NULL
@@ -99,7 +100,7 @@ setMethod("summary", signature(object="kRp.corpus"), function(
     } else {}
 
     if(!is.null(summary.info)){
-      rownames(summary.info) <- as.character(summary.info[["text"]])
+      rownames(summary.info) <- as.character(summary.info[["doc_id"]])
     } else {
       summary.info <- data.frame()
     }
