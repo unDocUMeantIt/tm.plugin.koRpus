@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -16,7 +16,7 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' S4 Class kRp.topicCorpus
+#' S4 Class kRp.topicCorpus and contructor
 #'
 #' Objects of this class can contain multiple texts simultaneously. Adding to that, these texts can be ordered
 #' at two levels: topic and source. This is useful for comparisons if you have a defined number of topics and
@@ -25,19 +25,29 @@
 #' 
 #' For each combination of topic and source, there is exactly one object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' 
+#' Objects should be created using the \code{\link[tm.plugin.koRpus:topicCorpus]{topicCorpus}} function.
+#' 
+#' @section Contructor function:
+#' Should you need to manually generate objects of this class (which should rarely be the case), the contructor function 
+#' \code{kRp_topicCorpus(...)} can be used instead of
+#' \code{new("kRp.topicCorpus", ...)}. Whenever possible, stick to
+#' \code{\link[tm.plugin.koRpus:topicCorpus]{topicCorpus}}.
+#' 
 #' @slot summary A summary data.frame for all topics combined.
 #' @slot topics A named list of nested objects. Each element is named after a topic and contains an object of class kRp.sourcesCorpus.
 #' @slot freq An object of class \code{\link[koRpus]{kRp.corp.freq-class}}, can contain word frequency
 #'  information on the full corpus if this object was analysed with
 #'  \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.
+#' @note There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.topicCorpus,-class
 #' @aliases kRp.topicCorpus,-class kRp.topicCorpus-class
 #' @import methods
 #' @keywords classes
-#' @export
+#' @export kRp_topicCorpus
+#' @exportClass kRp.topicCorpus
 #' @include 01_class_02_kRp.sourcesCorpus.R
 #' @rdname kRp.topicCorpus-class
-setClass("kRp.topicCorpus",
+kRp_topicCorpus <- setClass("kRp.topicCorpus",
     representation=representation(
     summary="data.frame",
     topics="list",
@@ -45,7 +55,7 @@ setClass("kRp.topicCorpus",
   prototype=prototype(
     summary=data.frame(),
     topics=list(),
-    freq=new("kRp.corp.freq")
+    freq=kRp_corp_freq()
   )
 )
 

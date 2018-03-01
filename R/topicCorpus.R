@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -73,7 +73,7 @@ topicCorpus <- function(
                 ...
               ){
 
-  all.texts <- new("kRp.topicCorpus")
+  all.texts <- kRp_topicCorpus()
 
   for (topic in names(paths)) {
     slot(all.texts, "topics")[[topic]] <- sourcesCorpus(path=paths[[topic]], sources=sources, topic=topic, format=format, mc.cores=mc.cores, ...)

@@ -3,8 +3,9 @@
 \docType{class}
 \name{kRp.topicCorpus,-class}
 \alias{kRp.topicCorpus,-class}
+\alias{kRp_topicCorpus}
 \alias{kRp.topicCorpus-class}
-\title{S4 Class kRp.topicCorpus}
+\title{S4 Class kRp.topicCorpus and contructor}
 \description{
 Objects of this class can contain multiple texts simultaneously. Adding to that,
       these texts can be ordered
@@ -16,6 +17,8 @@ in all of the given sources.
 \details{
 For each combination of topic and source,
       there is exactly one object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
+
+Objects should be created using the \code{\link[tm.plugin.koRpus:topicCorpus]{topicCorpus}} function.
 }
 \section{Slots}{
 
@@ -29,5 +32,17 @@ For each combination of topic and source,
 information on the full corpus if this object was analysed with
 \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.}
 }}
+
+\note{
+There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
+}
+\section{Contructor function}{
+
+Should you need to manually generate objects of this class (which should rarely be the case),
+      the contructor function 
+\code{kRp_topicCorpus(...)} can be used instead of
+\code{new("kRp.topicCorpus", ...)}. Whenever possible, stick to
+\code{\link[tm.plugin.koRpus:topicCorpus]{topicCorpus}}.
+}
 
 \keyword{classes}

@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -21,25 +21,32 @@
 #' Objects of this class can contain multiple texts simultaneously. It supports both the \code{tm} package's
 #' \code{\link[tm]{Corpus}} class and \code{koRpus}' own object classes and stores them in separated slots.
 #' 
-#' Objects can be created using the \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} function.
+#' Objects should be created using the \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} function.
 #'
+#' @section Contructor function:
+#' Should you need to manually generate objects of this class (which should rarely be the case), the contructor function 
+#' \code{kRp_corpus(...)} can be used instead of
+#' \code{new("kRp.corpus", ...)}. Whenever possible, stick to
+#' \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}}.
+#' 
 #' @slot summary A summary data frame for the full corpus.
 #' @slot meta A named list. Can be used to store meta information. Currently, no particular format is defined.
 #' @slot raw A list of objects of class \code{\link[tm]{Corpus}}.
-#' @slot tagged A list of objects of class \code{kRp.taggedText-class} (a class union for tagged text objects).
-#' @slot hyphen A list of objects of class \code{\link[sylly]{kRp.hyphen-class}}.
-#' @slot TTR A list of objects of class \code{\link[koRpus]{kRp.TTR-class}}.
-#' @slot readability A list of objects of class \code{\link[koRpus]{kRp.readability-class}}.
-#' @slot freq A list with two elements, \code{texts} and \code{corpus}. Both hold objects of class \code{\link[koRpus]{kRp.corp.freq-class}},
+#' @slot tagged A list of objects of class \code{kRp.taggedText} (a class union for tagged text objects).
+#' @slot hyphen A list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.
+#' @slot TTR A list of objects of class \code{\link[koRpus:kRp.TTR-class]{kRp.TTR}}.
+#' @slot readability A list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.
+#' @slot freq A list with two elements, \code{texts} and \code{corpus}. Both hold objects of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}},
 #'    where \code{texts} is a list of these objects (one for each text), and \code{corpus} is a single object for the full corpus.
-#' @note There is also methods to transform get the lists of all particular slots from objects of this class.
+#' @note There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.corpus,-class
 #' @aliases kRp.corpus,-class kRp.corpus-class
 #' @import methods koRpus
 #' @keywords classes
-#' @export
+#' @export kRp_corpus
+#' @exportClass kRp.corpus
 #' @rdname kRp.corpus-class
-setClass("kRp.corpus",
+kRp_corpus <- setClass("kRp.corpus",
     representation=representation(
     summary="data.frame",
     meta="list",
@@ -57,7 +64,7 @@ setClass("kRp.corpus",
     hyphen=list(),
     TTR=list(),
     readability=list(),
-    freq=list(texts=list(), corpus=new("kRp.corp.freq"))
+    freq=list(texts=list(), corpus=kRp_corp_freq())
   )
 )
 

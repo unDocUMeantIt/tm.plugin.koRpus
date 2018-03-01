@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -62,7 +62,7 @@ sourcesCorpus <- function(
                   ...
                 ){
 
-    all.texts <- new("kRp.sourcesCorpus")
+    all.texts <- kRp_sourcesCorpus()
 
     if(identical(format, "file")){
       for (src in names(sources)){

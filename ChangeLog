@@ -7,7 +7,7 @@ fixed:
   - sourcesCorpus(): speak of "text" instead of "texts" if it's only one
 changed:
   - adjusted package to support koRpus >= 0.11 and sylly, especially
-    with regards to summary() and hyphen()
+    with regards to summary(), hyphen(), and new class contructors
   - summary(): for more coherence with the koRpus package the "text" column in
     the summary slot was renamed into "doc_id"
   - reaktanz.de supports HTTPS now, updated references
@@ -21,6 +21,8 @@ added:
   - new methods tif_as_tokens_df() to export corpus objects as a single
     data.frame in fully TIF compliant format
   - summary(): now also includes the total number of stopwords (if available)
+  - new class object contructors kRp_corpus(), kRp_sourcesCorpus(), and
+    kRp_topicCorpus() can be used instead of new("kRp.corpus", ...) etc.
 
 changes in version 0.01-3 (2016-07-12)
 fixed:

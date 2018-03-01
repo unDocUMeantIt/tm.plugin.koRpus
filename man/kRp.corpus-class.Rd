@@ -3,6 +3,7 @@
 \docType{class}
 \name{kRp.corpus,-class}
 \alias{kRp.corpus,-class}
+\alias{kRp_corpus}
 \alias{kRp.corpus-class}
 \title{S4 Class kRp.corpus}
 \description{
@@ -10,7 +11,7 @@ Objects of this class can contain multiple texts simultaneously. It supports bot
 \code{\link[tm]{Corpus}} class and \code{koRpus}' own object classes and stores them in separated slots.
 }
 \details{
-Objects can be created using the \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} function.
+Objects should be created using the \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} function.
 }
 \section{Slots}{
 
@@ -22,21 +23,30 @@ Objects can be created using the \code{\link[tm.plugin.koRpus:simpleCorpus]{simp
 
 \item{\code{raw}}{A list of objects of class \code{\link[tm]{Corpus}}.}
 
-\item{\code{tagged}}{A list of objects of class \code{kRp.taggedText-class} (a class union for tagged text objects).}
+\item{\code{tagged}}{A list of objects of class \code{kRp.taggedText} (a class union for tagged text objects).}
 
-\item{\code{hyphen}}{A list of objects of class \code{\link[sylly]{kRp.hyphen-class}}.}
+\item{\code{hyphen}}{A list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.}
 
-\item{\code{TTR}}{A list of objects of class \code{\link[koRpus]{kRp.TTR-class}}.}
+\item{\code{TTR}}{A list of objects of class \code{\link[koRpus:kRp.TTR-class]{kRp.TTR}}.}
 
-\item{\code{readability}}{A list of objects of class \code{\link[koRpus]{kRp.readability-class}}.}
+\item{\code{readability}}{A list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.}
 
 \item{\code{freq}}{A list with two elements,
-      \code{texts} and \code{corpus}. Both hold objects of class \code{\link[koRpus]{kRp.corp.freq-class}},
+      \code{texts} and \code{corpus}. Both hold objects of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}},
 where \code{texts} is a list of these objects (one for each text),
       and \code{corpus} is a single object for the full corpus.}
 }}
 
 \note{
-There is also methods to transform get the lists of all particular slots from objects of this class.
+There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
 }
+\section{Contructor function}{
+
+Should you need to manually generate objects of this class (which should rarely be the case),
+      the contructor function 
+\code{kRp_corpus(...)} can be used instead of
+\code{new("kRp.corpus", ...)}. Whenever possible, stick to
+\code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}}.
+}
+
 \keyword{classes}

@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -21,21 +21,31 @@
 #' Objects of this class can contain multiple texts simultaneously. Adding to that, these texts are ordered
 #' by their source in a number of slots. Each slot is a list of entries, one for each source.
 #' 
+#' Objects should be created using the \code{\link[tm.plugin.koRpus:sourcesCorpus]{sourcesCorpus}} function.
+#' 
+#' @section Contructor function:
+#' Should you need to manually generate objects of this class (which should rarely be the case), the contructor function 
+#' \code{kRp_sourcesCorpus(...)} can be used instead of
+#' \code{new("kRp.sourcesCorpus", ...)}. Whenever possible, stick to
+#' \code{\link[tm.plugin.koRpus:sourcesCorpus]{sourcesCorpus}}.
+#'
 #' @slot summary A summary data.frame for all sources combined.
 #' @slot paths A list of character strings with paths to all files
 #' @slot sources A list of objects of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}
 #' @slot files A list of character strings with only the file names of all texts
-#' @slot freq An object of class \code{\link[koRpus]{kRp.corp.freq-class}}, can contain word frequency
+#' @slot freq An object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}}, can contain word frequency
 #'  information on the full corpus if this object was analysed with
 #'  \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.
+#' @note There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.sourcesCorpus,-class
 #' @aliases kRp.sourcesCorpus,-class kRp.sourcesCorpus-class
 #' @import methods koRpus
 #' @keywords classes
-#' @export
+#' @export kRp_sourcesCorpus
+#' @exportClass kRp.sourcesCorpus
 #' @include 01_class_01_kRp.corpus.R
 #' @rdname kRp.sourcesCorpus-class
-setClass("kRp.sourcesCorpus",
+kRp_sourcesCorpus <- setClass("kRp.sourcesCorpus",
     representation=representation(
     summary="data.frame",
     paths="list",
@@ -47,7 +57,7 @@ setClass("kRp.sourcesCorpus",
     paths=list(),
     sources=list(),
     files=list(),
-    freq=new("kRp.corp.freq")
+    freq=kRp_corp_freq()
   )
 )
 

@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -23,7 +23,7 @@
 #' \code{\link[tm:VCorpus]{VCorpus}} and \code{\link[koRpus:tokenize]{tokenize}} or
 #' \code{\link[koRpus:treetag]{treetag}}.
 #' 
-#' The result, if succeeded, is a single object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
+#' The result, if succeeded, is a single object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
 #' which includes all read texts in a \code{tm} style \code{VCorpus} format, as well as in
 #' \code{koRpus} style \code{kRp.taggedText} class format.
 #' 
@@ -86,7 +86,7 @@ simpleCorpus <- function(
   } else {}
 
   if(identical(format, "file")){
-    newCorpus <- new("kRp.corpus",
+    newCorpus <- kRp_corpus(
       raw=list(VCorpus(
         DirSource(
           dir,
@@ -100,7 +100,7 @@ simpleCorpus <- function(
       )
     ))
   } else if(identical(format, "obj")){
-    newCorpus <- new("kRp.corpus",
+    newCorpus <- kRp_corpus(
       raw=list(VCorpus(
         VectorSource(
           dir

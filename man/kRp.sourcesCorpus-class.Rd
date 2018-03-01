@@ -3,12 +3,16 @@
 \docType{class}
 \name{kRp.sourcesCorpus,-class}
 \alias{kRp.sourcesCorpus,-class}
+\alias{kRp_sourcesCorpus}
 \alias{kRp.sourcesCorpus-class}
 \title{S4 Class kRp.sourcesCorpus}
 \description{
 Objects of this class can contain multiple texts simultaneously. Adding to that,
       these texts are ordered
 by their source in a number of slots. Each slot is a list of entries, one for each source.
+}
+\details{
+Objects should be created using the \code{\link[tm.plugin.koRpus:sourcesCorpus]{sourcesCorpus}} function.
 }
 \section{Slots}{
 
@@ -21,10 +25,22 @@ by their source in a number of slots. Each slot is a list of entries, one for ea
 
 \item{\code{files}}{A list of character strings with only the file names of all texts}
 
-\item{\code{freq}}{An object of class \code{\link[koRpus]{kRp.corp.freq-class}},
+\item{\code{freq}}{An object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}},
       can contain word frequency
 information on the full corpus if this object was analysed with
 \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.}
 }}
+
+\note{
+There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
+}
+\section{Contructor function}{
+
+Should you need to manually generate objects of this class (which should rarely be the case),
+      the contructor function 
+\code{kRp_sourcesCorpus(...)} can be used instead of
+\code{new("kRp.sourcesCorpus", ...)}. Whenever possible, stick to
+\code{\link[tm.plugin.koRpus:sourcesCorpus]{sourcesCorpus}}.
+}
 
 \keyword{classes}

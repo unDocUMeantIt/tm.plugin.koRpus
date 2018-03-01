@@ -3,7 +3,7 @@ Type: Package
 Title: A Compatibility Plugin Package for 'tm' and 'koRpus'
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Depends: R (>= 2.10.0),koRpus (>= 0.11-2),sylly
+Depends: R (>= 2.10.0),koRpus (>= 0.11-3),sylly
 Imports: methods,parallel,tm,NLP
 Suggests: testthat,knitr,rmarkdown
 VignetteBuilder: knitr
@@ -21,7 +21,7 @@ BugReports: https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues
 Authors@R: c(person(given="m.eik", family="michalke",
         email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-4
-Date: 2018-02-19
+Date: 2018-03-01
 RoxygenNote: 6.0.1
 Collate: 
     '01_class_01_kRp.corpus.R'

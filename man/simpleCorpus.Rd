@@ -61,7 +61,7 @@ This function is a combined wrapper that calls \code{\link[tm:DirSource]{DirSour
 }
 \details{
 The result, if succeeded,
-      is a single object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
+      is a single object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
 which includes all read texts in a \code{tm} style \code{VCorpus} format, as well as in
 \code{koRpus} style \code{kRp.taggedText} class format.
 }
