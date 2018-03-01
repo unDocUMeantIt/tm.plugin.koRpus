@@ -51,7 +51,7 @@ texts will be written to temporary files for the process (see \code{dir}).}
 \item{...}{Additional options which are passed through to the defined \code{tagger}.}
 }
 \value{
-An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}}.
+An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 }
 \description{
 This function is a combined wrapper that calls \code{\link[tm:DirSource]{DirSource}}

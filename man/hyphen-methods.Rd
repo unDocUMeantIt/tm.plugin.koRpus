@@ -17,9 +17,9 @@
   1L), quiet = TRUE, ...)
 }
 \arguments{
-\item{words}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-\code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-\code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.}
+\item{words}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+\code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+\code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.}
 
 \item{mc.cores}{The number of cores to use for parallelization,
       see \code{\link[parallel:mclapply]{mclapply}}.}

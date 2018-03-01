@@ -51,7 +51,7 @@
 #'    texts will be written to temporary files for the process (see \code{dir}).
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
-#' @return An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}}.
+#' @return An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @importFrom tm VCorpus DirSource VectorSource
 #' @importFrom parallel mclapply
 #' @importFrom koRpus tokenize treetag get.kRp.env

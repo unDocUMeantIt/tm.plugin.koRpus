@@ -17,9 +17,9 @@
   mc.cores = getOption("mc.cores", 1L), char = "", quiet = TRUE, ...)
 }
 \arguments{
-\item{txt}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-\code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-\code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.}
+\item{txt}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+\code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+\code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.}
 
 \item{summary}{Logical, determines if the \code{summary} slot should automatically be
 updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.}

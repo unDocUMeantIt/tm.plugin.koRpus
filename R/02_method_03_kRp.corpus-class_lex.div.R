@@ -21,9 +21,9 @@
 #' This method calls \code{\link[koRpus:lex.div]{lex.div}} on all tagged text objects
 #' inside the given \code{txt} object (using \code{lapply}).
 #' 
-#' @param txt An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-#'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-#'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
+#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+#'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+#'    \code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.

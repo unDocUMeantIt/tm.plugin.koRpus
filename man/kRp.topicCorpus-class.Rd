@@ -27,7 +27,7 @@ Objects should be created using the \code{\link[tm.plugin.koRpus:topicCorpus]{to
 
 \item{\code{topics}}{A named list of nested objects. Each element is named after a topic and contains an object of class kRp.sourcesCorpus.}
 
-\item{\code{freq}}{An object of class \code{\link[koRpus]{kRp.corp.freq-class}},
+\item{\code{freq}}{An object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}},
       can contain word frequency
 information on the full corpus if this object was analysed with
 \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.}

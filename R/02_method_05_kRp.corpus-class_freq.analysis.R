@@ -21,9 +21,9 @@
 #' This method calls \code{\link[koRpus:freq.analysis]{freq.analysis}} on all tagged text objects
 #' inside the given \code{txt.file} object (using \code{lapply}).
 #' 
-#' @param txt.file An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-#'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-#'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
+#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+#'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+#'    \code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:freq.analysis]{freq.analysis}}.
 #' @return An object of the same class as \code{txt.file}.

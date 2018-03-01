@@ -225,9 +225,9 @@ tif_as_tokens_df(tokens)
 \S4method{tif_as_tokens_df}{kRp.topicCorpus}(tokens)
 }
 \arguments{
-\item{obj}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-\code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-\code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.}
+\item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+\code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+\code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.}
 
 \item{value}{The new value to replace the current with.}
 

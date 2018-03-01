@@ -31,9 +31,9 @@
 #' The \code{summary} slot contains a data.frame with aggregated information of
 #' all texts that the respective object level contains.
 #' 
-#' @param object An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-#'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-#'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
+#' @param object An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+#'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+#'    \code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.
 # @param available.rdb Character vector with the column names of all readability measures
 #    that are supposed to be available for all texts. Missings are automatically filled
 #    with the value of \code{missing}.
@@ -168,9 +168,9 @@ setMethod("summary", signature(object="kRp.topicCorpus"), function(object){
 )
 
 #' @rdname summary-methods
-#' @param obj An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-#'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-#'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+#'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+#'    \code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.
 #' @docType methods
 #' @export
 setGeneric("corpusSummary", function(obj) standardGeneric("corpusSummary"))

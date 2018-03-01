@@ -17,9 +17,9 @@
   mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
-\item{txt.file}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-\code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-\code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.}
+\item{txt.file}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+\code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+\code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.}
 
 \item{mc.cores}{The number of cores to use for parallelization,
       see \code{\link[parallel:mclapply]{mclapply}}.}

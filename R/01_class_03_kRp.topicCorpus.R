@@ -35,7 +35,7 @@
 #' 
 #' @slot summary A summary data.frame for all topics combined.
 #' @slot topics A named list of nested objects. Each element is named after a topic and contains an object of class kRp.sourcesCorpus.
-#' @slot freq An object of class \code{\link[koRpus]{kRp.corp.freq-class}}, can contain word frequency
+#' @slot freq An object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}}, can contain word frequency
 #'  information on the full corpus if this object was analysed with
 #'  \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.
 #' @note There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.

@@ -24,9 +24,9 @@
 #' documentation of \code{\link[sylly:correct.hyph]{correct.hyph}} in the \code{sylly}
 #' package.
 #' 
-#' @param obj An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-#'    \code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-#'    \code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+#'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+#'    \code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.
 # @param row Integer, the row number of the entry to be changed. Can be an integer vector
 #    to change several rows in one go.
 #' @param word A character string, the (possibly incorrectly hyphenated) \code{word} entry to be replaced with \code{hyphen}.

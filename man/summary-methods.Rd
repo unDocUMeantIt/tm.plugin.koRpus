@@ -45,17 +45,17 @@ corpusSummary(obj) <- value
 \S4method{corpusSummary}{kRp.topicCorpus}(obj) <- value
 }
 \arguments{
-\item{object}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-\code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-\code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.}
+\item{object}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+\code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+\code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.}
 
 \item{missing}{Character string to use for missing values.}
 
 \item{...}{Used for internal processes.}
 
-\item{obj}{An object of class \code{\link[tm.plugin.koRpus]{kRp.corpus-class}},
-\code{\link[tm.plugin.koRpus]{kRp.sourcesCorpus-class}} or
-\code{\link[tm.plugin.koRpus]{kRp.topicCorpus-class}}.}
+\item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
+\code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
+\code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.}
 
 \item{value}{The new value to replace the current with.}
 }
