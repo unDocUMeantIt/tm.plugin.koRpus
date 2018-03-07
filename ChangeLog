@@ -1,5 +1,9 @@
 ChangeLog for package tm.plugin.koRpus
 
+changes in version 0.01-5 (2018-03-07)
+unreleased:
+  - this release is under development
+
 changes in version 0.01-4 (2018-03-07)
 fixed:
   - sourcesCorpus(): speak of "text" instead of "texts" if it's only one
