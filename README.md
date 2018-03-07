@@ -1,12 +1,9 @@
 # tm.plugin.koRpus
 
-[![Flattr this git repo](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=m.eik&url=https://github.com/unDocUMeantIt/tm.plugin.koRpus&title=tm.plugin.koRpus&language=en_GB&tags=github&category=software)
-
-This package provides classes and methods to enhance the ability to use the 'koRpus'
-package together with the 'tm' package. It is in its early stages. To ask for help, report
-bugs, suggest feature improvements, or discuss the global development of the package, please
-subscribe to the koRpus-dev mailing list:
-https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de
+This package provides classes and methods to enhance the ability to use the ['koRpus'](https://reaktanz.de/?c=hacking&s=koRpus)
+package together with the ['tm'](https://CRAN.R-project.org/package=tm) package.
+Not all planned features are fully implemented, but it is already a recommended addition to 'koRpus' of you want to analyze
+full text corpora instead of single texts.
 
 More information on tm.plugin.koRpus is available on the [project homepage](https://reaktanz.de/?c=hacking&s=koRpus).
 
@@ -14,10 +11,10 @@ More information on tm.plugin.koRpus is available on the [project homepage](http
 
 ### Development releases via the project repository
 
-Installation of tha latest stable release is fairly easy, it's available from the project's own repository:
+The latest stable release is available from the project's own repository:
 
 ```
-install.packages("tm.plugin.koRpus", repo="https://reaktanz.de/R")
+install.packages("tm.plugin.koRpus", repo=c(getOption("repos"), "https://reaktanz.de/R"))
 ```
 
 To automatically get updates, consider adding the repository to your R configuration. You might also
@@ -39,7 +36,9 @@ install_github("unDocUMeantIt/tm.plugin.koRpus", ref="develop") # development re
 ## Contributing
 
 To ask for help, report bugs, suggest feature improvements, or discuss the global
-development of the package, please use the issue tracker on GitHub.
+development of the package, please either subscribe to the
+[koRpus-dev mailing list](https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de), or
+use the [issue tracker](https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues) on GitHub.
 
 ### Branches
 
@@ -48,7 +47,7 @@ branch will be rejected, as it is reserved for the current stable release.
 
 ## License
 
-Copyright 2015-2017 Meik Michalke <meik.michalke@hhu.de>
+Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 
 tm.plugin.koRpus is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
