@@ -1,17 +1,16 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.01-4 (2018-02-19)
-unreleased:
-  - this release is under development
+changes in version 0.01-4 (2018-03-07)
 fixed:
   - sourcesCorpus(): speak of "text" instead of "texts" if it's only one
 changed:
-  - adjusted package to support koRpus >= 0.11 and sylly, especially
-    with regards to summary(), hyphen(), and new class contructors
-  - summary(): for more coherence with the koRpus package the "text" column in
-    the summary slot was renamed into "doc_id"
+  - adjusted package to support koRpus >= 0.11 and sylly, especially with
+    regards to summary(), hyphen(), and new class contructors
+  - summary(): for more coherence with the koRpus package the "text" column
+    in the summary slot was renamed into "doc_id"
   - reaktanz.de supports HTTPS now, updated references
-  - vignette is now in RMarkdown/HTML format; the SWeave/PDF version was dropped
+  - vignette is now in RMarkdown/HTML format; the SWeave/PDF version was
+    dropped
   - hyphen()/lex.div()/readability(): 'quiet' is now TRUE by default
   - lex.div(): 'char' is now an emtpy string by default; computing all
     characteristics was not a useful default for large text corpora

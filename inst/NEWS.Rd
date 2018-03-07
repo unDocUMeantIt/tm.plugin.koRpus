@@ -1,6 +1,38 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
+\section{Changes in tm.plugin.koRpus version 0.01-4 (2018-03-07)}{
+  \subsection{fixed}{
+    \itemize{
+      \item \code{sourcesCorpus()}: speak of \code{"text"} instead of \code{"texts"} if it's only one
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item adjusted package to support koRpus >= 0.11 and sylly, especially with
+        regards to \code{summary()}, \code{hyphen()}, and new class contructors
+      \item \code{summary()}: for more coherence with the koRpus package the \code{"text"} column
+        in the summary slot was renamed into \code{"doc_id"}
+      \item reaktanz.de supports HTTPS now, updated references
+      \item vignette is now in RMarkdown/HTML format; the SWeave/PDF version was
+        dropped
+      \item \code{hyphen()}/lex.\code{div()}/readability(): 'quiet' is now TRUE by default
+      \item \code{lex.div()}: 'char' is now an emtpy string by default; computing all
+        characteristics was not a useful default for large text corpora
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item README.md
+      \item new [, [<-, [[ and [[<- methods added for corpus object classes
+      \item new methods \code{tif_as_tokens_df()} to export corpus objects as a single
+        data.frame in fully TIF compliant format
+      \item \code{summary()}: now also includes the total number of stopwords (if available)
+      \item new class object contructors \code{kRp_corpus()}, \code{kRp_sourcesCorpus()}, and
+        \code{kRp_topicCorpus()} can be used instead of new(\code{"kRp.corpus"}, ...) etc.
+    }
+  }
+}
 \section{Changes in tm.plugin.koRpus version 0.01-3 (2016-07-12)}{
   \subsection{fixed}{
     \itemize{

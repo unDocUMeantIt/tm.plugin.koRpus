@@ -12,7 +12,7 @@ A Compatibility Plugin Package for 'tm' and 'koRpus'.
 Package: \tab tm.plugin.koRpus\cr
 Type: \tab Package\cr
 Version: \tab 0.01-4\cr
-Date: \tab 2018-03-01\cr
+Date: \tab 2018-03-07\cr
 Depends: \tab R (>= 2.10.0),koRpus (>= 0.11-3),sylly\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 3)\cr
