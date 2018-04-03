@@ -32,6 +32,7 @@
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #'    This value is passed through to simpleCorpus.
 #' @param ... Additional options, passed through to \code{simpleCorpus}.
+#' @return An object of class \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}}.
 #' @import tm
 #' @export
 #' @examples

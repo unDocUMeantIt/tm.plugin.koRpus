@@ -57,6 +57,10 @@
 #' @importFrom koRpus tokenize treetag get.kRp.env
 #' @importFrom NLP meta<-
 #' @export
+#' @examples
+#' \dontrun{
+#' myCorpus <- simpleCorpus("~/data/foo", source="The Bar Magazine", topic="short stories")
+#' }
 simpleCorpus <- function(
                 dir=".",
                 lang="kRp.env",

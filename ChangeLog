@@ -1,8 +1,11 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.01-5 (2018-03-07)
+changes in version 0.01-5 (2018-04-03)
 unreleased:
   - this release is under development
+added:
+  - read_corpus(): new general wrapper function to invoke simpleCorpus(),
+    sourcesCorpus(), or topicCorpus(), depending on the input provided
 
 changes in version 0.01-4 (2018-03-07)
 fixed:

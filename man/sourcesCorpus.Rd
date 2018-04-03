@@ -31,6 +31,9 @@ This value is passed through to simpleCorpus.}
 
 \item{...}{Additional options, passed through to \code{simpleCorpus}.}
 }
+\value{
+An object of class \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}}.
+}
 \description{
 Internally,
       this is a wrapper for \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}} you can use
