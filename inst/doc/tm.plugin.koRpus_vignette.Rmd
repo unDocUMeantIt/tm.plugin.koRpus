@@ -56,10 +56,12 @@ collection of texts. To distinguish texts which came from different sources, use
 given. And one level higher up, use the function `topicCorpus()`, to sort `kRp.sourcesCorpus` objects by different topics. Objects of this class will
 only be valid if there are texts of each topic from each source.
 
+Now, if this still confuses you, you can call the wrapper function `read_corpus()` instead, which will decide which one of these classes best suits your data, judging merely from the input.
+
 # Tokenizing corpora
 
 As with `koRpus`, the first step for text analysis is tokenizing and possibly POS tagging. This step is performed by the functions mentioned above,
-`simpleCorpus()`, `sourcesCorpus()`, or `topicCorpus()`, respectively. The package includes four sample texts taken from
+`simpleCorpus()`, `sourcesCorpus()`, `topicCorpus()`, or `read_corpus()`, respectively. The package includes four sample texts taken from
 Wikipedia^[see the file `tests/testthat/samples/License\_of\_sample\_texts.txt` for details] in its `tests` directory which
 we can use for a demonstration:
 
@@ -81,13 +83,30 @@ sampleSources <- c(
   wpn="Wikipedia_neu"
 )
 # and finally, we can tokenize all texts
-sampleTexts <- topicCorpus(paths=samplePaths, sources=sampleSources, tagger="tokenize", lang="de")
+sampleTexts <- topicCorpus(
+  paths=samplePaths,
+  sources=sampleSources,
+  tagger="tokenize",
+  lang="de"
+)
 ```
 ```
 processing topic "C3S", source "Wikipedia_alt", 1 text...
 processing topic "C3S", source "Wikipedia_neu", 1 text...
 processing topic "GEMA", source "Wikipedia_alt", 1 text...
 processing topic "GEMA", source "Wikipedia_neu", 1 text...
+```
+
+As describe above, you can achieve the same result by using the wrapper `read_corpus()`:
+
+```{r, eval=FALSE}
+sampleTexts <- read_corpus(
+  dir=sampleRoot,
+  sources=sampleSources,
+  topics=c("C3S", "GEMA"),
+  tagger="tokenize",
+  lang="de"
+)
 ```
 
 Should you need to get hold of the nested objects inside `kRp.sourcesCorpus` or `kRp.topicCorpus` class objects, or replace them

@@ -11,7 +11,7 @@
 
 <meta name="author" content="m.eik michalke" />
 
-<meta name="date" content="2018-03-07" />
+<meta name="date" content="2018-04-03" />
 
 <title>Using the tm.plugin.koRpus Package for Corpus Analysis</title>
 
@@ -261,7 +261,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Using the tm.plugin.koRpus Package for Corpus Analysis</h1>
 <h4 class="author"><em>m.eik michalke</em></h4>
-<h4 class="date"><em>2018-03-07</em></h4>
+<h4 class="date"><em>2018-04-03</em></h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>The R package <code>tm.plugin.koRpus</code> is an extension to the <code>koRpus</code> package, enhancing its usability for actual corpus analysis. It adds new classes and methods to <code>koRpus</code>, which are designed to work with complete text corpora in both <code>koRpus</code> and <code>tm</code> formats. This vignette gives you a quick overview.</p>
@@ -284,10 +284,11 @@ div.tocify {
 </ol>
 <p>The idea behind this is to be able to categorize corpora on at least two levels. The default assumes that these levels are different <em>sources</em> and different <em>topics</em>, but apart from this naming (which is coded into the classes) you can actually use this for whatever levels you like.</p>
 <p>If you don’t need these hierarchical levels, you can just use the function <code>simpleCorpus()</code> to create objects of class <code>kRp.corpus</code>. It simply represents a collection of texts. To distinguish texts which came from different sources, use the function <code>sourcesCorpus()</code>, which will generate sub-corpora for each source given. And one level higher up, use the function <code>topicCorpus()</code>, to sort <code>kRp.sourcesCorpus</code> objects by different topics. Objects of this class will only be valid if there are texts of each topic from each source.</p>
+<p>Now, if this still confuses you, you can call the wrapper function <code>read_corpus()</code> instead, which will decide which one of these classes best suits your data, judging merely from the input.</p>
 </div>
 <div id="tokenizing-corpora" class="section level1">
 <h1>Tokenizing corpora</h1>
-<p>As with <code>koRpus</code>, the first step for text analysis is tokenizing and possibly POS tagging. This step is performed by the functions mentioned above, <code>simpleCorpus()</code>, <code>sourcesCorpus()</code>, or <code>topicCorpus()</code>, respectively. The package includes four sample texts taken from Wikipedia<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> in its <code>tests</code> directory which we can use for a demonstration:</p>
+<p>As with <code>koRpus</code>, the first step for text analysis is tokenizing and possibly POS tagging. This step is performed by the functions mentioned above, <code>simpleCorpus()</code>, <code>sourcesCorpus()</code>, <code>topicCorpus()</code>, or <code>read_corpus()</code>, respectively. The package includes four sample texts taken from Wikipedia<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> in its <code>tests</code> directory which we can use for a demonstration:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tm.plugin.koRpus)
 <span class="kw">library</span>(koRpus.lang.de)
 <span class="co"># set the root path to the sample files</span>
@@ -305,11 +306,24 @@ sampleSources &lt;-<span class="st"> </span><span class="kw">c</span>(
   <span class="dt">wpn=</span><span class="st">&quot;Wikipedia_neu&quot;</span>
 )
 <span class="co"># and finally, we can tokenize all texts</span>
-sampleTexts &lt;-<span class="st"> </span><span class="kw">topicCorpus</span>(<span class="dt">paths=</span>samplePaths, <span class="dt">sources=</span>sampleSources, <span class="dt">tagger=</span><span class="st">&quot;tokenize&quot;</span>, <span class="dt">lang=</span><span class="st">&quot;de&quot;</span>)</code></pre></div>
+sampleTexts &lt;-<span class="st"> </span><span class="kw">topicCorpus</span>(
+  <span class="dt">paths=</span>samplePaths,
+  <span class="dt">sources=</span>sampleSources,
+  <span class="dt">tagger=</span><span class="st">&quot;tokenize&quot;</span>,
+  <span class="dt">lang=</span><span class="st">&quot;de&quot;</span>
+)</code></pre></div>
 <pre><code>processing topic &quot;C3S&quot;, source &quot;Wikipedia_alt&quot;, 1 text...
 processing topic &quot;C3S&quot;, source &quot;Wikipedia_neu&quot;, 1 text...
 processing topic &quot;GEMA&quot;, source &quot;Wikipedia_alt&quot;, 1 text...
 processing topic &quot;GEMA&quot;, source &quot;Wikipedia_neu&quot;, 1 text...</code></pre>
+<p>As describe above, you can achieve the same result by using the wrapper <code>read_corpus()</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sampleTexts &lt;-<span class="st"> </span><span class="kw">read_corpus</span>(
+  <span class="dt">dir=</span>sampleRoot,
+  <span class="dt">sources=</span>sampleSources,
+  <span class="dt">topics=</span><span class="kw">c</span>(<span class="st">&quot;C3S&quot;</span>, <span class="st">&quot;GEMA&quot;</span>),
+  <span class="dt">tagger=</span><span class="st">&quot;tokenize&quot;</span>,
+  <span class="dt">lang=</span><span class="st">&quot;de&quot;</span>
+)</code></pre></div>
 <p>Should you need to get hold of the nested objects inside <code>kRp.sourcesCorpus</code> or <code>kRp.topicCorpus</code> class objects, or replace them with updated ones, you can do so by using the methods <code>corpusTagged()</code>, <code>corpusSources()</code>, or <code>corpusTopics()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">allC3SSources &lt;-<span class="st"> </span><span class="kw">corpusSources</span>(<span class="kw">corpusTopics</span>(sampleTexts, <span class="st">&quot;C3S&quot;</span>))
 <span class="kw">names</span>(allC3SSources)</code></pre></div>

@@ -25,7 +25,21 @@ library(knitr)
 #    wpn="Wikipedia_neu"
 #  )
 #  # and finally, we can tokenize all texts
-#  sampleTexts <- topicCorpus(paths=samplePaths, sources=sampleSources, tagger="tokenize", lang="de")
+#  sampleTexts <- topicCorpus(
+#    paths=samplePaths,
+#    sources=sampleSources,
+#    tagger="tokenize",
+#    lang="de"
+#  )
+
+## ---- eval=FALSE---------------------------------------------------------
+#  sampleTexts <- read_corpus(
+#    dir=sampleRoot,
+#    sources=sampleSources,
+#    topics=c("C3S", "GEMA"),
+#    tagger="tokenize",
+#    lang="de"
+#  )
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  allC3SSources <- corpusSources(corpusTopics(sampleTexts, "C3S"))
