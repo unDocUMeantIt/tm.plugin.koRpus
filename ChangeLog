@@ -8,6 +8,8 @@ changed:
 added:
   - read_corpus(): new general wrapper function to invoke simpleCorpus(),
     sourcesCorpus(), or topicCorpus(), depending on the input provided
+  - kRp.hierarchy: new S4 class to replace kRp.sourcesCorpus and
+    kRp.topicCorpus to allow more generic nesting of hierarchical levels
 
 changes in version 0.01-4 (2018-03-07)
 fixed:
