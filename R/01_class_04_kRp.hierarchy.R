@@ -21,15 +21,15 @@
 #' Objects of this class can contain full text corpora in a hierachical structure. It supports both the \code{tm} package's
 #' \code{\link[tm]{Corpus}} class and \code{koRpus}' own object classes and stores them in separated slots.
 #' 
-#' Objects should be created using the \code{\link[tm.plugin.koRpus:read_corpus]{read_corpus}} function.
+#' Objects should be created using the \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}} function.
 #' 
 #' @section Contructor function:
 #' Should you need to manually generate objects of this class (which should rarely be the case), the contructor function 
 #' \code{kRp_hierarchy(...)} can be used instead of
 #' \code{new("kRp.hierarchy", ...)}. Whenever possible, stick to
-#' \code{\link[tm.plugin.koRpus:read_corpus]{read_corpus}}.
+#' \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}}.
 #' 
-#' @slot level A numeric value defining the hierachical level. Oblects of this class can be nested, \code{level=0} is the
+#' @slot level A numeric value defining the hierachical level. Objects of this class can be nested, \code{level=0} is the
 #'    deepest (i.e., a collection of actual texts), and higher values indicate that the object represents only a category.
 #' @slot category A character string describing the category of this level (e.g., "source" or "topic").
 #' @slot id A character string naming this category level (i.e., a particular source or topic).

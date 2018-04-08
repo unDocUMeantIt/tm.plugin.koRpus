@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -137,6 +137,20 @@ setMethod("corpusTm",
     return(result)
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusTm,-methods
+#'    corpusTm,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusTm",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="raw")[["tm"]]
+    return(result)
+  }
+)
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -152,6 +166,20 @@ setGeneric("corpusTm<-", function(obj, value) standardGeneric("corpusTm<-"))
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusTm<-",
   signature=signature(obj="kRp.corpus"),
+  function (obj, value){
+    slot(obj, name="raw")[["tm"]] <- value
+    return(obj)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusTm<-,-methods
+#'    corpusTm<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusTm<-",
+  signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
     slot(obj, name="raw")[["tm"]] <- value
     return(obj)
@@ -193,6 +221,35 @@ setMethod("corpusMeta",
     return(result)
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusMeta,-methods
+#'    corpusMeta,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusMeta",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, meta=NULL, fail=TRUE){
+    all.meta <- slot(obj, name="meta")
+    if(is.null(meta)){
+      result <- all.meta
+    } else {
+      if(meta %in% names(all.meta)){
+        result <- all.meta[[meta]]
+      } else {
+        if(isTRUE(fail)){
+          stop(simpleError(paste0("Entry named \"", meta,"\" not found in the slot \"meta\" of this object!")))
+        } else {
+          result <- invisible(NULL)
+        }
+      }
+    }
+
+    return(result)
+  }
+)
+
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -208,6 +265,24 @@ setGeneric("corpusMeta<-", function(obj, meta=NULL, value) standardGeneric("corp
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusMeta<-",
   signature=signature(obj="kRp.corpus"),
+  function (obj, meta=NULL, value){
+    if(is.null(meta)){
+      slot(obj, name="meta") <- value
+    } else {
+      slot(obj, name="meta")[[meta]] <- value
+    }
+    return(obj)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusMeta<-,-methods
+#'    corpusMeta<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusMeta<-",
+  signature=signature(obj="kRp.hierarchy"),
   function (obj, meta=NULL, value){
     if(is.null(meta)){
       slot(obj, name="meta") <- value
