@@ -17,14 +17,22 @@
 \alias{corpusTm}
 \alias{corpusTm,kRp.corpus-method}
 \alias{corpusTm,-methods}
+\alias{corpusTm,kRp.hierarchy-method}
+\alias{corpusTm,-methods}
 \alias{corpusTm<-}
 \alias{corpusTm<-,kRp.corpus-method}
+\alias{corpusTm<-,-methods}
+\alias{corpusTm<-,kRp.hierarchy-method}
 \alias{corpusTm<-,-methods}
 \alias{corpusMeta}
 \alias{corpusMeta,kRp.corpus-method}
 \alias{corpusMeta,-methods}
+\alias{corpusMeta,kRp.hierarchy-method}
+\alias{corpusMeta,-methods}
 \alias{corpusMeta<-}
 \alias{corpusMeta<-,kRp.corpus-method}
+\alias{corpusMeta<-,-methods}
+\alias{corpusMeta<-,kRp.hierarchy-method}
 \alias{corpusMeta<-,-methods}
 \alias{corpusHyphen}
 \alias{corpusHyphen,kRp.corpus-method}
@@ -130,17 +138,25 @@ corpusTm(obj)
 
 \S4method{corpusTm}{kRp.corpus}(obj)
 
+\S4method{corpusTm}{kRp.hierarchy}(obj)
+
 corpusTm(obj) <- value
 
 \S4method{corpusTm}{kRp.corpus}(obj) <- value
+
+\S4method{corpusTm}{kRp.hierarchy}(obj) <- value
 
 corpusMeta(obj, meta = NULL, fail = TRUE)
 
 \S4method{corpusMeta}{kRp.corpus}(obj, meta = NULL, fail = TRUE)
 
+\S4method{corpusMeta}{kRp.hierarchy}(obj, meta = NULL, fail = TRUE)
+
 corpusMeta(obj, meta = NULL) <- value
 
 \S4method{corpusMeta}{kRp.corpus}(obj, meta = NULL) <- value
+
+\S4method{corpusMeta}{kRp.hierarchy}(obj, meta = NULL) <- value
 
 corpusHyphen(obj)
 

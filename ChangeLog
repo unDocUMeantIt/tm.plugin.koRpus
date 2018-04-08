@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.01-5 (2018-04-03)
+changes in version 0.01-5 (2018-04-08)
 unreleased:
   - this release is under development
 changed:
@@ -10,6 +10,7 @@ added:
     sourcesCorpus(), or topicCorpus(), depending on the input provided
   - kRp.hierarchy: new S4 class to replace kRp.sourcesCorpus and
     kRp.topicCorpus to allow more generic nesting of hierarchical levels
+  - readCorpus(): new function to generate kRp.hierarchy objects recursively
 
 changes in version 0.01-4 (2018-03-07)
 fixed:

@@ -182,16 +182,7 @@ readCorpus_internal <- function(
       category=category,
       id=id,
       path=dir,
-#     files=list(),
-      children=children#,
-#     summary=data.frame(),
-#     meta=list(),
-#     raw=list(),
-#     tagged=list(),
-#     hyphen=list(),
-#     TTR=list(),
-#     readability=list(),
-#     freq=list(texts=list(), corpus=kRp_corp_freq())
+      children=children
     )
   } else {
     # actually parse texts
@@ -200,16 +191,7 @@ readCorpus_internal <- function(
       category=category,
       id=id,
       path=dir,
-      files=as.list(list.files(dir))#,
-#     children=list(),
-#     summary=data.frame(),
-#     meta=list(),
-#     raw=list(),
-#     tagged=list(),
-#     hyphen=list(),
-#     TTR=list(),
-#     readability=list(),
-#     freq=list(texts=list(), corpus=kRp_corp_freq())
+      files=as.list(list.files(dir))
     )
     if(identical(format, "file")){
       slot(result, "raw") <- list(VCorpus(

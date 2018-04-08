@@ -21,12 +21,13 @@ LazyLoad: yes
 Authors@R: c(person(given="m.eik", family="michalke",
         email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-5
-Date: 2018-04-03
+Date: 2018-04-08
 RoxygenNote: 6.0.1
 Collate: 
     '01_class_01_kRp.corpus.R'
     '01_class_02_kRp.sourcesCorpus.R'
     '01_class_03_kRp.topicCorpus.R'
+    '01_class_04_kRp.hierarchy.R'
     '02_method_01_kRp.corpus-class_readability.R'
     '02_method_02_kRp.corpus-class_hyphen.R'
     '02_method_03_kRp.corpus-class_lex.div.R'
@@ -36,6 +37,7 @@ Collate:
     '02_method_07_kRp.corpus-class_correct.R'
     '02_method_20_kRp.corpus_get_set_is.R'
     'kRpSource.R'
+    'readCorpus.R'
     'read_corpus.R'
     'simpleCorpus.R'
     'sourcesCorpus.R'
