@@ -27,6 +27,9 @@
 #'   \item{\code{corpusMeta()} }{returns the list with meta information.}
 #'   \item{\code{corpusHyphen()} }{returns the list of \code{kRp.hyphen} objects.}
 #'   \item{\code{corpusTTR()} }{returns the list of \code{kRp.TTR} objects.}
+#'   \item{\code{corpusLevel()} }{returns the level value of the top level object.}
+#'   \item{\code{corpusCategory()} }{returns the character vector of categories of the top level object.}
+#'   \item{\code{corpusID()} }{returns the character vector of category IDs of the top level object.}
 #'   \item{\code{[}/\code{[[} }{Can be used as a shortcut to index the results of \code{corpusSummary()}.}
 #'   \item{\code{tif_as_tokens_df} }{returns the \code{TT.res} slots of all texts in a single TIF[1] compliant
 #'      data.frame, i.e., \code{doc_id} is not a factor but a character vector.}
@@ -59,6 +62,20 @@ setMethod("corpusTagged",
     return(result)
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusTagged,-methods
+#'    corpusTagged,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusTagged",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="tagged")
+    return(result)
+  }
+)
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -74,6 +91,20 @@ setGeneric("corpusTagged<-", function(obj, value) standardGeneric("corpusTagged<
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusTagged<-",
   signature=signature(obj="kRp.corpus"),
+  function (obj, value){
+    slot(obj, name="tagged") <- value
+    return(obj)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusTagged<-,-methods
+#'    corpusTagged<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusTagged<-",
+  signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
     slot(obj, name="tagged") <- value
     return(obj)
@@ -98,6 +129,20 @@ setMethod("corpusReadability",
     return(result)
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusReadability,-methods
+#'    corpusReadability,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusReadability",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="readability")
+    return(result)
+  }
+)
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -113,6 +158,20 @@ setGeneric("corpusReadability<-", function(obj, value) standardGeneric("corpusRe
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusReadability<-",
   signature=signature(obj="kRp.corpus"),
+  function (obj, value){
+    slot(obj, name="readability") <- value
+    return(obj)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusReadability<-,-methods
+#'    corpusReadability<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusReadability<-",
+  signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
     slot(obj, name="readability") <- value
     return(obj)
@@ -151,6 +210,21 @@ setMethod("corpusTm",
     return(result)
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusTm,-methods
+#'    corpusTm,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusTm",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="raw")[["tm"]]
+    return(result)
+  }
+)
+
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -166,6 +240,20 @@ setGeneric("corpusTm<-", function(obj, value) standardGeneric("corpusTm<-"))
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusTm<-",
   signature=signature(obj="kRp.corpus"),
+  function (obj, value){
+    slot(obj, name="raw")[["tm"]] <- value
+    return(obj)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusTm<-,-methods
+#'    corpusTm<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusTm<-",
+  signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
     slot(obj, name="raw")[["tm"]] <- value
     return(obj)
@@ -311,6 +399,20 @@ setMethod("corpusHyphen",
     return(result)
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusHyphen,-methods
+#'    corpusHyphen,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusHyphen",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="hyphen")
+    return(result)
+  }
+)
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -326,6 +428,20 @@ setGeneric("corpusHyphen<-", function(obj, value) standardGeneric("corpusHyphen<
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusHyphen<-",
   signature=signature(obj="kRp.corpus"),
+  function (obj, value){
+    slot(obj, name="hyphen") <- value
+    return(obj)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusHyphen<-,-methods
+#'    corpusHyphen<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusHyphen<-",
+  signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
     slot(obj, name="hyphen") <- value
     return(obj)
@@ -350,6 +466,21 @@ setMethod("corpusTTR",
     return(result)
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusTTR,-methods
+#'    corpusTTR,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusTTR",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="TTR")
+    return(result)
+  }
+)
+
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -365,6 +496,20 @@ setGeneric("corpusTTR<-", function(obj, value) standardGeneric("corpusTTR<-"))
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusTTR<-",
   signature=signature(obj="kRp.corpus"),
+  function (obj, value){
+    slot(obj, name="TTR") <- value
+    return(obj)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusTTR<-,-methods
+#'    corpusTTR<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusTTR<-",
+  signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
     slot(obj, name="TTR") <- value
     return(obj)
@@ -501,7 +646,6 @@ setMethod("corpusFreq",
     return(result)
   }
 )
-
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -516,7 +660,6 @@ setMethod("corpusFreq",
     return(result)
   }
 )
-
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -531,6 +674,21 @@ setMethod("corpusFreq",
     return(result)
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusFreq,-methods
+#'    corpusFreq,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusFreq",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="freq")
+    return(result)
+  }
+)
+
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -551,7 +709,6 @@ setMethod("corpusFreq<-",
     return(obj)
   }
 )
-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -566,7 +723,6 @@ setMethod("corpusFreq<-",
     return(obj)
   }
 )
-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -578,6 +734,176 @@ setMethod("corpusFreq<-",
   signature=signature(obj="kRp.topicCorpus"),
   function (obj, value){
     slot(obj, name="freq") <- value
+    return(obj)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusFreq<-,-methods
+#'    corpusFreq<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusFreq<-",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, value){
+    slot(obj, name="freq") <- value
+    return(obj)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+setGeneric("corpusLevel", function(obj) standardGeneric("corpusLevel"))
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusLevel,-methods
+#'    corpusLevel,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusLevel",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="level")
+    return(result)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+# @param value The new value to replace the current with.
+setGeneric("corpusLevel<-", function(obj, topic, value) standardGeneric("corpusLevel<-"))
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusLevel<-,-methods
+#'    corpusLevel<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusLevel<-",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, value){
+    slot(obj, name="level") <- value
+    return(obj)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+setGeneric("corpusChildren", function(obj) standardGeneric("corpusChildren"))
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusChildren,-methods
+#'    corpusChildren,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusChildren",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="children")
+    return(result)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+# @param value The new value to replace the current with.
+setGeneric("corpusChildren<-", function(obj, topic, value) standardGeneric("corpusChildren<-"))
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusChildren<-,-methods
+#'    corpusChildren<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusChildren<-",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, value){
+    slot(obj, name="children") <- value
+    return(obj)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+setGeneric("corpusCategory", function(obj) standardGeneric("corpusCategory"))
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusCategory,-methods
+#'    corpusCategory,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusCategory",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="category")
+    return(result)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+# @param value The new value to replace the current with.
+setGeneric("corpusCategory<-", function(obj, topic, value) standardGeneric("corpusCategory<-"))
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusCategory<-,-methods
+#'    corpusCategory<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusCategory<-",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, value){
+    slot(obj, name="category") <- value
+    return(obj)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+setGeneric("corpusID", function(obj) standardGeneric("corpusID"))
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusID,-methods
+#'    corpusID,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusID",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="id")
+    return(result)
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+# @param value The new value to replace the current with.
+setGeneric("corpusID<-", function(obj, topic, value) standardGeneric("corpusID<-"))
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusID<-,-methods
+#'    corpusID<-,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusID<-",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, value){
+    slot(obj, name="id") <- value
     return(obj)
   }
 )
@@ -628,6 +954,18 @@ setMethod("[",
     return(corpusSummary(x)[i, j])
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [,-methods
+#'    [,kRp.hierarchy,ANY,ANY,ANY-method
+setMethod("[",
+  signature=signature(x="kRp.hierarchy"),
+  function (x, i, j){
+    return(corpusSummary(x)[i, j])
+  }
+)
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -663,6 +1001,19 @@ setMethod("[<-",
 #'    [<-,kRp.topicCorpus,ANY,ANY,ANY-method
 setMethod("[<-",
   signature=signature(x="kRp.topicCorpus"),
+  function (x, i, j, value){
+    corpusSummary(x)[i, j] <- value
+    return(x)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [<-,-methods
+#'    [<-,kRp.hierarchy,ANY,ANY,ANY-method
+setMethod("[<-",
+  signature=signature(x="kRp.hierarchy"),
   function (x, i, j, value){
     corpusSummary(x)[i, j] <- value
     return(x)
@@ -705,6 +1056,18 @@ setMethod("[[",
     return(corpusSummary(x)[[i]])
   }
 )
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [[,-methods
+#'    [[,kRp.hierarchy,ANY-method
+setMethod("[[",
+  signature=signature(x="kRp.hierarchy"),
+  function (x, i){
+    return(corpusSummary(x)[[i]])
+  }
+)
 
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -740,6 +1103,19 @@ setMethod("[[<-",
 #'    [[<-,kRp.topicCorpus,ANY,ANY-method
 setMethod("[[<-",
   signature=signature(x="kRp.topicCorpus"),
+  function (x, i, value){
+    corpusSummary(x)[[i]] <- value
+    return(x)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    [[<-,-methods
+#'    [[<-,kRp.hierarchy,ANY,ANY-method
+setMethod("[[<-",
+  signature=signature(x="kRp.hierarchy"),
   function (x, i, value){
     corpusSummary(x)[[i]] <- value
     return(x)
@@ -788,6 +1164,23 @@ setMethod("tif_as_tokens_df",
 setMethod("tif_as_tokens_df",
   signature=signature(tokens="kRp.topicCorpus"),
   function(tokens){
+    result <- do.call(rbind.data.frame, lapply(corpusTopics(tokens), tif_as_tokens_df))
+    rownames(result) <- NULL
+    return(result)
+  }
+)
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    tif_as_tokens_df,-methods
+#'    tif_as_tokens_df,hierarchy-method
+setMethod("tif_as_tokens_df",
+  signature=signature(tokens="kRp.hierarchy"),
+  function(tokens){
+    ## TODO:
+    stop(simpleError("fix me!"))
+
     result <- do.call(rbind.data.frame, lapply(corpusTopics(tokens), tif_as_tokens_df))
     rownames(result) <- NULL
     return(result)

@@ -5,6 +5,7 @@
 \alias{readability,kRp.corpus-method}
 \alias{readability,kRp.sourcesCorpus-method}
 \alias{readability,kRp.topicCorpus-method}
+\alias{readability,kRp.hierarchy-method}
 \title{Apply readability() to all texts in kRp.corpus objects}
 \usage{
 \S4method{readability}{kRp.corpus}(txt.file, summary = TRUE,
@@ -14,6 +15,9 @@
   mc.cores = getOption("mc.cores", 1L), quiet = TRUE, ...)
 
 \S4method{readability}{kRp.topicCorpus}(txt.file, summary = TRUE,
+  mc.cores = getOption("mc.cores", 1L), quiet = TRUE, ...)
+
+\S4method{readability}{kRp.hierarchy}(txt.file, summary = TRUE,
   mc.cores = getOption("mc.cores", 1L), quiet = TRUE, ...)
 }
 \arguments{
