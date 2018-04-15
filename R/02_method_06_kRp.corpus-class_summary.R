@@ -167,6 +167,91 @@ setMethod("summary", signature(object="kRp.topicCorpus"), function(object){
   }
 )
 
+#' @aliases summary,kRp.hierarchy-method
+#' @docType methods
+#' @rdname summary-methods
+#' @export
+setMethod("summary", signature(object="kRp.hierarchy"), function(
+  object, missing=NA, ...
+){
+    if(corpusLevel(object) > 0){
+      ## TODO: replace with categories and do recursion
+      all.topics <- corpusTopics(object)
+
+      # to not run into issues because of missing measures,
+      # globally set the values
+      available <- whatIsAvailable(all.corpora=all.topics, level="topics")
+
+      for (thisTopic in names(all.topics)){
+        all.topics[[thisTopic]] <- summary(all.topics[[thisTopic]],
+          available.rdb=available[["available.rdb"]],
+          available.TTR=available[["available.TTR"]])
+      }
+      corpusTopics(object) <- all.topics
+
+      allSummary <- corpusSummary(all.topics[[1]])
+      for (thisSummary in all.topics[-1]){
+        allSummary <- rbind(allSummary, corpusSummary(thisSummary))
+      }
+      corpusSummary(object) <- allSummary
+    } else {
+      # initialize the data.frame
+      summary.info <- data.frame(
+        doc_id=meta(corpusTm(object))[["textID"]],
+  #       topic=corpusMeta(object, "topic"),
+  #       source=corpusMeta(object, "source"),
+        stopwords=corpusMeta(object, "stopwords")
+      )
+
+      summary.rdb <- summary.lexdiv <- NULL
+
+      available <- availableFromOptions(allOptions=list(...), object=object)
+      available.rdb <- available[["available.rdb"]]
+      available.TTR <- available[["available.TTR"]]
+
+      if(!is.null(available.rdb)){
+        if(length(available.rdb[["index"]]) > 0){
+          summary.rdb <- t(as.data.frame(sapply(names(corpusReadability(object)), function(thisText){
+              thisSummary <- summary(corpusReadability(object)[[thisText]], flat=TRUE)
+              return(fixMissingIndices(have=thisSummary, want=available.rdb[["index"]], missing=missing))
+          }, simplify=FALSE)))
+          summary.info <- cbind(
+            summary.info,
+            getRdbDesc(object),
+            summary.rdb
+          )
+        } else {}
+      } else {}
+      if(!is.null(available.TTR)){
+        if(length(available.TTR[["index"]]) > 0){
+          summary.lexdiv <- t(as.data.frame(sapply(names(corpusTTR(object)), function(thisText){
+              thisSummary <- summary(corpusTTR(object)[[thisText]], flat=TRUE)
+              return(fixMissingIndices(have=thisSummary, want=available.TTR[["index"]], missing=missing))
+          }, simplify=FALSE)))
+          # suppress a second TTR
+          if("TTR" %in% colnames(summary.info) & "TTR" %in% colnames(summary.lexdiv)){
+            summary.lexdiv <- subset(summary.lexdiv, select=-TTR)
+          } else {}
+          summary.info <- cbind(
+            summary.info,
+            summary.lexdiv
+          )
+        } else {}
+      } else {}
+
+      if(!is.null(summary.info)){
+        rownames(summary.info) <- as.character(summary.info[["doc_id"]])
+      } else {
+        summary.info <- data.frame()
+      }
+      
+      corpusSummary(object) <- summary.info
+    }
+    return(object)
+  }
+)
+
+
 #' @rdname summary-methods
 #' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
 #'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or

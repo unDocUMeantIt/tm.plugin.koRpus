@@ -101,9 +101,14 @@ readCorpus <- function(
                 ...
                ){
   # analysis is done recursively by an internal function
+  hierarchy_branch <- matrix(c(id, names(id)), nrow=2, dimnames=list(c("id","dir"), category))
+#   hierarchy_branch <- id
+#   names(hierarchy_branch) <- category
   result <- readCorpus_internal(
     dir=dir,
     hierarchy=hierarchy,
+    all_hierarchy=hierarchy,
+    hierarchy_branch=hierarchy_branch,
     lang=lang,
     tagger=tagger,
     encoding=encoding,
@@ -125,6 +130,8 @@ readCorpus <- function(
 readCorpus_internal <- function(
                         dir,
                         hierarchy,
+                        all_hierarchy,
+                        hierarchy_branch,
                         lang,
                         tagger,
                         encoding,
@@ -167,9 +174,15 @@ readCorpus_internal <- function(
       seq_along(subdirs),
       function(thisSubdirNum){
         thisSubdir <- subdirs[thisSubdirNum]
+        thisID <- thisLevel[thisSubdirNum]
+        thisCategory <- names(hierarchy)[1]
+        new_hierarchy_branch <- matrix(c(thisID, names(thisID)), nrow=2, dimnames=list(c("id","dir"), thisCategory))
+        #names(new_hierarchy_branch) <- thisCategory
         readCorpus_internal(
           dir=thisSubdir,
           hierarchy=hierarchy[-1],
+          all_hierarchy=all_hierarchy,
+          hierarchy_branch=cbind(hierarchy_branch, new_hierarchy_branch),
           lang=lang,
           tagger=tagger,
           encoding=encoding,
@@ -181,8 +194,8 @@ readCorpus_internal <- function(
           mc.cores=mc.cores,
           level=level - 1,
           all_levels=all_levels,
-          category=names(hierarchy)[1],
-          id=thisLevel[thisSubdirNum],
+          category=thisCategory,
+          id=thisID,
           ...
         )
       }
@@ -192,7 +205,13 @@ readCorpus_internal <- function(
       category=category,
       id=id,
       path=dir,
-      children=children
+      children=children,
+      meta=list(
+        hierarchy=all_hierarchy,
+        hierarchy_branch=hierarchy_branch,
+        category=category,
+        id=id
+      )
     )
   } else {
     # actually parse texts
@@ -201,7 +220,13 @@ readCorpus_internal <- function(
       category=category,
       id=id,
       path=dir,
-      files=as.list(list.files(dir))
+      files=as.list(list.files(dir)),
+      meta=list(
+        hierarchy=all_hierarchy,
+        hierarchy_branch=hierarchy_branch,
+        category=category,
+        id=id
+      )
     )
     numTexts <- length(slot(result, "files"))
     msgText <- paste0(
@@ -238,10 +263,8 @@ readCorpus_internal <- function(
     names(slot(result, "raw")) <- "tm"
     numTexts <- length(corpusTm(result))
     nameNum <- sprintf("%02d", 1:numTexts)
-    text_ID <- textID(src=id, topic=category, nameNum=nameNum)
+    text_ID <- textID(src=names(id), topic=category, nameNum=nameNum)
     meta(corpusTm(result), tag="textID") <- text_ID
-    corpusMeta(result, "category") <- category
-    corpusMeta(result, "id") <- id
 
     corpusTagged <- mclapply(
       1:numTexts,
