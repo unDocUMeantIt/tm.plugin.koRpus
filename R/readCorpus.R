@@ -114,6 +114,7 @@ readCorpus <- function(
     format=format,
     mc.cores=mc.cores,
     level=length(hierarchy),
+    all_levels=length(hierarchy),
     category=category,
     id=id,
     ...
@@ -134,8 +135,9 @@ readCorpus_internal <- function(
                         format,
                         mc.cores,
                         level=0,
-                        id,
+                        all_levels=0,
                         category,
+                        id,
                         ...
                       ){
   taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
@@ -154,6 +156,13 @@ readCorpus_internal <- function(
     # start recursion on top level of hierarchy
     thisLevel <- hierarchy[[1]]
     subdirs <- normalizePath(file.path(dir, names(thisLevel)), mustWork=TRUE)
+    msgText <- paste0(
+      paste0(rep("  ", all_levels - level), collapse=""),
+      ifelse(identical(all_levels, level), "processing ", ""),
+      ifelse(nchar(category) > 0, paste0(category, " "), ""),
+      ifelse(nchar(id) > 0, paste0("\"", id, "\""), "")
+    )
+    message(msgText)
     children <- lapply(
       seq_along(subdirs),
       function(thisSubdirNum){
@@ -171,8 +180,9 @@ readCorpus_internal <- function(
           format=format,
           mc.cores=mc.cores,
           level=level - 1,
+          all_levels=all_levels,
           category=names(hierarchy)[1],
-          id=names(thisLevel)[thisSubdirNum],
+          id=thisLevel[thisSubdirNum],
           ...
         )
       }
@@ -193,6 +203,15 @@ readCorpus_internal <- function(
       path=dir,
       files=as.list(list.files(dir))
     )
+    numTexts <- length(slot(result, "files"))
+    msgText <- paste0(
+      paste0(rep("  ", all_levels - level), collapse=""),
+      ifelse(nchar(category) > 0, paste0(category, " "), ""),
+      ifelse(nchar(id) > 0, paste0("\"", id, "\", "), ", "),
+      numTexts,
+      ifelse(numTexts > 1, " texts...", " text...")
+    )
+    message(msgText)
     if(identical(format, "file")){
       slot(result, "raw") <- list(VCorpus(
         DirSource(
