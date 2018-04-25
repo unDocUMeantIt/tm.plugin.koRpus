@@ -49,27 +49,40 @@ nullToList <- function(obj, entry="index"){
 
 
 ## function whatIsAvailable()
-whatIsAvailable <- function(all.corpora, level="sources"){
-  if(identical(level, "sources")){
-    available.rdb <- unlist(lapply(all.corpora, function(thisCorpus){
-        corpusMeta(thisCorpus, "readability", fail=FALSE)[["index"]]
-      })
-    )
-    available.TTR <- unlist(lapply(all.corpora, function(thisCorpus){
-        corpusMeta(thisCorpus, "TTR", fail=FALSE)[["index"]]
-      })
-    )
-  } else if(identical(level, "topics")){
-    available.rdb <- unlist(lapply(all.corpora, function(thisCorpus){
-        whatIsAvailable(corpusSources(thisCorpus), level="sources")[["available.rdb"]]
-      })
-    )
-    available.TTR <- unlist(lapply(all.corpora, function(thisCorpus){
-        whatIsAvailable(corpusSources(thisCorpus), level="sources")[["available.TTR"]]
-      })
-    )
+whatIsAvailable <- function(all.corpora, level="sources", hierarchy=FALSE){
+  if(isTRUE(hierarchy)){
+    if(corpusLevel(all.corpora) > 0){
+      ## TODO:
+      # corpusID()
+      message(":::whatIsAvailable(): corpusID()")
+    } else {
+      ## TODO:
+      # recursion
+      message(":::whatIsAvailable(): recursion...")
+    }
   } else {
-    stop(simpleError(paste0("Unknown level \"", level, "\" for internal function  whatIsAvailable()")))
+    ## TODO: remove this stuff if kRp.hierachy is finished
+    if(identical(level, "sources")){
+      available.rdb <- unlist(lapply(all.corpora, function(thisCorpus){
+          corpusMeta(thisCorpus, "readability", fail=FALSE)[["index"]]
+        })
+      )
+      available.TTR <- unlist(lapply(all.corpora, function(thisCorpus){
+          corpusMeta(thisCorpus, "TTR", fail=FALSE)[["index"]]
+        })
+      )
+    } else if(identical(level, "topics")){
+      available.rdb <- unlist(lapply(all.corpora, function(thisCorpus){
+          whatIsAvailable(corpusSources(thisCorpus), level="sources")[["available.rdb"]]
+        })
+      )
+      available.TTR <- unlist(lapply(all.corpora, function(thisCorpus){
+          whatIsAvailable(corpusSources(thisCorpus), level="sources")[["available.TTR"]]
+        })
+      )
+    } else {
+      stop(simpleError(paste0("Unknown level \"", level, "\" for internal function  whatIsAvailable()")))
+    }
   }
   available.rdb <- nullToList(available.rdb, entry="index")
   available.TTR <- nullToList(available.TTR, entry="index")

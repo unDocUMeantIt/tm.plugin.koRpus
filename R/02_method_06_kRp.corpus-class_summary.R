@@ -148,7 +148,7 @@ setMethod("summary", signature(object="kRp.topicCorpus"), function(object){
 
     # to not run into issues because of missing measures,
     # globally set the values
-    available <- whatIsAvailable(all.corpora=all.topics, level="topics")
+    available <- whatIsAvailable(all.corpora=all.topics, level="topics", hierarchy=TRUE)
 
     for (thisTopic in names(all.topics)){
       all.topics[[thisTopic]] <- summary(all.topics[[thisTopic]],
