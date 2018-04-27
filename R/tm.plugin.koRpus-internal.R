@@ -52,13 +52,17 @@ nullToList <- function(obj, entry="index"){
 whatIsAvailable <- function(all.corpora, level="sources", hierarchy=FALSE){
   if(isTRUE(hierarchy)){
     if(corpusLevel(all.corpora) > 0){
-      ## TODO:
-      # corpusID()
-      message(":::whatIsAvailable(): corpusID()")
+        available.rdb <- unlist(lapply(corpusChildren(all.corpora), function(thisCorpus){
+            whatIsAvailable(thisCorpus, hierarchy=TRUE)[["available.rdb"]]
+          })
+        )
+        available.TTR <- unlist(lapply(corpusChildren(all.corpora), function(thisCorpus){
+            whatIsAvailable(thisCorpus, hierarchy=TRUE)[["available.TTR"]]
+          })
+        )
     } else {
-      ## TODO:
-      # recursion
-      message(":::whatIsAvailable(): recursion...")
+      available.rdb <- unlist(corpusMeta(all.corpora, "readability", fail=FALSE)[["index"]])
+      available.TTR <- unlist(corpusMeta(all.corpora, "TTR", fail=FALSE)[["index"]])
     }
   } else {
     ## TODO: remove this stuff if kRp.hierachy is finished

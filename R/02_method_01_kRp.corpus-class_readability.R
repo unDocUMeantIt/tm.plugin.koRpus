@@ -123,7 +123,7 @@ setMethod("readability", signature(txt.file="kRp.topicCorpus"), function(txt.fil
 #' @rdname readability-methods
 #' @export
 setMethod("readability", signature(txt.file="kRp.hierarchy"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
-    if(identical(slot(txt.file, "level"), 0)){
+    if(identical(corpusLevel(txt.file), 0)){
       corpusReadability(txt.file) <- mclapply(names(corpusTagged(txt.file)), function(thisText){
         if(thisText %in% names(corpusHyphen(txt.file)) & is.null(list(...)[["hyphen"]])){
           # we probably need to drop one of two hyphen arguments of

@@ -148,7 +148,7 @@ setMethod("summary", signature(object="kRp.topicCorpus"), function(object){
 
     # to not run into issues because of missing measures,
     # globally set the values
-    available <- whatIsAvailable(all.corpora=all.topics, level="topics", hierarchy=TRUE)
+    available <- whatIsAvailable(all.corpora=all.topics, level="topics")
 
     for (thisTopic in names(all.topics)){
       all.topics[[thisTopic]] <- summary(all.topics[[thisTopic]],
@@ -176,21 +176,21 @@ setMethod("summary", signature(object="kRp.hierarchy"), function(
 ){
     if(corpusLevel(object) > 0){
       ## TODO: replace with categories and do recursion
-      all.topics <- corpusTopics(object)
+      all.children <- corpusChildren(object)
 
       # to not run into issues because of missing measures,
       # globally set the values
-      available <- whatIsAvailable(all.corpora=all.topics, level="topics")
+      available <- whatIsAvailable(all.corpora=all.children, hierarchy=TRUE)
 
-      for (thisTopic in names(all.topics)){
-        all.topics[[thisTopic]] <- summary(all.topics[[thisTopic]],
+      for (thisChild in names(all.children)){
+        all.children[[thisChild]] <- summary(all.children[[thisChild]],
           available.rdb=available[["available.rdb"]],
           available.TTR=available[["available.TTR"]])
       }
-      corpusTopics(object) <- all.topics
+      corpusChildren(object) <- all.children
 
-      allSummary <- corpusSummary(all.topics[[1]])
-      for (thisSummary in all.topics[-1]){
+      allSummary <- corpusSummary(all.children[[1]])
+      for (thisSummary in all.children[-1]){
         allSummary <- rbind(allSummary, corpusSummary(thisSummary))
       }
       corpusSummary(object) <- allSummary
@@ -305,6 +305,21 @@ setMethod("corpusSummary",
 )
 
 #' @rdname summary-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusSummary,-methods
+#'    corpusSummary,kRp.hierarchy-method
+#' @include 01_class_04_kRp.hierarchy.R
+setMethod("corpusSummary",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj){
+    result <- slot(obj, name="summary")
+    return(result)
+  }
+)
+
+#' @rdname summary-methods
 #' @export
 #' @docType methods
 #' @param value The new value to replace the current with.
@@ -348,6 +363,21 @@ setMethod("corpusSummary<-",
 #' @include 01_class_03_kRp.topicCorpus.R
 setMethod("corpusSummary<-",
   signature=signature(obj="kRp.topicCorpus"),
+  function (obj, value){
+    slot(obj, name="summary") <- value
+    return(obj)
+  }
+)
+
+#' @rdname summary-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusSummary<-,-methods
+#'    corpusSummary<-,hierarchy-method
+#' @include 01_class_03_kRp.hierarchy.R
+setMethod("corpusSummary<-",
+  signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
     slot(obj, name="summary") <- value
     return(obj)
