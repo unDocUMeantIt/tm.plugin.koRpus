@@ -184,7 +184,8 @@ setMethod("summary", signature(object="kRp.hierarchy"), function(
       for (thisChild in names(all.children)){
         all.children[[thisChild]] <- summary(all.children[[thisChild]],
           available.rdb=available[["available.rdb"]],
-          available.TTR=available[["available.TTR"]])
+          available.TTR=available[["available.TTR"]]
+        )
       }
       corpusChildren(object) <- all.children
 
@@ -196,8 +197,22 @@ setMethod("summary", signature(object="kRp.hierarchy"), function(
     } else {
       # initialize the data.frame
       hierarchy_branch <- corpusMeta(object)[["hierarchy_branch"]]
-      summary.info <- as.data.frame(hierarchy_branch)["id",]
-      summary.info[["doc_id"]] <- meta(corpusTm(object))[["textID"]]
+      hierarchy_branch_id <- hierarchy_branch["id",]
+      hierarchy_branch_names <- colnames(hierarchy_branch)
+      text_IDs <- meta(corpusTm(object))[["textID"]]
+      summary.info <- as.data.frame(
+        matrix(
+          hierarchy_branch_id,
+          nrow=length(text_IDs),
+          ncol=length(hierarchy_branch_id),
+          byrow=TRUE,
+          dimnames=list(
+            c(),
+            hierarchy_branch_names
+          )
+        )
+      )
+      summary.info[["doc_id"]] <- text_IDs
       summary.info[["stopwords"]] <- corpusMeta(object, "stopwords")
 
       summary.rdb <- summary.lexdiv <- NULL
