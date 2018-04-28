@@ -199,12 +199,6 @@ setMethod("summary", signature(object="kRp.hierarchy"), function(
       summary.info <- as.data.frame(hierarchy_branch)["id",]
       summary.info[["doc_id"]] <- meta(corpusTm(object))[["textID"]]
       summary.info[["stopwords"]] <- corpusMeta(object, "stopwords")
-#       data.frame(
-#         doc_id=meta(corpusTm(object))[["textID"]],
-#   #       topic=corpusMeta(object, "topic"),
-#   #       source=corpusMeta(object, "source"),
-#         stopwords=corpusMeta(object, "stopwords")
-#       )
 
       summary.rdb <- summary.lexdiv <- NULL
 
