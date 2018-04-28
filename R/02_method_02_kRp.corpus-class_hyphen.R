@@ -79,3 +79,19 @@ setMethod("hyphen", signature(words="kRp.topicCorpus"), function(words, mc.cores
     return(words)
   }
 )
+
+#' @aliases hyphen,kRp.hierarchy-method
+#' @docType methods
+#' @rdname hyphen-methods
+#' @export
+setMethod("hyphen", signature(words="kRp.hierarchy"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
+    if(corpusLevel(words) > 0){
+      corpusChildren(words) <- lapply(corpusChildren(words), hyphen, mc.cores=mc.cores, quiet=quiet, ...)
+    } else {
+      corpusHyphen(words) <- mclapply(corpusTagged(words), function(thisText){
+        hyphen(thisText, quiet=quiet, ...)
+      }, mc.cores=mc.cores)
+    }
+    return(words)
+  }
+)

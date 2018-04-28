@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -104,6 +104,38 @@ setMethod("lex.div", signature(txt="kRp.topicCorpus"), function(txt, summary=TRU
     if(isTRUE(summary)){
       txt <- summary(txt)
     } else {}
+
+    return(txt)
+  }
+)
+
+#' @aliases lex.div,kRp.hierarchy-method
+#' @docType methods
+#' @rdname lex.div-methods
+#' @export
+setMethod("lex.div", signature(txt="kRp.hierarchy"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
+    if(corpusLevel(txt) > 0){
+      corpusChildren(txt) <- lapply(corpusChildren(txt), lex.div, summary=summary, mc.cores=mc.cores, char=char, quiet=quiet, ...)
+    } else {
+      corpusTTR(txt) <- mclapply(corpusTagged(txt), function(thisText){
+        lex.div(thisText, char=char, quiet=quiet, ...)
+      }, mc.cores=mc.cores)
+      # store meta-information on the maximum of available indices.
+      # a mere summary() will simply omit NA values which can later cause
+      # problems when we want to aggregate all summaries into one data.frame
+      corpusMeta(txt, "TTR") <- list(index=c())
+      corpusMeta(txt, "TTR")[["index"]] <- sort(
+        unique(
+          unlist(mclapply(corpusTTR(txt), function(thisText){
+              return(names(summary(thisText, flat=TRUE)))
+            }, mc.cores=mc.cores)
+          )
+        )
+      )
+      if(isTRUE(summary)){
+        txt <- summary(txt)
+      } else {}
+    }
 
     return(txt)
   }
