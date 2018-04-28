@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -54,6 +54,26 @@ setMethod("correct.hyph",
     corpusHyphen(obj) <- lapply(corpusTagged(obj), function(thisText){
       correct.hyph(thisText, word=word, hyphen=hyphen, cache=cache)
     })
+    return(obj)
+  }
+)
+
+#' @aliases correct.hyph,kRp.hierarchy-method
+#' @docType methods
+#' @rdname correct.hyph-methods
+#' @export
+setMethod("correct.hyph",
+  signature(obj="kRp.hierarchy"),
+  function (obj, word=NULL, hyphen=NULL, cache=TRUE){
+     if(corpusLevel(obj) > 0){
+      corpusChildren(obj) <- lapply(corpusChildren(obj), correct.hyph, word=word, hyphen=hyphen, cache=cache)
+    } else {
+      corpusHyphen(obj) <- lapply(corpusTagged(obj), function(thisText){
+          correct.hyph(thisText, word=word, hyphen=hyphen, cache=cache)
+        }
+      )
+    }
+
     return(obj)
   }
 )

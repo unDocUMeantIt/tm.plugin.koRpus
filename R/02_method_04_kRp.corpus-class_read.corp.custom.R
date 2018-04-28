@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -130,6 +130,26 @@ setMethod("read.corp.custom", signature(corpus="kRp.topicCorpus"), function(corp
     slot(corpus, "topics") <- all.topics
     # analysis on full corpus
     slot(corpus, "freq") <- read.corp.custom(all.tagged, ...)
+
+    return(corpus)
+  }
+)
+
+#' @aliases read.corp.custom,kRp.hierarchy-method
+#' @docType methods
+#' @rdname read.corp.custom-methods
+#' @export
+setMethod("read.corp.custom", signature(corpus="kRp.hierarchy"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
+    if(corpusLevel(corpus) > 0){
+      corpusChildren(corpus) <- lapply(corpusChildren(corpus), read.corp.custom, mc.cores=mc.cores, ...)
+    } else {
+      # individual tests
+      corpusFreq(corpus)[["texts"]] <- mclapply(corpusTagged(corpus), function(thisText){
+        read.corp.custom(thisText, ...)
+      }, mc.cores=mc.cores)
+      # analysis on full corpus
+      corpusFreq(corpus)[["corpus"]] <- read.corp.custom(corpusTagged(corpus), ...)
+    }
 
     return(corpus)
   }

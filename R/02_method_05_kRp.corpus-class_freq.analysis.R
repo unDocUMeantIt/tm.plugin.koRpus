@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -74,6 +74,23 @@ setMethod("freq.analysis", signature(txt.file="kRp.topicCorpus"), function(txt.f
       all.topics[[thisTopic]] <- freq.analysis(all.topics[[thisTopic]], mc.cores=mc.cores, ...)
     }
     corpusTopics(txt.file) <- all.topics
+
+    return(txt.file)
+  }
+)
+
+#' @aliases freq.analysis,kRp.hierarchy-method
+#' @docType methods
+#' @rdname freq.analysis-methods
+#' @export
+setMethod("freq.analysis", signature(txt.file="kRp.hierarchy"), function(txt.file, mc.cores=getOption("mc.cores", 1L), ...){
+    if(corpusLevel(txt.file) > 0){
+      corpusChildren(txt.file) <- lapply(corpusChildren(txt.file), freq.analysis, mc.cores=mc.cores, ...)
+    } else {
+      corpusTagged(txt.file) <- mclapply(corpusTagged(txt.file), function(thisText){
+        freq.analysis(thisText, ...)
+      }, mc.cores=mc.cores)
+    }
 
     return(txt.file)
   }
