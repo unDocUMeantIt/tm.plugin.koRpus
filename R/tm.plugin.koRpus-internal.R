@@ -1,4 +1,4 @@
-# Copyright 2015 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -16,6 +16,7 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 # ensure consistency for text IDs
+## TODO: remove this function when hierarchy works
 textID <- function(src, topic, nameNum){paste0(src, topic, nameNum)}
 
 
@@ -51,13 +52,13 @@ nullToList <- function(obj, entry="index"){
 ## function whatIsAvailable()
 whatIsAvailable <- function(all.corpora, level="sources", hierarchy=FALSE){
   if(isTRUE(hierarchy)){
-    if(corpusLevel(all.corpora) > 0){
+    if(level > 0){
         available.rdb <- unlist(lapply(corpusChildren(all.corpora), function(thisCorpus){
-            whatIsAvailable(thisCorpus, hierarchy=TRUE)[["available.rdb"]]
+            whatIsAvailable(thisCorpus, level=corpusLevel(thisCorpus), hierarchy=TRUE)[["available.rdb"]]
           })
         )
         available.TTR <- unlist(lapply(corpusChildren(all.corpora), function(thisCorpus){
-            whatIsAvailable(thisCorpus, hierarchy=TRUE)[["available.TTR"]]
+            whatIsAvailable(thisCorpus, level=corpusLevel(thisCorpus), hierarchy=TRUE)[["available.TTR"]]
           })
         )
     } else {

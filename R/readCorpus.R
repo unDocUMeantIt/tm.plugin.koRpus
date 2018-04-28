@@ -122,6 +122,7 @@ readCorpus <- function(
     all_levels=length(hierarchy),
     category=category,
     id=id,
+    text_id=id,
     ...
   )
   return(result)
@@ -144,7 +145,8 @@ readCorpus_internal <- function(
                         level=0,
                         all_levels=0,
                         category,
-                        id,
+                        id,             # ID of current level
+                        text_id,        # will grow longer with each hierarchy level
                         ...
                       ){
   taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
@@ -175,6 +177,7 @@ readCorpus_internal <- function(
       function(thisSubdirNum){
         thisSubdir <- subdirs[thisSubdirNum]
         thisID <- thisLevel[thisSubdirNum]
+        thisIDName <- names(thisLevel)[thisSubdirNum]
         thisCategory <- names(hierarchy)[1]
         new_hierarchy_branch <- matrix(c(thisID, names(thisID)), nrow=2, dimnames=list(c("id","dir"), thisCategory))
         #names(new_hierarchy_branch) <- thisCategory
@@ -196,10 +199,12 @@ readCorpus_internal <- function(
           all_levels=all_levels,
           category=thisCategory,
           id=thisID,
+          text_id=paste0(text_id, thisIDName),
           ...
         )
       }
     )
+    names(children) <- sapply(children, corpusID)
     result <- kRp_hierarchy(
       level=level,
       category=category,
@@ -263,18 +268,18 @@ readCorpus_internal <- function(
     names(slot(result, "raw")) <- "tm"
     numTexts <- length(corpusTm(result))
     nameNum <- sprintf("%02d", 1:numTexts)
-    text_ID <- textID(src=names(id), topic=category, nameNum=nameNum)
-    meta(corpusTm(result), tag="textID") <- text_ID
+    text_id <- paste0(text_id, nameNum) # TODO: remove textID(src=names(id), topic=category, nameNum=nameNum)
+    meta(corpusTm(result), tag="textID") <- text_id
 
     corpusTagged <- mclapply(
       1:numTexts,
       function(thisTextNum){
         thisText <- corpusTm(result)[[thisTextNum]]
-        taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=text_ID[thisTextNum], ...)
+        taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=text_id[thisTextNum], ...)
       },
       mc.cores=mc.cores
     )
-    names(corpusTagged) <- text_ID
+    names(corpusTagged) <- text_id
     corpusMeta(result, "stopwords") <- unlist(mclapply(
       corpusTagged,
       function(thisTaggedText){

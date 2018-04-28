@@ -174,14 +174,13 @@ setMethod("summary", signature(object="kRp.topicCorpus"), function(object){
 setMethod("summary", signature(object="kRp.hierarchy"), function(
   object, missing=NA, ...
 ){
-    if(corpusLevel(object) > 0){
-      ## TODO: replace with categories and do recursion
+    currentLevel <- corpusLevel(object)
+    if(currentLevel > 0){
       all.children <- corpusChildren(object)
 
       # to not run into issues because of missing measures,
       # globally set the values
-      available <- whatIsAvailable(all.corpora=all.children, hierarchy=TRUE)
-
+      available <- whatIsAvailable(all.corpora=object, level=currentLevel, hierarchy=TRUE)
       for (thisChild in names(all.children)){
         all.children[[thisChild]] <- summary(all.children[[thisChild]],
           available.rdb=available[["available.rdb"]],
@@ -196,12 +195,16 @@ setMethod("summary", signature(object="kRp.hierarchy"), function(
       corpusSummary(object) <- allSummary
     } else {
       # initialize the data.frame
-      summary.info <- data.frame(
-        doc_id=meta(corpusTm(object))[["textID"]],
-  #       topic=corpusMeta(object, "topic"),
-  #       source=corpusMeta(object, "source"),
-        stopwords=corpusMeta(object, "stopwords")
-      )
+      hierarchy_branch <- corpusMeta(object)[["hierarchy_branch"]]
+      summary.info <- as.data.frame(hierarchy_branch)["id",]
+      summary.info[["doc_id"]] <- meta(corpusTm(object))[["textID"]]
+      summary.info[["stopwords"]] <- corpusMeta(object, "stopwords")
+#       data.frame(
+#         doc_id=meta(corpusTm(object))[["textID"]],
+#   #       topic=corpusMeta(object, "topic"),
+#   #       source=corpusMeta(object, "source"),
+#         stopwords=corpusMeta(object, "stopwords")
+#       )
 
       summary.rdb <- summary.lexdiv <- NULL
 
