@@ -125,6 +125,9 @@ setMethod("readability", signature(txt.file="kRp.topicCorpus"), function(txt.fil
 setMethod("readability", signature(txt.file="kRp.hierarchy"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     if(corpusLevel(txt.file) > 0){
       corpusChildren(txt.file) <- lapply(corpusChildren(txt.file), readability, summary=summary, mc.cores=mc.cores, quiet=quiet, ...)
+      if(isTRUE(summary)){
+        txt.file <- summary(txt.file)
+      } else {}
     } else {
       corpusReadability(txt.file) <- mclapply(names(corpusTagged(txt.file)), function(thisText){
         if(thisText %in% names(corpusHyphen(txt.file)) & is.null(list(...)[["hyphen"]])){

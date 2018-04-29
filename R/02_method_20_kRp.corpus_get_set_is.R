@@ -1196,10 +1196,8 @@ setMethod("tif_as_tokens_df",
 setMethod("tif_as_tokens_df",
   signature=signature(tokens="kRp.hierarchy"),
   function(tokens){
-    ## TODO:
-    stop(simpleError("fix me!"))
-
-    result <- do.call(rbind.data.frame, lapply(corpusTopics(tokens), tif_as_tokens_df))
+    bottom_level <- unlist(lapply(corpusChildren(tokens, level=0), corpusTagged))
+    result <- do.call(rbind.data.frame, lapply(bottom_level, tif_as_tokens_df))
     rownames(result) <- NULL
     return(result)
   }

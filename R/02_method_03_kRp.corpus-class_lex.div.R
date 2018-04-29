@@ -116,6 +116,9 @@ setMethod("lex.div", signature(txt="kRp.topicCorpus"), function(txt, summary=TRU
 setMethod("lex.div", signature(txt="kRp.hierarchy"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
     if(corpusLevel(txt) > 0){
       corpusChildren(txt) <- lapply(corpusChildren(txt), lex.div, summary=summary, mc.cores=mc.cores, char=char, quiet=quiet, ...)
+      if(isTRUE(summary)){
+        txt <- summary(txt)
+      } else {}
     } else {
       corpusTTR(txt) <- mclapply(corpusTagged(txt), function(thisText){
         lex.div(thisText, char=char, quiet=quiet, ...)
