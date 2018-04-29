@@ -694,7 +694,7 @@ setMethod("corpusFreq",
 #' @export
 #' @docType methods
 # @param value The new value to replace the current with.
-setGeneric("corpusFreq<-", function(obj, topic, value) standardGeneric("corpusFreq<-"))
+setGeneric("corpusFreq<-", function(obj, value) standardGeneric("corpusFreq<-"))
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -775,7 +775,7 @@ setMethod("corpusLevel",
 #' @export
 #' @docType methods
 # @param value The new value to replace the current with.
-setGeneric("corpusLevel<-", function(obj, topic, value) standardGeneric("corpusLevel<-"))
+setGeneric("corpusLevel<-", function(obj, value) standardGeneric("corpusLevel<-"))
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -792,9 +792,12 @@ setMethod("corpusLevel<-",
 )
 
 #' @rdname kRp.corpus_get-methods
+#' @param level Numeric value specifying the level of child objects you want to get.
+#'    If \code{NULL} then the child objects of the current top level are returned,
+#'    otherwise all children at the level specified.
 #' @docType methods
 #' @export
-setGeneric("corpusChildren", function(obj) standardGeneric("corpusChildren"))
+setGeneric("corpusChildren", function(obj, level=NULL) standardGeneric("corpusChildren"))
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -804,9 +807,24 @@ setGeneric("corpusChildren", function(obj) standardGeneric("corpusChildren"))
 #' @include 01_class_04_kRp.hierarchy.R
 setMethod("corpusChildren",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj){
-    result <- slot(obj, name="children")
-    return(result)
+  function (obj, level=NULL){
+    child_obj <- slot(obj, name="children")
+    if(!is.null(level)){
+      if(!is.numeric(level)){
+        stop(simpleError("Invalid value for \"level\" given!"))
+      } else {}
+      obj_level <- corpusLevel(obj)
+      if(obj_level < level){
+        stop(simpleError("The value for \"level\" can't be greater than the object's top level!"))
+      } else if(obj_level > level){
+        child_obj <- slot(obj, name="children")
+        while(level < (obj_level - 1)){
+          child_obj <- unlist(lapply(child_obj, corpusChildren))
+          obj_level <- obj_level - 1
+        }
+      } else {}
+    } else {}
+    return(child_obj)
   }
 )
 
@@ -814,7 +832,7 @@ setMethod("corpusChildren",
 #' @export
 #' @docType methods
 # @param value The new value to replace the current with.
-setGeneric("corpusChildren<-", function(obj, topic, value) standardGeneric("corpusChildren<-"))
+setGeneric("corpusChildren<-", function(obj, value) standardGeneric("corpusChildren<-"))
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -853,7 +871,7 @@ setMethod("corpusCategory",
 #' @export
 #' @docType methods
 # @param value The new value to replace the current with.
-setGeneric("corpusCategory<-", function(obj, topic, value) standardGeneric("corpusCategory<-"))
+setGeneric("corpusCategory<-", function(obj, value) standardGeneric("corpusCategory<-"))
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -892,7 +910,7 @@ setMethod("corpusID",
 #' @export
 #' @docType methods
 # @param value The new value to replace the current with.
-setGeneric("corpusID<-", function(obj, topic, value) standardGeneric("corpusID<-"))
+setGeneric("corpusID<-", function(obj, value) standardGeneric("corpusID<-"))
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods

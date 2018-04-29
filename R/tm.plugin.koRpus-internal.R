@@ -52,19 +52,22 @@ nullToList <- function(obj, entry="index"){
 ## function whatIsAvailable()
 whatIsAvailable <- function(all.corpora, level="sources", hierarchy=FALSE){
   if(isTRUE(hierarchy)){
-    if(level > 0){
-        available.rdb <- unlist(lapply(corpusChildren(all.corpora), function(thisCorpus){
-            whatIsAvailable(thisCorpus, level=corpusLevel(thisCorpus), hierarchy=TRUE)[["available.rdb"]]
-          })
-        )
-        available.TTR <- unlist(lapply(corpusChildren(all.corpora), function(thisCorpus){
-            whatIsAvailable(thisCorpus, level=corpusLevel(thisCorpus), hierarchy=TRUE)[["available.TTR"]]
-          })
-        )
-    } else {
-      available.rdb <- unlist(corpusMeta(all.corpora, "readability", fail=FALSE)[["index"]])
-      available.TTR <- unlist(corpusMeta(all.corpora, "TTR", fail=FALSE)[["index"]])
-    }
+    # this fetches all level 0 objects from the nested corpus
+    # result is a list
+    bottom_level <- corpusChildren(all.corpora, level=0)
+    # now get all availability info from that list
+    available.rdb <- unique(unlist(lapply(
+      bottom_level,
+      function(thisCorpus){
+        unlist(corpusMeta(thisCorpus, "readability", fail=FALSE)[["index"]])
+      }
+    )))
+    available.TTR <- unique(unlist(lapply(
+      bottom_level,
+      function(thisCorpus){
+        unlist(corpusMeta(thisCorpus, "TTR", fail=FALSE)[["index"]])
+      }
+    )))
   } else {
     ## TODO: remove this stuff if kRp.hierachy is finished
     if(identical(level, "sources")){

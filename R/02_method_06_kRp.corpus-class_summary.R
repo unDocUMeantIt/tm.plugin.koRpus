@@ -180,7 +180,13 @@ setMethod("summary", signature(object="kRp.hierarchy"), function(
 
       # to not run into issues because of missing measures,
       # globally set the values
-      available <- whatIsAvailable(all.corpora=object, level=currentLevel, hierarchy=TRUE)
+      # first check if there's availability info in the call options already
+      if(any(c("available.rdb", "available.TTR") %in% names(list(...)))){
+        available <- availableFromOptions(allOptions=list(...), object=object)
+      } else {
+        available <- whatIsAvailable(all.corpora=object, hierarchy=TRUE)
+      }
+
       for (thisChild in names(all.children)){
         all.children[[thisChild]] <- summary(all.children[[thisChild]],
           available.rdb=available[["available.rdb"]],
