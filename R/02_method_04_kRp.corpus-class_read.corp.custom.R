@@ -142,6 +142,7 @@ setMethod("read.corp.custom", signature(corpus="kRp.topicCorpus"), function(corp
 setMethod("read.corp.custom", signature(corpus="kRp.hierarchy"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
     if(corpusLevel(corpus) > 0){
       corpusChildren(corpus) <- lapply(corpusChildren(corpus), read.corp.custom, mc.cores=mc.cores, ...)
+      corpusFreq(corpus)[["corpus"]] <- read.corp.custom(unlist(lapply(corpusChildren(corpus, level=0), corpusTagged)), ...)
     } else {
       # individual tests
       corpusFreq(corpus)[["texts"]] <- mclapply(corpusTagged(corpus), function(thisText){

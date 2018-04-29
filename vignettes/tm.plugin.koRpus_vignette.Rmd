@@ -205,7 +205,7 @@ The object classes make it quite comfortable to analyse type frequencies of corp
 ```{r, eval=FALSE}
 sampleTexts <- read.corp.custom(sampleTexts, caseSens=FALSE)
 sampleTextsWordFreq <- query(
-  corpusFreq(sampleTexts),
+  corpusFreq(sampleTexts)[["corpus"]],
   var="wclass",
   query=kRp.POS.tags(lang="de", list.classes=TRUE, tags="words")
 )
