@@ -2,26 +2,15 @@
 % Please edit documentation in
 %   R/02_method_04_kRp.corpus-class_read.corp.custom.R
 \docType{methods}
-\name{read.corp.custom,kRp.corpus-method}
-\alias{read.corp.custom,kRp.corpus-method}
-\alias{read.corp.custom}
-\alias{read.corp.custom,kRp.sourcesCorpus-method}
-\alias{read.corp.custom,kRp.topicCorpus-method}
-\title{Apply read.corp.custom() to all texts in kRp.corpus objects}
+\name{read.corp.custom,kRp.hierarchy-method}
+\alias{read.corp.custom,kRp.hierarchy-method}
+\title{Apply read.corp.custom() to all texts in kRp.hierarchy objects}
 \usage{
-\S4method{read.corp.custom}{kRp.corpus}(corpus,
-  mc.cores = getOption("mc.cores", 1L), ...)
-
-\S4method{read.corp.custom}{kRp.sourcesCorpus}(corpus,
-  mc.cores = getOption("mc.cores", 1L), ...)
-
-\S4method{read.corp.custom}{kRp.topicCorpus}(corpus,
+\S4method{read.corp.custom}{kRp.hierarchy}(corpus,
   mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
-\item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
-\code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
-\code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.}
+\item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.}
 
 \item{mc.cores}{The number of cores to use for parallelization,
       see \code{\link[parallel:mclapply]{mclapply}}.}

@@ -11,7 +11,7 @@
 
 <meta name="author" content="m.eik michalke" />
 
-<meta name="date" content="2018-04-03" />
+<meta name="date" content="2018-05-01" />
 
 <title>Using the tm.plugin.koRpus Package for Corpus Analysis</title>
 
@@ -261,7 +261,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Using the tm.plugin.koRpus Package for Corpus Analysis</h1>
 <h4 class="author"><em>m.eik michalke</em></h4>
-<h4 class="date"><em>2018-04-03</em></h4>
+<h4 class="date"><em>2018-05-01</em></h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>The R package <code>tm.plugin.koRpus</code> is an extension to the <code>koRpus</code> package, enhancing its usability for actual corpus analysis. It adds new classes and methods to <code>koRpus</code>, which are designed to work with complete text corpora in both <code>koRpus</code> and <code>tm</code> formats. This vignette gives you a quick overview.</p>
@@ -276,91 +276,91 @@ div.tocify {
 <div id="what-is-tm.plugin.korpus" class="section level1">
 <h1>What is tm.plugin.koRpus?</h1>
 <p>While the <code>koRpus</code> package focusses mostly on analysis steps of individual texts, <code>tm.plugin.koRpus</code> adds several new object classes and respective methods, which can be used to analyse complete text corpora in a single step. These classes are also a first step to combine object classes of both, the <code>koRpus</code> and <code>tm</code> packages.</p>
-<p>There are three basic classes, which are hierarchically nested:</p>
-<ol style="list-style-type: decimal">
-<li><p>class <code>kRp.topicCorpus</code> holds a list (named by topics) of objects of</p></li>
-<li><p>class <code>kRp.sourcesCorpus</code>, which in its <code>sources</code> slot holds a list of objects of</p></li>
-<li><p>class <code>kRp.corpus</code>, which in turn contains objects of both <code>koRpus</code> and <code>tm</code> classes.</p></li>
-</ol>
-<p>The idea behind this is to be able to categorize corpora on at least two levels. The default assumes that these levels are different <em>sources</em> and different <em>topics</em>, but apart from this naming (which is coded into the classes) you can actually use this for whatever levels you like.</p>
-<p>If you don’t need these hierarchical levels, you can just use the function <code>simpleCorpus()</code> to create objects of class <code>kRp.corpus</code>. It simply represents a collection of texts. To distinguish texts which came from different sources, use the function <code>sourcesCorpus()</code>, which will generate sub-corpora for each source given. And one level higher up, use the function <code>topicCorpus()</code>, to sort <code>kRp.sourcesCorpus</code> objects by different topics. Objects of this class will only be valid if there are texts of each topic from each source.</p>
-<p>Now, if this still confuses you, you can call the wrapper function <code>read_corpus()</code> instead, which will decide which one of these classes best suits your data, judging merely from the input.</p>
+<p>At the core of this package there is one particular object class – <code>kRp.hierarchy</code> – which can be used to construct hierarchically nested object trees. That is, you are able to categorize corpora on as many levels as you need. The examples in this vignette use two levels, one being different <em>topics</em> the texts in the sample corpus deal with, and the other different <em>sources</em> the texts come from.</p>
+<p>If you don’t need these hierarchical levels, you can just use the function <code>readCorpus()</code> to create a corpus object. It simply represents a collection of texts. To distinguish texts which came from different sources or deal with different topics, use the <code>hierarchy</code> argument, which will generate sub-corpora for each source and topic given. These objects will only be valid if there are texts of each topic from each source.</p>
+<p>Now, if this still confuses you, let’s look at a small example.</p>
 </div>
 <div id="tokenizing-corpora" class="section level1">
 <h1>Tokenizing corpora</h1>
-<p>As with <code>koRpus</code>, the first step for text analysis is tokenizing and possibly POS tagging. This step is performed by the functions mentioned above, <code>simpleCorpus()</code>, <code>sourcesCorpus()</code>, <code>topicCorpus()</code>, or <code>read_corpus()</code>, respectively. The package includes four sample texts taken from Wikipedia<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> in its <code>tests</code> directory which we can use for a demonstration:</p>
+<p>As with <code>koRpus</code>, the first step for text analysis is tokenizing and possibly POS tagging. This step is performed by the <code>readCorpus()</code> function mentioned above. The package includes four sample texts taken from Wikipedia<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> in its <code>tests</code> directory which we can use for a demonstration:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tm.plugin.koRpus)
 <span class="kw">library</span>(koRpus.lang.de)
 <span class="co"># set the root path to the sample files</span>
 sampleRoot &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">path.package</span>(<span class="st">&quot;tm.plugin.koRpus&quot;</span>), <span class="st">&quot;tests&quot;</span>, <span class="st">&quot;testthat&quot;</span>, <span class="st">&quot;samples&quot;</span>)
-<span class="co"># now we can define the topics (names of the vector elements)</span>
-<span class="co"># and their main path; i.e., these are subdirectories below sampleRoot</span>
-samplePaths &lt;-<span class="st"> </span><span class="kw">c</span>(
-  <span class="dt">C3S=</span><span class="kw">file.path</span>(sampleRoot, <span class="st">&quot;C3S&quot;</span>),
-  <span class="dt">GEMA=</span><span class="kw">file.path</span>(sampleRoot, <span class="st">&quot;GEMA&quot;</span>)
-)
-<span class="co"># we also define the sources; again, these are subdirectories, this time</span>
-<span class="co"># below the topic directories, and they contain all texts to analyze</span>
-sampleSources &lt;-<span class="st"> </span><span class="kw">c</span>(
-  <span class="dt">wpa=</span><span class="st">&quot;Wikipedia_alt&quot;</span>,
-  <span class="dt">wpn=</span><span class="st">&quot;Wikipedia_neu&quot;</span>
-)
-<span class="co"># and finally, we can tokenize all texts</span>
-sampleTexts &lt;-<span class="st"> </span><span class="kw">topicCorpus</span>(
-  <span class="dt">paths=</span>samplePaths,
-  <span class="dt">sources=</span>sampleSources,
-  <span class="dt">tagger=</span><span class="st">&quot;tokenize&quot;</span>,
-  <span class="dt">lang=</span><span class="st">&quot;de&quot;</span>
-)</code></pre></div>
-<pre><code>processing topic &quot;C3S&quot;, source &quot;Wikipedia_alt&quot;, 1 text...
-processing topic &quot;C3S&quot;, source &quot;Wikipedia_neu&quot;, 1 text...
-processing topic &quot;GEMA&quot;, source &quot;Wikipedia_alt&quot;, 1 text...
-processing topic &quot;GEMA&quot;, source &quot;Wikipedia_neu&quot;, 1 text...</code></pre>
-<p>As describe above, you can achieve the same result by using the wrapper <code>read_corpus()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sampleTexts &lt;-<span class="st"> </span><span class="kw">read_corpus</span>(
+<span class="co"># the next call uses &quot;hierarchy&quot; to describe the directory structure</span>
+<span class="co"># and its meaning; see below</span>
+sampleTexts &lt;-<span class="st"> </span><span class="kw">readCorpus</span>(
   <span class="dt">dir=</span>sampleRoot,
-  <span class="dt">sources=</span>sampleSources,
-  <span class="dt">topics=</span><span class="kw">c</span>(<span class="st">&quot;C3S&quot;</span>, <span class="st">&quot;GEMA&quot;</span>),
+  <span class="dt">hierarchy=</span><span class="kw">list</span>(
+    <span class="dt">Topic=</span><span class="kw">c</span>(
+      <span class="dt">C3S=</span><span class="st">&quot;C3S SCE&quot;</span>,
+      <span class="dt">GEMA=</span><span class="st">&quot;GEMA e.V.&quot;</span>
+    ),
+    <span class="dt">Source=</span><span class="kw">c</span>(
+      <span class="dt">Wikipedia_alt=</span><span class="st">&quot;Wikipedia (alt)&quot;</span>,
+      <span class="dt">Wikipedia_neu=</span><span class="st">&quot;Wikipedia (neu)&quot;</span>
+    )
+  ),
   <span class="dt">tagger=</span><span class="st">&quot;tokenize&quot;</span>,
   <span class="dt">lang=</span><span class="st">&quot;de&quot;</span>
 )</code></pre></div>
-<p>Should you need to get hold of the nested objects inside <code>kRp.sourcesCorpus</code> or <code>kRp.topicCorpus</code> class objects, or replace them with updated ones, you can do so by using the methods <code>corpusTagged()</code>, <code>corpusSources()</code>, or <code>corpusTopics()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">allC3SSources &lt;-<span class="st"> </span><span class="kw">corpusSources</span>(<span class="kw">corpusTopics</span>(sampleTexts, <span class="st">&quot;C3S&quot;</span>))
-<span class="kw">names</span>(allC3SSources)</code></pre></div>
-<pre><code>[1] &quot;wpa&quot; &quot;wpn&quot;</code></pre>
-<p>Since we’re using the <code>koRpus</code> package for all actual analysis, you can also setup your environment with <code>set.kRp.env()</code> and POS-tag all texts with <code>TreeTagger</code><a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>.</p>
+<pre><code>processing corpus 
+  Topic &quot;C3S SCE&quot;
+    Source &quot;Wikipedia (alt)&quot;, 1 text...
+    Source &quot;Wikipedia (neu)&quot;, 1 text...
+  Topic &quot;GEMA e.V.&quot;
+    Source &quot;Wikipedia (alt)&quot;, 1 text...
+    Source &quot;Wikipedia (neu)&quot;, 1 text...</code></pre>
+<div id="the-hierarchy-argument" class="section level2">
+<h2>The <code>hierarchy</code> argument</h2>
+<p>The <code>hierarchy</code> argument describes our corpus in a very condensed format. It is a named list of named character vectors, where each list entry represents a hierarchical level. In this case, the top level is called <em>“Topics”</em>, below that is the level <em>“Source”</em>. These hierachical levels must also be represented by the directory structure of the texts to parse, and the <em>names</em> of the character vectors must be identical to the <em>directory names</em> below the root directory specified by <code>dir</code>.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>So on your file system, what the <code>hierarchy</code> argument above describes is the following layout:</p>
+<p>‘’’ …/samples/ C3S/ Wikipedia_alt/ Text01.txt Text02.txt … Wikipedia_neu/ Text03.txt Text04.txt … GEMA/ Wikipedia_alt/ Text05.txt Text06.txt … Wikipedia_neu/ Text07.txt Text08.txt … ‘’’</p>
+<!--
+Should you need to get hold of the nested objects inside `kRp.sourcesCorpus` or `kRp.topicCorpus` class objects, or replace them
+with updated ones, you can do so by using the methods `corpusTagged()`, `corpusSources()`, or `corpusTopics()`:
+
+
+```r
+allC3SSources <- corpusSources(corpusTopics(sampleTexts, "C3S"))
+names(allC3SSources)
+```
+```
+[1] "wpa" "wpn"
+```
+-->
+<p>Since we’re using the <code>koRpus</code> package for all actual analysis, you can also setup your environment with <code>set.kRp.env()</code> and POS-tag all texts with <code>TreeTagger</code><a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>.</p>
+</div>
 </div>
 <div id="analysing-corpora" class="section level1">
 <h1>Analysing corpora</h1>
 <p>After the initial tokenizing, we can analyse the corpus by calling the provided methods, for instance lexical diversity:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sampleTexts &lt;-<span class="st"> </span><span class="kw">lex.div</span>(sampleTexts)
 <span class="kw">corpusSummary</span>(sampleTexts)</code></pre></div>
-<pre><code>             doc_id topic source stopwords    a    C CTTR   HDD     K lgV0
-wpaC3S01   wpaC3S01   C3S    wpa        NA 0.16 0.95 6.13 38.14 49.92 6.21
-wpnC3S01   wpnC3S01   C3S    wpn        NA 0.17 0.94 6.82 38.05 54.88 6.10
-wpaGEMA01 wpaGEMA01  GEMA    wpa        NA 0.17 0.94 7.07 37.61 65.08 6.11
-wpnGEMA01 wpnGEMA01  GEMA    wpn        NA 0.16 0.94 7.13 37.87 60.14 6.24
-          MATTR MSTTR   MTLD MTLDMA     R    S  TTR     U
-wpaC3S01   0.81  0.79 100.16     NA  8.68 0.93 0.78 39.92
-wpnC3S01   0.82  0.76 123.01     NA  9.65 0.92 0.73 36.46
-wpaGEMA01  0.80  0.78 106.94    192 10.00 0.92 0.71 35.96
-wpnGEMA01  0.81  0.79 111.64     NA 10.08 0.92 0.73 37.47</code></pre>
-<p>As you can see, <code>corpusSummary()</code> returns a <code>data.frame</code> object with the summarised results of all texts below the given object level. That is, if you are only interested in the results for texts of the first topic, simply apply <code>corpusSummary()</code> on the result of <code>corpusTopics()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">corpusSummary</span>(<span class="kw">corpusTopics</span>(sampleTexts, <span class="st">&quot;C3S&quot;</span>))</code></pre></div>
-<pre><code>           doc_id topic source stopwords    a    C CTTR   HDD     K lgV0 MATTR
-wpaC3S01 wpaC3S01   C3S    wpa        NA 0.16 0.95 6.13 38.14 49.92 6.21  0.81
-wpnC3S01 wpnC3S01   C3S    wpn        NA 0.17 0.94 6.82 38.05 54.88 6.10  0.82
-         MSTTR   MTLD MTLDMA    R    S  TTR     U
-wpaC3S01  0.79 100.16     NA 8.68 0.93 0.78 39.92
-wpnC3S01  0.76 123.01     NA 9.65 0.92 0.73 36.46</code></pre>
-<p>There are quite a number of <code>corpus*()</code> getter/setter methods for slots of these objects, e.g., <code>corpusReadability()</code> to get the <code>readability()</code> results from objects of class <code>kRp.corpus</code>.</p>
+<pre><code>                    corpus     Topic          Source              doc_id
+C3SWikipedia_alt01           C3S SCE Wikipedia (alt)  C3SWikipedia_alt01
+C3SWikipedia_neu01           C3S SCE Wikipedia (neu)  C3SWikipedia_neu01
+GEMAWikipedia_alt01        GEMA e.V. Wikipedia (alt) GEMAWikipedia_alt01
+GEMAWikipedia_neu01        GEMA e.V. Wikipedia (neu) GEMAWikipedia_neu01
+                    stopwords    a    C CTTR   HDD     K lgV0 MATTR MSTTR
+C3SWikipedia_alt01         NA 0.16 0.95 6.13 38.14 49.92 6.21  0.81  0.79
+C3SWikipedia_neu01         NA 0.17 0.94 6.82 38.05 54.88 6.10  0.82  0.76
+GEMAWikipedia_alt01        NA 0.17 0.94 7.07 37.61 65.08 6.11  0.80  0.78
+GEMAWikipedia_neu01        NA 0.16 0.94 7.13 37.87 60.14 6.24  0.81  0.79
+                      MTLD MTLDMA     R    S  TTR     U
+C3SWikipedia_alt01  100.16     NA  8.68 0.93 0.78 39.92
+C3SWikipedia_neu01  123.01     NA  9.65 0.92 0.73 36.46
+GEMAWikipedia_alt01 106.94    192 10.00 0.92 0.71 35.96
+GEMAWikipedia_neu01 111.64     NA 10.08 0.92 0.73 37.47</code></pre>
+<p>As you can see, <code>corpusSummary()</code> returns a <code>data.frame</code> object with the summarised results of all texts.</p>
+<p>There are quite a number of <code>corpus*()</code> getter/setter methods for slots of these objects, e.g., <code>corpusReadability()</code> to get the <code>readability()</code> results from objects of class <code>kRp.hierarchy</code>.</p>
 <p>As we explained earlier, the nested S4 object classes used by <code>tm.plugin.koRpus</code> are rather complex. Two methods can be especially helpful for further analysis. The first one is <code>tif_as_tokens_df()</code> and returns a <code>data.frame</code> including all texts of the tokenized corpus in a format that is compatible with <a href="https://github.com/ropensci/tif">Text Interchange Formats</a> standards.</p>
 <p>The second one is a family of <code>[</code>, <code>[&lt;-</code>, <code>[[</code> and <code>[[&lt;-</code> shorcuts to directly interact with the <code>data.frame</code> object you get via <code>corpusSummary()</code>. Here’s an example how to use this to plot interactions:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sciplot)
 <span class="kw">lineplot.CI</span>(
-  <span class="dt">x.factor=</span>sampleTexts[[<span class="st">&quot;source&quot;</span>]],
+  <span class="dt">x.factor=</span>sampleTexts[[<span class="st">&quot;Source&quot;</span>]],
   <span class="dt">response=</span>sampleTexts[[<span class="st">&quot;MTLD&quot;</span>]],
-  <span class="dt">group=</span>sampleTexts[[<span class="st">&quot;topic&quot;</span>]],
+  <span class="dt">group=</span>sampleTexts[[<span class="st">&quot;Topic&quot;</span>]],
   <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,
   <span class="dt">main=</span><span class="st">&quot;MTLD&quot;</span>,
   <span class="dt">xlab=</span><span class="st">&quot;Media source&quot;</span>,
@@ -379,7 +379,7 @@ Well, the example texts aren’t so impressive here, as there’s not much varia
 <p>The object classes make it quite comfortable to analyse type frequencies of corpora. There is a method <code>read.corp.custom()</code> for these classes, that will do this analysis recursively on all levels:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sampleTexts &lt;-<span class="st"> </span><span class="kw">read.corp.custom</span>(sampleTexts, <span class="dt">caseSens=</span><span class="ot">FALSE</span>)
 sampleTextsWordFreq &lt;-<span class="st"> </span><span class="kw">query</span>(
-  <span class="kw">corpusFreq</span>(sampleTexts),
+  <span class="kw">corpusFreq</span>(sampleTexts)[[<span class="st">&quot;corpus&quot;</span>]],
   <span class="dt">var=</span><span class="st">&quot;wclass&quot;</span>,
   <span class="dt">query=</span><span class="kw">kRp.POS.tags</span>(<span class="dt">lang=</span><span class="st">&quot;de&quot;</span>, <span class="dt">list.classes=</span><span class="ot">TRUE</span>, <span class="dt">tags=</span><span class="st">&quot;words&quot;</span>)
 )
@@ -427,8 +427,9 @@ The 200 most frequent words in the example corpus
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>see the file <code>tests/testthat/samples/License\_of\_sample\_texts.txt</code> for details<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>see the <code>koRpus</code> documentation for details.<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>See the file <code>tests/testthat/samples/License\_of\_sample\_texts.txt</code> for details<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Future versions of this package might add furter ways of describing your corpus, like using a configuration file or providing a full corpus in XML or JSON format.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>see the <code>koRpus</code> documentation for details.<a href="#fnref3">↩</a></p></li>
 </ol>
 </div>
 

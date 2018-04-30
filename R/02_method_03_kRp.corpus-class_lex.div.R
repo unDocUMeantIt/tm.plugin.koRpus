@@ -16,14 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply lex.div() to all texts in kRp.corpus objects
+#' Apply lex.div() to all texts in kRp.hierarchy objects
 #' 
 #' This method calls \code{\link[koRpus:lex.div]{lex.div}} on all tagged text objects
 #' inside the given \code{txt} object (using \code{lapply}).
 #' 
-#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
-#'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
-#'    \code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.
+#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
@@ -35,84 +33,16 @@
 #' @return An object of the same class as \code{txt}.
 #' @importFrom parallel mclapply
 #' @importMethodsFrom koRpus summary lex.div
-#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @docType methods
-#' @aliases lex.div,kRp.corpus-method
+#' @aliases lex.div,kRp.hierarchy-method
 #' @rdname lex.div-methods
 #' @examples
 #' \dontrun{
 #' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
 #' myTexts <- lex.div(myTexts)
 #' }
-setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
-    corpusTTR(txt) <- mclapply(corpusTagged(txt), function(thisText){
-      lex.div(thisText, char=char, quiet=quiet, ...)
-    }, mc.cores=mc.cores)
-    # store meta-information on the maximum of available indices.
-    # a mere summary() will simply omit NA values which can later cause
-    # problems when we want to aggregate all summaries into one data.frame
-    corpusMeta(txt, "TTR") <- list(index=c())
-    corpusMeta(txt, "TTR")[["index"]] <- sort(
-      unique(
-        unlist(mclapply(corpusTTR(txt), function(thisText){
-            return(names(summary(thisText, flat=TRUE)))
-          }, mc.cores=mc.cores)
-        )
-      )
-    )
-    if(isTRUE(summary)){
-      txt <- summary(txt)
-    } else {}
-
-    return(txt)
-  }
-)
-
-#' @aliases lex.div,kRp.sourcesCorpus-method
-#' @docType methods
-#' @rdname lex.div-methods
-#' @export
-setMethod("lex.div", signature(txt="kRp.sourcesCorpus"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
-    all.corpora <- corpusSources(txt)
-
-    for (thisCorpus in names(all.corpora)){
-      all.corpora[[thisCorpus]] <- lex.div(all.corpora[[thisCorpus]], summary=summary, mc.cores=mc.cores, char=char, quiet=quiet, ...)
-    }
-    corpusSources(txt) <- all.corpora
-
-    if(isTRUE(summary)){
-      txt <- summary(txt)
-    } else {}
-
-    return(txt)
-  }
-)
-
-#' @aliases lex.div,kRp.topicCorpus-method
-#' @docType methods
-#' @rdname lex.div-methods
-#' @export
-setMethod("lex.div", signature(txt="kRp.topicCorpus"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
-    all.topics <- corpusTopics(txt)
-
-    for (thisTopic in names(all.topics)){
-      all.topics[[thisTopic]] <- lex.div(all.topics[[thisTopic]], summary=summary, mc.cores=mc.cores, char=char, quiet=quiet, ...)
-    }
-    corpusTopics(txt) <- all.topics
-
-    if(isTRUE(summary)){
-      txt <- summary(txt)
-    } else {}
-
-    return(txt)
-  }
-)
-
-#' @aliases lex.div,kRp.hierarchy-method
-#' @docType methods
-#' @rdname lex.div-methods
-#' @export
+#' @include 01_class_04_kRp.hierarchy.R
 setMethod("lex.div", signature(txt="kRp.hierarchy"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
     if(corpusLevel(txt) > 0){
       corpusChildren(txt) <- lapply(corpusChildren(txt), lex.div, summary=summary, mc.cores=mc.cores, char=char, quiet=quiet, ...)

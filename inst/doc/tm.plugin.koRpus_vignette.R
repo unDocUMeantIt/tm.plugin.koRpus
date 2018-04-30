@@ -12,31 +12,20 @@ library(knitr)
 #  library(koRpus.lang.de)
 #  # set the root path to the sample files
 #  sampleRoot <- file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples")
-#  # now we can define the topics (names of the vector elements)
-#  # and their main path; i.e., these are subdirectories below sampleRoot
-#  samplePaths <- c(
-#    C3S=file.path(sampleRoot, "C3S"),
-#    GEMA=file.path(sampleRoot, "GEMA")
-#  )
-#  # we also define the sources; again, these are subdirectories, this time
-#  # below the topic directories, and they contain all texts to analyze
-#  sampleSources <- c(
-#    wpa="Wikipedia_alt",
-#    wpn="Wikipedia_neu"
-#  )
-#  # and finally, we can tokenize all texts
-#  sampleTexts <- topicCorpus(
-#    paths=samplePaths,
-#    sources=sampleSources,
-#    tagger="tokenize",
-#    lang="de"
-#  )
-
-## ---- eval=FALSE---------------------------------------------------------
-#  sampleTexts <- read_corpus(
+#  # the next call uses "hierarchy" to describe the directory structure
+#  # and its meaning; see below
+#  sampleTexts <- readCorpus(
 #    dir=sampleRoot,
-#    sources=sampleSources,
-#    topics=c("C3S", "GEMA"),
+#    hierarchy=list(
+#      Topic=c(
+#        C3S="C3S SCE",
+#        GEMA="GEMA e.V."
+#      ),
+#      Source=c(
+#        Wikipedia_alt="Wikipedia (alt)",
+#        Wikipedia_neu="Wikipedia (neu)"
+#      )
+#    ),
 #    tagger="tokenize",
 #    lang="de"
 #  )
@@ -50,14 +39,11 @@ library(knitr)
 #  corpusSummary(sampleTexts)
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  corpusSummary(corpusTopics(sampleTexts, "C3S"))
-
-## ---- eval=FALSE---------------------------------------------------------
 #  library(sciplot)
 #  lineplot.CI(
-#    x.factor=sampleTexts[["source"]],
+#    x.factor=sampleTexts[["Source"]],
 #    response=sampleTexts[["MTLD"]],
-#    group=sampleTexts[["topic"]],
+#    group=sampleTexts[["Topic"]],
 #    type="l",
 #    main="MTLD",
 #    xlab="Media source",
@@ -69,7 +55,7 @@ library(knitr)
 ## ---- eval=FALSE---------------------------------------------------------
 #  sampleTexts <- read.corp.custom(sampleTexts, caseSens=FALSE)
 #  sampleTextsWordFreq <- query(
-#    corpusFreq(sampleTexts),
+#    corpusFreq(sampleTexts)[["corpus"]],
 #    var="wclass",
 #    query=kRp.POS.tags(lang="de", list.classes=TRUE, tags="words")
 #  )

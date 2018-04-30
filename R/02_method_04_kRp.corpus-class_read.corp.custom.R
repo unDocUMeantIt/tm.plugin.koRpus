@@ -16,14 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply read.corp.custom() to all texts in kRp.corpus objects
+#' Apply read.corp.custom() to all texts in kRp.hierarchy objects
 #' 
 #' This method calls \code{\link[koRpus:read.corp.custom]{read.corp.custom}} on all tagged text objects
 #' inside the given \code{corpus} object (using \code{lapply}).
 #' 
-#' @param corpus An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
-#'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
-#'    \code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.
+#' @param corpus An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.
 #' @return An object of the same class as \code{corpus}.
@@ -31,7 +29,7 @@
 #' @importFrom parallel mclapply
 #' @importFrom koRpus read.corp.custom
 #' @docType methods
-#' @aliases read.corp.custom read.corp.custom,kRp.corpus-method
+#' @aliases read.corp.custom,kRp.hierarchy-method
 #' @rdname read.corp.custom-methods
 #' @examples
 #' \dontrun{
@@ -78,67 +76,7 @@
 #' myTopicTexts <- read.corp.custom(myTopicTexts)
 #' 
 #' }
-#' @include 01_class_01_kRp.corpus.R
-setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
-    # individual tests
-    corpusFreq(corpus)[["texts"]] <- mclapply(corpusTagged(corpus), function(thisText){
-      read.corp.custom(thisText, ...)
-    }, mc.cores=mc.cores)
-    # analysis on full corpus
-    corpusFreq(corpus)[["corpus"]] <- read.corp.custom(corpusTagged(corpus), ...)
-    return(corpus)
-  }
-)
-
-#' @aliases read.corp.custom,kRp.sourcesCorpus-method
-#' @docType methods
-#' @rdname read.corp.custom-methods
-#' @export
-setMethod("read.corp.custom", signature(corpus="kRp.sourcesCorpus"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
-    all.corpora <- slot(corpus, "sources")
-
-    all.tagged <- list()
-    # iterate through all texts indivudually
-    for (thisCorpus in names(all.corpora)){
-      all.tagged <- append(all.tagged, slot(all.corpora[[thisCorpus]], "tagged"))
-      all.corpora[[thisCorpus]] <- read.corp.custom(all.corpora[[thisCorpus]], mc.cores=mc.cores, ...)
-    }
-    slot(corpus, "sources") <- all.corpora
-    # analysis on full corpus
-    slot(corpus, "freq") <- read.corp.custom(all.tagged, ...)
-
-    return(corpus)
-  }
-)
-
-#' @aliases read.corp.custom,kRp.topicCorpus-method
-#' @docType methods
-#' @rdname read.corp.custom-methods
-#' @export
-setMethod("read.corp.custom", signature(corpus="kRp.topicCorpus"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
-    all.topics <- slot(corpus, "topics")
-
-    all.tagged <- list()
-    # iterate through all texts indivudually
-    for (thisTopic in names(all.topics)){
-      sub.corpora <- slot(all.topics[[thisTopic]], "sources")
-      for (thisCorpus in names(sub.corpora)){
-        all.tagged <- append(all.tagged, slot(sub.corpora[[thisCorpus]], "tagged"))
-      }
-      all.topics[[thisTopic]] <- read.corp.custom(all.topics[[thisTopic]], mc.cores=mc.cores, ...)
-    }
-    slot(corpus, "topics") <- all.topics
-    # analysis on full corpus
-    slot(corpus, "freq") <- read.corp.custom(all.tagged, ...)
-
-    return(corpus)
-  }
-)
-
-#' @aliases read.corp.custom,kRp.hierarchy-method
-#' @docType methods
-#' @rdname read.corp.custom-methods
-#' @export
+#' @include 01_class_04_kRp.hierarchy.R
 setMethod("read.corp.custom", signature(corpus="kRp.hierarchy"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
     if(corpusLevel(corpus) > 0){
       corpusChildren(corpus) <- lapply(corpusChildren(corpus), read.corp.custom, mc.cores=mc.cores, ...)

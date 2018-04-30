@@ -15,14 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Apply readability() to all texts in kRp.corpus objects
+#' Apply readability() to all texts in kRp.hierarchy objects
 #' 
 #' This method calls \code{\link[koRpus:readability]{readability}} on all tagged text objects
 #' inside the given \code{txt.file} object (using \code{lapply}).
 #' 
-#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
-#'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
-#'    \code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.
+#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
@@ -34,94 +32,27 @@
 #' @importFrom parallel mclapply
 #' @importMethodsFrom koRpus readability summary
 #' @docType methods
-#' @aliases readability,kRp.corpus-method
+#' @aliases readability,kRp.hierarchy-method
 #' @rdname readability-methods
+#' @export
 #' @examples
 #' \dontrun{
-#' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
-#' myTexts <- readability(myTexts)
+#' myCorpus <- readCorpus(
+#'   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+#'   hierarchy=list(
+#'     Topic=c(
+#'       C3S="C3S",
+#'       GEMA="GEMA"
+#'     ),
+#'     Source=c(
+#'       Wikipedia_alt="Wikipedia (alt)",
+#'       Wikipedia_neu="Wikipedia (neu)"
+#'     )
+#'   )
+#' )
+#' myTexts <- readability(myCorpus)
 #' }
-#' @include 01_class_01_kRp.corpus.R
-#' @export
-setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
-    corpusReadability(txt.file) <- mclapply(names(corpusTagged(txt.file)), function(thisText){
-      if(thisText %in% names(corpusHyphen(txt.file)) & is.null(list(...)[["hyphen"]])){
-        # we probably need to drop one of two hyphen arguments of
-        # readability was called from one of the wrapper functions
-        default <- list(txt.file=corpusTagged(txt.file)[[thisText]], ...)
-        args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
-        rdb <- do.call(readability, args)
-      } else {
-        rdb <- readability(corpusTagged(txt.file)[[thisText]], quiet=quiet, ...)
-      }
-      return(rdb)
-    }, mc.cores=mc.cores)
-    # store meta-information on the maximum of available indices.
-    # a mere summary() will simply omit NA values which can later cause
-    # problems when we want to aggregate all summaries into one data.frame
-    corpusMeta(txt.file, "readability") <- list(index=c())
-    corpusMeta(txt.file, "readability")[["index"]] <- sort(
-      unique(
-        unlist(mclapply(corpusReadability(txt.file), function(thisText){
-            names(summary(thisText, flat=TRUE))
-          }, mc.cores=mc.cores)
-        )
-      )
-    )
-    names(corpusReadability(txt.file)) <- names(corpusTagged(txt.file))
-    
-    if(isTRUE(summary)){
-      txt.file <- summary(txt.file)
-    } else {}
-    
-    return(txt.file)
-  }
-)
-
-#' @aliases readability,kRp.sourcesCorpus-method
-#' @docType methods
-#' @rdname readability-methods
-#' @export
-setMethod("readability", signature(txt.file="kRp.sourcesCorpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
-    all.corpora <- corpusSources(txt.file)
-
-    for (thisCorpus in names(all.corpora)){
-      all.corpora[[thisCorpus]] <- readability(all.corpora[[thisCorpus]], summary=summary, mc.cores=mc.cores, quiet=quiet, ...)
-    }
-    corpusSources(txt.file) <- all.corpora
-
-    if(isTRUE(summary)){
-      txt.file <- summary(txt.file)
-    } else {}
-
-    return(txt.file)
-  }
-)
-
-#' @aliases readability,kRp.topicCorpus-method
-#' @docType methods
-#' @rdname readability-methods
-#' @export
-setMethod("readability", signature(txt.file="kRp.topicCorpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
-    all.topics <- corpusTopics(txt.file)
-
-    for (thisTopic in names(all.topics)){
-      all.topics[[thisTopic]] <- readability(all.topics[[thisTopic]], summary=summary, mc.cores=mc.cores, quiet=quiet, ...)
-    }
-    corpusTopics(txt.file) <- all.topics
-
-    if(isTRUE(summary)){
-      txt.file <- summary(txt.file)
-    } else {}
-
-    return(txt.file)
-  }
-)
-
-#' @aliases readability,kRp.hierarchy-method
-#' @docType methods
-#' @rdname readability-methods
-#' @export
+#' @include 01_class_04_kRp.hierarchy.R
 setMethod("readability", signature(txt.file="kRp.hierarchy"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     if(corpusLevel(txt.file) > 0){
       corpusChildren(txt.file) <- lapply(corpusChildren(txt.file), readability, summary=summary, mc.cores=mc.cores, quiet=quiet, ...)

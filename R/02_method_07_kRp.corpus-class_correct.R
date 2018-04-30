@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Methods to correct kRp.copus objects
+#' Methods to correct kRp.hierarchy objects
 #' 
 #' These methods enable you to correct errors that occurred during automatic processing,
 #' e.g., wrong hyphenation.
@@ -24,9 +24,7 @@
 #' documentation of \code{\link[sylly:correct.hyph]{correct.hyph}} in the \code{sylly}
 #' package.
 #' 
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
-#'    \code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
-#'    \code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 # @param row Integer, the row number of the entry to be changed. Can be an integer vector
 #    to change several rows in one go.
 #' @param word A character string, the (possibly incorrectly hyphenated) \code{word} entry to be replaced with \code{hyphen}.
@@ -44,24 +42,10 @@
 #' @export
 #' @docType methods
 #' @rdname correct-methods
-#' @aliases correct.hyph correct.hyph,kRp.corpus-method
+#' @aliases correct.hyph correct.hyph,kRp.hierarchy-method
 #' @importFrom sylly correct.hyph
 #' @export
 #' @include 01_class_01_kRp.corpus.R
-setMethod("correct.hyph",
-  signature(obj="kRp.corpus"),
-  function (obj, word=NULL, hyphen=NULL, cache=TRUE){
-    corpusHyphen(obj) <- lapply(corpusTagged(obj), function(thisText){
-      correct.hyph(thisText, word=word, hyphen=hyphen, cache=cache)
-    })
-    return(obj)
-  }
-)
-
-#' @aliases correct.hyph,kRp.hierarchy-method
-#' @docType methods
-#' @rdname correct.hyph-methods
-#' @export
 setMethod("correct.hyph",
   signature(obj="kRp.hierarchy"),
   function (obj, word=NULL, hyphen=NULL, cache=TRUE){

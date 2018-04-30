@@ -20,8 +20,8 @@ Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="m.eik", family="michalke",
         email="meik.michalke@hhu.de", role=c("aut", "cre")))
-Version: 0.01-5
-Date: 2018-04-15
+Version: 0.02-1
+Date: 2018-05-01
 RoxygenNote: 6.0.1
 Collate: 
     '01_class_01_kRp.corpus.R'
@@ -38,9 +38,5 @@ Collate:
     '02_method_20_kRp.corpus_get_set_is.R'
     'kRpSource.R'
     'readCorpus.R'
-    'read_corpus.R'
-    'simpleCorpus.R'
-    'sourcesCorpus.R'
     'tm.plugin.koRpus-internal.R'
     'tm.plugin.koRpus-package.R'
-    'topicCorpus.R'

@@ -3,97 +3,45 @@
 \docType{methods}
 \name{corpusTagged}
 \alias{corpusTagged}
-\alias{corpusTagged,kRp.corpus-method}
-\alias{corpusTagged,-methods}
 \alias{corpusTagged,kRp.hierarchy-method}
 \alias{corpusTagged,-methods}
 \alias{corpusTagged<-}
-\alias{corpusTagged<-,kRp.corpus-method}
-\alias{corpusTagged<-,-methods}
 \alias{corpusTagged<-,kRp.hierarchy-method}
 \alias{corpusTagged<-,-methods}
 \alias{corpusReadability}
-\alias{corpusReadability,kRp.corpus-method}
-\alias{corpusReadability,-methods}
 \alias{corpusReadability,kRp.hierarchy-method}
 \alias{corpusReadability,-methods}
 \alias{corpusReadability<-}
-\alias{corpusReadability<-,kRp.corpus-method}
-\alias{corpusReadability<-,-methods}
 \alias{corpusReadability<-,kRp.hierarchy-method}
 \alias{corpusReadability<-,-methods}
 \alias{corpusTm}
-\alias{corpusTm,kRp.corpus-method}
-\alias{corpusTm,-methods}
-\alias{corpusTm,kRp.hierarchy-method}
-\alias{corpusTm,-methods}
 \alias{corpusTm,kRp.hierarchy-method}
 \alias{corpusTm,-methods}
 \alias{corpusTm<-}
-\alias{corpusTm<-,kRp.corpus-method}
-\alias{corpusTm<-,-methods}
-\alias{corpusTm<-,kRp.hierarchy-method}
-\alias{corpusTm<-,-methods}
 \alias{corpusTm<-,kRp.hierarchy-method}
 \alias{corpusTm<-,-methods}
 \alias{corpusMeta}
-\alias{corpusMeta,kRp.corpus-method}
-\alias{corpusMeta,-methods}
 \alias{corpusMeta,kRp.hierarchy-method}
 \alias{corpusMeta,-methods}
 \alias{corpusMeta<-}
-\alias{corpusMeta<-,kRp.corpus-method}
-\alias{corpusMeta<-,-methods}
 \alias{corpusMeta<-,kRp.hierarchy-method}
 \alias{corpusMeta<-,-methods}
 \alias{corpusHyphen}
-\alias{corpusHyphen,kRp.corpus-method}
-\alias{corpusHyphen,-methods}
 \alias{corpusHyphen,kRp.hierarchy-method}
 \alias{corpusHyphen,-methods}
 \alias{corpusHyphen<-}
-\alias{corpusHyphen<-,kRp.corpus-method}
-\alias{corpusHyphen<-,-methods}
 \alias{corpusHyphen<-,kRp.hierarchy-method}
 \alias{corpusHyphen<-,-methods}
 \alias{corpusTTR}
-\alias{corpusTTR,kRp.corpus-method}
-\alias{corpusTTR,-methods}
 \alias{corpusTTR,kRp.hierarchy-method}
 \alias{corpusTTR,-methods}
 \alias{corpusTTR<-}
-\alias{corpusTTR<-,kRp.corpus-method}
-\alias{corpusTTR<-,-methods}
 \alias{corpusTTR<-,kRp.hierarchy-method}
 \alias{corpusTTR<-,-methods}
-\alias{corpusSources}
-\alias{corpusSources,kRp.sourcesCorpus-method}
-\alias{corpusSources,-methods}
-\alias{corpusSources<-}
-\alias{corpusSources<-,kRp.sourcesCorpus-method}
-\alias{corpusSources<-,-methods}
-\alias{corpusTopics}
-\alias{corpusTopics,kRp.topicCorpus-method}
-\alias{corpusTopics,-methods}
-\alias{corpusTopics<-}
-\alias{corpusTopics<-,kRp.topicCorpus-method}
-\alias{corpusTopics<-,-methods}
 \alias{corpusFreq}
-\alias{corpusFreq,kRp.corpus-method}
-\alias{corpusFreq,-methods}
-\alias{corpusFreq,kRp.sourcesCorpus-method}
-\alias{corpusFreq,-methods}
-\alias{corpusFreq,kRp.topicCorpus-method}
-\alias{corpusFreq,-methods}
 \alias{corpusFreq,kRp.hierarchy-method}
 \alias{corpusFreq,-methods}
 \alias{corpusFreq<-}
-\alias{corpusFreq<-,kRp.corpus-method}
-\alias{corpusFreq<-,-methods}
-\alias{corpusFreq<-,kRp.sourcesCorpus-method}
-\alias{corpusFreq<-,-methods}
-\alias{corpusFreq<-,kRp.topicCorpus-method}
-\alias{corpusFreq<-,-methods}
 \alias{corpusFreq<-,kRp.hierarchy-method}
 \alias{corpusFreq<-,-methods}
 \alias{corpusLevel}
@@ -121,175 +69,77 @@
 \alias{corpusID<-,kRp.hierarchy-method}
 \alias{corpusID<-,-methods}
 \alias{is.corpus}
-\alias{[,kRp.corpus-method}
-\alias{[,-methods}
-\alias{[,kRp.corpus,ANY,ANY-method}
-\alias{[,kRp.sourcesCorpus-method}
-\alias{[,-methods}
-\alias{[,kRp.sourcesCorpus,ANY,ANY,ANY-method}
-\alias{[,kRp.topicCorpus-method}
-\alias{[,-methods}
-\alias{[,kRp.topicCorpus,ANY,ANY,ANY-method}
 \alias{[,kRp.hierarchy-method}
 \alias{[,-methods}
 \alias{[,kRp.hierarchy,ANY,ANY,ANY-method}
-\alias{[<-,kRp.corpus-method}
-\alias{[<-,-methods}
-\alias{[<-,kRp.corpus,ANY,ANY,ANY-method}
-\alias{[<-,kRp.sourcesCorpus-method}
-\alias{[<-,-methods}
-\alias{[<-,kRp.sourcesCorpus,ANY,ANY,ANY-method}
-\alias{[<-,kRp.topicCorpus-method}
-\alias{[<-,-methods}
-\alias{[<-,kRp.topicCorpus,ANY,ANY,ANY-method}
 \alias{[<-,kRp.hierarchy-method}
 \alias{[<-,-methods}
 \alias{[<-,kRp.hierarchy,ANY,ANY,ANY-method}
-\alias{[[,kRp.corpus-method}
-\alias{[[,-methods}
-\alias{[[,kRp.corpus,ANY-method}
-\alias{[[,kRp.sourcesCorpus-method}
-\alias{[[,-methods}
-\alias{[[,kRp.sourcesCorpus,ANY-method}
-\alias{[[,kRp.topicCorpus-method}
-\alias{[[,-methods}
-\alias{[[,kRp.topicCorpus,ANY-method}
 \alias{[[,kRp.hierarchy-method}
 \alias{[[,-methods}
 \alias{[[,kRp.hierarchy,ANY-method}
-\alias{[[<-,kRp.corpus-method}
-\alias{[[<-,-methods}
-\alias{[[<-,kRp.corpus,ANY,ANY-method}
-\alias{[[<-,kRp.sourcesCorpus-method}
-\alias{[[<-,-methods}
-\alias{[[<-,kRp.sourcesCorpus,ANY,ANY-method}
-\alias{[[<-,kRp.topicCorpus-method}
-\alias{[[<-,-methods}
-\alias{[[<-,kRp.topicCorpus,ANY,ANY-method}
 \alias{[[<-,kRp.hierarchy-method}
 \alias{[[<-,-methods}
 \alias{[[<-,kRp.hierarchy,ANY,ANY-method}
 \alias{tif_as_tokens_df}
-\alias{tif_as_tokens_df,kRp.corpus-method}
-\alias{tif_as_tokens_df,-methods}
-\alias{tif_as_tokens_df,kRp.sourcesCorpus-method}
-\alias{tif_as_tokens_df,-methods}
-\alias{tif_as_tokens_df,kRp.topicCorpus-method}
-\alias{tif_as_tokens_df,-methods}
 \alias{tif_as_tokens_df,kRp.hierarchy-method}
 \alias{tif_as_tokens_df,-methods}
 \alias{tif_as_tokens_df,hierarchy-method}
-\title{Getter/setter methods for kRp.corpus objects}
+\title{Getter/setter methods for kRp.hierarchy objects}
 \usage{
 corpusTagged(obj)
-
-\S4method{corpusTagged}{kRp.corpus}(obj)
 
 \S4method{corpusTagged}{kRp.hierarchy}(obj)
 
 corpusTagged(obj) <- value
 
-\S4method{corpusTagged}{kRp.corpus}(obj) <- value
-
 \S4method{corpusTagged}{kRp.hierarchy}(obj) <- value
 
 corpusReadability(obj)
-
-\S4method{corpusReadability}{kRp.corpus}(obj)
 
 \S4method{corpusReadability}{kRp.hierarchy}(obj)
 
 corpusReadability(obj) <- value
 
-\S4method{corpusReadability}{kRp.corpus}(obj) <- value
-
 \S4method{corpusReadability}{kRp.hierarchy}(obj) <- value
 
 corpusTm(obj)
-
-\S4method{corpusTm}{kRp.corpus}(obj)
-
-\S4method{corpusTm}{kRp.hierarchy}(obj)
 
 \S4method{corpusTm}{kRp.hierarchy}(obj)
 
 corpusTm(obj) <- value
 
-\S4method{corpusTm}{kRp.corpus}(obj) <- value
-
-\S4method{corpusTm}{kRp.hierarchy}(obj) <- value
-
 \S4method{corpusTm}{kRp.hierarchy}(obj) <- value
 
 corpusMeta(obj, meta = NULL, fail = TRUE)
-
-\S4method{corpusMeta}{kRp.corpus}(obj, meta = NULL, fail = TRUE)
 
 \S4method{corpusMeta}{kRp.hierarchy}(obj, meta = NULL, fail = TRUE)
 
 corpusMeta(obj, meta = NULL) <- value
 
-\S4method{corpusMeta}{kRp.corpus}(obj, meta = NULL) <- value
-
 \S4method{corpusMeta}{kRp.hierarchy}(obj, meta = NULL) <- value
 
 corpusHyphen(obj)
-
-\S4method{corpusHyphen}{kRp.corpus}(obj)
 
 \S4method{corpusHyphen}{kRp.hierarchy}(obj)
 
 corpusHyphen(obj) <- value
 
-\S4method{corpusHyphen}{kRp.corpus}(obj) <- value
-
 \S4method{corpusHyphen}{kRp.hierarchy}(obj) <- value
 
 corpusTTR(obj)
-
-\S4method{corpusTTR}{kRp.corpus}(obj)
 
 \S4method{corpusTTR}{kRp.hierarchy}(obj)
 
 corpusTTR(obj) <- value
 
-\S4method{corpusTTR}{kRp.corpus}(obj) <- value
-
 \S4method{corpusTTR}{kRp.hierarchy}(obj) <- value
-
-corpusSources(obj, source = NULL)
-
-\S4method{corpusSources}{kRp.sourcesCorpus}(obj, source = NULL)
-
-corpusSources(obj, source = NULL) <- value
-
-\S4method{corpusSources}{kRp.sourcesCorpus}(obj, source = NULL) <- value
-
-corpusTopics(obj, topic = NULL)
-
-\S4method{corpusTopics}{kRp.topicCorpus}(obj, topic = NULL)
-
-corpusTopics(obj, topic = NULL) <- value
-
-\S4method{corpusTopics}{kRp.topicCorpus}(obj, topic = NULL) <- value
 
 corpusFreq(obj)
 
-\S4method{corpusFreq}{kRp.corpus}(obj)
-
-\S4method{corpusFreq}{kRp.sourcesCorpus}(obj)
-
-\S4method{corpusFreq}{kRp.topicCorpus}(obj)
-
 \S4method{corpusFreq}{kRp.hierarchy}(obj)
 
-corpusFreq(obj, topic) <- value
-
-\S4method{corpusFreq}{kRp.corpus}(obj) <- value
-
-\S4method{corpusFreq}{kRp.sourcesCorpus}(obj) <- value
-
-\S4method{corpusFreq}{kRp.topicCorpus}(obj) <- value
+corpusFreq(obj) <- value
 
 \S4method{corpusFreq}{kRp.hierarchy}(obj) <- value
 
@@ -297,15 +147,15 @@ corpusLevel(obj)
 
 \S4method{corpusLevel}{kRp.hierarchy}(obj)
 
-corpusLevel(obj, topic) <- value
+corpusLevel(obj) <- value
 
 \S4method{corpusLevel}{kRp.hierarchy}(obj) <- value
 
-corpusChildren(obj)
+corpusChildren(obj, level = NULL)
 
-\S4method{corpusChildren}{kRp.hierarchy}(obj)
+\S4method{corpusChildren}{kRp.hierarchy}(obj, level = NULL)
 
-corpusChildren(obj, topic) <- value
+corpusChildren(obj) <- value
 
 \S4method{corpusChildren}{kRp.hierarchy}(obj) <- value
 
@@ -313,7 +163,7 @@ corpusCategory(obj)
 
 \S4method{corpusCategory}{kRp.hierarchy}(obj)
 
-corpusCategory(obj, topic) <- value
+corpusCategory(obj) <- value
 
 \S4method{corpusCategory}{kRp.hierarchy}(obj) <- value
 
@@ -321,58 +171,26 @@ corpusID(obj)
 
 \S4method{corpusID}{kRp.hierarchy}(obj)
 
-corpusID(obj, topic) <- value
+corpusID(obj) <- value
 
 \S4method{corpusID}{kRp.hierarchy}(obj) <- value
 
 is.corpus(obj)
 
-\S4method{[}{kRp.corpus}(x, i, j)
-
-\S4method{[}{kRp.sourcesCorpus}(x, i, j)
-
-\S4method{[}{kRp.topicCorpus}(x, i, j)
-
 \S4method{[}{kRp.hierarchy}(x, i, j)
-
-\S4method{[}{kRp.corpus}(x, i, j) <- value
-
-\S4method{[}{kRp.sourcesCorpus}(x, i, j) <- value
-
-\S4method{[}{kRp.topicCorpus}(x, i, j) <- value
 
 \S4method{[}{kRp.hierarchy}(x, i, j) <- value
 
-\S4method{[[}{kRp.corpus}(x, i)
-
-\S4method{[[}{kRp.sourcesCorpus}(x, i)
-
-\S4method{[[}{kRp.topicCorpus}(x, i)
-
 \S4method{[[}{kRp.hierarchy}(x, i)
-
-\S4method{[[}{kRp.corpus}(x, i) <- value
-
-\S4method{[[}{kRp.sourcesCorpus}(x, i) <- value
-
-\S4method{[[}{kRp.topicCorpus}(x, i) <- value
 
 \S4method{[[}{kRp.hierarchy}(x, i) <- value
 
 tif_as_tokens_df(tokens)
 
-\S4method{tif_as_tokens_df}{kRp.corpus}(tokens)
-
-\S4method{tif_as_tokens_df}{kRp.sourcesCorpus}(tokens)
-
-\S4method{tif_as_tokens_df}{kRp.topicCorpus}(tokens)
-
 \S4method{tif_as_tokens_df}{kRp.hierarchy}(tokens)
 }
 \arguments{
-\item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}},
-\code{\link[tm.plugin.koRpus:kRp.sourcesCorpus-class]{kRp.sourcesCorpus}} or
-\code{\link[tm.plugin.koRpus:kRp.topicCorpus-class]{kRp.topicCorpus}}.}
+\item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.}
 
 \item{value}{The new value to replace the current with.}
 
@@ -382,23 +200,19 @@ tif_as_tokens_df(tokens)
       whether the method should fail with an error if \code{meta} was not found.
 If set to \code{FALSE}, returns \code{invisible(NULL)} instead.}
 
-\item{source}{Character value, name of a source in this object. If given,
-      you get/set only the value of this source.}
-
-\item{topic}{Character value, name of a topic in this object. If given,
-      you get/set only the value of this topic.}
+\item{level}{Numeric value specifying the level of child objects you want to get.
+If \code{NULL} then the child objects of the current top level are returned,
+otherwise all children at the level specified.}
 
 \item{x}{See \code{obj}.}
 
 \item{i}{Defines the row selector (\code{[}) or the name to match (\code{[[}) in the summary slot.}
 
 \item{j}{Defines the column selector in the summary slot.}
-
-\item{tokens}{See \code{obj}.}
 }
 \description{
 These methods should be used to get or set values of text objects
-generated by functions like \code{\link[tm.plugin.koRpus:simpleCorpus]{simpleCorpus}}.
+generated by functions like \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}}.
 }
 \details{
 \itemize{

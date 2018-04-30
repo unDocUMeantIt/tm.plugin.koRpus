@@ -40,29 +40,20 @@ library(knitr)
 While the `koRpus` package focusses mostly on analysis steps of individual texts, `tm.plugin.koRpus` adds several new object classes and respective methods, which can be used
 to analyse complete text corpora in a single step. These classes are also a first step to combine object classes of both, the `koRpus` and `tm` packages.
 
-There are three basic classes, which are hierarchically nested:
+At the core of this package there is one particular object class -- `kRp.hierarchy` -- which can be used to construct hierarchically nested object trees.
+That is, you are able to categorize corpora on as many levels as you need. The examples in this vignette use two levels, one being different *topics* the texts
+in the sample corpus deal with, and the other different *sources* the texts come from.
 
-1. class `kRp.topicCorpus` holds a list (named by topics) of objects of
+If you don't need these hierarchical levels, you can just use the function `readCorpus()` to create a corpus object. It simply represents a
+collection of texts. To distinguish texts which came from different sources or deal with different topics, use the `hierarchy` argument, which will generate sub-corpora for each source
+and topic given. These objects will only be valid if there are texts of each topic from each source.
 
-2. class `kRp.sourcesCorpus`, which in its `sources` slot holds a list of objects of
-
-3. class `kRp.corpus`, which in turn contains objects of both `koRpus` and `tm` classes.
-
-The idea behind this is to be able to categorize corpora on at least two levels. The default assumes that these levels are different *sources*
-and different *topics*, but apart from this naming (which is coded into the classes) you can actually use this for whatever levels you like.
-
-If you don't need these hierarchical levels, you can just use the function `simpleCorpus()` to create objects of class `kRp.corpus`. It simply represents a
-collection of texts. To distinguish texts which came from different sources, use the function `sourcesCorpus()`, which will generate sub-corpora for each source
-given. And one level higher up, use the function `topicCorpus()`, to sort `kRp.sourcesCorpus` objects by different topics. Objects of this class will
-only be valid if there are texts of each topic from each source.
-
-Now, if this still confuses you, you can call the wrapper function `read_corpus()` instead, which will decide which one of these classes best suits your data, judging merely from the input.
+Now, if this still confuses you, let's look at a small example.
 
 # Tokenizing corpora
 
-As with `koRpus`, the first step for text analysis is tokenizing and possibly POS tagging. This step is performed by the functions mentioned above,
-`simpleCorpus()`, `sourcesCorpus()`, `topicCorpus()`, or `read_corpus()`, respectively. The package includes four sample texts taken from
-Wikipedia^[see the file `tests/testthat/samples/License\_of\_sample\_texts.txt` for details] in its `tests` directory which
+As with `koRpus`, the first step for text analysis is tokenizing and possibly POS tagging. This step is performed by the `readCorpus()` function mentioned above.
+The package includes four sample texts taken from Wikipedia^[See the file `tests/testthat/samples/License\_of\_sample\_texts.txt` for details] in its `tests` directory which
 we can use for a demonstration:
 
 ```{r, eval=FALSE}
@@ -70,45 +61,68 @@ library(tm.plugin.koRpus)
 library(koRpus.lang.de)
 # set the root path to the sample files
 sampleRoot <- file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples")
-# now we can define the topics (names of the vector elements)
-# and their main path; i.e., these are subdirectories below sampleRoot
-samplePaths <- c(
-  C3S=file.path(sampleRoot, "C3S"),
-  GEMA=file.path(sampleRoot, "GEMA")
-)
-# we also define the sources; again, these are subdirectories, this time
-# below the topic directories, and they contain all texts to analyze
-sampleSources <- c(
-  wpa="Wikipedia_alt",
-  wpn="Wikipedia_neu"
-)
-# and finally, we can tokenize all texts
-sampleTexts <- topicCorpus(
-  paths=samplePaths,
-  sources=sampleSources,
-  tagger="tokenize",
-  lang="de"
-)
-```
-```
-processing topic "C3S", source "Wikipedia_alt", 1 text...
-processing topic "C3S", source "Wikipedia_neu", 1 text...
-processing topic "GEMA", source "Wikipedia_alt", 1 text...
-processing topic "GEMA", source "Wikipedia_neu", 1 text...
-```
-
-As describe above, you can achieve the same result by using the wrapper `read_corpus()`:
-
-```{r, eval=FALSE}
-sampleTexts <- read_corpus(
+# the next call uses "hierarchy" to describe the directory structure
+# and its meaning; see below
+sampleTexts <- readCorpus(
   dir=sampleRoot,
-  sources=sampleSources,
-  topics=c("C3S", "GEMA"),
+  hierarchy=list(
+    Topic=c(
+      C3S="C3S SCE",
+      GEMA="GEMA e.V."
+    ),
+    Source=c(
+      Wikipedia_alt="Wikipedia (alt)",
+      Wikipedia_neu="Wikipedia (neu)"
+    )
+  ),
   tagger="tokenize",
   lang="de"
 )
 ```
+```
+processing corpus 
+  Topic "C3S SCE"
+    Source "Wikipedia (alt)", 1 text...
+    Source "Wikipedia (neu)", 1 text...
+  Topic "GEMA e.V."
+    Source "Wikipedia (alt)", 1 text...
+    Source "Wikipedia (neu)", 1 text...
+```
 
+## The `hierarchy` argument
+
+The `hierarchy` argument describes our corpus in a very condensed format. It is a named list of named character vectors,
+where each list entry represents a hierarchical level. In this case, the top level is called *"Topics"*, below that is the
+level *"Source"*. These hierachical levels must also be represented by the directory structure of the texts to parse,
+and the *names* of the character vectors must be identical to the *directory names* below the root directory specified by `dir`.^[
+Future versions of this package might add furter ways of describing your corpus, like using a configuration file or providing
+a full corpus in XML or JSON format.]
+
+So on your file system, what the `hierarchy` argument above describes is the following layout:
+
+'''
+.../samples/
+  C3S/
+    Wikipedia_alt/
+      Text01.txt
+      Text02.txt
+      ...
+    Wikipedia_neu/
+      Text03.txt
+      Text04.txt
+      ...
+  GEMA/
+    Wikipedia_alt/
+      Text05.txt
+      Text06.txt
+      ...
+    Wikipedia_neu/
+      Text07.txt
+      Text08.txt
+      ...
+'''
+
+<!--
 Should you need to get hold of the nested objects inside `kRp.sourcesCorpus` or `kRp.topicCorpus` class objects, or replace them
 with updated ones, you can do so by using the methods `corpusTagged()`, `corpusSources()`, or `corpusTopics()`:
 
@@ -119,6 +133,7 @@ names(allC3SSources)
 ```
 [1] "wpa" "wpn"
 ```
+-->
 
 Since we're using the `koRpus` package for all actual analysis, you can also setup your environment with `set.kRp.env()` and POS-tag all texts with `TreeTagger`^[see the `koRpus`
 documentation for details.].
@@ -132,36 +147,28 @@ sampleTexts <- lex.div(sampleTexts)
 corpusSummary(sampleTexts)
 ```
 ```
-             doc_id topic source stopwords    a    C CTTR   HDD     K lgV0
-wpaC3S01   wpaC3S01   C3S    wpa        NA 0.16 0.95 6.13 38.14 49.92 6.21
-wpnC3S01   wpnC3S01   C3S    wpn        NA 0.17 0.94 6.82 38.05 54.88 6.10
-wpaGEMA01 wpaGEMA01  GEMA    wpa        NA 0.17 0.94 7.07 37.61 65.08 6.11
-wpnGEMA01 wpnGEMA01  GEMA    wpn        NA 0.16 0.94 7.13 37.87 60.14 6.24
-          MATTR MSTTR   MTLD MTLDMA     R    S  TTR     U
-wpaC3S01   0.81  0.79 100.16     NA  8.68 0.93 0.78 39.92
-wpnC3S01   0.82  0.76 123.01     NA  9.65 0.92 0.73 36.46
-wpaGEMA01  0.80  0.78 106.94    192 10.00 0.92 0.71 35.96
-wpnGEMA01  0.81  0.79 111.64     NA 10.08 0.92 0.73 37.47
+                    corpus     Topic          Source              doc_id
+C3SWikipedia_alt01           C3S SCE Wikipedia (alt)  C3SWikipedia_alt01
+C3SWikipedia_neu01           C3S SCE Wikipedia (neu)  C3SWikipedia_neu01
+GEMAWikipedia_alt01        GEMA e.V. Wikipedia (alt) GEMAWikipedia_alt01
+GEMAWikipedia_neu01        GEMA e.V. Wikipedia (neu) GEMAWikipedia_neu01
+                    stopwords    a    C CTTR   HDD     K lgV0 MATTR MSTTR
+C3SWikipedia_alt01         NA 0.16 0.95 6.13 38.14 49.92 6.21  0.81  0.79
+C3SWikipedia_neu01         NA 0.17 0.94 6.82 38.05 54.88 6.10  0.82  0.76
+GEMAWikipedia_alt01        NA 0.17 0.94 7.07 37.61 65.08 6.11  0.80  0.78
+GEMAWikipedia_neu01        NA 0.16 0.94 7.13 37.87 60.14 6.24  0.81  0.79
+                      MTLD MTLDMA     R    S  TTR     U
+C3SWikipedia_alt01  100.16     NA  8.68 0.93 0.78 39.92
+C3SWikipedia_neu01  123.01     NA  9.65 0.92 0.73 36.46
+GEMAWikipedia_alt01 106.94    192 10.00 0.92 0.71 35.96
+GEMAWikipedia_neu01 111.64     NA 10.08 0.92 0.73 37.47
 ```
 
 As you can see, `corpusSummary()` returns a `data.frame` object with the summarised results of all
-texts below the given object level. That is, if you are only interested in the results for texts of the first topic,
-simply apply `corpusSummary()` on the result of `corpusTopics()`:
-
-```{r, eval=FALSE}
-corpusSummary(corpusTopics(sampleTexts, "C3S"))
-```
-```
-           doc_id topic source stopwords    a    C CTTR   HDD     K lgV0 MATTR
-wpaC3S01 wpaC3S01   C3S    wpa        NA 0.16 0.95 6.13 38.14 49.92 6.21  0.81
-wpnC3S01 wpnC3S01   C3S    wpn        NA 0.17 0.94 6.82 38.05 54.88 6.10  0.82
-         MSTTR   MTLD MTLDMA    R    S  TTR     U
-wpaC3S01  0.79 100.16     NA 8.68 0.93 0.78 39.92
-wpnC3S01  0.76 123.01     NA 9.65 0.92 0.73 36.46
-```
+texts.
 
 There are quite a number of `corpus*()` getter/setter methods for slots of these objects, e.g.,
-`corpusReadability()` to get the `readability()` results from objects of class `kRp.corpus`.
+`corpusReadability()` to get the `readability()` results from objects of class `kRp.hierarchy`.
 
 As we explained earlier, the nested S4 object classes used by `tm.plugin.koRpus` are rather complex.
 Two methods can be especially helpful for further analysis. The first one is `tif_as_tokens_df()` and returns
@@ -174,9 +181,9 @@ The second one is a family of `[`, `[<-`, `[[` and `[[<-` shorcuts to directly i
 ```{r, eval=FALSE}
 library(sciplot)
 lineplot.CI(
-  x.factor=sampleTexts[["source"]],
+  x.factor=sampleTexts[["Source"]],
   response=sampleTexts[["MTLD"]],
-  group=sampleTexts[["topic"]],
+  group=sampleTexts[["Topic"]],
   type="l",
   main="MTLD",
   xlab="Media source",
@@ -198,7 +205,7 @@ The object classes make it quite comfortable to analyse type frequencies of corp
 ```{r, eval=FALSE}
 sampleTexts <- read.corp.custom(sampleTexts, caseSens=FALSE)
 sampleTextsWordFreq <- query(
-  corpusFreq(sampleTexts),
+  corpusFreq(sampleTexts)[["corpus"]],
   var="wclass",
   query=kRp.POS.tags(lang="de", list.classes=TRUE, tags="words")
 )
