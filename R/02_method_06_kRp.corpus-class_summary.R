@@ -46,7 +46,7 @@
 #' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
 #' summary(myTexts)
 #' }
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("summary", signature(object="kRp.hierarchy"), function(
   object, missing=NA, ...
 ){
@@ -157,7 +157,7 @@ setGeneric("corpusSummary", function(obj) standardGeneric("corpusSummary"))
 #' @aliases
 #'    corpusSummary,-methods
 #'    corpusSummary,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusSummary",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -177,7 +177,7 @@ setGeneric("corpusSummary<-", function(obj, value) standardGeneric("corpusSummar
 #' @aliases
 #'    corpusSummary<-,-methods
 #'    corpusSummary<-,hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusSummary<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){

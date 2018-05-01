@@ -43,7 +43,7 @@
 #' @keywords classes
 #' @export kRp_sourcesCorpus
 #' @exportClass kRp.sourcesCorpus
-#' @include 01_class_01_kRp.corpus.R
+#' @include 01_class_04_kRp.corpus.R
 #' @rdname kRp.sourcesCorpus-class
 kRp_sourcesCorpus <- setClass("kRp.sourcesCorpus",
     representation=representation(

@@ -42,7 +42,7 @@
 #' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
 #' myTexts <- lex.div(myTexts)
 #' }
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("lex.div", signature(txt="kRp.hierarchy"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
     if(corpusLevel(txt) > 0){
       corpusChildren(txt) <- lapply(corpusChildren(txt), lex.div, summary=summary, mc.cores=mc.cores, char=char, quiet=quiet, ...)

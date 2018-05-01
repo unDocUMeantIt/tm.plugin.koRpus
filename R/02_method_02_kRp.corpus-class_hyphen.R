@@ -37,7 +37,7 @@
 #' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
 #' myTexts <- hyphen(myTexts)
 #' }
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("hyphen", signature(words="kRp.hierarchy"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     if(corpusLevel(words) > 0){
       corpusChildren(words) <- lapply(corpusChildren(words), hyphen, mc.cores=mc.cores, quiet=quiet, ...)

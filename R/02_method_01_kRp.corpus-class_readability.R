@@ -52,7 +52,7 @@
 #' )
 #' myTexts <- readability(myCorpus)
 #' }
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("readability", signature(txt.file="kRp.hierarchy"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     if(corpusLevel(txt.file) > 0){
       corpusChildren(txt.file) <- lapply(corpusChildren(txt.file), readability, summary=summary, mc.cores=mc.cores, quiet=quiet, ...)

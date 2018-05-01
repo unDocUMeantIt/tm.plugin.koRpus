@@ -52,7 +52,7 @@ setGeneric("corpusTagged", function(obj) standardGeneric("corpusTagged"))
 #' @aliases
 #'    corpusTagged,-methods
 #'    corpusTagged,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTagged",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -72,7 +72,7 @@ setGeneric("corpusTagged<-", function(obj, value) standardGeneric("corpusTagged<
 #' @aliases
 #'    corpusTagged<-,-methods
 #'    corpusTagged<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTagged<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -91,7 +91,7 @@ setGeneric("corpusReadability", function(obj) standardGeneric("corpusReadability
 #' @aliases
 #'    corpusReadability,-methods
 #'    corpusReadability,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusReadability",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -111,7 +111,7 @@ setGeneric("corpusReadability<-", function(obj, value) standardGeneric("corpusRe
 #' @aliases
 #'    corpusReadability<-,-methods
 #'    corpusReadability<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusReadability<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -130,7 +130,7 @@ setGeneric("corpusTm", function(obj) standardGeneric("corpusTm"))
 #' @aliases
 #'    corpusTm,-methods
 #'    corpusTm,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTm",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -150,7 +150,7 @@ setGeneric("corpusTm<-", function(obj, value) standardGeneric("corpusTm<-"))
 #' @aliases
 #'    corpusTm<-,-methods
 #'    corpusTm<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTm<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -172,7 +172,7 @@ setGeneric("corpusMeta", function(obj, meta=NULL, fail=TRUE) standardGeneric("co
 #' @aliases
 #'    corpusMeta,-methods
 #'    corpusMeta,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusMeta",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, meta=NULL, fail=TRUE){
@@ -207,7 +207,7 @@ setGeneric("corpusMeta<-", function(obj, meta=NULL, value) standardGeneric("corp
 #' @aliases
 #'    corpusMeta<-,-methods
 #'    corpusMeta<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusMeta<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, meta=NULL, value){
@@ -230,7 +230,7 @@ setGeneric("corpusHyphen", function(obj) standardGeneric("corpusHyphen"))
 #' @aliases
 #'    corpusHyphen,-methods
 #'    corpusHyphen,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusHyphen",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -250,7 +250,7 @@ setGeneric("corpusHyphen<-", function(obj, value) standardGeneric("corpusHyphen<
 #' @aliases
 #'    corpusHyphen<-,-methods
 #'    corpusHyphen<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusHyphen<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -269,7 +269,7 @@ setGeneric("corpusTTR", function(obj) standardGeneric("corpusTTR"))
 #' @aliases
 #'    corpusTTR,-methods
 #'    corpusTTR,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTTR",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -290,7 +290,7 @@ setGeneric("corpusTTR<-", function(obj, value) standardGeneric("corpusTTR<-"))
 #' @aliases
 #'    corpusTTR<-,-methods
 #'    corpusTTR<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTTR<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -310,7 +310,7 @@ setGeneric("corpusFreq", function(obj) standardGeneric("corpusFreq"))
 #' @aliases
 #'    corpusFreq,-methods
 #'    corpusFreq,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusFreq",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -331,7 +331,7 @@ setGeneric("corpusFreq<-", function(obj, value) standardGeneric("corpusFreq<-"))
 #' @aliases
 #'    corpusFreq<-,-methods
 #'    corpusFreq<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusFreq<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -350,7 +350,7 @@ setGeneric("corpusLevel", function(obj) standardGeneric("corpusLevel"))
 #' @aliases
 #'    corpusLevel,-methods
 #'    corpusLevel,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusLevel",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -370,7 +370,7 @@ setGeneric("corpusLevel<-", function(obj, value) standardGeneric("corpusLevel<-"
 #' @aliases
 #'    corpusLevel<-,-methods
 #'    corpusLevel<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusLevel<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -392,7 +392,7 @@ setGeneric("corpusChildren", function(obj, level=NULL) standardGeneric("corpusCh
 #' @aliases
 #'    corpusChildren,-methods
 #'    corpusChildren,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusChildren",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, level=NULL){
@@ -427,7 +427,7 @@ setGeneric("corpusChildren<-", function(obj, value) standardGeneric("corpusChild
 #' @aliases
 #'    corpusChildren<-,-methods
 #'    corpusChildren<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusChildren<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -446,7 +446,7 @@ setGeneric("corpusCategory", function(obj) standardGeneric("corpusCategory"))
 #' @aliases
 #'    corpusCategory,-methods
 #'    corpusCategory,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusCategory",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -466,7 +466,7 @@ setGeneric("corpusCategory<-", function(obj, value) standardGeneric("corpusCateg
 #' @aliases
 #'    corpusCategory<-,-methods
 #'    corpusCategory<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusCategory<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -485,7 +485,7 @@ setGeneric("corpusID", function(obj) standardGeneric("corpusID"))
 #' @aliases
 #'    corpusID,-methods
 #'    corpusID,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusID",
   signature=signature(obj="kRp.hierarchy"),
   function (obj){
@@ -505,7 +505,7 @@ setGeneric("corpusID<-", function(obj, value) standardGeneric("corpusID<-"))
 #' @aliases
 #'    corpusID<-,-methods
 #'    corpusID<-,kRp.hierarchy-method
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusID<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
@@ -516,7 +516,7 @@ setMethod("corpusID<-",
 
 #' @rdname kRp.hierarchy_get-methods
 #' @export
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 is.corpus <- function(obj){
   inherits(obj, "kRp.hieraarchy")
 }

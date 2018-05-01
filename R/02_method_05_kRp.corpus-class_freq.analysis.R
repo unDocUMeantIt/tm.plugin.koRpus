@@ -36,7 +36,7 @@
 #' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
 #' myTexts <- freq.analysis(myTexts)
 #' }
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("freq.analysis", signature(txt.file="kRp.hierarchy"), function(txt.file, mc.cores=getOption("mc.cores", 1L), ...){
     if(corpusLevel(txt.file) > 0){
       corpusChildren(txt.file) <- lapply(corpusChildren(txt.file), freq.analysis, mc.cores=mc.cores, ...)

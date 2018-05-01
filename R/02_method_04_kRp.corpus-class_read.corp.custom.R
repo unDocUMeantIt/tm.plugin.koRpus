@@ -76,7 +76,7 @@
 #' myTopicTexts <- read.corp.custom(myTopicTexts)
 #' 
 #' }
-#' @include 01_class_04_kRp.hierarchy.R
+#' @include 01_class_01_kRp.hierarchy.R
 setMethod("read.corp.custom", signature(corpus="kRp.hierarchy"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
     if(corpusLevel(corpus) > 0){
       corpusChildren(corpus) <- lapply(corpusChildren(corpus), read.corp.custom, mc.cores=mc.cores, ...)

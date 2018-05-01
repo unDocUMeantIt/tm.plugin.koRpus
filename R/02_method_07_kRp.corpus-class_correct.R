@@ -45,7 +45,7 @@
 #' @aliases correct.hyph correct.hyph,kRp.hierarchy-method
 #' @importFrom sylly correct.hyph
 #' @export
-#' @include 01_class_01_kRp.corpus.R
+#' @include 01_class_04_kRp.corpus.R
 setMethod("correct.hyph",
   signature(obj="kRp.hierarchy"),
   function (obj, word=NULL, hyphen=NULL, cache=TRUE){
