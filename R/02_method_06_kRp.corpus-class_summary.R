@@ -40,11 +40,25 @@
 #' @export
 #' @docType methods
 #' @aliases summary,kRp.hierarchy-method
-#' @rdname summary-methods
+#' @rdname summary
 #' @examples
 #' \dontrun{
-#' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
-#' summary(myTexts)
+#' myCorpus <- readCorpus(
+#'   dir=file.path(
+#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S"
+#'   ),
+#'   hierarchy=list(
+#'     Source=c(
+#'       Wikipedia_alt="Wikipedia (alt)",
+#'       Wikipedia_neu="Wikipedia (neu)"
+#'     )
+#'   )
+#' )
+#' myCorpus <- readability(myCorpus, summary=FALSE)
+#' corpusSummary(myCorpus)
+#' # add summaries
+#' myCorpus <- summary(myCorpus)
+#' corpusSummary(myCorpus)
 #' }
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("summary", signature(object="kRp.hierarchy"), function(
@@ -146,12 +160,12 @@ setMethod("summary", signature(object="kRp.hierarchy"), function(
 )
 
 
-#' @rdname summary-methods
+#' @rdname summary
 #' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 #' @docType methods
 #' @export
 setGeneric("corpusSummary", function(obj) standardGeneric("corpusSummary"))
-#' @rdname summary-methods
+#' @rdname summary
 #' @docType methods
 #' @export
 #' @aliases
@@ -166,12 +180,12 @@ setMethod("corpusSummary",
   }
 )
 
-#' @rdname summary-methods
+#' @rdname summary
 #' @export
 #' @docType methods
 #' @param value The new value to replace the current with.
 setGeneric("corpusSummary<-", function(obj, value) standardGeneric("corpusSummary<-"))
-#' @rdname summary-methods
+#' @rdname summary
 #' @export
 #' @docType methods
 #' @aliases

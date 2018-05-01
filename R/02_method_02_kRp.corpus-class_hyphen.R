@@ -31,11 +31,15 @@
 #' @export
 #' @docType methods
 #' @aliases hyphen,kRp.hierarchy-method
-#' @rdname hyphen-methods
+#' @rdname hyphen
 #' @examples
 #' \dontrun{
-#' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
-#' myTexts <- hyphen(myTexts)
+#' myCorpus <- readCorpus(
+#'   dir=file.path(
+#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S", "Wikipedia_alt"
+#'   )
+#' )
+#' myCorpus <- hyphen(myCorpus)
 #' }
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("hyphen", signature(words="kRp.hierarchy"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){

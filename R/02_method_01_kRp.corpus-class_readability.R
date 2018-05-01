@@ -33,7 +33,7 @@
 #' @importMethodsFrom koRpus readability summary
 #' @docType methods
 #' @aliases readability,kRp.hierarchy-method
-#' @rdname readability-methods
+#' @rdname readability
 #' @export
 #' @examples
 #' \dontrun{

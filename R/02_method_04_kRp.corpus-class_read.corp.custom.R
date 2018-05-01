@@ -30,51 +30,22 @@
 #' @importFrom koRpus read.corp.custom
 #' @docType methods
 #' @aliases read.corp.custom,kRp.hierarchy-method
-#' @rdname read.corp.custom-methods
+#' @rdname read.corp.custom
 #' @examples
 #' \dontrun{
-#' myBasePath <- file.path("/home","me","textCorpus")
-#' # analyse a single corpus
-#' myTexts <- simpleCorpus(dir=myBasePath)
-#' myTexts <- read.corp.custom(myTexts)
-#' 
-#' # you can also analyse multiple corpora from different sources simultaneously
-#' # the following would assume that below 'myBasePath', there are subfolders
-#' # named "Wikipedia" and Journal of Applied Geschwurbel"
-#' mySources <- c(
-#'    wp="Wikipedia",
-#'    jg="Journal of Applied Geschwurbel"
-#'  )
-#' mySourcesTexts <- sourcesCorpus(
-#'   path=myBasePath,
-#'   sources=mySources
+#' myCorpus <- readCorpus(
+#'   dir=file.path(
+#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S"
+#'   ),
+#'   hierarchy=list(
+#'     Source=c(
+#'       Wikipedia_alt="Wikipedia (alt)",
+#'       Wikipedia_neu="Wikipedia (neu)"
+#'     )
+#'   )
 #' )
-#' # this will also call read.corp.custom() recursively on
-#' # the single text level
-#' mySourcesTexts <- read.corp.custom(mySourcesTexts)
-#' 
-#' # and you might have guessed, you can also add a topic level
-#' # with the following two vectors you would describe your
-#' # data structure as two subfolders called "proc" and "gesw"
-#' # below myBasePath, and two further subfolders named "Wikipedia"
-#' # and Journal of Applied Geschwurbel" below each of the topic folders,
-#' # containing the actual texts
-#' myTopicPaths <- c(
-#'   procrastination=file.path(myBasePath, "proc"),
-#'   geschwurbel=file.path(myBasePath, "gesw")
-#' )
-#' mySources <- c(
-#'    wp="Wikipedia",
-#'    jg="Journal of Applied Geschwurbel"
-#'  )
-#' myTopicTexts <- topicCorpus(
-#'   paths=myTopicPaths,
-#'   sources=mySources
-#' )
-#' # this will also call read.corp.custom() recursively on
-#' # the source and single text level
-#' myTopicTexts <- read.corp.custom(myTopicTexts)
-#' 
+#' # this will call read.corp.custom() recursively
+#' myCorpus <- read.corp.custom(myCorpus)
 #' }
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("read.corp.custom", signature(corpus="kRp.hierarchy"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){

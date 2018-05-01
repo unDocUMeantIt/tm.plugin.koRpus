@@ -315,7 +315,25 @@ sampleTexts &lt;-<span class="st"> </span><span class="kw">readCorpus</span>(
 <h2>The <code>hierarchy</code> argument</h2>
 <p>The <code>hierarchy</code> argument describes our corpus in a very condensed format. It is a named list of named character vectors, where each list entry represents a hierarchical level. In this case, the top level is called <em>“Topics”</em>, below that is the level <em>“Source”</em>. These hierachical levels must also be represented by the directory structure of the texts to parse, and the <em>names</em> of the character vectors must be identical to the <em>directory names</em> below the root directory specified by <code>dir</code>.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
 <p>So on your file system, what the <code>hierarchy</code> argument above describes is the following layout:</p>
-<p>‘’’ …/samples/ C3S/ Wikipedia_alt/ Text01.txt Text02.txt … Wikipedia_neu/ Text03.txt Text04.txt … GEMA/ Wikipedia_alt/ Text05.txt Text06.txt … Wikipedia_neu/ Text07.txt Text08.txt … ‘’’</p>
+<pre><code>.../samples/
+  C3S/
+    Wikipedia_alt/
+      Text01.txt
+      Text02.txt
+      ...
+    Wikipedia_neu/
+      Text03.txt
+      Text04.txt
+      ...
+  GEMA/
+    Wikipedia_alt/
+      Text05.txt
+      Text06.txt
+      ...
+    Wikipedia_neu/
+      Text07.txt
+      Text08.txt
+      ...</code></pre>
 <!--
 Should you need to get hold of the nested objects inside `kRp.sourcesCorpus` or `kRp.topicCorpus` class objects, or replace them
 with updated ones, you can do so by using the methods `corpusTagged()`, `corpusSources()`, or `corpusTopics()`:

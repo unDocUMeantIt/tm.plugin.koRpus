@@ -28,7 +28,12 @@ inside the given \code{words} object (using \code{lapply}).
 }
 \examples{
 \dontrun{
-myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
-myTexts <- hyphen(myTexts)
+myCorpus <- readCorpus(
+  dir=file.path(
+    path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S",
+      "Wikipedia_alt"
+  )
+)
+myCorpus <- hyphen(myCorpus)
 }
 }

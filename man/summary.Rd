@@ -51,7 +51,21 @@ all texts that the respective object level contains.
 }
 \examples{
 \dontrun{
-myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
-summary(myTexts)
+myCorpus <- readCorpus(
+  dir=file.path(
+    path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S"
+  ),
+  hierarchy=list(
+    Source=c(
+      Wikipedia_alt="Wikipedia (alt)",
+      Wikipedia_neu="Wikipedia (neu)"
+    )
+  )
+)
+myCorpus <- readability(myCorpus, summary=FALSE)
+corpusSummary(myCorpus)
+# add summaries
+myCorpus <- summary(myCorpus)
+corpusSummary(myCorpus)
 }
 }

@@ -53,7 +53,26 @@
 #' @keywords classes
 #' @export kRp_hierarchy
 #' @exportClass kRp.hierarchy
-#' @rdname kRp.hierarchy-class
+#' @rdname kRp.hierarchy
+#' @examples
+#' \dontrun{
+#' # use readCorpus() to create objects of class kRp.hierarchy
+#' myCorpus <- readCorpus(
+#'   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+#'   hierarchy=list(
+#'     Topic=c(
+#'       C3S="C3S",
+#'       GEMA="GEMA"
+#'     ),
+#'     Source=c(
+#'       Wikipedia_alt="Wikipedia (alt)",
+#'       Wikipedia_neu="Wikipedia (neu)"
+#'     )
+#'   )
+#' )
+#' }
+#' # manual creation
+#' emptyCorpus <- kRp_hierarchy()
 kRp_hierarchy <- setClass("kRp.hierarchy",
     representation=representation(
     level="numeric",

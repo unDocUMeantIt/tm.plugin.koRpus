@@ -25,7 +25,19 @@ inside the given \code{txt.file} object (using \code{lapply}).
 }
 \examples{
 \dontrun{
-myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
-myTexts <- freq.analysis(myTexts)
+myCorpus <- readCorpus(
+  dir=file.path(
+    path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S"
+  ),
+  hierarchy=list(
+    Source=c(
+      Wikipedia_alt="Wikipedia (alt)",
+      Wikipedia_neu="Wikipedia (neu)"
+    )
+  )
+)
+# this will call read.corp.custom() recursively
+myCorpus <- read.corp.custom(myCorpus)
+myCorpus <- freq.analysis(myCorpus)
 }
 }

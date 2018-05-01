@@ -30,11 +30,23 @@
 #' @export
 #' @docType methods
 #' @aliases freq.analysis,kRp.hierarchy-method
-#' @rdname freq.analysis-methods
+#' @rdname freq.analysis
 #' @examples
 #' \dontrun{
-#' myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
-#' myTexts <- freq.analysis(myTexts)
+#' myCorpus <- readCorpus(
+#'   dir=file.path(
+#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S"
+#'   ),
+#'   hierarchy=list(
+#'     Source=c(
+#'       Wikipedia_alt="Wikipedia (alt)",
+#'       Wikipedia_neu="Wikipedia (neu)"
+#'     )
+#'   )
+#' )
+#' # this will call read.corp.custom() recursively
+#' myCorpus <- read.corp.custom(myCorpus)
+#' myCorpus <- freq.analysis(myCorpus)
 #' }
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("freq.analysis", signature(txt.file="kRp.hierarchy"), function(txt.file, mc.cores=getOption("mc.cores", 1L), ...){

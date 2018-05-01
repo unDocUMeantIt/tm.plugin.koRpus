@@ -69,4 +69,24 @@ Should you need to manually generate objects of this class (which should rarely 
 \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}}.
 }
 
+\examples{
+\dontrun{
+# use readCorpus() to create objects of class kRp.hierarchy
+myCorpus <- readCorpus(
+  dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+  hierarchy=list(
+    Topic=c(
+      C3S="C3S",
+      GEMA="GEMA"
+    ),
+    Source=c(
+      Wikipedia_alt="Wikipedia (alt)",
+      Wikipedia_neu="Wikipedia (neu)"
+    )
+  )
+)
+}
+# manual creation
+emptyCorpus <- kRp_hierarchy()
+}
 \keyword{classes}

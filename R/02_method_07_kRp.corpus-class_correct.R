@@ -41,7 +41,7 @@
 #' @return An object of the same class as \code{obj}.
 #' @export
 #' @docType methods
-#' @rdname correct-methods
+#' @rdname correct
 #' @aliases correct.hyph correct.hyph,kRp.hierarchy-method
 #' @importFrom sylly correct.hyph
 #' @export

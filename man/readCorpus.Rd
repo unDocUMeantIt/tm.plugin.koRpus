@@ -62,6 +62,9 @@ and higher values indicate a hierachical category. You should not manipulate thi
 
 \item{...}{Additional options which are passed through to the defined \code{tagger}.}
 }
+\value{
+An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+}
 \description{
 Function to create kRp.hierarchy objects from hierachically structured directories
 }
@@ -89,6 +92,28 @@ list items however describe the hierachical level and are not matched with direc
 
 \examples{
 \dontrun{
+# "flat" corpus, parse all texts in the given dir
+myCorpus <- readCorpus(
+  dir=file.path(
+    path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S",
+      "Wikipedia_alt"
+  )
+)
+
+# corpus with one category names "Source"
+myCorpus <- readCorpus(
+  dir=file.path(
+    path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S"
+  ),
+  hierarchy=list(
+    Source=c(
+      Wikipedia_alt="Wikipedia (alt)",
+      Wikipedia_neu="Wikipedia (neu)"
+    )
+  )
+)
+
+# two hieraryhical levels, "Topic" and "Source"
 myCorpus <- readCorpus(
   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
   hierarchy=list(

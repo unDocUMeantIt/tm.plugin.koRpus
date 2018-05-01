@@ -64,10 +64,31 @@
 #' @param level A numeric value defining the hierachical level, where \code{level=0} is the actual collection of texts,
 #'    and higher values indicate a hierachical category. You should not manipulate this value yourself, it is used
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
-#' @value An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @return An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 #' @export
 #' @examples
 #' \dontrun{
+#' # "flat" corpus, parse all texts in the given dir
+#' myCorpus <- readCorpus(
+#'   dir=file.path(
+#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S", "Wikipedia_alt"
+#'   )
+#' )
+#'
+#' # corpus with one category names "Source"
+#' myCorpus <- readCorpus(
+#'   dir=file.path(
+#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S"
+#'   ),
+#'   hierarchy=list(
+#'     Source=c(
+#'       Wikipedia_alt="Wikipedia (alt)",
+#'       Wikipedia_neu="Wikipedia (neu)"
+#'     )
+#'   )
+#' )
+#'
+#' # two hieraryhical levels, "Topic" and "Source"
 #' myCorpus <- readCorpus(
 #'   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
 #'   hierarchy=list(

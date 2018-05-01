@@ -36,7 +36,19 @@ inside the given \code{txt} object (using \code{lapply}).
 }
 \examples{
 \dontrun{
-myTexts <- simpleCorpus(dir=file.path("/home","me","textCorpus"))
-myTexts <- lex.div(myTexts)
+myCorpus <- readCorpus(
+  dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+  hierarchy=list(
+    Topic=c(
+      C3S="C3S",
+      GEMA="GEMA"
+    ),
+    Source=c(
+      Wikipedia_alt="Wikipedia (alt)",
+      Wikipedia_neu="Wikipedia (neu)"
+    )
+  )
+)
+myCorpus <- lex.div(myCorpus)
 }
 }

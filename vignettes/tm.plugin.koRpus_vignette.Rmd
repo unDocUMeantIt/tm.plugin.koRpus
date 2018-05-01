@@ -100,7 +100,7 @@ a full corpus in XML or JSON format.]
 
 So on your file system, what the `hierarchy` argument above describes is the following layout:
 
-'''
+```
 .../samples/
   C3S/
     Wikipedia_alt/
@@ -120,7 +120,7 @@ So on your file system, what the `hierarchy` argument above describes is the fol
       Text07.txt
       Text08.txt
       ...
-'''
+```
 
 <!--
 Should you need to get hold of the nested objects inside `kRp.sourcesCorpus` or `kRp.topicCorpus` class objects, or replace them
