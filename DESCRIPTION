@@ -21,7 +21,7 @@ LazyLoad: yes
 Authors@R: c(person(given="m.eik", family="michalke",
         email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.02-1
-Date: 2018-05-01
+Date: 2018-05-02
 RoxygenNote: 6.0.1
 Collate: 
     '01_class_01_kRp.hierarchy.R'
@@ -33,6 +33,7 @@ Collate:
     '02_method_06_kRp.corpus-class_summary.R'
     '02_method_07_kRp.corpus-class_correct.R'
     '02_method_20_kRp.corpus_get_set_is.R'
+    'deprecated.R'
     'kRpSource.R'
     'readCorpus.R'
     'tm.plugin.koRpus-internal.R'
