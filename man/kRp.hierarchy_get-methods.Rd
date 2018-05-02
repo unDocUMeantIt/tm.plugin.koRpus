@@ -192,7 +192,7 @@ tif_as_tokens_df(tokens)
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.}
 
-\item{level}{Integer value of the target level. If \code{NULL} the top level is used.}
+\item{level}{Either the integer value or name (character string) of the target level. If \code{NULL} the top level is used.}
 
 \item{id}{Character value specifying the category ID of child objects you want to get.
 If \code{NULL} then the child objects of the current top level are returned,

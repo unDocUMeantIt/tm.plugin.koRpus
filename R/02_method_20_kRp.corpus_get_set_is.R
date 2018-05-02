@@ -38,7 +38,11 @@
 #' Please note that the \code{<-} methods usually do not work on nested levels but only on single object nodes.
 #' 
 #' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
-#' @param level Integer value of the target level. If \code{NULL} the top level is used.
+#' @param level Either the integer value or name (character string) of the target level. If \code{NULL} the top level is used.
+#' @param id Character value specifying the category ID of child objects you want to get.
+#'    If \code{NULL} then the child objects of the current top level are returned,
+#'    otherwise all children with the ID specified. Only interpreted if \code{level=NULL}
+#'    (you can't use both at the same time).
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @references
@@ -411,10 +415,6 @@ setMethod("corpusLevel<-",
 )
 
 #' @rdname kRp.hierarchy_get-methods
-#' @param id Character value specifying the category ID of child objects you want to get.
-#'    If \code{NULL} then the child objects of the current top level are returned,
-#'    otherwise all children with the ID specified. Only interpreted if \code{level=NULL}
-#'    (you can't use both at the same time).
 #' @docType methods
 #' @export
 setGeneric("corpusChildren", function(obj, level=NULL, id=NULL) standardGeneric("corpusChildren"))
