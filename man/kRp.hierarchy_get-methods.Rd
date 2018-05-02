@@ -87,25 +87,25 @@
 \alias{tif_as_tokens_df,hierarchy-method}
 \title{Getter/setter methods for kRp.hierarchy objects}
 \usage{
-corpusTagged(obj, level = NULL)
+corpusTagged(obj, level = NULL, id = NULL)
 
-\S4method{corpusTagged}{kRp.hierarchy}(obj, level = NULL)
+\S4method{corpusTagged}{kRp.hierarchy}(obj, level = NULL, id = NULL)
 
 corpusTagged(obj) <- value
 
 \S4method{corpusTagged}{kRp.hierarchy}(obj) <- value
 
-corpusReadability(obj, level = NULL)
+corpusReadability(obj, level = NULL, id = NULL)
 
-\S4method{corpusReadability}{kRp.hierarchy}(obj, level = NULL)
+\S4method{corpusReadability}{kRp.hierarchy}(obj, level = NULL, id = NULL)
 
 corpusReadability(obj) <- value
 
 \S4method{corpusReadability}{kRp.hierarchy}(obj) <- value
 
-corpusTm(obj, level = NULL)
+corpusTm(obj, level = NULL, id = NULL)
 
-\S4method{corpusTm}{kRp.hierarchy}(obj, level = NULL)
+\S4method{corpusTm}{kRp.hierarchy}(obj, level = NULL, id = NULL)
 
 corpusTm(obj) <- value
 
@@ -119,25 +119,25 @@ corpusMeta(obj, meta = NULL) <- value
 
 \S4method{corpusMeta}{kRp.hierarchy}(obj, meta = NULL) <- value
 
-corpusHyphen(obj, level = NULL)
+corpusHyphen(obj, level = NULL, id = NULL)
 
-\S4method{corpusHyphen}{kRp.hierarchy}(obj, level = NULL)
+\S4method{corpusHyphen}{kRp.hierarchy}(obj, level = NULL, id = NULL)
 
 corpusHyphen(obj) <- value
 
 \S4method{corpusHyphen}{kRp.hierarchy}(obj) <- value
 
-corpusTTR(obj, level = NULL)
+corpusTTR(obj, level = NULL, id = NULL)
 
-\S4method{corpusTTR}{kRp.hierarchy}(obj, level = NULL)
+\S4method{corpusTTR}{kRp.hierarchy}(obj, level = NULL, id = NULL)
 
 corpusTTR(obj) <- value
 
 \S4method{corpusTTR}{kRp.hierarchy}(obj) <- value
 
-corpusFreq(obj, level = NULL)
+corpusFreq(obj, level = NULL, id = NULL)
 
-\S4method{corpusFreq}{kRp.hierarchy}(obj, level = NULL)
+\S4method{corpusFreq}{kRp.hierarchy}(obj, level = NULL, id = NULL)
 
 corpusFreq(obj) <- value
 
@@ -159,9 +159,9 @@ corpusChildren(obj) <- value
 
 \S4method{corpusChildren}{kRp.hierarchy}(obj) <- value
 
-corpusCategory(obj, level = NULL)
+corpusCategory(obj, level = NULL, id = NULL)
 
-\S4method{corpusCategory}{kRp.hierarchy}(obj, level = NULL)
+\S4method{corpusCategory}{kRp.hierarchy}(obj, level = NULL, id = NULL)
 
 corpusCategory(obj) <- value
 
@@ -194,6 +194,11 @@ tif_as_tokens_df(tokens)
 
 \item{level}{Integer value of the target level. If \code{NULL} the top level is used.}
 
+\item{id}{Character value specifying the category ID of child objects you want to get.
+If \code{NULL} then the child objects of the current top level are returned,
+otherwise all children with the ID specified. Only interpreted if \code{level=NULL}
+(you can't use both at the same time).}
+
 \item{value}{The new value to replace the current with.}
 
 \item{meta}{If not NULL, the \code{meta} list entry of the given name.}
@@ -201,11 +206,6 @@ tif_as_tokens_df(tokens)
 \item{fail}{Logical,
       whether the method should fail with an error if \code{meta} was not found.
 If set to \code{FALSE}, returns \code{invisible(NULL)} instead.}
-
-\item{id}{Character value specifying the category ID of child objects you want to get.
-If \code{NULL} then the child objects of the current top level are returned,
-otherwise all children with the ID specified. Only interpreted if \code{level=NULL}
-(you can't use both at the same time).}
 
 \item{x}{See \code{obj}.}
 

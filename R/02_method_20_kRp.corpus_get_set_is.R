@@ -49,7 +49,7 @@
 #' corpusTagged(myCorpus)
 #' corpusMeta(myCorpus, "note") <- "an interesting read!"
 #' }
-setGeneric("corpusTagged", function(obj, level=NULL) standardGeneric("corpusTagged"))
+setGeneric("corpusTagged", function(obj, level=NULL, id=NULL) standardGeneric("corpusTagged"))
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
@@ -59,11 +59,11 @@ setGeneric("corpusTagged", function(obj, level=NULL) standardGeneric("corpusTagg
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTagged",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj, level=NULL){
-    if(is.null(level)){
+  function (obj, level=NULL, id=NULL){
+    if(all(is.null(level), is.null(id))){
       result <- slot(obj, name="tagged")
     } else {
-      result <- unlist(lapply(corpusChildren(obj, level=level), slot, name="tagged"))
+      result <- unlist(lapply(corpusChildren(obj, level=level, id=id), slot, name="tagged"))
     }
     return(result)
   }
@@ -92,7 +92,7 @@ setMethod("corpusTagged<-",
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusReadability", function(obj, level=NULL) standardGeneric("corpusReadability"))
+setGeneric("corpusReadability", function(obj, level=NULL, id=NULL) standardGeneric("corpusReadability"))
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
@@ -102,12 +102,12 @@ setGeneric("corpusReadability", function(obj, level=NULL) standardGeneric("corpu
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusReadability",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj, level=NULL){
+  function (obj, level=NULL, id=NULL){
 #     result <- unlist(lapply(corpusChildren(obj, level=0), slot, name="readability"))
-    if(is.null(level)){
+    if(all(is.null(level), is.null(id))){
       result <- slot(obj, name="readability")
     } else {
-      result <- unlist(lapply(corpusChildren(obj, level=level), slot, name="readability"))
+      result <- unlist(lapply(corpusChildren(obj, level=level, id=id), slot, name="readability"))
     }
     return(result)
   }
@@ -136,7 +136,7 @@ setMethod("corpusReadability<-",
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusTm", function(obj, level=NULL) standardGeneric("corpusTm"))
+setGeneric("corpusTm", function(obj, level=NULL, id=NULL) standardGeneric("corpusTm"))
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
@@ -146,11 +146,11 @@ setGeneric("corpusTm", function(obj, level=NULL) standardGeneric("corpusTm"))
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTm",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj, level=NULL){
-    if(is.null(level)){
+  function (obj, level=NULL, id=NULL){
+    if(all(is.null(level), is.null(id))){
       result <- slot(obj, name="raw")[["tm"]]
     } else {
-      result <- unlist(lapply(corpusChildren(obj, level=level), function(thisObj) {
+      result <- unlist(lapply(corpusChildren(obj, level=level, id=id), function(thisObj) {
         return(slot(thisObj, name="raw")[["tm"]])
       }))
     }
@@ -242,7 +242,7 @@ setMethod("corpusMeta<-",
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusHyphen", function(obj, level=NULL) standardGeneric("corpusHyphen"))
+setGeneric("corpusHyphen", function(obj, level=NULL, id=NULL) standardGeneric("corpusHyphen"))
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
@@ -252,11 +252,11 @@ setGeneric("corpusHyphen", function(obj, level=NULL) standardGeneric("corpusHyph
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusHyphen",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj, level=NULL){
-    if(is.null(level)){
+  function (obj, level=NULL, id=NULL){
+    if(all(is.null(level), is.null(id))){
       result <- slot(obj, name="hyphen")
     } else {
-      result <- unlist(lapply(corpusChildren(obj, level=level), slot, name="hyphen"))
+      result <- unlist(lapply(corpusChildren(obj, level=level, id=id), slot, name="hyphen"))
     }
     return(result)
   }
@@ -285,7 +285,7 @@ setMethod("corpusHyphen<-",
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusTTR", function(obj, level=NULL) standardGeneric("corpusTTR"))
+setGeneric("corpusTTR", function(obj, level=NULL, id=NULL) standardGeneric("corpusTTR"))
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
@@ -295,11 +295,11 @@ setGeneric("corpusTTR", function(obj, level=NULL) standardGeneric("corpusTTR"))
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTTR",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj, level=NULL){
-    if(is.null(level)){
+  function (obj, level=NULL, id=NULL){
+    if(all(is.null(level), is.null(id))){
       result <- slot(obj, name="TTR")
     } else {
-      result <- unlist(lapply(corpusChildren(obj, level=level), slot, name="TTR"))
+      result <- unlist(lapply(corpusChildren(obj, level=level, id=id), slot, name="TTR"))
     }
     return(result)
   }
@@ -330,7 +330,7 @@ setMethod("corpusTTR<-",
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusFreq", function(obj, level=NULL) standardGeneric("corpusFreq"))
+setGeneric("corpusFreq", function(obj, level=NULL, id=NULL) standardGeneric("corpusFreq"))
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
@@ -340,11 +340,11 @@ setGeneric("corpusFreq", function(obj, level=NULL) standardGeneric("corpusFreq")
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusFreq",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj, level=NULL){
-    if(is.null(level)){
+  function (obj, level=NULL, id=NULL){
+    if(all(is.null(level), is.null(id))){
       result <- slot(obj, name="freq")
     } else {
-      result <- unlist(lapply(corpusChildren(obj, level=level), slot, name="freq"))
+      result <- unlist(lapply(corpusChildren(obj, level=level, id=id), slot, name="freq"))
     }
     return(result)
   }
@@ -498,7 +498,7 @@ setMethod("corpusChildren<-",
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusCategory", function(obj, level=NULL) standardGeneric("corpusCategory"))
+setGeneric("corpusCategory", function(obj, level=NULL, id=NULL) standardGeneric("corpusCategory"))
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
@@ -508,11 +508,11 @@ setGeneric("corpusCategory", function(obj, level=NULL) standardGeneric("corpusCa
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusCategory",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj, level=NULL){
-    if(is.null(level)){
+  function (obj, level=NULL, id=NULL){
+    if(all(is.null(level), is.null(id))){
       result <- slot(obj, name="category")
     } else {
-      result <- unlist(lapply(corpusChildren(obj, level=level), slot, name="category"))
+      result <- unlist(lapply(corpusChildren(obj, level=level, id=id), slot, name="category"))
     }
     return(result)
   }
