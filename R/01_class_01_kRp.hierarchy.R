@@ -75,7 +75,7 @@
 #' emptyCorpus <- kRp_hierarchy()
 kRp_hierarchy <- setClass("kRp.hierarchy",
     representation=representation(
-    level="numeric",
+    level="integer",
     category="character",
     id="character",
     path="character",
@@ -90,7 +90,7 @@ kRp_hierarchy <- setClass("kRp.hierarchy",
     readability="list",
     freq="list"),
   prototype=prototype(
-    level=0,
+    level=as.integer(0),
     category="",
     id="",
     path="",
@@ -109,22 +109,33 @@ kRp_hierarchy <- setClass("kRp.hierarchy",
 
 setValidity("kRp.hierarchy", function(object){
 # TODO:
+# this was done by the previous nested classes; check if this is still useful
+# for starters, the summary slot is always a data frame and does not have names
 # if (level > 0){
-#   <merge checks from sourcesCorpus/topicCorpus>
+#   path <- slot(object, "path")
+#   files <- slot(object, "files")
+#   summary <- slot(object, "summary")
+#   if(!all(
+#         identical(names(summary), names(paths)),
+#         identical(names(paths), names(sources)),
+#         identical(names(sources), names(files))
+#       )
+#     ){
+#     stop(simpleError("All slots except \"freq\" must have entries of the same name!"))
+#   }
 # }
 
+    level <- slot(object, "level")
+    category <- slot(object, "category")
+    id <- slot(object, "id")
     children <- slot(object, "children")
-    meta <- slot(object, "meta")
+#     meta <- slot(object, "meta")
     raw <- slot(object, "raw")
     tagged <- slot(object, "tagged")
     hyphen <- slot(object, "hyphen")
     TTR <- slot(object, "TTR")
     readability <- slot(object, "readability")
     freq <- slot(object, "freq")
-
-    if(!is.list(freq)){
-      stop(simpleError("Invalid object: Slot \"freq\" must be a list!"))
-    } else {}
 
     freq.names <- names(freq)
     
@@ -135,9 +146,23 @@ setValidity("kRp.hierarchy", function(object){
     freq.texts <- freq[["texts"]]
     freq.corpus <- freq[["corpus"]]
 
-    if(!inherits(freq.corpus, "kRp.corp.freq")){
-      stop(simpleError("Invalid object: Element \"corpus\" in slot \"freq\" must be of class kRp.corp.freq!"))
-    } else {}
+    classObj <- list(
+      "integer"=list(name="level", obj=level, length=1),
+      "character"=list(name="category", obj=category, length=1),
+      "character"=list(name="id", obj=id, length=1),
+      "kRp.corp.freq"=list(name="corpus", obj=freq.corpus)
+    )
+    for (thisClassObj in names(classObj)) {
+      # we'll not check all classes because that is already enforced by object initialization
+      # but the object length should be checked
+      if(!is.null(classObj[[thisClassObj]][["length"]])){
+        if(length(classObj[[thisClassObj]][["obj"]]) != classObj[[thisClassObj]][["length"]]){
+          stop(simpleError("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must be a single value!"))
+        } else {}
+      } else if(!inherits(classObj[[thisClassObj]][["obj"]], thisClassObj)){
+        stop(simpleError(paste0("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must have entries inheriting from class ", thisClassObj, "!")))
+      } else {}
+    }
 
     classObj <- list(
       "kRp.hierarchy"=list(name="children", obj=children),
@@ -150,7 +175,6 @@ setValidity("kRp.hierarchy", function(object){
     )
     for (thisClassObj in names(classObj)) {
       if(!identical(classObj[[thisClassObj]][["obj"]], list()) && !all(sapply(classObj[[thisClassObj]][["obj"]], function(x) inherits(x, thisClassObj)))){
-        message(thisClassObj)
         stop(simpleError(paste0("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must have entries inheriting from class ", thisClassObj, "!")))
       } else {}
     }

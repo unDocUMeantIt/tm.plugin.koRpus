@@ -55,10 +55,11 @@ This value is passed through to simpleCorpus.}
 
 \item{id}{A character string describing the main subject/purpose of the text corpus.}
 
-\item{level}{A numeric value defining the hierachical level,
+\item{level}{An integer value defining the hierachical level,
       where \code{level=0} is the actual collection of texts,
-and higher values indicate a hierachical category. You should not manipulate this value yourself,
-      it is used}
+and higher values indicate a hierachical category. Normally,
+      you should not manipulate this value yourself, it is
+used and set internally.}
 
 \item{...}{Additional options which are passed through to the defined \code{tagger}.}
 }

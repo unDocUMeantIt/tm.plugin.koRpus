@@ -61,8 +61,9 @@
 #'    This value is passed through to simpleCorpus.
 #' @param category A character string describing the root level of the corpus.
 #' @param id A character string describing the main subject/purpose of the text corpus.
-#' @param level A numeric value defining the hierachical level, where \code{level=0} is the actual collection of texts,
-#'    and higher values indicate a hierachical category. You should not manipulate this value yourself, it is used
+#' @param level An integer value defining the hierachical level, where \code{level=0} is the actual collection of texts,
+#'    and higher values indicate a hierachical category. Normally, you should not manipulate this value yourself, it is
+#'    used and set internally.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
 #' @return An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 #' @export
@@ -227,7 +228,7 @@ readCorpus_internal <- function(
     )
     names(children) <- sapply(children, corpusID)
     result <- kRp_hierarchy(
-      level=level,
+      level=as.integer(level),
       category=category,
       id=id,
       path=dir,
@@ -242,7 +243,7 @@ readCorpus_internal <- function(
   } else {
     # actually parse texts
     result <- kRp_hierarchy(
-      level=level,
+      level=as.integer(level),
       category=category,
       id=id,
       path=dir,

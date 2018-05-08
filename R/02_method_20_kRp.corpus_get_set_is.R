@@ -30,6 +30,8 @@
 #'   \item{\code{corpusLevel()} }{returns the level value of the top level object.}
 #'   \item{\code{corpusCategory()} }{returns the character vector of categories of the top level object.}
 #'   \item{\code{corpusID()} }{returns the character vector of category IDs of the top level object.}
+#'   \item{\code{corpusPath()} }{returns the root directory path of the top level object.}
+#'   \item{\code{corpusFiles()} }{returns the character vector of file names of level 0 of the object.}
 #'   \item{\code{[}/\code{[[} }{Can be used as a shortcut to index the results of \code{corpusSummary()}.}
 #'   \item{\code{tif_as_tokens_df} }{returns the \code{TT.res} slots of all texts in a single TIF[1] compliant
 #'      data.frame, i.e., \code{doc_id} is not a factor but a character vector.}
@@ -577,6 +579,92 @@ setMethod("corpusID<-",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, value){
     slot(obj, name="id") <- value
+    return(obj)
+  }
+)
+
+#' @rdname kRp.hierarchy_get-methods
+#' @docType methods
+#' @export
+setGeneric("corpusPath", function(obj, level=NULL) standardGeneric("corpusPath"))
+#' @rdname kRp.hierarchy_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusPath,-methods
+#'    corpusPath,kRp.hierarchy-method
+#' @include 01_class_01_kRp.hierarchy.R
+setMethod("corpusPath",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, level=NULL){
+    if(is.null(level)){
+      result <- slot(obj, name="path")
+    } else {
+      result <- unlist(lapply(corpusChildren(obj, level=level), slot, name="path"))
+    }
+    return(result)
+  }
+)
+
+#' @rdname kRp.hierarchy_get-methods
+#' @export
+#' @docType methods
+# @param value The new value to replace the current with.
+setGeneric("corpusPath<-", function(obj, value) standardGeneric("corpusPath<-"))
+#' @rdname kRp.hierarchy_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusPath<-,-methods
+#'    corpusPath<-,kRp.hierarchy-method
+#' @include 01_class_01_kRp.hierarchy.R
+setMethod("corpusPath<-",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, value){
+    slot(obj, name="path") <- value
+    return(obj)
+  }
+)
+
+#' @rdname kRp.hierarchy_get-methods
+#' @docType methods
+#' @export
+setGeneric("corpusFiles", function(obj, level=0) standardGeneric("corpusFiles"))
+#' @rdname kRp.hierarchy_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusFiles,-methods
+#'    corpusFiles,kRp.hierarchy-method
+#' @include 01_class_01_kRp.hierarchy.R
+setMethod("corpusFiles",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, level=0){
+    if(is.null(level)){
+      result <- slot(obj, name="files")
+    } else {
+      result <- unlist(lapply(corpusChildren(obj, level=level), slot, name="files"))
+    }
+    return(result)
+  }
+)
+
+#' @rdname kRp.hierarchy_get-methods
+#' @export
+#' @docType methods
+# @param value The new value to replace the current with.
+setGeneric("corpusFiles<-", function(obj, value) standardGeneric("corpusFiles<-"))
+#' @rdname kRp.hierarchy_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusFiles<-,-methods
+#'    corpusFiles<-,kRp.hierarchy-method
+#' @include 01_class_01_kRp.hierarchy.R
+setMethod("corpusFiles<-",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, value){
+    slot(obj, name="files") <- value
     return(obj)
   }
 )
