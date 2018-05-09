@@ -290,7 +290,7 @@ readCorpus_internal <- function(
     names(slot(result, "raw")) <- "tm"
     numTexts <- length(corpusTm(result))
     nameNum <- sprintf("%02d", 1:numTexts)
-    text_id <- paste0(text_id, nameNum) # TODO: remove textID(src=names(id), topic=category, nameNum=nameNum)
+    text_id <- paste0(text_id, nameNum)
     meta(corpusTm(result), tag="textID") <- text_id
 
     corpusTagged <- mclapply(
