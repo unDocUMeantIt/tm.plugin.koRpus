@@ -628,8 +628,9 @@ setMethod("corpusPath<-",
 
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
+#' @param paths Logical, indicates for \code{corpusFiles()} whether full paths should be returned, or just the actual file name.
 #' @export
-setGeneric("corpusFiles", function(obj, level=0) standardGeneric("corpusFiles"))
+setGeneric("corpusFiles", function(obj, level=0, id=NULL, paths=FALSE) standardGeneric("corpusFiles"))
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
@@ -639,12 +640,30 @@ setGeneric("corpusFiles", function(obj, level=0) standardGeneric("corpusFiles"))
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusFiles",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj, level=0){
-    if(is.null(level)){
+  function (obj, level=0, id=NULL, paths=FALSE){
+    # make sure 'id' becomes effective at all, it's ignored by corpusChildren() if level is set
+    if(!is.null(id)){
+      level <- NULL
+    } else {}
+    if(all(is.null(level), is.null(id))){
       result <- slot(obj, name="files")
+      if(isTRUE(paths)){
+        result <- file.path(slot(obj, name="path"), result)
+      }
     } else {
-      result <- unlist(lapply(corpusChildren(obj, level=level), slot, name="files"))
+      result <- unlist(sapply(
+        corpusChildren(obj, level=level, id=id),
+        function(thisChild){
+          if(corpusLevel(thisChild) > 0){
+            return(sapply(corpusChildren(thisChild, level=0), corpusFiles, level=NULL, id=NULL, paths=paths))
+          } else {
+            return(corpusFiles(thisChild, level=NULL, id=NULL, paths=paths))
+          }
+        }
+      ))
     }
+    result <- as.vector(result)
+    names(result) <- NULL
     return(result)
   }
 )

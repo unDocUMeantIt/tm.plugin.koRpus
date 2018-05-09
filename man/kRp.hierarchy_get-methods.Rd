@@ -195,9 +195,9 @@ corpusPath(obj) <- value
 
 \S4method{corpusPath}{kRp.hierarchy}(obj) <- value
 
-corpusFiles(obj, level = 0)
+corpusFiles(obj, level = 0, paths = FALSE)
 
-\S4method{corpusFiles}{kRp.hierarchy}(obj, level = 0)
+\S4method{corpusFiles}{kRp.hierarchy}(obj, level = 0, paths = FALSE)
 
 corpusFiles(obj) <- value
 
@@ -234,6 +234,9 @@ otherwise all children with the ID specified. Only interpreted if \code{level=NU
 \item{fail}{Logical,
       whether the method should fail with an error if \code{meta} was not found.
 If set to \code{FALSE}, returns \code{invisible(NULL)} instead.}
+
+\item{paths}{Logical,
+      indicates for \code{corpusFiles()} whether full paths should be returned, or just the actual file name.}
 
 \item{x}{See \code{obj}.}
 
