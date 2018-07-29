@@ -13,7 +13,7 @@ The DESCRIPTION file:
 \tabular{ll}{
 Package: \tab tm.plugin.koRpus\cr
 Type: \tab Package\cr
-Version: \tab 0.02-1\cr
+Version: \tab 0.02-2\cr
 Date: \tab 2018-07-29\cr
 Depends: \tab R (>= 2.10.0),koRpus (>= 0.11-3),sylly\cr
 Encoding: \tab UTF-8\cr
