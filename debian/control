@@ -11,7 +11,7 @@ Homepage: https://reaktanz.de/?c=hacking&s=koRpus
 Package: r-other-reaktanz-tm.plugin.korpus
 Architecture: all
 Section: gnu-r
-Depends: r-base-core (>= 3.4.0), r-cran-korpus (>= 0.11-3) |
+Depends: r-base-core (>= 3.5.0), r-api-3.5, r-cran-korpus (>= 0.11-3) |
  r-other-reaktanz-korpus (>= 0.11-3), r-cran-sylly |
  r-other-reaktanz-sylly, r-cran-tm, r-cran-nlp
 Description: GNU R package "A Compatibility Plugin Package for 'tm' and

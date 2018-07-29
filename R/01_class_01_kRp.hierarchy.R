@@ -46,7 +46,7 @@
 #' @slot freq A list with two elements, \code{texts} and \code{corpus}. At \code{level=0}, both hold objects of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}},
 #'    where \code{texts} is a list of these objects (one for each text), and \code{corpus} is a single object for the full corpus. At higher levels only \code{corpus}
 #'    is used.
-#' @note There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
+#' @note There is also \code{\link[tm.plugin.koRpus:kRp.hierarchy_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.hierarchy,-class
 #' @aliases kRp.hierarchy,-class kRp.hierarchy-class
 #' @import methods koRpus
@@ -157,7 +157,7 @@ setValidity("kRp.hierarchy", function(object){
       # but the object length should be checked
       if(!is.null(classObj[[thisClassObj]][["length"]])){
         if(length(classObj[[thisClassObj]][["obj"]]) != classObj[[thisClassObj]][["length"]]){
-          stop(simpleError("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must be a single value!"))
+          stop(simpleError(paste0("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must be a single value!")))
         } else {}
       } else if(!inherits(classObj[[thisClassObj]][["obj"]], thisClassObj)){
         stop(simpleError(paste0("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must have entries inheriting from class ", thisClassObj, "!")))

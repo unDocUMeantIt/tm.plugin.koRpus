@@ -2,31 +2,36 @@
 % Please edit documentation in R/tm.plugin.koRpus-package.R
 \docType{package}
 \name{tm.plugin.koRpus-package}
+\alias{tm.plugin.koRpus}
 \alias{tm.plugin.koRpus-package}
-\title{The tm.plugin.koRpus Package}
+\title{\packageTitle{tm.plugin.koRpus}}
 \description{
-A Compatibility Plugin Package for 'tm' and 'koRpus'.
+\packageDescription{tm.plugin.koRpus}
 }
 \details{
+The DESCRIPTION file:
 \tabular{ll}{
 Package: \tab tm.plugin.koRpus\cr
 Type: \tab Package\cr
 Version: \tab 0.02-1\cr
-Date: \tab 2018-05-09\cr
+Date: \tab 2018-07-29\cr
 Depends: \tab R (>= 2.10.0),koRpus (>= 0.11-3),sylly\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
 URL: \tab https://reaktanz.de/?c=hacking&s=koRpus\cr
 }
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://reaktanz.de/?c=hacking&s=koRpus}
+  \item Report bugs at \url{https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues}
+}
 
-Provides classes and methods to enhance the ability to use the 'koRpus' package together
-with the 'tm' package. It is in its early stages. To ask for help, report bugs, suggest
-feature improvements, or discuss the global development of the package,
-      please subscribe to
-the koRpus-dev mailing list (<http://korpusml.reaktanz.de>).
 }
 \author{
-m.eik michalke
+\packageAuthor{tm.plugin.koRpus}
+
+Maintainer: \packageMaintainer{tm.plugin.koRpus}
 }
-\keyword{package}

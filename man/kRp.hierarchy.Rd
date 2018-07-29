@@ -58,7 +58,7 @@ is used.}
 }}
 
 \note{
-There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
+There is also \code{\link[tm.plugin.koRpus:kRp.hierarchy_get-methods]{getter and setter methods}} for objects of this class.
 }
 \section{Contructor function}{
 

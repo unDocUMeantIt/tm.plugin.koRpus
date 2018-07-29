@@ -195,9 +195,10 @@ corpusPath(obj) <- value
 
 \S4method{corpusPath}{kRp.hierarchy}(obj) <- value
 
-corpusFiles(obj, level = 0, paths = FALSE)
+corpusFiles(obj, level = 0, id = NULL, paths = FALSE)
 
-\S4method{corpusFiles}{kRp.hierarchy}(obj, level = 0, paths = FALSE)
+\S4method{corpusFiles}{kRp.hierarchy}(obj, level = 0, id = NULL,
+  paths = FALSE)
 
 corpusFiles(obj) <- value
 
@@ -243,6 +244,8 @@ If set to \code{FALSE}, returns \code{invisible(NULL)} instead.}
 \item{i}{Defines the row selector (\code{[}) or the name to match (\code{[[}) in the summary slot.}
 
 \item{j}{Defines the column selector in the summary slot.}
+
+\item{tokens}{An object of class \code{kRp.hierarchy}.}
 }
 \description{
 These methods should be used to get or set values of text objects

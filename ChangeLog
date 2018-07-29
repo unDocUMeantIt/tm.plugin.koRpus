@@ -1,18 +1,18 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.02-1 (2018-05-01)
-unreleased:
-  - this release is under development
+changes in version 0.02-1 (2018-07-29)
 changed:
   - vignette: also includes info on readCorpus()
+  - tests: adjusted test standards to new object class
 added:
   - kRp.hierarchy: new S4 class to replace kRp.sourcesCorpus and
     kRp.topicCorpus to allow more generic nesting of hierarchical levels
   - readCorpus(): new function to generate kRp.hierarchy objects recursively
-  - many corpus*() getter functions can now filter by hierarchy level or category ID
-  - removed all code regarding simpleCorpus(), sourcesCorpus() and topicCorpus(),
-    their object classes and methods; this is all handled much more flexible
-    by kRp.hierarchy and readCorpus() now
+  - many corpus*() getter functions can now filter by hierarchy level or
+    category ID
+  - removed all code regarding simpleCorpus(), sourcesCorpus() and
+    topicCorpus(), their object classes and methods; this is all handled much more
+    flexible by kRp.hierarchy and readCorpus() now
 
 changes in version 0.01-4 (2018-03-07)
 fixed:

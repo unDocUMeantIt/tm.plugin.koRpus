@@ -15,6 +15,28 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
+#' Deprecated functions and methods
+#' 
+#' These functions were used in earlier versions of the package but since
+#' replaced by \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}}.
+#'
+#' @param dir Use \code{readCorpus} instead.
+#' @param lang Use \code{readCorpus} instead.
+#' @param tagger Use \code{readCorpus} instead.
+#' @param encoding Use \code{readCorpus} instead.
+#' @param pattern Use \code{readCorpus} instead.
+#' @param recursive Use \code{readCorpus} instead.
+#' @param ignore.case Use \code{readCorpus} instead.
+#' @param mode Use \code{readCorpus} instead.
+#' @param path Use \code{readCorpus} instead.
+#' @param paths Use \code{readCorpus} instead.
+#' @param source Use \code{readCorpus} instead.
+#' @param sources Use \code{readCorpus} instead.
+#' @param topic Use \code{readCorpus} instead.
+#' @param format Use \code{readCorpus} instead.
+#' @param mc.cores Use \code{readCorpus} instead.
+#' @param ... Use \code{readCorpus} instead.
+#' @rdname deprecated
 #' @export
 simpleCorpus <- function(
                 dir=".",
@@ -51,6 +73,7 @@ simpleCorpus <- function(
   ))
 }
 
+#' @rdname deprecated
 #' @export
 sourcesCorpus <- function(
                   path,
@@ -72,6 +95,7 @@ sourcesCorpus <- function(
   ))
 }
 
+#' @rdname deprecated
 #' @export
 topicCorpus <- function(
                 paths,

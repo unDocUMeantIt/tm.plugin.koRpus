@@ -17,15 +17,23 @@ set.lang.support("kRp.POS.tags",
   )
 )
 
-context("class kRp.corpus")
+context("class kRp.hierarchy")
 
-test_that("creating a kRp.corpus class object", {
+test_that("creating a 'flat' kRp.hierarchy class object", {
   sampleTextDir <- normalizePath(file.path("samples","C3S","Wikipedia_alt"))
   load("mySimpleCorpus.RData")
 
-  mySimpleCorpus.test <- simpleCorpus(dir=sampleTextDir, lang="xy", tagger="tokenize")
+  mySimpleCorpus.test <- readCorpus(
+    dir=sampleTextDir,
+    lang="xy",
+    tagger="tokenize"
+  )
+
+  # we have to manually set the paths because they would reference the
+  # test environment which would cause a string mismatch
+  corpusPath(mySimpleCorpus.test) <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
   # manually set the timetamps of the tm objects, these can't be equal
-  meta(slot(mySimpleCorpus.test, "raw")[["tm"]][[1]])$datetimestamp <- as.POSIXlt("2018-03-07 01:01:01", tz="GMT")
+  meta(corpusTm(mySimpleCorpus.test)[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
 
   expect_equal(
     mySimpleCorpus.test,
@@ -40,37 +48,30 @@ test_that("creating a kRp.corpus class object", {
 #   compress="xz",
 #   compression_level=-9)
 
-test_that("creating a kRp.sourcesCorpus class object", {
+test_that("creating a kRp.hierarchy class object", {
   sampleTextDir <- normalizePath(file.path("samples","C3S"))
   load("mySourcesCorpus.RData")
 
-  sampleSources <- c(
-    wpa="Wikipedia_alt",
-    wpn="Wikipedia_neu"
+  mySourcesCorpus.test <- readCorpus(
+    dir=sampleTextDir,
+    hierarchy=list(
+      Source=c(
+        Wikipedia_alt="Wikipedia (alt)",
+        Wikipedia_neu="Wikipedia (neu)"
+      )
+    ),
+    lang="xy",
+    tagger="tokenize"
   )
-  mySourcesCorpus.test <- sourcesCorpus(
-    path=sampleTextDir,
-    sources=sampleSources,
-    topic="C3S",
-    tagger="tokenize",
-    lang="xy"
-  )
-    
+
   # we have to manually set the paths because they would reference the
   # test environment which would cause a string mismatch
-  slot(mySourcesCorpus.test, "paths") <- list(
-    wpa="tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt/C3S_2013-09-24.txt",
-    wpn="tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu/C3S_2015-07-05.txt"
-  )
+  corpusPath(mySourcesCorpus.test) <- "tm.plugin.koRpus/tests/testthat/samples/C3S"
+  slot(corpusChildren(mySourcesCorpus.test)[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
+  slot(corpusChildren(mySourcesCorpus.test)[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
   # the same for the timetamps of the tm objects
-  meta(
-    slot(
-      slot(mySourcesCorpus.test, "sources")[["wpn"]],
-      "raw")[["tm"]][[1]])$datetimestamp <- as.POSIXlt("2018-03-07 01:01:01", tz="GMT")
-  meta(
-    slot(
-      slot(mySourcesCorpus.test, "sources")[["wpa"]],
-      "raw")[["tm"]][[1]])$datetimestamp <- as.POSIXlt("2018-03-07 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
 
   expect_equal(
     mySourcesCorpus,
@@ -84,57 +85,41 @@ test_that("creating a kRp.sourcesCorpus class object", {
 #   compress="xz",
 #   compression_level=-9)
 
-test_that("creating a kRp.topicCorpus class object", {
-  sampleTextDirC3S <- normalizePath(file.path("samples","C3S"))
-  sampleTextDirGEMA <- normalizePath(file.path("samples","GEMA"))
+test_that("creating a kRp.hierarchy class object with two levels", {
+  sampleTextDir <- normalizePath(file.path("samples"))
   load("myTopicCorpus.RData")
 
-  samplePaths <- c(
-    C3S=sampleTextDirC3S,
-    GEMA=sampleTextDirGEMA
-  )
-  sampleSources <- c(
-    wpa="Wikipedia_alt",
-    wpn="Wikipedia_neu"
-  )
-  myTopicCorpus.test <- topicCorpus(
-    paths=samplePaths,
-    sources=sampleSources,
-    tagger="tokenize",
-    lang="xy"
+  myTopicCorpus.test <- readCorpus(
+    dir=sampleTextDir,
+    hierarchy=list(
+      Topic=c(
+        C3S="C3S",
+        GEMA="GEMA"
+      ),
+      Source=c(
+        Wikipedia_alt="Wikipedia (alt)",
+        Wikipedia_neu="Wikipedia (neu)"
+      )
+    ),
+    lang="xy",
+    tagger="tokenize"
   )
 
   # we have to manually set the paths because they would reference the
   # test environment which would cause a string mismatch
-  slot(slot(myTopicCorpus.test, "topics")[["C3S"]], "paths") <- list(
-    wpa="tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt/C3S_2013-09-24.txt",
-    wpn="tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu/C3S_2015-07-05.txt"
-  )
-  slot(slot(myTopicCorpus.test, "topics")[["GEMA"]], "paths") <- list(
-    wpa="tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt/GEMA_2013-09-26.txt",
-    wpn="tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu/GEMA_2015-07-05.txt"
-  )
+  corpusPath(myTopicCorpus.test) <- "tm.plugin.koRpus/tests/testthat/samples"
+  corpusPath(corpusChildren(myTopicCorpus.test)[["C3S"]]) <- "tm.plugin.koRpus/tests/testthat/samples/C3S"
+  corpusPath(corpusChildren(myTopicCorpus.test)[["GEMA"]]) <- "tm.plugin.koRpus/tests/testthat/samples/GEMA"
+  slot(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
+  slot(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
+  slot(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
+  slot(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
+
   # the same for the timetamps of the tm objects
-  meta(
-    slot(
-      slot(
-        slot(myTopicCorpus.test, "topics")[["C3S"]], "sources")[["wpa"]],
-        "raw")[["tm"]][[1]])$datetimestamp <- as.POSIXlt("2018-03-07 01:01:01", tz="GMT")
-  meta(
-    slot(
-      slot(
-        slot(myTopicCorpus.test, "topics")[["C3S"]], "sources")[["wpn"]],
-        "raw")[["tm"]][[1]])$datetimestamp <- as.POSIXlt("2018-03-07 01:01:01", tz="GMT")
-  meta(
-    slot(
-      slot(
-        slot(myTopicCorpus.test, "topics")[["GEMA"]], "sources")[["wpa"]],
-        "raw")[["tm"]][[1]])$datetimestamp <- as.POSIXlt("2018-03-07 01:01:01", tz="GMT")
-  meta(
-    slot(
-      slot(
-        slot(myTopicCorpus.test, "topics")[["GEMA"]], "sources")[["wpn"]],
-        "raw")[["tm"]][[1]])$datetimestamp <- as.POSIXlt("2018-03-07 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
 
   expect_equal(
     myTopicCorpus,

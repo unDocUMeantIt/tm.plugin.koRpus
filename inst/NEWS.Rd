@@ -1,6 +1,26 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
+\section{Changes in tm.plugin.koRpus version 0.02-1 (2018-07-29)}{
+  \subsection{changed}{
+    \itemize{
+      \item vignette: also includes info on \code{readCorpus()}
+      \item tests: adjusted test standards to new object class
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item kRp.hierarchy: new S4 class to replace kRp.sourcesCorpus and
+        kRp.topicCorpus to allow more generic nesting of hierarchical levels
+      \item \code{readCorpus()}: new function to generate kRp.hierarchy objects recursively
+      \item many corpus*() getter functions can now filter by hierarchy level or
+        category ID
+      \item removed all code regarding \code{simpleCorpus()}, \code{sourcesCorpus()} and
+        \code{topicCorpus()}, their object classes and methods; this is all handled much more
+        flexible by kRp.hierarchy and \code{readCorpus()} now
+    }
+  }
+}
 \section{Changes in tm.plugin.koRpus version 0.01-4 (2018-03-07)}{
   \subsection{fixed}{
     \itemize{

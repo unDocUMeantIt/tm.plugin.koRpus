@@ -753,6 +753,7 @@ setMethod("[[<-",
 )
 
 #' @rdname kRp.hierarchy_get-methods
+#' @param tokens An object of class \code{kRp.hierarchy}.
 #' @docType methods
 #' @export
 setGeneric("tif_as_tokens_df", function(tokens) standardGeneric("tif_as_tokens_df"))
