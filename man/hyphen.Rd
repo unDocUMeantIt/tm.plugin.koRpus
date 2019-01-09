@@ -5,8 +5,8 @@
 \alias{hyphen,kRp.hierarchy-method}
 \title{Apply hyphen() to all texts in kRp.hierarchy objects}
 \usage{
-\S4method{hyphen}{kRp.hierarchy}(words, mc.cores = getOption("mc.cores", 1L),
-  quiet = TRUE, ...)
+\S4method{hyphen}{kRp.hierarchy}(words, mc.cores = getOption("mc.cores",
+  1L), quiet = TRUE, ...)
 }
 \arguments{
 \item{words}{An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.}

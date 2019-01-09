@@ -66,6 +66,9 @@
 #'    used and set internally.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
 #' @return An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @importFrom tm VCorpus DirSource VectorSource
+#' @importFrom NLP meta<-
+#' @importFrom parallel mclapply
 #' @export
 #' @examples
 #' \dontrun{

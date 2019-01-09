@@ -4,9 +4,10 @@
 \alias{readCorpus}
 \title{Function to create kRp.hierarchy objects from hierachically structured directories}
 \usage{
-readCorpus(dir, hierarchy = list(), lang = "kRp.env", tagger = "kRp.env",
-  encoding = "", pattern = NULL, recursive = FALSE, ignore.case = FALSE,
-  mode = "text", format = "file", mc.cores = getOption("mc.cores", 1L),
+readCorpus(dir, hierarchy = list(), lang = "kRp.env",
+  tagger = "kRp.env", encoding = "", pattern = NULL,
+  recursive = FALSE, ignore.case = FALSE, mode = "text",
+  format = "file", mc.cores = getOption("mc.cores", 1L),
   category = "corpus", id = "", level = 0, ...)
 }
 \arguments{

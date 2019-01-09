@@ -109,7 +109,8 @@ corpusTagged(obj) <- value
 
 corpusReadability(obj, level = NULL, id = NULL)
 
-\S4method{corpusReadability}{kRp.hierarchy}(obj, level = NULL, id = NULL)
+\S4method{corpusReadability}{kRp.hierarchy}(obj, level = NULL,
+  id = NULL)
 
 corpusReadability(obj) <- value
 

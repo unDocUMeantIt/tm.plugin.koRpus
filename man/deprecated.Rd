@@ -7,9 +7,9 @@
 \title{Deprecated functions and methods}
 \usage{
 simpleCorpus(dir = ".", lang = "kRp.env", tagger = "kRp.env",
-  encoding = "", pattern = NULL, recursive = FALSE, ignore.case = FALSE,
-  mode = "text", source = "", topic = "", format = "file",
-  mc.cores = getOption("mc.cores", 1L), ...)
+  encoding = "", pattern = NULL, recursive = FALSE,
+  ignore.case = FALSE, mode = "text", source = "", topic = "",
+  format = "file", mc.cores = getOption("mc.cores", 1L), ...)
 
 sourcesCorpus(path, sources, topic = "", format = "file",
   mc.cores = getOption("mc.cores", 1L), ...)
