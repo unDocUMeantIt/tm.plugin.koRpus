@@ -1,10 +1,17 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.02-2 (2019-01-09)
+changes in version 0.02-2 (2019-01-10)
 unreleased:
   - this release is under development
 fixed:
   - readCorpus(): missing imports from packages tm, NLP and parallel
+  - corpusTm(): removed useless "level" argument and corrected the output
+  - corpusFiles(): now also works with flat hierarchy objects
+added:
+  - tif_as_corpus_df(): new S4 method to transform a kRp.hierarchy object
+    into a TIF compliant data frame
+changed:
+  - readCorpus(): the tm corpora now include full hierarchy metadata
 
 changes in version 0.02-1 (2018-07-29)
 changed:

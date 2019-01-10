@@ -139,10 +139,11 @@ setMethod("corpusReadability<-",
   }
 )
 
+
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusTm", function(obj, level=NULL, id=NULL) standardGeneric("corpusTm"))
+setGeneric("corpusTm", function(obj, id=NULL) standardGeneric("corpusTm"))
 #' @rdname kRp.hierarchy_get-methods
 #' @docType methods
 #' @export
@@ -152,13 +153,29 @@ setGeneric("corpusTm", function(obj, level=NULL, id=NULL) standardGeneric("corpu
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("corpusTm",
   signature=signature(obj="kRp.hierarchy"),
-  function (obj, level=NULL, id=NULL){
-    if(all(is.null(level), is.null(id))){
-      result <- slot(obj, name="raw")[["tm"]]
-    } else {
-      result <- unlist(lapply(corpusChildren(obj, level=level, id=id), function(thisObj) {
-        return(slot(thisObj, name="raw")[["tm"]])
+  function (obj, id=NULL){
+    if(corpusLevel(obj) > 0){
+      corpus_part <- corpusChildren(obj, level=NULL, id=id)
+      corpus_part <- unlist(lapply(corpus_part, function(thisPart){
+        if(corpusLevel(thisPart) > 0){
+          return(corpusChildren(thisPart, level=0, id=NULL))
+        } else {
+          return(thisPart)
+        }
       }))
+      tm_list <- lapply(corpus_part, function(thisObj) {
+        return(slot(thisObj, name="raw")[["tm"]])
+      })
+      if(length(tm_list) > 1){
+        result <- tm_list[[1]]
+        for (this_tm_num in 2:length(tm_list)){
+          result <- c(result, tm_list[[this_tm_num]])
+        }
+      } else {
+        result <- tm_list
+      }
+    } else {
+      result <- slot(obj, name="raw")[["tm"]]
     }
     return(result)
   }
@@ -641,26 +658,30 @@ setGeneric("corpusFiles", function(obj, level=0, id=NULL, paths=FALSE) standardG
 setMethod("corpusFiles",
   signature=signature(obj="kRp.hierarchy"),
   function (obj, level=0, id=NULL, paths=FALSE){
-    # make sure 'id' becomes effective at all, it's ignored by corpusChildren() if level is set
-    if(!is.null(id)){
-      level <- NULL
-    } else {}
-    if(all(is.null(level), is.null(id))){
-      result <- slot(obj, name="files")
-      if(isTRUE(paths)){
-        result <- file.path(slot(obj, name="path"), result)
+    if(corpusLevel(obj) > 0){
+      # make sure 'id' becomes effective at all, it's ignored by corpusChildren() if level is set
+      if(!is.null(id)){
+        level <- NULL
+      } else {}
+      if(all(is.null(level), is.null(id))){
+        result <- unlist(slot(obj, name="files"))
+        if(isTRUE(paths)){
+          result <- file.path(slot(obj, name="path"), result)
+        }
+      } else {
+        result <- unlist(sapply(
+          corpusChildren(obj, level=level, id=id),
+          function(thisChild){
+            if(corpusLevel(thisChild) > 0){
+              return(sapply(corpusChildren(thisChild, level=0), corpusFiles, level=NULL, id=NULL, paths=paths))
+            } else {
+              return(corpusFiles(thisChild, level=NULL, id=NULL, paths=paths))
+            }
+          }
+        ))
       }
     } else {
-      result <- unlist(sapply(
-        corpusChildren(obj, level=level, id=id),
-        function(thisChild){
-          if(corpusLevel(thisChild) > 0){
-            return(sapply(corpusChildren(thisChild, level=0), corpusFiles, level=NULL, id=NULL, paths=paths))
-          } else {
-            return(corpusFiles(thisChild, level=NULL, id=NULL, paths=paths))
-          }
-        }
-      ))
+      result <- unlist(slot(obj, name="files"))
     }
     result <- as.vector(result)
     names(result) <- NULL
@@ -772,3 +793,39 @@ setMethod("tif_as_tokens_df",
     return(result)
   }
 )
+
+#' @rdname kRp.hierarchy_get-methods
+#' @param corpus An object of class \code{kRp.hierarchy}.
+#' @docType methods
+#' @export
+setGeneric("tif_as_corpus_df", function(corpus) standardGeneric("tif_as_corpus_df"))
+#' @rdname kRp.hierarchy_get-methods
+#' @importFrom NLP meta
+#' @export
+#' @docType methods
+#' @aliases
+#'    tif_as_corpus_df,-methods
+#'    tif_as_corpus_df,hierarchy-method
+setMethod("tif_as_corpus_df",
+  signature=signature(corpus="kRp.hierarchy"),
+  function(corpus){
+    corpus_tm <- corpusTm(obj=corpus)
+    corpus_texts <- sapply(corpus_tm, function(thisText){paste0(thisText, collapse="\n")})
+    corpus_files <- corpusFiles(corpus)
+    corpus_meta <- meta(corpus_tm)
+    result <- data.frame(
+      doc_id=as.character(corpus_meta[["textID"]]),
+      text=as.character(corpus_texts),
+      file=as.character(corpus_files),
+      stringsAsFactors=FALSE
+    )
+    extra_cols <- !colnames(corpus_meta) %in% "textID"
+    if(sum(extra_cols) > 1){
+      # append hierarchy information
+      result <- cbind(result, as.data.frame(corpus_meta)[,extra_cols])
+    } else {}
+    rownames(result) <- NULL
+    return(result)
+  }
+)
+

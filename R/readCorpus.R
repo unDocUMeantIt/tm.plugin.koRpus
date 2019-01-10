@@ -295,6 +295,10 @@ readCorpus_internal <- function(
     nameNum <- sprintf("%02d", 1:numTexts)
     text_id <- paste0(text_id, nameNum)
     meta(corpusTm(result), tag="textID") <- text_id
+    # add all available hierarchy info
+    for(this_branch in colnames(hierarchy_branch)){
+      meta(corpusTm(result), tag=this_branch) <- hierarchy_branch["id",this_branch]
+    }
 
     corpusTagged <- mclapply(
       1:numTexts,

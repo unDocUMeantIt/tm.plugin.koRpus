@@ -97,6 +97,10 @@
 \alias{tif_as_tokens_df,kRp.hierarchy-method}
 \alias{tif_as_tokens_df,-methods}
 \alias{tif_as_tokens_df,hierarchy-method}
+\alias{tif_as_corpus_df}
+\alias{tif_as_corpus_df,kRp.hierarchy-method}
+\alias{tif_as_corpus_df,-methods}
+\alias{tif_as_corpus_df,hierarchy-method}
 \title{Getter/setter methods for kRp.hierarchy objects}
 \usage{
 corpusTagged(obj, level = NULL, id = NULL)
@@ -116,9 +120,9 @@ corpusReadability(obj) <- value
 
 \S4method{corpusReadability}{kRp.hierarchy}(obj) <- value
 
-corpusTm(obj, level = NULL, id = NULL)
+corpusTm(obj, id = NULL)
 
-\S4method{corpusTm}{kRp.hierarchy}(obj, level = NULL, id = NULL)
+\S4method{corpusTm}{kRp.hierarchy}(obj, id = NULL)
 
 corpusTm(obj) <- value
 
@@ -218,6 +222,10 @@ is.corpus(obj)
 tif_as_tokens_df(tokens)
 
 \S4method{tif_as_tokens_df}{kRp.hierarchy}(tokens)
+
+tif_as_corpus_df(corpus)
+
+\S4method{tif_as_corpus_df}{kRp.hierarchy}(corpus)
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.}
@@ -247,6 +255,8 @@ If set to \code{FALSE}, returns \code{invisible(NULL)} instead.}
 \item{j}{Defines the column selector in the summary slot.}
 
 \item{tokens}{An object of class \code{kRp.hierarchy}.}
+
+\item{corpus}{An object of class \code{kRp.hierarchy}.}
 }
 \description{
 These methods should be used to get or set values of text objects
