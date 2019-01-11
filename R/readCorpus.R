@@ -66,7 +66,7 @@
 #'    used and set internally.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
 #' @return An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
-#' @importFrom tm VCorpus DirSource VectorSource
+#' @importFrom tm VCorpus DirSource VectorSource DataframeSource
 #' @importFrom NLP meta<-
 #' @importFrom parallel mclapply
 #' @export
@@ -174,6 +174,10 @@ readCorpus_internal <- function(
                         text_id,        # will grow longer with each hierarchy level
                         ...
                       ){
+  if(!format %in% c("file", "obj")){
+    stop(simpleError(paste0("invalid value for \"format\":\n  \"", format, "\"")))
+  } else {}
+
   taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
     if(identical(tagger, "tokenize")){
       return(tokenize(txt=text, format="obj", lang=lang, doc_id=doc_id, ...))
@@ -244,13 +248,28 @@ readCorpus_internal <- function(
       )
     )
   } else {
+    if(identical(format, "file")){
+      file_names <- as.list(list.files(dir))
+      path_name <- dir
+    } else if(identical(format, "obj")){
+      file_names <- list()
+      path_name <- ""
+      if(is.data.frame(dir)){
+        if("file" %in% colnames(dir)){
+         file_names <- list(as.character(dir[["file"]]))
+        } else {}
+        if("path" %in% colnames(dir)){
+         path_names <- list(as.character(dir[["path"]]))
+        } else {}
+      } else {}
+    } else {}
     # actually parse texts
     result <- kRp_hierarchy(
       level=as.integer(level),
       category=category,
       id=id,
-      path=dir,
-      files=as.list(list.files(dir)),
+      path=path_name,
+      files=file_names,
       meta=list(
         hierarchy=all_hierarchy,
         hierarchy_branch=hierarchy_branch,
@@ -280,15 +299,16 @@ readCorpus_internal <- function(
         readerControl=list(language=lang)
       ))
     } else if(identical(format, "obj")){
+      if(is.data.frame(dir)){
+        corpus_source <- DataframeSource(dir)
+      } else {
+        corpus_source <- VectorSource(dir)
+      }
       slot(result, "raw") <- list(VCorpus(
-        VectorSource(
-          dir
-        ),
+        corpus_source,
         readerControl=list(language=lang)
       ))
-    } else {
-      stop(simpleError(paste0("invalid value for \"format\":\n  \"", format, "\"")))
-    }
+    } else {}
 
     names(slot(result, "raw")) <- "tm"
     numTexts <- length(corpusTm(result))

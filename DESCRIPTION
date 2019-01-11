@@ -17,7 +17,7 @@ Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.02-2
-Date: 2019-01-10
+Date: 2019-01-11
 RoxygenNote: 6.1.1
 Collate: 
     '01_class_01_kRp.hierarchy.R'
