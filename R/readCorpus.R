@@ -127,8 +127,6 @@ readCorpus <- function(
                ){
   # analysis is done recursively by an internal function
   hierarchy_branch <- matrix(c(id, names(id)), nrow=2, dimnames=list(c("id","dir"), category))
-#   hierarchy_branch <- id
-#   names(hierarchy_branch) <- category
   result <- readCorpus_internal(
     dir=dir,
     hierarchy=hierarchy,
@@ -174,9 +172,14 @@ readCorpus_internal <- function(
                         text_id,        # will grow longer with each hierarchy level
                         ...
                       ){
-  if(!format %in% c("file", "obj")){
+  do_files <- do_object <- FALSE
+  if(identical(format, "file")){
+    do_files <- TRUE
+  } else if(identical(format, "obj")){
+    do_object <- TRUE
+  } else {
     stop(simpleError(paste0("invalid value for \"format\":\n  \"", format, "\"")))
-  } else {}
+  }
 
   taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
     if(identical(tagger, "tokenize")){
@@ -209,7 +212,6 @@ readCorpus_internal <- function(
         thisIDName <- names(thisLevel)[thisSubdirNum]
         thisCategory <- names(hierarchy)[1]
         new_hierarchy_branch <- matrix(c(thisID, names(thisID)), nrow=2, dimnames=list(c("id","dir"), thisCategory))
-        #names(new_hierarchy_branch) <- thisCategory
         readCorpus_internal(
           dir=thisSubdir,
           hierarchy=hierarchy[-1],
@@ -248,10 +250,10 @@ readCorpus_internal <- function(
       )
     )
   } else {
-    if(identical(format, "file")){
+    if(do_files){
       file_names <- as.list(list.files(dir))
       path_name <- dir
-    } else if(identical(format, "obj")){
+    } else if(do_object){
       file_names <- list()
       path_name <- ""
       if(is.data.frame(dir)){
@@ -286,7 +288,7 @@ readCorpus_internal <- function(
       ifelse(numTexts > 1, " texts...", " text...")
     )
     message(msgText)
-    if(identical(format, "file")){
+    if(do_files){
       slot(result, "raw") <- list(VCorpus(
         DirSource(
           dir,
@@ -298,7 +300,7 @@ readCorpus_internal <- function(
         ),
         readerControl=list(language=lang)
       ))
-    } else if(identical(format, "obj")){
+    } else if(do_object){
       if(is.data.frame(dir)){
         corpus_source <- DataframeSource(dir)
       } else {
