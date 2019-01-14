@@ -188,7 +188,23 @@ readCorpus_internal <- function(
       return(treetag(file=text, treetagger=tagger, format="obj", lang=lang, doc_id=doc_id, ...))
     }
   }
-  
+
+  file_path_from_dir <- function(d){
+    result <- list(
+      file_names=list(),
+      path_name=c()
+    )
+    if(is.data.frame(d)){
+      if("file" %in% colnames(d)){
+        result[["file_names"]] <- list(as.character(d[["file"]]))
+      } else {}
+      if("path" %in% colnames(d)){
+        result[["path_name"]] <- as.character(d[["path"]])
+      } else {}
+    } else {}
+    return(result)
+  }
+
   if(identical(lang, "kRp.env")){
     lang <- get.kRp.env(lang=TRUE)
   } else {}
@@ -196,7 +212,20 @@ readCorpus_internal <- function(
   if(length(hierarchy) > 0){
     # start recursion on top level of hierarchy
     thisLevel <- hierarchy[[1]]
-    subdirs <- normalizePath(file.path(dir, names(thisLevel)), mustWork=TRUE)
+## file
+    if(do_files){
+message("do_files")
+      subdirs <- normalizePath(file.path(dir, names(thisLevel)), mustWork=TRUE)
+    } else if(do_object){
+message("do_object")
+message(paste0("colnames dir:\n  ", paste0(colnames(dir), collapse="\n  ")))
+      if(category %in% colnames(dir)){
+        subdirs <- unique(as.character(dir[[category]]))
+message(paste0("subdirs:\n  ", paste0(subdirs, collapse="\n  ")))
+      } else {
+        stop(simpleError(paste0("Invalid hierarchy category (not in data frame): ", category)))
+      }
+    }
     msgText <- paste0(
       paste0(rep("  ", all_levels - level), collapse=""),
       ifelse(identical(all_levels, level), "processing ", ""),
@@ -208,12 +237,21 @@ readCorpus_internal <- function(
       seq_along(subdirs),
       function(thisSubdirNum){
         thisSubdir <- subdirs[thisSubdirNum]
+message(paste0("thisSubdir: ", thisSubdir))
         thisID <- thisLevel[thisSubdirNum]
         thisIDName <- names(thisLevel)[thisSubdirNum]
         thisCategory <- names(hierarchy)[1]
         new_hierarchy_branch <- matrix(c(thisID, names(thisID)), nrow=2, dimnames=list(c("id","dir"), thisCategory))
+        if(do_files){
+message("do_files")
+          do_subdir <- thisSubdir
+        } else if(do_object){
+message("do_object")
+          do_subdir <- dir[dir[[category]] %in% thisSubdir,]
+message(paste0("colnames do_subdir:\n  ", paste0(colnames(do_subdir), collapse="\n  ")))
+        } else {}
         readCorpus_internal(
-          dir=thisSubdir,
+          dir=do_subdir,
           hierarchy=hierarchy[-1],
           all_hierarchy=all_hierarchy,
           hierarchy_branch=cbind(hierarchy_branch, new_hierarchy_branch),
@@ -236,11 +274,22 @@ readCorpus_internal <- function(
       }
     )
     names(children) <- sapply(children, corpusID)
+message(paste0("step 1: ", dir, collapse="  \n"))
+message(paste0("class: ", class(dir)))
+    if(do_files){
+message("do_files")
+      path_name <- dir
+    } else if(do_object){
+message("do_object")
+      fp_lookup <- file_path_from_dir(d=dir)
+      path_name <- fp_lookup[["path_name"]]
+    } else {}
     result <- kRp_hierarchy(
       level=as.integer(level),
       category=category,
       id=id,
-      path=dir,
+## file
+      path=path_name,
       children=children,
       meta=list(
         hierarchy=all_hierarchy,
@@ -251,19 +300,16 @@ readCorpus_internal <- function(
     )
   } else {
     if(do_files){
+message("step 2: do_files")
       file_names <- as.list(list.files(dir))
       path_name <- dir
     } else if(do_object){
-      file_names <- list()
-      path_name <- ""
-      if(is.data.frame(dir)){
-        if("file" %in% colnames(dir)){
-         file_names <- list(as.character(dir[["file"]]))
-        } else {}
-        if("path" %in% colnames(dir)){
-         path_names <- list(as.character(dir[["path"]]))
-        } else {}
-      } else {}
+message("step 2: do_object")
+      fp_lookup <- file_path_from_dir(d=dir)
+      file_names <- fp_lookup[["file_names"]]
+      path_name <- fp_lookup[["path_name"]]
+message(paste0("step 2:\n  ", paste0(path_name, collapse="  \n")))
+message(paste0("class: ", class(path_name)))
     } else {}
     # actually parse texts
     result <- kRp_hierarchy(
@@ -317,6 +363,9 @@ readCorpus_internal <- function(
     nameNum <- sprintf("%02d", 1:numTexts)
     text_id <- paste0(text_id, nameNum)
     meta(corpusTm(result), tag="textID") <- text_id
+    # add directory and filename
+    meta(corpusTm(result), tag="path") <- dir
+    meta(corpusTm(result), tag="file") <- file_names
     # add all available hierarchy info
     for(this_branch in colnames(hierarchy_branch)){
       meta(corpusTm(result), tag=this_branch) <- hierarchy_branch["id",this_branch]

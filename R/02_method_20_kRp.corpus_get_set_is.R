@@ -816,7 +816,6 @@ setMethod("tif_as_corpus_df",
     result <- data.frame(
       doc_id=as.character(corpus_meta[["textID"]]),
       text=as.character(corpus_texts),
-      file=as.character(corpus_files),
       stringsAsFactors=FALSE
     )
     extra_cols <- !colnames(corpus_meta) %in% "textID"
