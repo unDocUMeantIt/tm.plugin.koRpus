@@ -5,7 +5,7 @@
 #' Package: \tab tm.plugin.koRpus\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.02-2\cr
-#' Date: \tab 2019-01-11\cr
+#' Date: \tab 2019-01-16\cr
 #' Depends: \tab R (>= 2.10.0),koRpus (>= 0.11-3),sylly\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr

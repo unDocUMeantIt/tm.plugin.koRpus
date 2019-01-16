@@ -61,9 +61,6 @@
 #'    This value is passed through to simpleCorpus.
 #' @param category A character string describing the root level of the corpus.
 #' @param id A character string describing the main subject/purpose of the text corpus.
-#' @param level An integer value defining the hierachical level, where \code{level=0} is the actual collection of texts,
-#'    and higher values indicate a hierachical category. Normally, you should not manipulate this value yourself, it is
-#'    used and set internally.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
 #' @return An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 #' @importFrom tm VCorpus DirSource VectorSource DataframeSource
@@ -122,7 +119,6 @@ readCorpus <- function(
                 mc.cores=getOption("mc.cores", 1L),
                 category="corpus",
                 id="",
-                level=0,
                 ...
                ){
   # analysis is done recursively by an internal function
@@ -224,8 +220,8 @@ readCorpus_internal <- function(
     msgText <- paste0(
       paste0(rep("  ", all_levels - level), collapse=""),
       ifelse(identical(all_levels, level), "processing ", ""),
-      ifelse(nchar(category) > 0, paste0(category, " "), ""),
-      ifelse(nchar(id) > 0, paste0("\"", id, "\""), "")
+      ifelse(nchar(category) > 0, category, ""),
+      ifelse(nchar(id) > 0, paste0(" \"", id, "\""), "")
     )
     message(msgText)
     children <- lapply(
@@ -307,11 +303,12 @@ readCorpus_internal <- function(
         id=id
       )
     )
-    numTexts <- length(slot(result, "files"))
+    numTexts <- length(corpusFiles(result))
     msgText <- paste0(
       paste0(rep("  ", all_levels - level), collapse=""),
-      ifelse(nchar(category) > 0, paste0(category, " "), ""),
-      ifelse(nchar(id) > 0, paste0("\"", id, "\", "), ", "),
+      ifelse(identical(all_levels, level), "processing ", ""),
+      ifelse(nchar(category) > 0, category, ""),
+      ifelse(nchar(id) > 0, paste0(" \"", id, "\", "), ", "),
       numTexts,
       ifelse(numTexts > 1, " texts...", " text...")
     )

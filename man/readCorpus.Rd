@@ -8,7 +8,7 @@ readCorpus(dir, hierarchy = list(), lang = "kRp.env",
   tagger = "kRp.env", encoding = "", pattern = NULL,
   recursive = FALSE, ignore.case = FALSE, mode = "text",
   format = "file", mc.cores = getOption("mc.cores", 1L),
-  category = "corpus", id = "", level = 0, ...)
+  category = "corpus", id = "", ...)
 }
 \arguments{
 \item{dir}{File path to the root directory of the text corpus. Below this path, texts
@@ -55,12 +55,6 @@ This value is passed through to simpleCorpus.}
 \item{category}{A character string describing the root level of the corpus.}
 
 \item{id}{A character string describing the main subject/purpose of the text corpus.}
-
-\item{level}{An integer value defining the hierachical level,
-      where \code{level=0} is the actual collection of texts,
-and higher values indicate a hierachical category. Normally,
-      you should not manipulate this value yourself, it is
-used and set internally.}
 
 \item{...}{Additional options which are passed through to the defined \code{tagger}.}
 }
