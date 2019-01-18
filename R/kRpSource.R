@@ -1,4 +1,4 @@
-# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -26,7 +26,7 @@
 #' @param obj An object of class \code{kRp.taggedText} (a class union for tagged text objects).
 #' @param encoding Character string, defining the character encoding of the object.
 #' @return An object of class \code{\link[tm:Source]{Source}}, also inheriting class \code{kRpSource}.
-#' @importFrom tm SimpleSource
+#' @importFrom tm SimpleSource readPlain
 #' @export
 kRpSource <- function(obj, encoding="UTF-8"){
   thisText <- kRp.text.paste(obj)

@@ -6,7 +6,7 @@ unreleased:
 fixed:
   - readCorpus(): can now also import data frames in TIF format, including
     support for hierarchal categories
-  - readCorpus(): added missing imports from packages tm, NLP and parallel
+  - readCorpus(), kRpSource(): added missing imports from packages tm, NLP and parallel
   - readCorpus(): removed unused "level" argument
   - readCorpus(): fixed status message formatting
   - corpusTm(): removed useless "level" argument and corrected the output
@@ -16,6 +16,7 @@ added:
     into a TIF compliant data frame
 changed:
   - readCorpus(): the tm corpora now include full hierarchy metadata
+  - removed pre-hierarchy portions from internal function whatIsAvailable()
 
 changes in version 0.02-1 (2018-07-29)
 changed:

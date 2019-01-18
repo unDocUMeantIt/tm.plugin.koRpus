@@ -1,4 +1,4 @@
-# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -50,48 +50,23 @@ nullToList <- function(obj, entry="index"){
 
 
 ## function whatIsAvailable()
-whatIsAvailable <- function(all.corpora, level="sources", hierarchy=FALSE){
-  if(isTRUE(hierarchy)){
-    # this fetches all level 0 objects from the nested corpus
-    # result is a list
-    bottom_level <- corpusChildren(all.corpora, level=0)
-    # now get all availability info from that list
-    available.rdb <- unique(unlist(lapply(
-      bottom_level,
-      function(thisCorpus){
-        unlist(corpusMeta(thisCorpus, "readability", fail=FALSE)[["index"]])
-      }
-    )))
-    available.TTR <- unique(unlist(lapply(
-      bottom_level,
-      function(thisCorpus){
-        unlist(corpusMeta(thisCorpus, "TTR", fail=FALSE)[["index"]])
-      }
-    )))
-  } else {
-    ## TODO: remove this stuff if kRp.hierachy is finished
-    if(identical(level, "sources")){
-      available.rdb <- unlist(lapply(all.corpora, function(thisCorpus){
-          corpusMeta(thisCorpus, "readability", fail=FALSE)[["index"]]
-        })
-      )
-      available.TTR <- unlist(lapply(all.corpora, function(thisCorpus){
-          corpusMeta(thisCorpus, "TTR", fail=FALSE)[["index"]]
-        })
-      )
-    } else if(identical(level, "topics")){
-      available.rdb <- unlist(lapply(all.corpora, function(thisCorpus){
-          whatIsAvailable(corpusSources(thisCorpus), level="sources")[["available.rdb"]]
-        })
-      )
-      available.TTR <- unlist(lapply(all.corpora, function(thisCorpus){
-          whatIsAvailable(corpusSources(thisCorpus), level="sources")[["available.TTR"]]
-        })
-      )
-    } else {
-      stop(simpleError(paste0("Unknown level \"", level, "\" for internal function  whatIsAvailable()")))
+whatIsAvailable <- function(all.corpora){
+  # this fetches all level 0 objects from the nested corpus
+  # result is a list
+  bottom_level <- corpusChildren(all.corpora, level=0)
+  # now get all availability info from that list
+  available.rdb <- unique(unlist(lapply(
+    bottom_level,
+    function(thisCorpus){
+      unlist(corpusMeta(thisCorpus, "readability", fail=FALSE)[["index"]])
     }
-  }
+  )))
+  available.TTR <- unique(unlist(lapply(
+    bottom_level,
+    function(thisCorpus){
+      unlist(corpusMeta(thisCorpus, "TTR", fail=FALSE)[["index"]])
+    }
+  )))
   available.rdb <- nullToList(available.rdb, entry="index")
   available.TTR <- nullToList(available.TTR, entry="index")
   return(list(available.rdb=available.rdb, available.TTR=available.TTR))

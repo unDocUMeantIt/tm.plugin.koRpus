@@ -1,4 +1,4 @@
-# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -74,7 +74,7 @@ setMethod("summary", signature(object="kRp.hierarchy"), function(
       if(any(c("available.rdb", "available.TTR") %in% names(list(...)))){
         available <- availableFromOptions(allOptions=list(...), object=object)
       } else {
-        available <- whatIsAvailable(all.corpora=object, hierarchy=TRUE)
+        available <- whatIsAvailable(all.corpora=object)
       }
 
       for (thisChild in names(all.children)){
