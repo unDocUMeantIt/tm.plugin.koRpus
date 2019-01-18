@@ -1,6 +1,32 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
+\section{Changes in tm.plugin.koRpus version 0.02-2 (2019-01-18)}{
+  \subsection{fixed}{
+    \itemize{
+      \item \code{readCorpus()}, \code{kRpSource()}: added missing imports from packages tm, NLP
+        and parallel
+      \item \code{readCorpus()}: fixed status message formatting
+      \item \code{corpusTm()}: removed useless \code{"level"} argument and corrected the output
+      \item \code{readCorpus()}: removed unused \code{"level"} argument
+      \item \code{corpusFiles()}: now also works with flat hierarchy objects
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item \code{readCorpus()}: can now also import data frames in TIF format, including
+        support for hierarchal categories
+      \item \code{tif_as_corpus_df()}: new S4 method to transform a kRp.hierarchy object
+        into a TIF compliant data frame
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item \code{readCorpus()}: the tm corpora now include full hierarchy metadata
+      \item removed pre-hierarchy portions from internal function \code{whatIsAvailable()}
+    }
+  }
+}
 \section{Changes in tm.plugin.koRpus version 0.02-1 (2018-07-29)}{
   \subsection{changed}{
     \itemize{

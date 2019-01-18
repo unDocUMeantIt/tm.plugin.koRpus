@@ -15,7 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Function to create kRp.hierarchy objects from hierachically structured directories
+#' Create kRp.hierarchy objects from text files or data frames
+#' 
+#' You can either read a corpus from text files (one file per text, also see the Hierarchy section below)
+#' or from TIF compliant data frames (see the Data frames section below).
 #' 
 #' @section Hierarchy:
 #' To import a hierarchically structured text corpus you must categorize all texts in a directory
@@ -32,9 +35,25 @@
 #' the corresponding subdirectroy name, whereas the value is a free text description. The names of the
 #' list items however describe the hierachical level and are not matched with directory names.
 #' 
-#' @param dir File path to the root directory of the text corpus. Below this path, texts
-#'    can be ordered into subfolders named exactly like defined by \code{hierarchy}. If \code{hierarchy}
-#'    is an emtpy list, all text files located in \code{dir} are parsed without a hierachical structure.
+#' @section Data frames:
+#' In order to import a corpus from a data frame, the object must be in Text Interchange Format (TIF)
+#' as described by [1]. As a minimum, the data frame must have two character columns, \code{doc_id}
+#' and \code{text}.
+#' 
+#' You can provide additional information on hierarchical categories by using further
+#' columns, where the column name must match the category name (hierachical level). The order of those
+#' columns in the data frame is not important, as you must still fully define the hierarchical structure
+#' using the \code{hierarchy} argument. All columns you omit are ignored, but the values used in
+#' the \code{hierarchy} list and the respective columns must match, as rows with unmatched category levels
+#' will also be ignored.
+#' 
+#' Note that the special column names \code{path} and \code{file} will also be imported automatically.
+#' 
+#' @param dir Either a file path to the root directory of the text corpus, or a TIF compliant data frame.
+#'    If a directory path (character string), texts can be recursively ordered into subfolders named
+#'    exactly as defined by \code{hierarchy}. If \code{hierarchy} is an emtpy list, all text files located in
+#'    \code{dir} are parsed without a hierachical structure. If a data frame, also set \code{format="obj"}
+#'    and provide hierarchy levels as additional columns, as described in the Data frames section.
 #' @param hierarchy A named list of named character vectors describing the directory hierarchy level by level.
 #'    See section Hierarchy for details.
 #' @param lang A character string naming the language of the analyzed corpus.
@@ -66,6 +85,8 @@
 #' @importFrom tm VCorpus DirSource VectorSource DataframeSource
 #' @importFrom NLP meta<-
 #' @importFrom parallel mclapply
+#' @references
+#'    [1] Text Interchange Formats (\url{https://github.com/ropensci/tif})
 #' @export
 #' @examples
 #' \dontrun{
@@ -102,6 +123,22 @@
 #'       Wikipedia_neu="Wikipedia (neu)"
 #'     )
 #'   )
+#' )
+#' 
+#' # if the same corpus is available as TIF compliant data frame
+#' myCorpus <- readCorpus(
+#'   dir=myCorpus_df,
+#'   hierarchy=list(
+#'     Topic=c(
+#'       C3S="C3S",
+#'       GEMA="GEMA"
+#'     ),
+#'     Source=c(
+#'       Wikipedia_alt="Wikipedia (alt)",
+#'       Wikipedia_neu="Wikipedia (neu)"
+#'     )
+#'   ),
+#'   format="obj"
 #' )
 #' }
 

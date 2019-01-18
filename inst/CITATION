@@ -1,13 +1,13 @@
 bibentry("Manual",
     title="tm.plugin.koRpus: A Compatibility Plugin Package for 'tm' and 'koRpus'",
     author="m.eik michalke",
-    year="2018",
-    note="(Version 0.02-1)",
+    year="2019",
+    note="(Version 0.02-2)",
     url="https://reaktanz.de/?c=hacking&s=koRpus",
 
     textVersion =
-    paste("michalke, m. (2018). ",
-        "tm.plugin.koRpus: A Compatibility Plugin Package for 'tm' and 'koRpus' (Version 0.02-1). ",
+    paste("michalke, m. (2019). ",
+        "tm.plugin.koRpus: A Compatibility Plugin Package for 'tm' and 'koRpus' (Version 0.02-2). ",
         "Available from https://reaktanz.de/?c=hacking&s=koRpus",
         sep=""),
 

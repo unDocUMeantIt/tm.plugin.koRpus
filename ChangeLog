@@ -1,17 +1,16 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.02-2 (2019-01-16)
-unreleased:
-  - this release is under development
+changes in version 0.02-2 (2019-01-18)
 fixed:
-  - readCorpus(): can now also import data frames in TIF format, including
-    support for hierarchal categories
-  - readCorpus(), kRpSource(): added missing imports from packages tm, NLP and parallel
-  - readCorpus(): removed unused "level" argument
+  - readCorpus(), kRpSource(): added missing imports from packages tm, NLP
+    and parallel
   - readCorpus(): fixed status message formatting
   - corpusTm(): removed useless "level" argument and corrected the output
+  - readCorpus(): removed unused "level" argument
   - corpusFiles(): now also works with flat hierarchy objects
 added:
+  - readCorpus(): can now also import data frames in TIF format, including
+    support for hierarchal categories
   - tif_as_corpus_df(): new S4 method to transform a kRp.hierarchy object
     into a TIF compliant data frame
 changed:

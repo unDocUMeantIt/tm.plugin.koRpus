@@ -286,6 +286,9 @@ Please note that the \code{<-} methods usually do not work on nested levels but 
 \dontrun{
 corpusTagged(myCorpus)
 corpusMeta(myCorpus, "note") <- "an interesting read!"
+
+# export object to TIF compliant data frame
+myCorpus_df <- tif_as_corpus_df(myCorpus)
 }
 }
 \references{

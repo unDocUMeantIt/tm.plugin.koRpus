@@ -1,4 +1,4 @@
-# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -54,6 +54,9 @@
 #' \dontrun{
 #' corpusTagged(myCorpus)
 #' corpusMeta(myCorpus, "note") <- "an interesting read!"
+#' 
+#' # export object to TIF compliant data frame
+#' myCorpus_df <- tif_as_corpus_df(myCorpus)
 #' }
 setGeneric("corpusTagged", function(obj, level=NULL, id=NULL) standardGeneric("corpusTagged"))
 #' @rdname kRp.hierarchy_get-methods
