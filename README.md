@@ -47,7 +47,7 @@ branch will be rejected, as it is reserved for the current stable release.
 
 ## License
 
-Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 
 tm.plugin.koRpus is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
