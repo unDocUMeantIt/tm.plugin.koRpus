@@ -1,8 +1,12 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.02-3 (2019-01-18)
+changes in version 0.02-3 (2019-01-24)
 unreleased:
   - this release is under development
+added:
+  - query(): new method, extending the generic of koRpus >= 0.11-6
+changed:
+  - depends on koRpus >= 0.11-6 now
 
 changes in version 0.02-2 (2019-01-18)
 fixed:
