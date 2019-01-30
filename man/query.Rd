@@ -8,7 +8,7 @@
 \usage{
 \S4method{query}{kRp.hierarchy}(obj, var, query, rel = "eq",
   as.df = TRUE, ignore.case = TRUE, perl = FALSE,
-  regexp_var = "token")
+  regexp_var = "token", mc.cores = getOption("mc.cores", 1L))
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.}
@@ -28,9 +28,8 @@ Must either be \code{"eq"} (equal, the default), \code{"gt"} (greater than),
 \code{"lt"} (less than) or \code{"le"} (less or equal). If \code{var="word"},
       is always interpreted as \code{"eq"}}
 
-\item{as.df}{Logical, if \code{TRUE}, returns a TIF compliant data frame,
-      otherwise an object of
-the input class.}
+\item{as.df}{Logical, if \code{TRUE}, returns a data frame,
+      otherwise an object of the input class.}
 
 \item{ignore.case}{Logical, passed through to \code{grepl} if \code{var="regexp"}.}
 
