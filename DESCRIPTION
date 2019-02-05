@@ -16,7 +16,7 @@ Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.02-3
-Date: 2019-01-30
+Date: 2019-02-05
 RoxygenNote: 6.1.1
 Collate: 
     '01_class_01_kRp.hierarchy.R'
@@ -28,6 +28,11 @@ Collate:
     '02_method_06_kRp.corpus-class_summary.R'
     '02_method_07_kRp.corpus-class_correct.R'
     '02_method_08_kRp.corpus-class_query.R'
+    '02_method_09_kRp.corpus-class_filterByClass.R'
+    '02_method_10_kRp.corpus-class_jumbleWords.R'
+    '02_method_11_kRp.corpus-class_clozeDelete.R'
+    '02_method_12_kRp.corpus-class_cTest.R'
+    '02_method_13_kRp.corpus-class_textTransform.R'
     '02_method_20_kRp.corpus_get_set_is.R'
     '02_method_21_kRp.corpus-class_show.R'
     'deprecated.R'

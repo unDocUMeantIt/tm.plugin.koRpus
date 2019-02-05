@@ -1,10 +1,15 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.02-3 (2019-01-30)
+changes in version 0.02-3 (2019-02-05)
 unreleased:
   - this release is under development
 added:
   - query(): new method, extending the generic of koRpus >= 0.11-6
+  - filterByClass(): new method, extending the generic of koRpus >= 0.11-6
+  - jumbleWords(): new method, extending the generic of koRpus >= 0.11-6
+  - clozeDelete(): new method, extending the generic of koRpus >= 0.11-6
+  - cTest(): new method, extending the generic of koRpus >= 0.11-6
+  - textTransform(): new method, extending the generic of koRpus >= 0.11-6
   - show(): new method for objects of class kRp.hierarchy
 changed:
   - depends on koRpus >= 0.11-6 now
