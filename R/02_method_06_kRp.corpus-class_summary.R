@@ -28,6 +28,9 @@
 #' The \code{summary} slot contains a data.frame with aggregated information of
 #' all texts that the respective object level contains.
 #' 
+#' \code{corpusSummary} is a simple method to get or set the \code{summary} slot
+#' in kRp.hierarchy objects directly.
+#' 
 #' @param object An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 # @param available.rdb Character vector with the column names of all readability measures
 #    that are supposed to be available for all texts. Missings are automatically filled
