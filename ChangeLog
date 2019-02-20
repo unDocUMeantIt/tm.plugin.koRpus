@@ -1,8 +1,10 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.02-3 (2019-02-05)
+changes in version 0.02-3 (2019-02-20)
 unreleased:
   - this release is under development
+fixed:
+  - readCorpus(): solved a cryptic warning when more than one text was tokenized
 added:
   - query(): new method, extending the generic of koRpus >= 0.11-6
   - filterByClass(): new method, extending the generic of koRpus >= 0.11-6

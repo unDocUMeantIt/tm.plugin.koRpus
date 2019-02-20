@@ -381,7 +381,7 @@ readCorpus_internal <- function(
     meta(corpusTm(result), tag="textID") <- text_id
     # add directory and filename
     meta(corpusTm(result), tag="path") <- path_name
-    meta(corpusTm(result), tag="file") <- file_names
+    meta(corpusTm(result), tag="file") <- unlist(file_names)
     # add all available hierarchy info
     for(this_branch in colnames(hierarchy_branch)){
       meta(corpusTm(result), tag=this_branch) <- hierarchy_branch["id",this_branch]
