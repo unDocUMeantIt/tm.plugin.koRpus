@@ -6,7 +6,8 @@ unreleased:
 fixed:
   - readCorpus(): solved a cryptic warning when more than one text was tokenized
 added:
-  - docTermMatrix(): new method to generate document-term matrices
+  - docTermMatrix(): new method to generate document-term matrices, either
+    with absolute frequencies or tf-idf values
   - query(): new method, extending the generic of koRpus >= 0.11-6
   - filterByClass(): new method, extending the generic of koRpus >= 0.11-6
   - jumbleWords(): new method, extending the generic of koRpus >= 0.11-6

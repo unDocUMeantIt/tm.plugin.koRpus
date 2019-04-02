@@ -5,12 +5,12 @@
 \alias{docTermMatrix}
 \alias{docTermMatrix,kRp.hierarchy-method}
 \alias{docTermMatrix,-methods}
-\title{Generate a document-term matrix from a corpus opbject}
+\title{Generate a document-term matrix from a corpus object}
 \usage{
-docTermMatrix(obj, terms = "token", case.sens = FALSE, ...)
+docTermMatrix(obj, terms = "token", case.sens = FALSE, tfidf = FALSE)
 
 \S4method{docTermMatrix}{kRp.hierarchy}(obj, terms = "token",
-  case.sens = FALSE)
+  case.sens = FALSE, tfidf = FALSE)
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.}
@@ -18,10 +18,49 @@ docTermMatrix(obj, terms = "token", case.sens = FALSE, ...)
 \item{terms}{A character string defining the \code{TT.res} column to be used for calculating the matrix.}
 
 \item{case.sens}{Logical, whether terms should be counted case sensitive.}
+
+\item{tfidf}{Logical,
+      if \code{TRUE} calculates term frequency--inverse document frequency (tf-idf)
+values instead of absolute frequency.}
 }
 \value{
 A sparse matrix of class \code{\link[Matrix:dgCMatrix]{dgCMatrix}}.
 }
 \description{
-Generate a document-term matrix from a corpus opbject
+Returns a sparse document-term matrix calculated from a given object of class
+\code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}. You can also
+calculate the term frequency inverted document frequency value (tf-idf) for each
+term.
+}
+\details{
+See the examples to learn how to limit the analysis to desired word classes.
+}
+\examples{
+\dontrun{
+myCorpus <- readCorpus(
+  dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+  hierarchy=list(
+    Topic=c(
+      C3S="C3S",
+      GEMA="GEMA"
+    ),
+    Source=c(
+      Wikipedia_alt="Wikipedia (alt)",
+      Wikipedia_neu="Wikipedia (neu)"
+    )
+  )
+)
+
+# get the document-term frequencies in a sparse matrix
+myDTMatrix <- docTermMatrix(myCorpus)
+
+# combine with filterByClass() to, e.g.,  exclude all punctuation
+myDTMatrix <- docTermMatrix(filterByClass(myCorpus))
+
+# instead of bsolute frequencies, get the tf-idf values
+myDTMatrix <- docTermMatrix(
+  filterByClass(myCorpus),
+  tfidf=TRUE
+)
+}
 }

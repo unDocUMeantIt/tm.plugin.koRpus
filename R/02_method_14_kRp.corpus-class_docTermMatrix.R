@@ -15,21 +15,54 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Generate a document-term matrix from a corpus opbject
+#' Generate a document-term matrix from a corpus object
 #'
+#' Returns a sparse document-term matrix calculated from a given object of class
+#' \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}. You can also
+#' calculate the term frequency inverted document frequency value (tf-idf) for each
+#' term.
+#' 
+#' See the examples to learn how to limit the analysis to desired word classes.
 #' 
 #' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 #' @param terms A character string defining the \code{TT.res} column to be used for calculating the matrix.
 #' @param case.sens Logical, whether terms should be counted case sensitive.
+#' @param tfidf Logical, if \code{TRUE} calculates term frequency--inverse document frequency (tf-idf)
+#'   values instead of absolute frequency.
 #' @return A sparse matrix of class \code{\link[Matrix:dgCMatrix]{dgCMatrix}}.
 #' @importFrom Matrix Matrix
 #' @export
 #' @docType methods
 #' @rdname docTermMatrix
-# @examples
-# \dontrun{
-# }
-setGeneric("docTermMatrix", function(obj, terms="token", case.sens=FALSE, ...) standardGeneric("docTermMatrix"))
+#' @examples
+#' \dontrun{
+#' myCorpus <- readCorpus(
+#'   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+#'   hierarchy=list(
+#'     Topic=c(
+#'       C3S="C3S",
+#'       GEMA="GEMA"
+#'     ),
+#'     Source=c(
+#'       Wikipedia_alt="Wikipedia (alt)",
+#'       Wikipedia_neu="Wikipedia (neu)"
+#'     )
+#'   )
+#' )
+#' 
+#' # get the document-term frequencies in a sparse matrix
+#' myDTMatrix <- docTermMatrix(myCorpus)
+#' 
+#' # combine with filterByClass() to, e.g.,  exclude all punctuation
+#' myDTMatrix <- docTermMatrix(filterByClass(myCorpus))
+#' 
+#' # instead of bsolute frequencies, get the tf-idf values
+#' myDTMatrix <- docTermMatrix(
+#'   filterByClass(myCorpus),
+#'   tfidf=TRUE
+#' )
+#' }
+setGeneric("docTermMatrix", function(obj, terms="token", case.sens=FALSE, tfidf=FALSE) standardGeneric("docTermMatrix"))
 
 #' @rdname docTermMatrix
 #' @docType methods
@@ -40,7 +73,7 @@ setGeneric("docTermMatrix", function(obj, terms="token", case.sens=FALSE, ...) s
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("docTermMatrix",
   signature=signature(obj="kRp.hierarchy"),
-  function(obj, terms="token", case.sens=FALSE){
+  function(obj, terms="token", case.sens=FALSE, tfidf=FALSE){
     tagged <- tif_as_tokens_df(obj)
     if(!isTRUE(case.sens)){
       tagged[[terms]] <- tolower(tagged[[terms]])
@@ -54,11 +87,25 @@ setMethod("docTermMatrix",
       ncol=length(uniqueTerms),
       dimnames=list(doc_ids, uniqueTerms)
     )
+    if(isTRUE(tfidf)){
+      tf_mtx <- dt_mtx
+    } else {}
+
     for (thisDoc in doc_ids){
-      termsInDoc <- table(tagged[tagged[["doc_id"]] %in% thisDoc, terms])
+      relevantTerms <- tagged[tagged[["doc_id"]] %in% thisDoc, terms]
+      termsInDoc <- table(relevantTerms)
+      if(isTRUE(tfidf)){
+        tf_mtx[rownames(tf_mtx) %in% thisDoc, colnames(tf_mtx) %in% names(termsInDoc)] <- termsInDoc/length(relevantTerms)
+      } else {}
       dt_mtx[rownames(dt_mtx) %in% thisDoc, colnames(dt_mtx) %in% names(termsInDoc)] <- termsInDoc
     }
-    result <- Matrix(dt_mtx, sparse=TRUE)
+
+    if(isTRUE(tfidf)){
+      idf <- log(nrow(dt_mtx)/colSums(dt_mtx > 0))
+      result <- Matrix(t(t(tf_mtx) * idf), sparse=TRUE)
+    } else {
+      result <- Matrix(dt_mtx, sparse=TRUE)
+    }
     return(result)
   }
 )
