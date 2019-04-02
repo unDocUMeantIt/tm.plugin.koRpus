@@ -48,6 +48,9 @@ methods for lower corpus objects.
 
 The \code{summary} slot contains a data.frame with aggregated information of
 all texts that the respective object level contains.
+
+\code{corpusSummary} is a simple method to get or set the \code{summary} slot
+in kRp.hierarchy objects directly.
 }
 \examples{
 \dontrun{

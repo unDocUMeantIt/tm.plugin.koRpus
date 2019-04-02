@@ -81,12 +81,10 @@
 \alias{corpusFiles<-,kRp.hierarchy-method}
 \alias{corpusFiles<-,-methods}
 \alias{is.corpus}
-\alias{[,kRp.hierarchy-method}
-\alias{[,-methods}
 \alias{[,kRp.hierarchy,ANY,ANY,ANY-method}
-\alias{[<-,kRp.hierarchy-method}
-\alias{[<-,-methods}
+\alias{[,-methods}
 \alias{[<-,kRp.hierarchy,ANY,ANY,ANY-method}
+\alias{[<-,-methods}
 \alias{[[,kRp.hierarchy-method}
 \alias{[[,-methods}
 \alias{[[,kRp.hierarchy,ANY-method}
@@ -211,9 +209,9 @@ corpusFiles(obj) <- value
 
 is.corpus(obj)
 
-\S4method{[}{kRp.hierarchy}(x, i, j)
+\S4method{[}{kRp.hierarchy,ANY,ANY,ANY}(x, i, j)
 
-\S4method{[}{kRp.hierarchy}(x, i, j) <- value
+\S4method{[}{kRp.hierarchy,ANY,ANY,ANY}(x, i, j) <- value
 
 \S4method{[[}{kRp.hierarchy}(x, i)
 
