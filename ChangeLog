@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.02-3 (2019-04-02)
+changes in version 0.02-3 (2019-04-09)
 unreleased:
   - this release is under development
 fixed:
@@ -16,8 +16,10 @@ added:
   - textTransform(): new method, extending the generic of koRpus >= 0.11-6
   - show(): new method for objects of class kRp.hierarchy
 changed:
-  - depends on koRpus >= 0.11-6 now
-  - deoends on the Matrix package now (for docTermMatrix())
+  - depends on koRpus >= 0.12-1 now
+  - depends on the Matrix package now (for docTermMatrix())
+  - adjusted test standards to include the additional POS tags from
+    koRpus >= 0.12-1
 
 changes in version 0.02-2 (2019-01-18)
 fixed:

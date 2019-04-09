@@ -34,7 +34,7 @@ test_that("creating a 'flat' kRp.hierarchy class object", {
   corpusPath(mySimpleCorpus.test) <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
   meta(corpusTm(mySimpleCorpus.test))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
   # manually set the timetamps of the tm objects, these can't be equal
-  meta(corpusTm(mySimpleCorpus.test)[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
+  meta(corpusTm(mySimpleCorpus.test)[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
 
   expect_equal(
     mySimpleCorpus.test,
@@ -73,8 +73,8 @@ test_that("creating a kRp.hierarchy class object", {
   meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
   meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
   # the same for the timetamps of the tm objects
-  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
 
   expect_equal(
     mySourcesCorpus,
@@ -123,16 +123,22 @@ test_that("creating a kRp.hierarchy class object with two levels", {
   meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
 
   # the same for the timetamps of the tm objects
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
 
   expect_equal(
     myTopicCorpus,
     myTopicCorpus.test
   )
 })
+# # new test standards
+# myTopicCorpus <- myTopicCorpus.test
+# save(myTopicCorpus,
+#   file=file.path(main.root,"tests","testthat","myTopicCorpus.RData"),
+#   compress="xz",
+#   compression_level=-9)
 
 
 context("export to TIF")
@@ -185,20 +191,19 @@ test_that("importing a TIF data frame as a kRp.hierarchy class object", {
   meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
   meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
   meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2018-07-29 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
   
   expect_equal(
     myTopicCorpus_from_df,
     myTopicCorpus_from_df.test
   )
 })
-
 # # new test standards
-# myTopicCorpus <- myTopicCorpus.test
-# save(myTopicCorpus,
-#   file=file.path(main.root,"tests","testthat","myTopicCorpus.RData"),
+# myTopicCorpus_from_df <- myTopicCorpus_from_df.test
+# save(myTopicCorpus_from_df,
+#   file=file.path(main.root,"tests","testthat","myTopicCorpus_from_df.RData"),
 #   compress="xz",
 #   compression_level=-9)
