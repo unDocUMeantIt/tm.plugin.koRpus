@@ -13,8 +13,8 @@ The DESCRIPTION file:
 \tabular{ll}{
 Package: \tab tm.plugin.koRpus\cr
 Type: \tab Package\cr
-Version: \tab 0.02-3\cr
-Date: \tab 2019-04-02\cr
+Version: \tab 0.3-1\cr
+Date: \tab 2019-05-13\cr
 Depends: \tab R (>= 2.10.0),koRpus (>= 0.12-1),sylly\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 3)\cr

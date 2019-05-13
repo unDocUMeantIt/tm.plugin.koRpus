@@ -29,7 +29,7 @@
 #' @param case.sens Logical, whether terms should be counted case sensitive.
 #' @param tfidf Logical, if \code{TRUE} calculates term frequency--inverse document frequency (tf-idf)
 #'   values instead of absolute frequency.
-#' @return A sparse matrix of class \code{\link[Matrix:dgCMatrix]{dgCMatrix}}.
+#' @return A sparse matrix of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.
 #' @importFrom Matrix Matrix
 #' @export
 #' @docType methods

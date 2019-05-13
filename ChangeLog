@@ -1,10 +1,11 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.02-3 (2019-04-09)
+changes in version 0.3-1 (2019-05-13)
 unreleased:
   - this release is under development
 fixed:
-  - readCorpus(): solved a cryptic warning when more than one text was tokenized
+  - readCorpus(): solved a cryptic warning when more than one text was
+    tokenized
 added:
   - docTermMatrix(): new method to generate document-term matrices, either
     with absolute frequencies or tf-idf values
@@ -18,8 +19,8 @@ added:
 changed:
   - depends on koRpus >= 0.12-1 now
   - depends on the Matrix package now (for docTermMatrix())
-  - adjusted test standards to include the additional POS tags from
-    koRpus >= 0.12-1
+  - adjusted test standards to include the additional POS tags from koRpus >=
+    0.12-1
 
 changes in version 0.02-2 (2019-01-18)
 fixed:

@@ -24,7 +24,7 @@ docTermMatrix(obj, terms = "token", case.sens = FALSE, tfidf = FALSE)
 values instead of absolute frequency.}
 }
 \value{
-A sparse matrix of class \code{\link[Matrix:dgCMatrix]{dgCMatrix}}.
+A sparse matrix of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.
 }
 \description{
 Returns a sparse document-term matrix calculated from a given object of class
@@ -57,7 +57,7 @@ myDTMatrix <- docTermMatrix(myCorpus)
 # combine with filterByClass() to, e.g.,  exclude all punctuation
 myDTMatrix <- docTermMatrix(filterByClass(myCorpus))
 
-# instead of bsolute frequencies, get the tf-idf values
+# instead of absolute frequencies, get the tf-idf values
 myDTMatrix <- docTermMatrix(
   filterByClass(myCorpus),
   tfidf=TRUE
