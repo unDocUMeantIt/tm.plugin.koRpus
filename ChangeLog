@@ -1,5 +1,9 @@
 ChangeLog for package tm.plugin.koRpus
 
+changes in version 0.3-2 (2019-05-14)
+unreleased:
+  - this release is under development
+
 changes in version 0.3-1 (2019-05-14)
 fixed:
   - readCorpus(): solved a cryptic warning when more than one text was
