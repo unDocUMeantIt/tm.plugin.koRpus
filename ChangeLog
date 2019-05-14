@@ -9,12 +9,12 @@ fixed:
 added:
   - docTermMatrix(): new method to generate document-term matrices, either
     with absolute frequencies or tf-idf values
-  - query(): new method, extending the generic of koRpus >= 0.11-6
-  - filterByClass(): new method, extending the generic of koRpus >= 0.11-6
-  - jumbleWords(): new method, extending the generic of koRpus >= 0.11-6
-  - clozeDelete(): new method, extending the generic of koRpus >= 0.11-6
-  - cTest(): new method, extending the generic of koRpus >= 0.11-6
-  - textTransform(): new method, extending the generic of koRpus >= 0.11-6
+  - query(): new method, extending the generic of koRpus >= 0.12-1
+  - filterByClass(): new method, extending the generic of koRpus >= 0.12-1
+  - jumbleWords(): new method, extending the generic of koRpus >= 0.12-1
+  - clozeDelete(): new method, extending the generic of koRpus >= 0.12-1
+  - cTest(): new method, extending the generic of koRpus >= 0.12-1
+  - textTransform(): new method, extending the generic of koRpus >= 0.12-1
   - show(): new method for objects of class kRp.hierarchy
 changed:
   - depends on koRpus >= 0.12-1 now
