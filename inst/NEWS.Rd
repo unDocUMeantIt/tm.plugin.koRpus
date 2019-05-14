@@ -1,6 +1,35 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
+\section{Changes in tm.plugin.koRpus version 0.3-1 (2019-05-14)}{
+  \subsection{fixed}{
+    \itemize{
+      \item \code{readCorpus()}: solved a cryptic warning when more than one text was
+        tokenized
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item \code{docTermMatrix()}: new method to generate document-term matrices, either
+        with absolute frequencies or tf-idf values
+      \item \code{query()}: new method, extending the generic of koRpus >= 0.12-1
+      \item \code{filterByClass()}: new method, extending the generic of koRpus >= 0.12-1
+      \item \code{jumbleWords()}: new method, extending the generic of koRpus >= 0.12-1
+      \item \code{clozeDelete()}: new method, extending the generic of koRpus >= 0.12-1
+      \item \code{cTest()}: new method, extending the generic of koRpus >= 0.12-1
+      \item \code{textTransform()}: new method, extending the generic of koRpus >= 0.12-1
+      \item \code{show()}: new method for objects of class kRp.hierarchy
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item depends on koRpus >= 0.12-1 now
+      \item depends on the Matrix package now (for \code{docTermMatrix()})
+      \item adjusted test standards to include the additional POS tags from koRpus >=
+        0.12-1
+    }
+  }
+}
 \section{Changes in tm.plugin.koRpus version 0.02-2 (2019-01-18)}{
   \subsection{fixed}{
     \itemize{

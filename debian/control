@@ -2,15 +2,16 @@ Source: r-other-reaktanz-tm.plugin.korpus
 Section: gnu-r
 Priority: optional
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Build-Depends-Indep: debhelper (>> 9.0.0), r-base-dev (>= 2.10.0), cdbs, r-cran-korpus (>= 0.11-3) | r-other-reaktanz-korpus (>= 0.11-3), r-cran-sylly | r-other-reaktanz-sylly,
- r-cran-tm, r-cran-nlp
+Build-Depends-Indep: debhelper (>> 9.0.0), r-base-dev (>= 2.10.0), cdbs, r-cran-korpus (>= 0.12-1) | r-other-reaktanz-korpus (>= 0.12-1), r-cran-sylly | r-other-reaktanz-sylly,
+ r-cran-tm, r-cran-nlp, r-cran-matrix
 Standards-Version: 3.9.3.1
 Homepage: https://reaktanz.de/?c=hacking&s=koRpus
 
 Package: r-other-reaktanz-tm.plugin.korpus
 Architecture: all
 Section: gnu-r
-Depends: r-base-core (>= 3.5.0), r-api-3.5, r-cran-korpus (>= 0.11-3) | r-other-reaktanz-korpus (>= 0.11-3), r-cran-sylly | r-other-reaktanz-sylly, r-cran-tm, r-cran-nlp
+Depends: r-base-core (>= 3.6.0), r-api-3.5, r-cran-korpus (>= 0.12-1) | r-other-reaktanz-korpus (>= 0.12-1), r-cran-sylly | r-other-reaktanz-sylly, r-cran-tm, r-cran-nlp,
+ r-cran-matrix
 Description: GNU R package "A Compatibility Plugin Package for 'tm' and 'koRpus'"
  .
  Provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages. To ask for help, report bugs, suggest
