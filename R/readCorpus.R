@@ -55,7 +55,8 @@
 #'    \code{dir} are parsed without a hierachical structure. If a data frame, also set \code{format="obj"}
 #'    and provide hierarchy levels as additional columns, as described in the Data frames section.
 #' @param hierarchy A named list of named character vectors describing the directory hierarchy level by level.
-#'    See section Hierarchy for details.
+#'    If \code{TRUE} instead, the hierarchy structure is taken directly from the directory tree.
+#'    See section Hierarchy for details. 
 #' @param lang A character string naming the language of the analyzed corpus.
 #'    See \code{\link[koRpus:kRp.POS.tags]{kRp.POS.tags}} for all supported languages.
 #'    If set to \code{"kRp.env"} this is got from \code{\link[koRpus:get.kRp.env]{get.kRp.env}}.
@@ -158,8 +159,14 @@ readCorpus <- function(
                 id="",
                 ...
                ){
+  # try to get the hierarchy directly from te directory tree
+  if(isTRUE(hierarchy)){
+    hierarchy <- hierarchy_from_dirtree(dir)
+  } else {}
+
   # analysis is done recursively by an internal function
   hierarchy_branch <- matrix(c(id, names(id)), nrow=2, dimnames=list(c("id","dir"), category))
+
   result <- readCorpus_internal(
     dir=dir,
     hierarchy=hierarchy,

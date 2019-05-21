@@ -121,3 +121,17 @@ getRdbDesc <- function(object){
   ))
   return(rdbDesc)
 } ## end function getRdbDesc()
+
+
+## function hierarchy_from_dirtree()
+hierarchy_from_dirtree <- function(
+  dir, level=0, result=list()
+){
+  subdirs <- list.dirs(dir, full.names=FALSE, recursive=FALSE)
+  if(length(subdirs) > 0){
+    names(subdirs) <- subdirs
+    result[[paste0("level", level)]] <- subdirs
+    result <- hierarchy_from_dirtree(dir=file.path(dir, subdirs[1]), level=level + 1, result=result)
+  } else {}
+  return(result)
+} ## end function hierarchy_from_dirtree()
