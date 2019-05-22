@@ -129,6 +129,10 @@ hierarchy_from_dirtree <- function(
 ){
   subdirs <- list.dirs(dir, full.names=FALSE, recursive=FALSE)
   if(length(subdirs) > 0){
+    subsubdirs <- unique(lapply(file.path(dir, subdirs), list.dirs, full.names=FALSE, recursive=FALSE))
+    if(length(subsubdirs) > 1){
+      stop(simpleError("Can't auto-detect hierarchy structure: subdirectories do not match!"))
+    } else {}
     names(subdirs) <- subdirs
     result[[paste0("level", level)]] <- subdirs
     result <- hierarchy_from_dirtree(dir=file.path(dir, subdirs[1]), level=level + 1, result=result)

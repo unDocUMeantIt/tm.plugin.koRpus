@@ -125,6 +125,12 @@
 #'     )
 #'   )
 #' )
+#'
+#' # get hierarchy from directory tree
+#' myCorpus <- readCorpus(
+#'   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+#'   hierarchy=TRUE
+#' )
 #' 
 #' # if the same corpus is available as TIF compliant data frame
 #' myCorpus <- readCorpus(
