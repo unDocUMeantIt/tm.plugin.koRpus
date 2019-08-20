@@ -32,7 +32,9 @@
 #'   \item{\code{corpusID()} }{returns the character vector of category IDs of the top level object.}
 #'   \item{\code{corpusPath()} }{returns the root directory path of the top level object.}
 #'   \item{\code{corpusFiles()} }{returns the character vector of file names of level 0 of the object.}
-#'   \item{\code{[}/\code{[[} }{Can be used as a shortcut to index the results of \code{corpusSummary()}.}
+#'   \item{\code{[}/\code{[[} }{can be used as a shortcut to index the results of \code{corpusSummary()}.}
+#'   \item{\code{tif_as_corpus_df} }{returns the whole corpus in a single TIF[1] compliant
+#'      data.frame.}
 #'   \item{\code{tif_as_tokens_df} }{returns the \code{TT.res} slots of all texts in a single TIF[1] compliant
 #'      data.frame, i.e., \code{doc_id} is not a factor but a character vector.}
 #' }

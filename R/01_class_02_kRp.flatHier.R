@@ -34,7 +34,8 @@
 #'    See section Hierarchy for details. 
 #' @slot meta A named list. Can be used to store meta information. Currently, no particular format is defined.
 #' @slot raw A list of objects of class \code{\link[tm]{Corpus}}.
-#' @slot tagged An object of class \code{kRp.taggedText}.
+#' @slot TT.res A data frame as used for the \code{TT.res} slot in objects of class \code{kRp.taggedText}. In addition to the columns
+#'    usually found in those objects, this data frame also has a factor column for each hierarchical category defined (if any).
 #' @note There is also \code{\link[tm.plugin.koRpus:kRp.flatHier_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.flatHier,-class
 #' @aliases kRp.flatHier,-class kRp.flatHier-class
@@ -67,13 +68,13 @@ kRp_flatHier <- setClass("kRp.flatHier",
     hierarchy="list",
     meta="list",
     raw="list",
-    tagged="kRp.taggedText"
+    TT.res="data.frame"
   ),
   prototype=prototype(
     hierarchy=list=(),
     meta=list(),
     raw=list(),
-    tagged=list()
+    TT.res=list()
   )
 )
 
