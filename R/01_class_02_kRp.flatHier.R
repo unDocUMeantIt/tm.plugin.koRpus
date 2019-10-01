@@ -147,22 +147,19 @@ init_flatHier_TT.res <- function(hierarchy=list()){
 
 
 ## method append_flatHier()
-# appends the content of one kRp.flatHier object to another one
-setGeneric("append_flatHier", function(obj, append) standardGeneric("append_flatHier"))
-# @rdname append_flatHier
-# @docType methods
-# @export
-# @aliases
-#    append_flatHier,-methods
-#    append_flatHier,kRp.hierarchy-method
-# @include 01_class_02_kRp.flatHier.R
+# appends the content of one kRp.flatHier object to another one during corpus import
+# omitting lang, hierarchy and raw as that should be set globally
+setGeneric("append_flatHier", function(obj, TT.res, desc, misc) standardGeneric("append_flatHier"))
 setMethod("append_flatHier",
-  signature=signature(obj="kRp.hierarchy"),
-  function (obj, append){
-    if(!is(append, "kRp.hierarchy")){
-      stop(simpleError("Can't append object, invalid class!"))
+  signature=signature(obj="kRp.flatHier"),
+  function (obj, doc_id, TT.res, desc, misc){
+    obj_df <- slot(obj, "TT.res")
+    if(!identical(names(obj_df), names(TT.res))){
+      stop(simpleError("Can't append TT.res, invalid columns!"))
     } else {}
-    message("(not implemented yet)")
+    slot(obj, "TT.res") <- rbind(tobj_df, TT.res)
+    slot(obj, "desc")[[doc_id]] <- desc
+    slot(obj, "misc")[[doc_id]] <- misc
     return(obj)
   }
 ) ## end method append_flatHier()
