@@ -29,9 +29,7 @@
 #' \code{new("kRp.flatHier", ...)}. Whenever possible, stick to
 #' \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}}.
 #' 
-#' @param hierarchy A named list of named character vectors describing the directory hierarchy level by level.
-#'    If \code{TRUE} instead, the hierarchy structure is taken directly from the directory tree.
-#'    See section Hierarchy for details. 
+#' @slot hierarchy A named list of named character vectors describing the directory hierarchy level by level.
 #' @slot meta A named list. Can be used to store meta information. Currently, no particular format is defined.
 #' @slot raw A list of objects of class \code{\link[tm]{Corpus}}.
 #' @slot TT.res A data frame as used for the \code{TT.res} slot in objects of class \code{kRp.taggedText}. In addition to the columns
@@ -71,10 +69,10 @@ kRp_flatHier <- setClass("kRp.flatHier",
     TT.res="data.frame"
   ),
   prototype=prototype(
-    hierarchy=list=(),
+    hierarchy=list(),
     meta=list(),
     raw=list(),
-    TT.res=list()
+    TT.res=koRpus::taggedText(koRpus::kRp_tagged())
   )
 )
 
@@ -82,6 +80,9 @@ setValidity("kRp.flatHier", function(object){
   # TODO: check if hierarchy is resembled by rows in tagged object
     hierarchy <- slot(object, "hierarchy")
     raw <- slot(object, "raw")
+    TT.res <- slot(object, "TT.res")
+    TT.res.names <- colnames(TT.res)
+    standard.TT.res.names <- colnames(koRpus::taggedText(koRpus::kRp_tagged()))
 
     classObj <- list(
       "Corpus"=list(name="raw", obj=raw)
@@ -91,6 +92,16 @@ setValidity("kRp.flatHier", function(object){
         stop(simpleError(paste0("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must have entries inheriting from class ", thisClassObj, "!")))
       } else {}
     }
+
+    missingCols <- standard.TT.res.names[!standard.TT.res.names %in% TT.res.names]
+    if(length(missingCols) > 0){
+      warning(
+        paste0(
+          "Invalid object: Missing columns in slot \"TT.res\":\n  ",
+          paste0(missingCols, collapse=", ")
+        ),
+        call.=FALSE)
+    } else {}
 
     return(TRUE)
 })
