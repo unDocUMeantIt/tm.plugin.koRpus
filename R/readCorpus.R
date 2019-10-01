@@ -170,6 +170,42 @@ readCorpus <- function(
     hierarchy <- hierarchy_from_dirtree(dir)
   } else {}
 
+  # generate a data frame listing all path combinations to expect
+  # expand.grid() actually returns the reverse order we want, but
+  # we'll fix that later simply by sorting all generated paths
+  hier_dirs <- expand.grid(
+    hierarchy,
+    KEEP.OUT.ATTRS=FALSE,
+    stringsAsFactors=FALSE
+  )
+  hier_paths <- sort(apply(
+    hier_dirs,
+    MARGIN=1,
+    paste0,
+    collapse=.Platform$file.sep
+  ))
+
+  result <- init_flatHier_TT.res(hierarchy=hierarchy)
+
+  taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
+    if(identical(tagger, "tokenize")){
+      return(tokenize(txt=text, format="obj", lang=lang, doc_id=doc_id, ...))
+    } else {
+      return(treetag(file=text, treetagger=tagger, format="obj", lang=lang, doc_id=doc_id, ...))
+    }
+  }
+
+  if(identical(lang, "kRp.env")){
+    lang <- get.kRp.env(lang=TRUE)
+  } else {}
+
+
+  for (thisPath in hier_paths) {
+    for (thisFile in list.files(file.path(dir, thisPath))) {
+      ## TODO: fixme :)
+      thisFile_tagged <- taggerFunction(text, lang, tagger=tagger, doc_id=NA, ...)
+    }
+  }
   # analysis is done recursively by an internal function
   hierarchy_branch <- matrix(c(id, names(id)), nrow=2, dimnames=list(c("id","dir"), category))
 
