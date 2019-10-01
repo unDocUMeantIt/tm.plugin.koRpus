@@ -29,6 +29,8 @@
 #' \code{new("kRp.flatHier", ...)}. Whenever possible, stick to
 #' \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}}.
 #' 
+#' @slot lang A character string, naming the language that is assumed for the tokenized texts in this object.
+#' @slot desc A list of descriptive statistics of the tagged texts.
 #' @slot hierarchy A named list of named character vectors describing the directory hierarchy level by level.
 #' @slot meta A named list. Can be used to store meta information. Currently, no particular format is defined.
 #' @slot raw A list of objects of class \code{\link[tm]{Corpus}}.
@@ -63,16 +65,20 @@
 #' emptyCorpus <- kRp_hierarchy()
 kRp_flatHier <- setClass("kRp.flatHier",
   representation=representation(
+    lang="character",
+    desc="list",
     hierarchy="list",
     meta="list",
     raw="list",
     TT.res="data.frame"
   ),
   prototype=prototype(
+    lang=character(),
+    desc=list(),
     hierarchy=list(),
     meta=list(),
     raw=list(),
-    TT.res=koRpus::taggedText(koRpus::kRp_tagged())
+    TT.res=init_flatHier_TT.res()
   )
 )
 
@@ -105,3 +111,58 @@ setValidity("kRp.flatHier", function(object){
 
     return(TRUE)
 })
+
+
+## function init_flatHier_TT.res()
+# initializes the TT.res data frame including columns with hierarchy information
+init_flatHier_TT.res <- function(hierarchy=list()){
+  kRp_df <- koRpus::taggedText(koRpus::kRp_tagged())
+  if(length(hierarchy) > 0){
+    hier_names <- names(hierarchy)
+    invalidNames <- hier_names %in% names(kRp_df)
+    if(any(invalidNames)){
+      stop(simpleError(
+        paste0(
+          "Invalid hierarchy, names must not match column names in the TT.res slot:\n  \"",
+          paste0(hier_names[invalidNames], collapse="\", \""),
+          "\""
+        )
+      ))
+    } else {}
+    initial_df <- data.frame(
+      kRp_df,
+      matrix(
+        ncol=length(hierarchy),
+        dimnames=list(c(), hier_names)
+      )
+    )
+    for (thisCat in hier_names) {
+      initial_df[[thisCat]] <- factor(NA, levels=hierarchy[[thisCat]])
+    }
+    return(initial_df)
+  } else {
+    return(kRp_df)
+  }
+} ## end function init_flatHier()
+
+
+## method append_flatHier()
+# appends the content of one kRp.flatHier object to another one
+setGeneric("append_flatHier", function(obj, append) standardGeneric("append_flatHier"))
+# @rdname append_flatHier
+# @docType methods
+# @export
+# @aliases
+#    append_flatHier,-methods
+#    append_flatHier,kRp.hierarchy-method
+# @include 01_class_02_kRp.flatHier.R
+setMethod("append_flatHier",
+  signature=signature(obj="kRp.hierarchy"),
+  function (obj, append){
+    if(!is(append, "kRp.hierarchy")){
+      stop(simpleError("Can't append object, invalid class!"))
+    } else {}
+    message("(not implemented yet)")
+    return(obj)
+  }
+) ## end method append_flatHier()
