@@ -150,53 +150,33 @@
 #' }
 
 readCorpus <- function(
-                dir,
-                hierarchy=list(),
-                lang="kRp.env",
-                tagger="kRp.env",
-                encoding="",
-                pattern=NULL,
-                recursive=FALSE,
-                ignore.case=FALSE,
-                mode="text",
-                format="file",
-                mc.cores=getOption("mc.cores", 1L),
-                category="corpus",
-                id="",
-                ...
-               ){
+  dir,
+  hierarchy=list(),
+  lang="kRp.env",
+  tagger="kRp.env",
+  encoding="",
+  pattern=NULL,
+  recursive=FALSE,
+  ignore.case=FALSE,
+  mode="text",
+  format="file",
+  mc.cores=getOption("mc.cores", 1L),
+  category="corpus",
+  id="",
+  ...
+){
   # try to get the hierarchy directly from te directory tree
   if(isTRUE(hierarchy)){
     hierarchy <- hierarchy_from_dirtree(dir)
   } else {}
 
-  # generate a data frame listing all path combinations to expect
-  # expand.grid() actually returns the reverse order we want, but
-  # we'll fix that later simply by sorting all generated paths
-  hier_names <- expand.grid(
-    hierarchy,
-    KEEP.OUT.ATTRS=FALSE,
-    stringsAsFactors=FALSE
-  )
-  hier_dirs <- expand.grid(
-    lapply(hierarchy, names),
-    KEEP.OUT.ATTRS=FALSE,
-    stringsAsFactors=FALSE
-  )
-  hier_paths <- apply(
-    hier_dirs,
-    MARGIN=1,
-    paste0,
-    collapse=.Platform$file.sep
-  )
-  hier_order <- order(hier_paths)
-  hier_names <- hier_names[hier_order,]
-  hier_dirs <- hier_dirs[hier_order,]
-  hier_paths <- hier_paths[hier_order]
-
   do_files <- do_object <- FALSE
   if(identical(format, "file")){
-    full_hier_paths <- normalizePath(file.path(dir, hier_paths), mustWork=TRUE)
+    full_hier_info <- corpus_files(
+      dir=dir,
+      hierarchy=hierarchy
+    )
+    full_hier_paths <- normalizePath(file.path(dir, full_hier_info[["hier_paths"]]), mustWork=TRUE)
     do_files <- TRUE
   } else if(identical(format, "obj")){
     if(all(!is.data.frame(dir), !is.character(dir))){
@@ -214,25 +194,7 @@ readCorpus <- function(
   } else {}
 
   if(do_files){
-    all_files <- as.data.frame(matrix(
-      character(),
-      ncol=2+ncol(hier_dirs),
-      dimnames=list(
-        c(),
-        c("file", "path", colnames(hier_dirs))
-      )
-    ), stringsAsFactors=FALSE)
-    for (thisPath in 1:length(hier_paths)){
-      append_files <- data.frame(
-        file=list.files(full_hier_paths[thisPath]),
-        path=full_hier_paths[thisPath]
-      )
-      append_files[,colnames(hier_dirs)] <- hier_dirs[thisPath,]
-      all_files <- rbind(all_files, append_files)
-    }
-    for (thisCat in colnames(hier_dirs)){
-      all_files[[thisCat]] <- as.factor(all_files[[thisCat]])
-    }
+    all_files <- corpus_files(dir=dir, hierarchy=hierarchy, fsep=.Platform$file.sep)
     slot(result, "raw") <- list(VCorpus(
       DirSource(
         full_hier_paths,
@@ -387,26 +349,26 @@ file_path_from_dir <- function(d){
 
 
 readCorpus_internal <- function(
-                        dir,
-                        hierarchy,
-                        all_hierarchy,
-                        hierarchy_branch,
-                        lang,
-                        tagger,
-                        encoding,
-                        pattern,
-                        recursive,
-                        ignore.case,
-                        mode,
-                        format,
-                        mc.cores,
-                        level=0,
-                        all_levels=0,
-                        category,
-                        id,             # ID of current level
-                        text_id,        # will grow longer with each hierarchy level
-                        ...
-                      ){
+  dir,
+  hierarchy,
+  all_hierarchy,
+  hierarchy_branch,
+  lang,
+  tagger,
+  encoding,
+  pattern,
+  recursive,
+  ignore.case,
+  mode,
+  format,
+  mc.cores,
+  level=0,
+  all_levels=0,
+  category,
+  id,             # ID of current level
+  text_id,        # will grow longer with each hierarchy level
+  ...
+){
   do_files <- do_object <- FALSE
   if(identical(format, "file")){
     do_files <- TRUE
