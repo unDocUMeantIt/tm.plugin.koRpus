@@ -51,7 +51,7 @@
 #' 
 #' @param dir Either a file path to the root directory of the text corpus, or a TIF compliant data frame.
 #'    If a directory path (character string), texts can be recursively ordered into subfolders named
-#'    exactly as defined by \code{hierarchy}. If \code{hierarchy} is an emtpy list, all text files located in
+#'    exactly as defined by \code{hierarchy}. If \code{hierarchy} is an empty list, all text files located in
 #'    \code{dir} are parsed without a hierachical structure. If a data frame, also set \code{format="obj"}
 #'    and provide hierarchy levels as additional columns, as described in the Data frames section.
 #' @param hierarchy A named list of named character vectors describing the directory hierarchy level by level.
@@ -173,31 +173,155 @@ readCorpus <- function(
   # generate a data frame listing all path combinations to expect
   # expand.grid() actually returns the reverse order we want, but
   # we'll fix that later simply by sorting all generated paths
-  hier_dirs <- expand.grid(
+  hier_names <- expand.grid(
     hierarchy,
     KEEP.OUT.ATTRS=FALSE,
     stringsAsFactors=FALSE
   )
-  hier_paths <- sort(apply(
+  hier_dirs <- expand.grid(
+    lapply(hierarchy, names),
+    KEEP.OUT.ATTRS=FALSE,
+    stringsAsFactors=FALSE
+  )
+  hier_paths <- apply(
     hier_dirs,
     MARGIN=1,
     paste0,
     collapse=.Platform$file.sep
-  ))
+  )
+  hier_order <- order(hier_paths)
+  hier_names <- hier_names[hier_order,]
+  hier_dirs <- hier_dirs[hier_order,]
+  hier_paths <- hier_paths[hier_order]
+
+  do_files <- do_object <- FALSE
+  if(identical(format, "file")){
+    full_hier_paths <- normalizePath(file.path(dir, hier_paths), mustWork=TRUE)
+    do_files <- TRUE
+  } else if(identical(format, "obj")){
+    if(all(!is.data.frame(dir), !is.character(dir))){
+      stop(simpleError("\"dir\" must be a character vecor or data frame!"))
+    } else {}
+    do_object <- TRUE
+  } else {
+    stop(simpleError(paste0("invalid value for \"format\":\n  \"", format, "\"")))
+  }
 
   result <- init_flatHier_TT.res(hierarchy=hierarchy)
-
-  taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
-    if(identical(tagger, "tokenize")){
-      return(tokenize(txt=text, format="obj", lang=lang, doc_id=doc_id, ...))
-    } else {
-      return(treetag(file=text, treetagger=tagger, format="obj", lang=lang, doc_id=doc_id, ...))
-    }
-  }
 
   if(identical(lang, "kRp.env")){
     lang <- get.kRp.env(lang=TRUE)
   } else {}
+
+  if(do_files){
+    all_files <- as.data.frame(matrix(
+      character(),
+      ncol=2+ncol(hier_dirs),
+      dimnames=list(
+        c(),
+        c("file", "path", colnames(hier_dirs))
+      )
+    ), stringsAsFactors=FALSE)
+    for (thisPath in 1:length(hier_paths)){
+      append_files <- data.frame(
+        file=list.files(full_hier_paths[thisPath]),
+        path=full_hier_paths[thisPath]
+      )
+      append_files[,colnames(hier_dirs)] <- hier_dirs[thisPath,]
+      all_files <- rbind(all_files, append_files)
+    }
+    for (thisCat in colnames(hier_dirs)){
+      all_files[[thisCat]] <- as.factor(all_files[[thisCat]])
+    }
+    slot(result, "raw") <- list(VCorpus(
+      DirSource(
+        full_hier_paths,
+        encoding=encoding,
+        pattern=pattern,
+        recursive=recursive,
+        ignore.case=ignore.case,
+        mode=mode
+      ),
+      readerControl=list(language=lang)
+    ))
+  } else if(do_object){
+    if(is.data.frame(dir)){
+      corpus_source <- DataframeSource(dir)
+    } else {
+      corpus_source <- VectorSource(dir)
+    }
+    slot(result, "raw") <- list(VCorpus(
+      corpus_source,
+      readerControl=list(language=lang)
+    ))
+  } else {}
+
+  ## TODO : fixme :)
+  names(slot(result, "raw")) <- "tm"
+  numTexts <- length(corpusTm(result))
+  nameNum <- sprintf(paste0("%0", nchar(numTexts), "d"), 1:numTexts)
+  text_id <- paste0(text_id, nameNum)
+  meta(corpusTm(result), tag="textID") <- text_id
+  # add directory and filename
+  meta(corpusTm(result), tag="path") <- path_name
+  meta(corpusTm(result), tag="file") <- unlist(file_names)
+  # add all available hierarchy info
+  for(this_branch in colnames(hierarchy_branch)){
+    meta(corpusTm(result), tag=this_branch) <- hierarchy_branch["id",this_branch]
+  }
+
+
+    if(do_files){
+      file_names <- as.list(list.files(dir))
+      path_name <- dir
+    } else if(do_object){
+      fp_lookup <- file_path_from_dir(d=dir)
+      file_names <- fp_lookup[["file_names"]]
+      path_name <- fp_lookup[["path_name"]]
+    } else {}
+    # actually parse texts
+    result <- kRp_hierarchy(
+      level=as.integer(level),
+      category=category,
+      id=id,
+      path=path_name,
+      files=file_names,
+      meta=list(
+        hierarchy=all_hierarchy,
+        hierarchy_branch=hierarchy_branch,
+        category=category,
+        id=id
+      )
+    )
+    numTexts <- length(corpusFiles(result))
+    msgText <- paste0(
+      paste0(rep("  ", all_levels - level), collapse=""),
+      ifelse(identical(all_levels, level), "processing ", ""),
+      ifelse(nchar(category) > 0, category, ""),
+      ifelse(nchar(id) > 0, paste0(" \"", id, "\", "), ", "),
+      numTexts,
+      ifelse(numTexts > 1, " texts...", " text...")
+    )
+    message(msgText)
+
+    corpusTagged <- mclapply(
+      1:numTexts,
+      function(thisTextNum){
+        thisText <- corpusTm(result)[[thisTextNum]]
+        taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=text_id[thisTextNum], ...)
+      },
+      mc.cores=mc.cores
+    )
+    names(corpusTagged) <- text_id
+    corpusMeta(result, "stopwords") <- unlist(mclapply(
+      corpusTagged,
+      function(thisTaggedText){
+        sum(thisTaggedText[["stop"]])
+      },
+      mc.cores=mc.cores
+    ))
+    slot(result, "tagged") <- corpusTagged
+  
 
 
   for (thisPath in hier_paths) {
@@ -232,6 +356,35 @@ readCorpus <- function(
   )
   return(result)
 }
+
+
+## function taggerFunction()
+taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
+  if(identical(tagger, "tokenize")){
+    return(tokenize(txt=text, format="obj", lang=lang, doc_id=doc_id, ...))
+  } else {
+    return(treetag(file=text, treetagger=tagger, format="obj", lang=lang, doc_id=doc_id, ...))
+  }
+} ## end function taggerFunction()
+
+
+## function file_path_from_dir()
+file_path_from_dir <- function(d){
+  result <- list(
+    file_names=list(),
+    path_name=c()
+  )
+  if(is.data.frame(d)){
+    if("file" %in% colnames(d)){
+      result[["file_names"]] <- list(as.character(d[["file"]]))
+    } else {}
+    if("path" %in% colnames(d)){
+      result[["path_name"]] <- as.character(d[["path"]])
+    } else {}
+  } else {}
+  return(result)
+} ## end function file_path_from_dir()
+
 
 readCorpus_internal <- function(
                         dir,

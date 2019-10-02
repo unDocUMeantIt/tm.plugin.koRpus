@@ -40,6 +40,7 @@
 #' @name kRp.flatHier,-class
 #' @aliases kRp.flatHier,-class kRp.flatHier-class
 #' @import methods koRpus
+#' @import tm as.VCorpus
 #' @keywords classes
 #' @export kRp_flatHier
 #' @exportClass kRp.flatHier
@@ -90,15 +91,6 @@ setValidity("kRp.flatHier", function(object){
     TT.res.names <- colnames(TT.res)
     standard.TT.res.names <- colnames(koRpus::taggedText(koRpus::kRp_tagged()))
 
-    classObj <- list(
-      "Corpus"=list(name="raw", obj=raw)
-    )
-    for (thisClassObj in names(classObj)) {
-      if(!identical(classObj[[thisClassObj]][["obj"]], list()) && !all(sapply(classObj[[thisClassObj]][["obj"]], function(x) inherits(x, thisClassObj)))){
-        stop(simpleError(paste0("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must have entries inheriting from class ", thisClassObj, "!")))
-      } else {}
-    }
-
     missingCols <- standard.TT.res.names[!standard.TT.res.names %in% TT.res.names]
     if(length(missingCols) > 0){
       warning(
@@ -108,6 +100,15 @@ setValidity("kRp.flatHier", function(object){
         ),
         call.=FALSE)
     } else {}
+
+    classObj <- list(
+      "Corpus"=list(name="raw", obj=raw)
+    )
+    for (thisClassObj in names(classObj)) {
+      if(!identical(classObj[[thisClassObj]][["obj"]], list()) && !all(sapply(classObj[[thisClassObj]][["obj"]], function(x) inherits(x, thisClassObj)))){
+        stop(simpleError(paste0("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must have entries inheriting from class ", thisClassObj, "!")))
+      } else {}
+    }
 
     return(TRUE)
 })
