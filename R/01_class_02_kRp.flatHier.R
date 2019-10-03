@@ -150,7 +150,7 @@ init_flatHier_TT.res <- function(hierarchy=list()){
 ## method append_flatHier()
 # appends the content of one kRp.flatHier object to another one during corpus import
 # omitting lang, hierarchy and raw as that should be set globally
-setGeneric("append_flatHier", function(obj, TT.res, desc, misc) standardGeneric("append_flatHier"))
+setGeneric("append_flatHier", function(obj, doc_id, TT.res, desc, misc) standardGeneric("append_flatHier"))
 setMethod("append_flatHier",
   signature=signature(obj="kRp.flatHier"),
   function (obj, doc_id, TT.res, desc, misc){
