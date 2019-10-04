@@ -1,4 +1,4 @@
-# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Apply readability() to all texts in kRp.hierarchy objects
+#' Apply readability() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:readability]{readability}} on all tagged text objects
 #' inside the given \code{txt.file} object (using \code{lapply}).
 #' 
-#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
@@ -32,7 +32,7 @@
 #' @importFrom parallel mclapply
 #' @importMethodsFrom koRpus readability summary
 #' @docType methods
-#' @aliases readability,kRp.hierarchy-method
+#' @aliases readability,kRp.flatHier-method
 #' @rdname readability
 #' @export
 #' @examples
@@ -52,44 +52,37 @@
 #' )
 #' myTexts <- readability(myCorpus)
 #' }
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("readability", signature(txt.file="kRp.hierarchy"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
-    if(corpusLevel(txt.file) > 0){
-      corpusChildren(txt.file) <- lapply(corpusChildren(txt.file), readability, summary=summary, mc.cores=mc.cores, quiet=quiet, ...)
-      if(isTRUE(summary)){
-        txt.file <- summary(txt.file)
-      } else {}
-    } else {
-      corpusReadability(txt.file) <- mclapply(names(corpusTagged(txt.file)), function(thisText){
-        if(thisText %in% names(corpusHyphen(txt.file)) & is.null(list(...)[["hyphen"]])){
-          # we probably need to drop one of two hyphen arguments of
-          # readability was called from one of the wrapper functions
-          default <- list(txt.file=corpusTagged(txt.file)[[thisText]], ...)
-          args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
-          rdb <- do.call(readability, args)
-        } else {
-          rdb <- readability(corpusTagged(txt.file)[[thisText]], quiet=quiet, ...)
-        }
-        return(rdb)
-      }, mc.cores=mc.cores)
-      # store meta-information on the maximum of available indices.
-      # a mere summary() will simply omit NA values which can later cause
-      # problems when we want to aggregate all summaries into one data.frame
-      corpusMeta(txt.file, "readability") <- list(index=c())
-      corpusMeta(txt.file, "readability")[["index"]] <- sort(
-        unique(
-          unlist(mclapply(corpusReadability(txt.file), function(thisText){
-              names(summary(thisText, flat=TRUE))
-            }, mc.cores=mc.cores)
-          )
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("readability", signature(txt.file="kRp.flatHier"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
+    corpusReadability(txt.file) <- mclapply(names(describe(txt.file)), function(thisText){
+      if(thisText %in% names(corpusHyphen(txt.file)) & is.null(list(...)[["hyphen"]])){
+        # we probably need to drop one of two hyphen arguments if
+        # readability was called from one of the wrapper functions
+        default <- list(txt.file=corpusTagged(txt.file)[[thisText]], ...)
+        args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
+        rdb <- do.call(readability, args)
+      } else {
+        rdb <- readability(corpusTagged(txt.file)[[thisText]], quiet=quiet, ...)
+      }
+      return(rdb)
+    }, mc.cores=mc.cores)
+    # store meta-information on the maximum of available indices.
+    # a mere summary() will simply omit NA values which can later cause
+    # problems when we want to aggregate all summaries into one data.frame
+    corpusMeta(txt.file, "readability") <- list(index=c())
+    corpusMeta(txt.file, "readability")[["index"]] <- sort(
+      unique(
+        unlist(mclapply(corpusReadability(txt.file), function(thisText){
+            names(summary(thisText, flat=TRUE))
+          }, mc.cores=mc.cores)
         )
       )
-      names(corpusReadability(txt.file)) <- names(corpusTagged(txt.file))
+    )
+    names(corpusReadability(txt.file)) <- names(corpusTagged(txt.file))
 
-      if(isTRUE(summary)){
-        txt.file <- summary(txt.file)
-      } else {}
-    }
+    if(isTRUE(summary)){
+      txt.file <- summary(txt.file)
+    } else {}
 
     return(txt.file)
   }

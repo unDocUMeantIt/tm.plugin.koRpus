@@ -184,10 +184,15 @@ readCorpus <- function(
     if(all(!is.data.frame(dir), !is.character(dir))){
       stop(simpleError("\"dir\" must be a character vecor or data frame!"))
     } else {}
-    do_object <- TRUE
+    ## TODO: equivalent function to fetch info from a data frame given as 'dir'
+    full_hier_info <- corpus_files_df(
+      dir=dir
+    )
+   do_object <- TRUE
   } else {
     stop(simpleError(paste0("invalid value for \"format\":\n  \"", format, "\"")))
   }
+  all_files <- full_hier_info[["all_files"]]
 
   if(identical(lang, "kRp.env")){
     lang <- get.kRp.env(lang=TRUE)
@@ -223,62 +228,37 @@ readCorpus <- function(
     )
   } else {}
 
-  meta(corpusTm(result), tag="id", type="local") <- full_hier_info[["all_files"]][["doc_id"]]
-  for (thisCol in colnames(full_hier_info[["all_files"]])) {
-    meta(corpusTm(result), tag=thisCol, type="indexed") <- meta(corpusTm(result), tag=thisCol, type="local") <- as.character(full_hier_info[["all_files"]][[thisCol]])
+  meta(corpusTm(result), tag="id", type="local") <- all_files[["doc_id"]]
+  for (thisCol in colnames(all_files)) {
+    meta(corpusTm(result), tag=thisCol, type="indexed") <- meta(corpusTm(result), tag=thisCol, type="local") <- as.character(all_files[[thisCol]])
   }
 
-## TODO : fixme :)
-    corpusTagged <- mclapply(
-      seq_along(corpusTm(result)),
-      function(thisTextNum){
-        thisText <- corpusTm(result)[[thisTextNum]]
-        taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=full_hier_info[["all_files"]][thisTextNum,"doc_id"], ...)
-      },
-      mc.cores=mc.cores
+  corpusTagged <- mclapply(
+    seq_along(corpusTm(result)),
+    function(thisTextNum){
+      thisText <- corpusTm(result)[[thisTextNum]]
+      taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=all_files[thisTextNum,"doc_id"], ...)
+    },
+    mc.cores=mc.cores
+  )
+  names(corpusTagged) <- all_files[["doc_id"]]
+  corpusMeta(result, "stopwords") <- unlist(mclapply(
+    corpusTagged,
+    function(thisTaggedText){
+      sum(thisTaggedText[["stop"]])
+    },
+    mc.cores=mc.cores
+  ))
+  # merge all TT.res data frames
+  for (thisTaggedText in names(corpusTagged)){
+    result <- append_flatHier(
+      obj=result,
+      TT.res=taggedText(corpusTagged[[thisTaggedText]]),
+      desc=describe(corpusTagged[[thisTaggedText]]),
+      all_files=all_files[all_files[["doc_id"]] == thisTaggedText, c("doc_id", names(full_hier_info[["hier_names"]]))]
     )
-    names(corpusTagged) <- full_hier_info[["all_files"]][["doc_id"]]
-    corpusMeta(result, "stopwords") <- unlist(mclapply(
-      corpusTagged,
-      function(thisTaggedText){
-        sum(thisTaggedText[["stop"]])
-      },
-      mc.cores=mc.cores
-    ))
-    slot(result, "meta") <- corpusTagged
-#   
-# 
-# 
-#   for (thisPath in hier_paths) {
-#     for (thisFile in list.files(file.path(dir, thisPath))) {
-#       ## TODO: fixme :)
-#       thisFile_tagged <- taggerFunction(text, lang, tagger=tagger, doc_id=NA, ...)
-#     }
-#   }
-#   # analysis is done recursively by an internal function
-#   hierarchy_branch <- matrix(c(id, names(id)), nrow=2, dimnames=list(c("id","dir"), category))
-# 
-#   result <- readCorpus_internal(
-#     dir=dir,
-#     hierarchy=hierarchy,
-#     all_hierarchy=hierarchy,
-#     hierarchy_branch=hierarchy_branch,
-#     lang=lang,
-#     tagger=tagger,
-#     encoding=encoding,
-#     pattern=pattern,
-#     recursive=recursive,
-#     ignore.case=ignore.case,
-#     mode=mode,
-#     format=format,
-#     mc.cores=mc.cores,
-#     level=length(hierarchy),
-#     all_levels=length(hierarchy),
-#     category=category,
-#     id=id,
-#     text_id=id,
-#     ...
-#   )
+  }
+
   return(result)
 }
 
@@ -310,230 +290,6 @@ file_path_from_dir <- function(d){
   return(result)
 } ## end function file_path_from_dir()
 
-
-readCorpus_internal <- function(
-  dir,
-  hierarchy,
-  all_hierarchy,
-  hierarchy_branch,
-  lang,
-  tagger,
-  encoding,
-  pattern,
-  recursive,
-  ignore.case,
-  mode,
-  format,
-  mc.cores,
-  level=0,
-  all_levels=0,
-  category,
-  id,             # ID of current level
-  text_id,        # will grow longer with each hierarchy level
-  ...
-){
-  do_files <- do_object <- FALSE
-  if(identical(format, "file")){
-    do_files <- TRUE
-  } else if(identical(format, "obj")){
-    do_object <- TRUE
-  } else {
-    stop(simpleError(paste0("invalid value for \"format\":\n  \"", format, "\"")))
-  }
-
-  taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
-    if(identical(tagger, "tokenize")){
-      return(tokenize(txt=text, format="obj", lang=lang, doc_id=doc_id, ...))
-    } else {
-      return(treetag(file=text, treetagger=tagger, format="obj", lang=lang, doc_id=doc_id, ...))
-    }
-  }
-
-  file_path_from_dir <- function(d){
-    result <- list(
-      file_names=list(),
-      path_name=c()
-    )
-    if(is.data.frame(d)){
-      if("file" %in% colnames(d)){
-        result[["file_names"]] <- list(as.character(d[["file"]]))
-      } else {}
-      if("path" %in% colnames(d)){
-        result[["path_name"]] <- as.character(d[["path"]])
-      } else {}
-    } else {}
-    return(result)
-  }
-
-  if(identical(lang, "kRp.env")){
-    lang <- get.kRp.env(lang=TRUE)
-  } else {}
-
-  if(length(hierarchy) > 0){
-    # start recursion on top level of hierarchy
-    thisLevel <- hierarchy[[1]]
-    if(do_files){
-      subdirs <- normalizePath(file.path(dir, names(thisLevel)), mustWork=TRUE)
-    } else if(do_object){
-      if(names(hierarchy)[1] %in% colnames(dir)){
-        subdirs <- unique(as.character(dir[[names(hierarchy)[1]]]))
-      } else {
-        stop(simpleError(paste0("Invalid hierarchy category (not in data frame): ", category)))
-      }
-    }
-    msgText <- paste0(
-      paste0(rep("  ", all_levels - level), collapse=""),
-      ifelse(identical(all_levels, level), "processing ", ""),
-      ifelse(nchar(category) > 0, category, ""),
-      ifelse(nchar(id) > 0, paste0(" \"", id, "\""), "")
-    )
-    message(msgText)
-    children <- lapply(
-      seq_along(subdirs),
-      function(thisSubdirNum){
-        thisSubdir <- subdirs[thisSubdirNum]
-        thisID <- thisLevel[thisSubdirNum]
-        thisIDName <- names(thisLevel)[thisSubdirNum]
-        thisCategory <- names(hierarchy)[1]
-        new_hierarchy_branch <- matrix(c(thisID, names(thisID)), nrow=2, dimnames=list(c("id","dir"), thisCategory))
-        if(do_files){
-          do_subdir <- thisSubdir
-        } else if(do_object){
-          do_subdir <- dir[dir[[thisCategory]] %in% thisSubdir,]
-        } else {}
-        readCorpus_internal(
-          dir=do_subdir,
-          hierarchy=hierarchy[-1],
-          all_hierarchy=all_hierarchy,
-          hierarchy_branch=cbind(hierarchy_branch, new_hierarchy_branch),
-          lang=lang,
-          tagger=tagger,
-          encoding=encoding,
-          pattern=pattern,
-          recursive=recursive,
-          ignore.case=ignore.case,
-          mode=mode,
-          format=format,
-          mc.cores=mc.cores,
-          level=level - 1,
-          all_levels=all_levels,
-          category=thisCategory,
-          id=thisID,
-          text_id=paste0(text_id, thisIDName),
-          ...
-        )
-      }
-    )
-    names(children) <- sapply(children, corpusID)
-    if(do_files){
-      path_name <- dir
-    } else if(do_object){
-      fp_lookup <- file_path_from_dir(d=dir)
-      path_name <- fp_lookup[["path_name"]]
-    } else {}
-    result <- kRp_hierarchy(
-      level=as.integer(level),
-      category=category,
-      id=id,
-      path=path_name,
-      children=children,
-      meta=list(
-        hierarchy=all_hierarchy,
-        hierarchy_branch=hierarchy_branch,
-        category=category,
-        id=id
-      )
-    )
-  } else {
-    if(do_files){
-      file_names <- as.list(list.files(dir))
-      path_name <- dir
-    } else if(do_object){
-      fp_lookup <- file_path_from_dir(d=dir)
-      file_names <- fp_lookup[["file_names"]]
-      path_name <- fp_lookup[["path_name"]]
-    } else {}
-    # actually parse texts
-    result <- kRp_hierarchy(
-      level=as.integer(level),
-      category=category,
-      id=id,
-      path=path_name,
-      files=file_names,
-      meta=list(
-        hierarchy=all_hierarchy,
-        hierarchy_branch=hierarchy_branch,
-        category=category,
-        id=id
-      )
-    )
-    numTexts <- length(corpusFiles(result))
-    msgText <- paste0(
-      paste0(rep("  ", all_levels - level), collapse=""),
-      ifelse(identical(all_levels, level), "processing ", ""),
-      ifelse(nchar(category) > 0, category, ""),
-      ifelse(nchar(id) > 0, paste0(" \"", id, "\", "), ", "),
-      numTexts,
-      ifelse(numTexts > 1, " texts...", " text...")
-    )
-    message(msgText)
-    if(do_files){
-      slot(result, "raw") <- list(VCorpus(
-        DirSource(
-          dir,
-          encoding=encoding,
-          pattern=pattern,
-          recursive=recursive,
-          ignore.case=ignore.case,
-          mode=mode
-        ),
-        readerControl=list(language=lang)
-      ))
-    } else if(do_object){
-      if(is.data.frame(dir)){
-        corpus_source <- DataframeSource(dir)
-      } else {
-        corpus_source <- VectorSource(dir)
-      }
-      slot(result, "raw") <- list(VCorpus(
-        corpus_source,
-        readerControl=list(language=lang)
-      ))
-    } else {}
-
-    names(slot(result, "raw")) <- "tm"
-    numTexts <- length(corpusTm(result))
-    nameNum <- sprintf("%02d", 1:numTexts)
-    text_id <- paste0(text_id, nameNum)
-    meta(corpusTm(result), tag="textID") <- text_id
-    # add directory and filename
-    meta(corpusTm(result), tag="path") <- path_name
-    meta(corpusTm(result), tag="file") <- unlist(file_names)
-    # add all available hierarchy info
-    for(this_branch in colnames(hierarchy_branch)){
-      meta(corpusTm(result), tag=this_branch) <- hierarchy_branch["id",this_branch]
-    }
-
-    corpusTagged <- mclapply(
-      1:numTexts,
-      function(thisTextNum){
-        thisText <- corpusTm(result)[[thisTextNum]]
-        taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=text_id[thisTextNum], ...)
-      },
-      mc.cores=mc.cores
-    )
-    names(corpusTagged) <- text_id
-    corpusMeta(result, "stopwords") <- unlist(mclapply(
-      corpusTagged,
-      function(thisTaggedText){
-        sum(thisTaggedText[["stop"]])
-      },
-      mc.cores=mc.cores
-    ))
-    slot(result, "tagged") <- corpusTagged
-  }
-  return(result)
-}
 
 
 

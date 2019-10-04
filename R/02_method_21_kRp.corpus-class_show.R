@@ -15,18 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Show methods for kRp.hierarchy objects
+#' Show methods for kRp.flatHier objects
 #'
-#' Show methods for S4 objects of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' Show methods for S4 objects of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #'
-#' @param object An object of class \code{kRp.hierarchy}.
+#' @param object An object of class \code{kRp.flatHier}.
 #' @export
 #' @docType methods
-#' @aliases show,kRp.hierarchy-method
+#' @aliases show,kRp.flatHier-method
 #' @rdname show
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("show", signature(object="kRp.hierarchy"), function(object){
-  num_texts <- length(corpusTagged(object, level=0))
+#' @include 01_class_02_kRp.flatHier.R
+setMethod("show", signature(object="kRp.flatHier"), function(object){
+  num_texts <- length(levels(taggedText(object)[["doc_id"]]))
   if(num_texts != 1){
     txt <- "texts"
   } else {
@@ -35,7 +35,7 @@ setMethod("show", signature(object="kRp.hierarchy"), function(object){
 
   message(paste0("A corpus with ", num_texts, " ", txt, "." ))
   
-  hierarchy <- slot(object, "meta")[["hierarchy"]]
+  hierarchy <- slot(object, "hierarchy")
   txt_hier <- "\nThe texts are "
   if(length(hierarchy) > 0){
     txt_hier <- paste0(txt_hier, " hierarchically grouped:\n\n  ")
