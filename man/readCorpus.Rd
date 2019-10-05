@@ -7,15 +7,15 @@
 readCorpus(dir, hierarchy = list(), lang = "kRp.env",
   tagger = "kRp.env", encoding = "", pattern = NULL,
   recursive = FALSE, ignore.case = FALSE, mode = "text",
-  format = "file", mc.cores = getOption("mc.cores", 1L),
-  category = "corpus", id = "", ...)
+  format = "file", mc.cores = getOption("mc.cores", 1L), id = "",
+  ...)
 }
 \arguments{
 \item{dir}{Either a file path to the root directory of the text corpus,
       or a TIF compliant data frame.
 If a directory path (character string),
       texts can be recursively ordered into subfolders named
-exactly as defined by \code{hierarchy}. If \code{hierarchy} is an emtpy list,
+exactly as defined by \code{hierarchy}. If \code{hierarchy} is an empty list,
       all text files located in
 \code{dir} are parsed without a hierachical structure. If a data frame,
       also set \code{format="obj"}
@@ -23,6 +23,7 @@ and provide hierarchy levels as additional columns,
       as described in the Data frames section.}
 
 \item{hierarchy}{A named list of named character vectors describing the directory hierarchy level by level.
+If \code{TRUE} instead, the hierarchy structure is taken directly from the directory tree.
 See section Hierarchy for details.}
 
 \item{lang}{A character string naming the language of the analyzed corpus.
@@ -57,8 +58,6 @@ texts will be written to temporary files for the process (see \code{dir}).}
 \item{mc.cores}{The number of cores to use for parallelization,
       see \code{\link[parallel:mclapply]{mclapply}}.
 This value is passed through to simpleCorpus.}
-
-\item{category}{A character string describing the root level of the corpus.}
 
 \item{id}{A character string describing the main subject/purpose of the text corpus.}
 
@@ -152,6 +151,12 @@ myCorpus <- readCorpus(
       Wikipedia_neu="Wikipedia (neu)"
     )
   )
+)
+
+# get hierarchy from directory tree
+myCorpus <- readCorpus(
+  dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+  hierarchy=TRUE
 )
 
 # if the same corpus is available as TIF compliant data frame

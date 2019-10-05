@@ -122,7 +122,7 @@ setMethod("describe<-",
 
 ## the standard generic for language() is defined in the sylly package
 #' @importFrom sylly language
-#' @rdname kRp.flatHier-methods
+#' @rdname kRp.flatHier_get-methods
 #' @export
 #' @docType methods
 #' @aliases
@@ -139,7 +139,7 @@ setMethod("language",
 
 ## the standard generic for language()<- is defined in the sylly package
 #' @importFrom sylly language<-
-#' @rdname kRp.flatHier-methods
+#' @rdname kRp.flatHier_get-methods
 #' @export
 #' @docType methods
 #' @aliases
@@ -158,7 +158,7 @@ setMethod("language<-",
 #' @rdname kRp.flatHier_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusReadability", function(obj) standardGeneric("corpusReadability"))
+setGeneric("corpusReadability", function(obj, ...) standardGeneric("corpusReadability"))
 #' @rdname kRp.flatHier_get-methods
 #' @docType methods
 #' @export
@@ -296,7 +296,7 @@ setMethod("corpusMeta<-",
 #' @rdname kRp.flatHier_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusHyphen", function(obj) standardGeneric("corpusHyphen"))
+setGeneric("corpusHyphen", function(obj, ...) standardGeneric("corpusHyphen"))
 #' @rdname kRp.flatHier_get-methods
 #' @docType methods
 #' @export
@@ -334,7 +334,7 @@ setMethod("corpusHyphen<-",
 #' @rdname kRp.flatHier_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusTTR", function(obj) standardGeneric("corpusTTR"))
+setGeneric("corpusTTR", function(obj, ...) standardGeneric("corpusTTR"))
 #' @rdname kRp.flatHier_get-methods
 #' @docType methods
 #' @export
@@ -374,7 +374,7 @@ setMethod("corpusTTR<-",
 #' @rdname kRp.flatHier_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusFreq", function(obj) standardGeneric("corpusFreq"))
+setGeneric("corpusFreq", function(obj, ...) standardGeneric("corpusFreq"))
 #' @rdname kRp.flatHier_get-methods
 #' @docType methods
 #' @export

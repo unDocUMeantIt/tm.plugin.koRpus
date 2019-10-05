@@ -47,7 +47,7 @@
 #'     )
 #'   )
 #' )
-
+#' }
 corpus_files <- function(
   dir,
   hierarchy,

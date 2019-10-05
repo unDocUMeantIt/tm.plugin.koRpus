@@ -16,6 +16,39 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
+## function init_flatHier_TT.res()
+# initializes the TT.res data frame including columns with hierarchy information
+init_flatHier_TT.res <- function(hierarchy=list()){
+  kRp_df <- koRpus::taggedText(koRpus::kRp_tagged())
+  if(length(hierarchy) > 0){
+    hier_names <- names(hierarchy)
+    invalidNames <- hier_names %in% names(kRp_df)
+    if(any(invalidNames)){
+      stop(simpleError(
+        paste0(
+          "Invalid hierarchy, names must not match column names in the TT.res slot:\n  \"",
+          paste0(hier_names[invalidNames], collapse="\", \""),
+          "\""
+        )
+      ))
+    } else {}
+    initial_df <- data.frame(
+      kRp_df,
+      matrix(
+        ncol=length(hierarchy),
+        dimnames=list(c(), hier_names)
+      )
+    )
+    for (thisCat in hier_names) {
+      initial_df[[thisCat]] <- factor(NA, levels=hierarchy[[thisCat]])
+    }
+    return(initial_df)
+  } else {
+    return(kRp_df)
+  }
+} ## end function init_flatHier()
+
+
 #' S4 Class kRp.flatHier
 #'
 #' Objects of this class can contain full text corpora in a hierachical structure. It supports both the \code{tm} package's
@@ -43,7 +76,7 @@
 #' @name kRp.flatHier,-class
 #' @aliases kRp.flatHier,-class kRp.flatHier-class
 #' @import methods koRpus
-#' @import tm as.VCorpus
+#' @importFrom tm as.VCorpus
 #' @keywords classes
 #' @export kRp_flatHier
 #' @exportClass kRp.flatHier
@@ -144,61 +177,6 @@ setValidity("kRp.flatHier", function(object){
 })
 
 
-## function init_flatHier_TT.res()
-# initializes the TT.res data frame including columns with hierarchy information
-init_flatHier_TT.res <- function(hierarchy=list()){
-  kRp_df <- koRpus::taggedText(koRpus::kRp_tagged())
-  if(length(hierarchy) > 0){
-    hier_names <- names(hierarchy)
-    invalidNames <- hier_names %in% names(kRp_df)
-    if(any(invalidNames)){
-      stop(simpleError(
-        paste0(
-          "Invalid hierarchy, names must not match column names in the TT.res slot:\n  \"",
-          paste0(hier_names[invalidNames], collapse="\", \""),
-          "\""
-        )
-      ))
-    } else {}
-    initial_df <- data.frame(
-      kRp_df,
-      matrix(
-        ncol=length(hierarchy),
-        dimnames=list(c(), hier_names)
-      )
-    )
-    for (thisCat in hier_names) {
-      initial_df[[thisCat]] <- factor(NA, levels=hierarchy[[thisCat]])
-    }
-    return(initial_df)
-  } else {
-    return(kRp_df)
-  }
-} ## end function init_flatHier()
-
-
-## method append_flatHier()
-setGeneric("append_flatHier", function(obj, TT.res, desc, all_files) standardGeneric("append_flatHier"))
-setMethod("append_flatHier",
-  signature=signature(obj="kRp.flatHier"),
-  function (obj, TT.res, desc, all_files){
-    obj_df <- taggedText(obj)
-    if(!identical(names(obj_df), names(TT.res))){
-      missingCols <- names(obj_df)[!names(obj_df) %in% names(TT.res)]
-      for (thisCat in missingCols) {
-        TT.res[[thisCat]] <- factor(
-          all_files[all_files[["doc_id"]] == desc[["doc_id"]], thisCat],
-          levels=levels(obj_df[[thisCat]])
-        )
-      }
-    } else {}
-    taggedText(obj) <- rbind(obj_df, TT.res)
-    describe(obj)[[desc[["doc_id"]]]] <- desc
-    return(obj)
-  }
-) ## end method append_flatHier()
-
-
 ## method flatHier2tagged()
 # fetches a single kRp.tagged object from an object of class kRp.flatHier by doc_id
 setGeneric("flatHier2tagged", function(obj, doc_id) standardGeneric("flatHier2tagged"))
@@ -207,7 +185,7 @@ setMethod("flatHier2tagged",
   function(obj, doc_id){
     flatHier_lang <- language(obj)
     flatHier_desc <- describe(obj)[[doc_id]]
-    flatHier_df <- taggedText(obj)[, colnames(koRpus::taggedText(koRpus::kRp_tagged()))]
+    flatHier_df <- taggedText(obj)
     result <- kRp_tagged(
       lang=language(obj),
       desc=describe(obj)[[doc_id]],

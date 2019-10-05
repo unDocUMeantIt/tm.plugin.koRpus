@@ -145,7 +145,7 @@ setGeneric("corpusSummary<-", function(obj, value) standardGeneric("corpusSummar
 #' @docType methods
 #' @aliases
 #'    corpusSummary<-,-methods
-#'    corpusSummary<-,hierarchy-method
+#'    corpusSummary<-,kRp.flatHier-method
 #' @include 01_class_01_kRp.flatHier.R
 setMethod("corpusSummary<-",
   signature=signature(obj="kRp.flatHier"),

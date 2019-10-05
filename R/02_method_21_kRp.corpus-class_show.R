@@ -24,7 +24,7 @@
 #' @docType methods
 #' @aliases show,kRp.flatHier-method
 #' @rdname show
-#' @include 01_class_02_kRp.flatHier.R
+#' @include 01_class_01_kRp.flatHier.R
 setMethod("show", signature(object="kRp.flatHier"), function(object){
   num_texts <- length(levels(taggedText(object)[["doc_id"]]))
   if(num_texts != 1){

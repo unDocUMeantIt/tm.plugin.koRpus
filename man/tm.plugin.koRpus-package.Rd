@@ -13,9 +13,9 @@ The DESCRIPTION file:
 \tabular{ll}{
 Package: \tab tm.plugin.koRpus\cr
 Type: \tab Package\cr
-Version: \tab 0.3-2\cr
-Date: \tab 2019-05-14\cr
-Depends: \tab R (>= 2.10.0),koRpus (>= 0.12-1),sylly\cr
+Version: \tab 0.4-1\cr
+Date: \tab 2019-10-05\cr
+Depends: \tab R (>= 2.10.0),koRpus (>= 0.12-2),sylly\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
