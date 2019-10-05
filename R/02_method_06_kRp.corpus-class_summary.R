@@ -15,23 +15,19 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Apply summary() to all texts in kRp.hierarchy objects
+#' Apply summary() to all texts in kRp.flatHier objects
 #' 
-#' This method performs a \code{summary} call on all text objects
-#' inside the given \code{object} object (using \code{lapply}). Contrary to what
-#' other summary methods do, these methods always return the full object with
-#' an updated \code{summary} slot.
-#' 
-#' The methods for nested object classes also recursively invoke the summary
-#' methods for lower corpus objects.
+#' This method performs a \code{summary} call on all text objects inside the given
+#' \code{object} object. Contrary to what other summary methods do, this method
+#' always returns the full object with an updated \code{summary} slot.
 #' 
 #' The \code{summary} slot contains a data.frame with aggregated information of
-#' all texts that the respective object level contains.
+#' all texts that the respective object contains.
 #' 
 #' \code{corpusSummary} is a simple method to get or set the \code{summary} slot
-#' in kRp.hierarchy objects directly.
+#' in kRp.flatHier objects directly.
 #' 
-#' @param object An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param object An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 # @param available.rdb Character vector with the column names of all readability measures
 #    that are supposed to be available for all texts. Missings are automatically filled
 #    with the value of \code{missing}.
@@ -42,7 +38,7 @@
 #' @importFrom NLP meta
 #' @export
 #' @docType methods
-#' @aliases summary,kRp.hierarchy-method
+#' @aliases summary,kRp.flatHier-method
 #' @rdname summary
 #' @examples
 #' \dontrun{
@@ -63,108 +59,64 @@
 #' myCorpus <- summary(myCorpus)
 #' corpusSummary(myCorpus)
 #' }
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("summary", signature(object="kRp.hierarchy"), function(
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("summary", signature(object="kRp.flatHier"), function(
   object, missing=NA, ...
 ){
-    currentLevel <- corpusLevel(object)
-    if(currentLevel > 0){
-      all.children <- corpusChildren(object)
+    available.rdb <- nullToList(unlist(corpusMeta(object, "readability", fail=FALSE)[["index"]]), entry="index")
+    available.TTR <- nullToList(unlist(corpusMeta(object, "TTR", fail=FALSE)[["index"]]), entry="index")
 
-      # to not run into issues because of missing measures,
-      # globally set the values
-      # first check if there's availability info in the call options already
-      if(any(c("available.rdb", "available.TTR") %in% names(list(...)))){
-        available <- availableFromOptions(allOptions=list(...), object=object)
-      } else {
-        available <- whatIsAvailable(all.corpora=object)
-      }
+    # initialize the data.frame
+    summary.info <- meta(corpusTm(object))[, c("doc_id", names(slot(object, "hierarchy")))]
+    summary.info[["stopwords"]] <- corpusMeta(object, "stopwords")
 
-      for (thisChild in names(all.children)){
-        all.children[[thisChild]] <- summary(all.children[[thisChild]],
-          available.rdb=available[["available.rdb"]],
-          available.TTR=available[["available.TTR"]]
+    summary.rdb <- summary.lexdiv <- NULL
+
+    if(!is.null(available.rdb)){
+      if(length(available.rdb[["index"]]) > 0){
+        summary.rdb <- t(as.data.frame(sapply(names(corpusReadability(object)), function(thisText){
+            thisSummary <- summary(corpusReadability(object)[[thisText]], flat=TRUE)
+            return(fixMissingIndices(have=thisSummary, want=available.rdb[["index"]], missing=missing))
+        }, simplify=FALSE)))
+        summary.info <- cbind(
+          summary.info,
+          getRdbDesc(object),
+          summary.rdb
         )
-      }
-      corpusChildren(object) <- all.children
-
-      allSummary <- corpusSummary(all.children[[1]])
-      for (thisSummary in all.children[-1]){
-        allSummary <- rbind(allSummary, corpusSummary(thisSummary))
-      }
-      corpusSummary(object) <- allSummary
-    } else {
-      # initialize the data.frame
-      hierarchy_branch <- corpusMeta(object)[["hierarchy_branch"]]
-      hierarchy_branch_id <- hierarchy_branch["id",]
-      hierarchy_branch_names <- colnames(hierarchy_branch)
-      text_IDs <- meta(corpusTm(object))[["textID"]]
-      summary.info <- as.data.frame(
-        matrix(
-          hierarchy_branch_id,
-          nrow=length(text_IDs),
-          ncol=length(hierarchy_branch_id),
-          byrow=TRUE,
-          dimnames=list(
-            c(),
-            hierarchy_branch_names
-          )
+      } else {}
+    } else {}
+    if(!is.null(available.TTR)){
+      if(length(available.TTR[["index"]]) > 0){
+        summary.lexdiv <- t(as.data.frame(sapply(names(corpusTTR(object)), function(thisText){
+            thisSummary <- summary(corpusTTR(object)[[thisText]], flat=TRUE)
+            return(fixMissingIndices(have=thisSummary, want=available.TTR[["index"]], missing=missing))
+        }, simplify=FALSE)))
+        # suppress a second TTR
+        if("TTR" %in% colnames(summary.info) & "TTR" %in% colnames(summary.lexdiv)){
+          summary.lexdiv <- subset(summary.lexdiv, select=-TTR)
+        } else {}
+        summary.info <- cbind(
+          summary.info,
+          summary.lexdiv
         )
-      )
-      summary.info[["doc_id"]] <- text_IDs
-      summary.info[["stopwords"]] <- corpusMeta(object, "stopwords")
-
-      summary.rdb <- summary.lexdiv <- NULL
-
-      available <- availableFromOptions(allOptions=list(...), object=object)
-      available.rdb <- available[["available.rdb"]]
-      available.TTR <- available[["available.TTR"]]
-
-      if(!is.null(available.rdb)){
-        if(length(available.rdb[["index"]]) > 0){
-          summary.rdb <- t(as.data.frame(sapply(names(corpusReadability(object)), function(thisText){
-              thisSummary <- summary(corpusReadability(object)[[thisText]], flat=TRUE)
-              return(fixMissingIndices(have=thisSummary, want=available.rdb[["index"]], missing=missing))
-          }, simplify=FALSE)))
-          summary.info <- cbind(
-            summary.info,
-            getRdbDesc(object),
-            summary.rdb
-          )
-        } else {}
       } else {}
-      if(!is.null(available.TTR)){
-        if(length(available.TTR[["index"]]) > 0){
-          summary.lexdiv <- t(as.data.frame(sapply(names(corpusTTR(object)), function(thisText){
-              thisSummary <- summary(corpusTTR(object)[[thisText]], flat=TRUE)
-              return(fixMissingIndices(have=thisSummary, want=available.TTR[["index"]], missing=missing))
-          }, simplify=FALSE)))
-          # suppress a second TTR
-          if("TTR" %in% colnames(summary.info) & "TTR" %in% colnames(summary.lexdiv)){
-            summary.lexdiv <- subset(summary.lexdiv, select=-TTR)
-          } else {}
-          summary.info <- cbind(
-            summary.info,
-            summary.lexdiv
-          )
-        } else {}
-      } else {}
-
-      if(!is.null(summary.info)){
-        rownames(summary.info) <- as.character(summary.info[["doc_id"]])
-      } else {
-        summary.info <- data.frame()
-      }
-      
-      corpusSummary(object) <- summary.info
     }
+
+    if(!is.null(summary.info)){
+      rownames(summary.info) <- as.character(summary.info[["doc_id"]])
+    } else {
+      summary.info <- data.frame()
+    }
+    
+    corpusSummary(object) <- summary.info
+
     return(object)
   }
 )
 
 
 #' @rdname summary
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @docType methods
 #' @export
 setGeneric("corpusSummary", function(obj) standardGeneric("corpusSummary"))
@@ -173,10 +125,10 @@ setGeneric("corpusSummary", function(obj) standardGeneric("corpusSummary"))
 #' @export
 #' @aliases
 #'    corpusSummary,-methods
-#'    corpusSummary,kRp.hierarchy-method
-#' @include 01_class_01_kRp.hierarchy.R
+#'    corpusSummary,kRp.flatHier-method
+#' @include 01_class_01_kRp.flatHier.R
 setMethod("corpusSummary",
-  signature=signature(obj="kRp.hierarchy"),
+  signature=signature(obj="kRp.flatHier"),
   function (obj){
     result <- slot(obj, name="summary")
     return(result)
@@ -194,9 +146,9 @@ setGeneric("corpusSummary<-", function(obj, value) standardGeneric("corpusSummar
 #' @aliases
 #'    corpusSummary<-,-methods
 #'    corpusSummary<-,hierarchy-method
-#' @include 01_class_01_kRp.hierarchy.R
+#' @include 01_class_01_kRp.flatHier.R
 setMethod("corpusSummary<-",
-  signature=signature(obj="kRp.hierarchy"),
+  signature=signature(obj="kRp.flatHier"),
   function (obj, value){
     slot(obj, name="summary") <- value
     return(obj)

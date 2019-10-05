@@ -62,6 +62,7 @@
 #' # export object to TIF compliant data frame
 #' myCorpus_df <- tif_as_corpus_df(myCorpus)
 #' }
+## the standard generic for taggedText() is defined in the koRpus package
 setMethod("taggedText",
   signature=signature(obj="kRp.flatHier"),
   function (obj){
@@ -69,7 +70,9 @@ setMethod("taggedText",
   }
 )
 
+## the standard generic for taggedText()<- is defined in the koRpus package
 #' @rdname kRp.flatHier_get-methods
+#' @importFrom koRpus taggedText<-
 #' @export
 #' @docType methods
 #' @aliases
@@ -84,6 +87,7 @@ setMethod("taggedText<-",
   }
 )
 
+## the standard generic for describe() is defined in the sylly package
 #' @rdname kRp.flatHier_get-methods
 #' @importFrom sylly describe
 #' @docType methods
@@ -99,6 +103,7 @@ setMethod("describe",
   }
 )
 
+## the standard generic for describe()<- is defined in the sylly package
 #' @rdname kRp.flatHier_get-methods
 #' @importFrom sylly describe<-
 #' @export
@@ -111,6 +116,40 @@ setMethod("describe<-",
   signature=signature(obj="kRp.flatHier"),
   function (obj, value){
     slot(obj, name="desc") <- value
+    return(obj)
+  }
+)
+
+## the standard generic for language() is defined in the sylly package
+#' @importFrom sylly language
+#' @rdname kRp.flatHier-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    language,-methods
+#'    language,kRp.flatHier-method
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("language",
+  signature=signature(obj="kRp.flatHier"),
+  function (obj){
+    result <- slot(obj, name="lang")
+    return(result)
+  }
+)
+
+## the standard generic for language()<- is defined in the sylly package
+#' @importFrom sylly language<-
+#' @rdname kRp.flatHier-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    language<-,-methods
+#'    language<-,kRp.flatHier-method
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("language<-",
+  signature=signature(obj="kRp.flatHier"),
+  function (obj, value){
+    slot(obj, name="lang") <- value
     return(obj)
   }
 )
@@ -345,7 +384,7 @@ setGeneric("corpusFreq", function(obj) standardGeneric("corpusFreq"))
 #' @include 01_class_01_kRp.flatHier.R
 setMethod("corpusFreq",
   signature=signature(obj="kRp.flatHier"),
-  function (obj, level=NULL, id=NULL){
+  function (obj){
     return(slot(obj, name="freq"))
   }
 )
@@ -375,7 +414,7 @@ setMethod("corpusFreq<-",
 #' @docType methods
 #' @param paths Logical, indicates for \code{corpusFiles()} whether full paths should be returned, or just the actual file name.
 #' @export
-setGeneric("corpusFiles", function(obj, paths=FALSE) standardGeneric("corpusFiles"))
+setGeneric("corpusFiles", function(obj, paths=FALSE, ...) standardGeneric("corpusFiles"))
 #' @rdname kRp.flatHier_get-methods
 #' @docType methods
 #' @export

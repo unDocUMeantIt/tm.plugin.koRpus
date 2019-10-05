@@ -1,4 +1,4 @@
-# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply lex.div() to all texts in kRp.hierarchy objects
+#' Apply lex.div() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:lex.div]{lex.div}} on all tagged text objects
 #' inside the given \code{txt} object (using \code{lapply}).
 #' 
-#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
@@ -35,7 +35,7 @@
 #' @importMethodsFrom koRpus summary lex.div
 #' @export
 #' @docType methods
-#' @aliases lex.div,kRp.hierarchy-method
+#' @aliases lex.div,kRp.flatHier-method
 #' @rdname lex.div
 #' @examples
 #' \dontrun{
@@ -54,33 +54,28 @@
 #' )
 #' myCorpus <- lex.div(myCorpus)
 #' }
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("lex.div", signature(txt="kRp.hierarchy"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
-    if(corpusLevel(txt) > 0){
-      corpusChildren(txt) <- lapply(corpusChildren(txt), lex.div, summary=summary, mc.cores=mc.cores, char=char, quiet=quiet, ...)
-      if(isTRUE(summary)){
-        txt <- summary(txt)
-      } else {}
-    } else {
-      corpusTTR(txt) <- mclapply(corpusTagged(txt), function(thisText){
-        lex.div(thisText, char=char, quiet=quiet, ...)
-      }, mc.cores=mc.cores)
-      # store meta-information on the maximum of available indices.
-      # a mere summary() will simply omit NA values which can later cause
-      # problems when we want to aggregate all summaries into one data.frame
-      corpusMeta(txt, "TTR") <- list(index=c())
-      corpusMeta(txt, "TTR")[["index"]] <- sort(
-        unique(
-          unlist(mclapply(corpusTTR(txt), function(thisText){
-              return(names(summary(thisText, flat=TRUE)))
-            }, mc.cores=mc.cores)
-          )
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("lex.div", signature(txt="kRp.flatHier"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
+    corpusTTR(txt) <- mclapply(names(describe(txt)), function(thisText){
+      lex.div(flatHier2tagged(txt, doc_id=thisText), char=char, quiet=quiet, ...)
+    }, mc.cores=mc.cores)
+    # store meta-information on the maximum of available indices.
+    # a mere summary() will simply omit NA values which can later cause
+    # problems when we want to aggregate all summaries into one data.frame
+    corpusMeta(txt, "TTR") <- list(index=c())
+    corpusMeta(txt, "TTR")[["index"]] <- sort(
+      unique(
+        unlist(mclapply(corpusTTR(txt), function(thisText){
+            return(names(summary(thisText, flat=TRUE)))
+          }, mc.cores=mc.cores)
         )
       )
-      if(isTRUE(summary)){
-        txt <- summary(txt)
-      } else {}
-    }
+    )
+    names(corpusTTR(txt)) <- names(describe(txt))
+
+    if(isTRUE(summary)){
+      txt <- summary(txt)
+    } else {}
 
     return(txt)
   }

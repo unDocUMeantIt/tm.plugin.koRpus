@@ -79,7 +79,6 @@
 #'    texts will be written to temporary files for the process (see \code{dir}).
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #'    This value is passed through to simpleCorpus.
-#' @param category A character string describing the root level of the corpus.
 #' @param id A character string describing the main subject/purpose of the text corpus.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
 #' @return An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
@@ -161,7 +160,6 @@ readCorpus <- function(
   mode="text",
   format="file",
   mc.cores=getOption("mc.cores", 1L),
-  category="corpus",
   id="",
   ...
 ){
@@ -200,10 +198,10 @@ readCorpus <- function(
 
   result <- kRp_flatHier(
     lang=lang,
-    hierarchy=hierarchy,
-    TT.res=init_flatHier_TT.res(hierarchy=hierarchy)
+    hierarchy=hierarchy
   )
 
+  message("Processing corpus...")
   if(do_files){
     corpusTm(result) <- VCorpus(
       DirSource(
@@ -233,11 +231,29 @@ readCorpus <- function(
     meta(corpusTm(result), tag=thisCol, type="indexed") <- meta(corpusTm(result), tag=thisCol, type="local") <- as.character(all_files[[thisCol]])
   }
 
+  init_df <- init_flatHier_TT.res(hierarchy=hierarchy)
   corpusTagged <- mclapply(
     seq_along(corpusTm(result)),
     function(thisTextNum){
       thisText <- corpusTm(result)[[thisTextNum]]
-      taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=all_files[thisTextNum,"doc_id"], ...)
+      import_status(
+        doc_id=all_files[thisTextNum,"doc_id"],
+        all_files=all_files,
+        hier_cols=names(full_hier_info[["hier_names"]])
+      )
+      tagged <- taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=all_files[thisTextNum,"doc_id"], ...)
+      if(!identical(names(init_df), names(taggedText(tagged)))){
+        tagged_df <- taggedText(tagged)
+        missingCols <- names(init_df)[!names(init_df) %in% names(tagged_df)]
+        for (thisCat in missingCols) {
+          tagged_df[[thisCat]] <- factor(
+            all_files[all_files[["doc_id"]] == all_files[thisTextNum,"doc_id"], thisCat],
+            levels=levels(init_df[[thisCat]])
+          )
+        }
+        taggedText(tagged) <- tagged_df
+      } else {}
+      return(tagged)
     },
     mc.cores=mc.cores
   )
@@ -249,15 +265,13 @@ readCorpus <- function(
     },
     mc.cores=mc.cores
   ))
-  # merge all TT.res data frames
-  for (thisTaggedText in names(corpusTagged)){
-    result <- append_flatHier(
-      obj=result,
-      TT.res=taggedText(corpusTagged[[thisTaggedText]]),
-      desc=describe(corpusTagged[[thisTaggedText]]),
-      all_files=all_files[all_files[["doc_id"]] == thisTaggedText, c("doc_id", names(full_hier_info[["hier_names"]]))]
-    )
-  }
+
+  corpusTagged_df <- do.call(rbind, mclapply(corpusTagged, taggedText, mc.cores=mc.cores))
+  row.names(corpusTagged_df) <- NULL
+
+  taggedText(result) <- corpusTagged_df
+
+  describe(result) <- mclapply(corpusTagged, describe, mc.cores=mc.cores)
 
   return(result)
 }
@@ -291,6 +305,34 @@ file_path_from_dir <- function(d){
 } ## end function file_path_from_dir()
 
 
+## function import_status()
+# as an easy way to get some status feedback, check if the current doc_id
+# is the first one of a given (sub)category, and if so, write a message
+import_status <- function(doc_id, all_files, hier_cols){
+  file_num <- match(doc_id, all_files[["doc_id"]])
+  for (hier_level in seq_len(length(hier_cols))){
+    if (hier_level > 1){
+      # subset the all_files data frame to get the mathes we're interested in
+      for (this_cat_num in 1:(hier_level - 1)){
+        this_cat <- hier_cols[this_cat_num]
+        this_cat_name <- all_files[file_num, this_cat]
+        all_files <- all_files[all_files[[this_cat]] == this_cat_name,]
+      }
+      file_num <- match(doc_id, all_files[["doc_id"]])
+    } else {}
+    cat_name <- all_files[file_num, hier_cols[hier_level]]
+    cat_start <- match(cat_name, all_files[[hier_cols[hier_level]]])
+    if(identical(cat_start, file_num)){
+      num_texts <- sum(all_files[[hier_cols[hier_level]]] == cat_name)
+      msgText <- paste0(
+        paste0(rep("  ", hier_level), collapse=""),
+        paste0(hier_cols[hier_level], " \"", cat_name, "\", ", num_texts),
+        ifelse(num_texts > 1, " texts...", " text...")
+      )
+      message(msgText)
+    } else {}
+  }
+} ## end function import_status()
 
 
 readCorpus_old <- function(

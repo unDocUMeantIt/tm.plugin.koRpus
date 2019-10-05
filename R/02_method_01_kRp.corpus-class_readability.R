@@ -58,11 +58,11 @@ setMethod("readability", signature(txt.file="kRp.flatHier"), function(txt.file, 
       if(thisText %in% names(corpusHyphen(txt.file)) & is.null(list(...)[["hyphen"]])){
         # we probably need to drop one of two hyphen arguments if
         # readability was called from one of the wrapper functions
-        default <- list(txt.file=corpusTagged(txt.file)[[thisText]], ...)
+        default <- list(txt.file=flatHier2tagged(txt.file, doc_id=thisText), ...)
         args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
         rdb <- do.call(readability, args)
       } else {
-        rdb <- readability(corpusTagged(txt.file)[[thisText]], quiet=quiet, ...)
+        rdb <- readability(flatHier2tagged(txt.file, doc_id=thisText), quiet=quiet, ...)
       }
       return(rdb)
     }, mc.cores=mc.cores)
@@ -78,7 +78,7 @@ setMethod("readability", signature(txt.file="kRp.flatHier"), function(txt.file, 
         )
       )
     )
-    names(corpusReadability(txt.file)) <- names(corpusTagged(txt.file))
+    names(corpusReadability(txt.file)) <- names(describe(txt.file))
 
     if(isTRUE(summary)){
       txt.file <- summary(txt.file)

@@ -88,14 +88,16 @@ corpus_files <- function(
       c("doc_id", "file", "path", colnames(hier_dirs))
     )
   ), stringsAsFactors=FALSE)
-  for (thisPath in 1:length(hier_paths)){
+  for (thisPath in seq_along(hier_paths)){
     hier_files <- list.files(full_hier_paths[thisPath])
+    this_cat <- hier_dirs[thisPath,]
+    row.names(this_cat) <- NULL
     append_files <- data.frame(
       doc_id=gsub(
         "[^[:alnum:]_\\\\.-]+", "",
           gsub(
             "[[:space:]]+", "_",
-            apply(cbind(hier_dirs[thisPath,], hier_files), 1, paste0, collapse="-")
+            apply(cbind(this_cat, hier_files), 1, paste0, collapse="-")
           )
         ),
       file=hier_files,
