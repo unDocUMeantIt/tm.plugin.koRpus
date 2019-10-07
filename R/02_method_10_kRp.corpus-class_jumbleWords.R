@@ -49,14 +49,9 @@
 #' }
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("jumbleWords", signature(words="kRp.hierarchy"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
-    if(corpusLevel(words) > 0){
-      corpusChildren(words) <- lapply(corpusChildren(words), jumbleWords, mc.cores=mc.cores, ...)
-    } else {
-      corpusTagged(words) <- mclapply(corpusTagged(words), function(thisText){
-        jumbleWords(thisText, ...)
-      }, mc.cores=mc.cores)
-    }
-
+    corpusTagged(words) <- mclapply(corpusTagged(words), function(thisText){
+      jumbleWords(thisText, ...)
+    }, mc.cores=mc.cores)
     return(words)
   }
 )

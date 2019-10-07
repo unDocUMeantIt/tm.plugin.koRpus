@@ -1,4 +1,4 @@
-# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply hyphen() to all texts in kRp.hierarchy objects
+#' Apply hyphen() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[sylly:hyphen]{hyphen}} on all tagged text objects
-#' inside the given \code{words} object (using \code{lapply}).
+#' inside the given \code{words} object (using \code{mclapply}).
 #' 
-#' @param words An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param words An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param quiet Logical, if \code{FALSE} shows a status bar for the hyphenation process of each text.
 #' @param ... options to pass through to \code{\link[sylly:hyphen]{hyphen}}.
@@ -30,7 +30,7 @@
 #' @importFrom sylly hyphen
 #' @export
 #' @docType methods
-#' @aliases hyphen,kRp.hierarchy-method
+#' @aliases hyphen,kRp.flatHier-method
 #' @rdname hyphen
 #' @examples
 #' \dontrun{
@@ -41,15 +41,12 @@
 #' )
 #' myCorpus <- hyphen(myCorpus)
 #' }
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("hyphen", signature(words="kRp.hierarchy"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
-    if(corpusLevel(words) > 0){
-      corpusChildren(words) <- lapply(corpusChildren(words), hyphen, mc.cores=mc.cores, quiet=quiet, ...)
-    } else {
-      corpusHyphen(words) <- mclapply(corpusTagged(words), function(thisText){
-        hyphen(thisText, quiet=quiet, ...)
-      }, mc.cores=mc.cores)
-    }
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("hyphen", signature(words="kRp.flatHier"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
+    tagged_list <- flatHier2tagged(words)
+    corpusHyphen(words) <- mclapply(tagged_list, function(thisText){
+      hyphen(thisText, quiet=quiet, ...)
+    }, mc.cores=mc.cores)
     return(words)
   }
 )

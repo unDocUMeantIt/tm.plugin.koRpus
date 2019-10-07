@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply filterByClass() to all texts in kRp.hierarchy objects
+#' Apply filterByClass() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:filterByClass]{filterByClass}} on all tagged text objects
 #' inside the given \code{txt} object (using \code{lapply}).
 #' 
-#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:filterByClass]{filterByClass}}.
 #' @return An object of the same class as \code{txt}.
@@ -29,7 +29,7 @@
 #' @importFrom koRpus filterByClass
 #' @export
 #' @docType methods
-#' @aliases filterByClass,kRp.hierarchy-method
+#' @aliases filterByClass,kRp.flatHier-method
 #' @rdname filterByClass
 #' @examples
 #' \dontrun{
@@ -47,16 +47,19 @@
 #' # remove all punctuation
 #' myCorpus <- filterByClass(myCorpus)
 #' }
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("filterByClass", signature(txt="kRp.hierarchy"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
-    if(corpusLevel(txt) > 0){
-      corpusChildren(txt) <- lapply(corpusChildren(txt), filterByClass, mc.cores=mc.cores, ...)
-    } else {
-      corpusTagged(txt) <- mclapply(corpusTagged(txt), function(thisText){
-        filterByClass(thisText, ...)
-      }, mc.cores=mc.cores)
-    }
-
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("filterByClass", signature(txt="kRp.flatHier"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
+    # filterByClass() by default updates the desc slot, and since that is still split into
+    # individual texts, we must get individual calculations and merge the TT.res data frames
+    # again afterwards
+    tagged_list <- flatHier2tagged(txt)
+    filtered_list <- mclapply(tagged_list, function(thisText){
+      filterByClass(thisText, ...)
+    }, mc.cores=mc.cores)
+    corpusTagged_df <- do.call(rbind, mclapply(filtered_list, taggedText, mc.cores=mc.cores))
+    row.names(corpusTagged_df) <- NULL
+    taggedText(txt) <- corpusTagged_df
+    describe(txt) <- mclapply(filtered_list, describe)
     return(txt)
   }
 )

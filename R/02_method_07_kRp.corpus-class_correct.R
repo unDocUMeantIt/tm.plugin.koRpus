@@ -1,4 +1,4 @@
-# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Methods to correct kRp.hierarchy objects
+#' Methods to correct kRp.flatHier objects
 #' 
 #' These methods enable you to correct errors that occurred during automatic processing,
 #' e.g., wrong hyphenation.
@@ -24,7 +24,7 @@
 #' documentation of \code{\link[sylly:correct.hyph]{correct.hyph}} in the \code{sylly}
 #' package.
 #' 
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 # @param row Integer, the row number of the entry to be changed. Can be an integer vector
 #    to change several rows in one go.
 #' @param word A character string, the (possibly incorrectly hyphenated) \code{word} entry to be replaced with \code{hyphen}.
@@ -42,22 +42,17 @@
 #' @export
 #' @docType methods
 #' @rdname correct
-#' @aliases correct.hyph correct.hyph,kRp.hierarchy-method
+#' @aliases correct.hyph correct.hyph,kRp.flatHier-method
 #' @importFrom sylly correct.hyph
 #' @export
-#' @include 01_class_01_kRp.hierarchy.R
+#' @include 01_class_01_kRp.flatHier.R
 setMethod("correct.hyph",
-  signature(obj="kRp.hierarchy"),
+  signature(obj="kRp.flatHier"),
   function (obj, word=NULL, hyphen=NULL, cache=TRUE){
-     if(corpusLevel(obj) > 0){
-      corpusChildren(obj) <- lapply(corpusChildren(obj), correct.hyph, word=word, hyphen=hyphen, cache=cache)
-    } else {
-      corpusHyphen(obj) <- lapply(corpusTagged(obj), function(thisText){
-          correct.hyph(thisText, word=word, hyphen=hyphen, cache=cache)
-        }
-      )
-    }
-
+    corpusHyphen(obj) <- lapply(corpusHyphen(obj), function(thisText){
+        correct.hyph(thisText, word=word, hyphen=hyphen, cache=cache)
+      }
+    )
     return(obj)
   }
 )

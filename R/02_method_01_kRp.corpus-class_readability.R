@@ -54,15 +54,16 @@
 #' }
 #' @include 01_class_01_kRp.flatHier.R
 setMethod("readability", signature(txt.file="kRp.flatHier"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
-    corpusReadability(txt.file) <- mclapply(names(describe(txt.file)), function(thisText){
+    tagged_list <- flatHier2tagged(txt.file)
+    corpusReadability(txt.file) <- mclapply(names(tagged_list), function(thisText){
       if(thisText %in% names(corpusHyphen(txt.file)) & is.null(list(...)[["hyphen"]])){
         # we probably need to drop one of two hyphen arguments if
         # readability was called from one of the wrapper functions
-        default <- list(txt.file=flatHier2tagged(txt.file, doc_id=thisText), ...)
+        default <- list(txt.file=tagged_list[[thisText]], ...)
         args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
         rdb <- do.call(readability, args)
       } else {
-        rdb <- readability(flatHier2tagged(txt.file, doc_id=thisText), quiet=quiet, ...)
+        rdb <- readability(tagged_list[[thisText]], quiet=quiet, ...)
       }
       return(rdb)
     }, mc.cores=mc.cores)

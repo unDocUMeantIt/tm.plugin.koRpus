@@ -56,8 +56,9 @@
 #' }
 #' @include 01_class_01_kRp.flatHier.R
 setMethod("lex.div", signature(txt="kRp.flatHier"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
+    tagged_list <- flatHier2tagged(txt)
     corpusTTR(txt) <- mclapply(names(describe(txt)), function(thisText){
-      lex.div(flatHier2tagged(txt, doc_id=thisText), char=char, quiet=quiet, ...)
+      lex.div(tagged_list[[thisText]], char=char, quiet=quiet, ...)
     }, mc.cores=mc.cores)
     # store meta-information on the maximum of available indices.
     # a mere summary() will simply omit NA values which can later cause

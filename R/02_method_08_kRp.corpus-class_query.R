@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Apply query() to all texts in kRp.hierarchy objects
+#' Apply query() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:query]{query}} on all tagged text objects
-#' inside the given object (using \code{lapply}).
+#' inside the given object.
 #' 
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param var A character string naming a column in the tagged text. If set to
 #'    \code{"regexp"}, \code{grepl} is called on the column specified by \code{regexp_var}.
 #' @param query A character vector (for words), regular expression, or single number naming values to be matched in the variable.
@@ -41,22 +41,18 @@
 #' @docType methods
 #' @rdname query
 #' @aliases query,kRp.hierarch-method
-#' @include 01_class_01_kRp.hierarchy.R
+#' @include 01_class_01_kRp.flatHier.R
 setMethod("query",
-  signature(obj="kRp.hierarchy"),
-  function (obj, var, query, rel="eq", as.df=TRUE, ignore.case=TRUE, perl=FALSE, regexp_var="token", mc.cores=getOption("mc.cores", 1L)){
-    if(corpusLevel(obj) > 0){
-      corpusChildren(obj) <- lapply(corpusChildren(obj), tm.plugin.koRpus::query, var=var, query=query, rel=rel, as.df=FALSE, ignore.case=ignore.case, perl=perl, regexp_var=regexp_var, mc.cores=mc.cores)
-    } else {
-      corpusTagged(obj) <- mclapply(corpusTagged(obj), function(thisText){
-        query(obj=thisText, var=var, query=query, rel=rel, as.df=FALSE, ignore.case=ignore.case, perl=perl, regexp_var=regexp_var)
-      }, mc.cores=mc.cores)
-    }
+  signature(obj="kRp.flatHier"),
+  function (obj, var, query, rel="eq", as.df=TRUE, ignore.case=TRUE, perl=FALSE, regexp_var="token"){
+    tagged_large <- kRp_tagged(
+      lang=language(obj),
+      TT.res=taggedText(obj)
+    )
+    obj <- query(obj=tagged_large, var=var, query=query, rel=rel, as.df=FALSE, ignore.case=ignore.case, perl=perl, regexp_var=regexp_var)
 
-    if(is.corpus(obj) & isTRUE(as.df)){
-      obj_list <- corpusTagged(obj, level=0)
-      obj_df <- lapply(obj_list, taggedText)
-      result <- eval(parse(text=paste0("rbind(", paste0("obj_df[[", seq_along(obj_df), "]]", collapse= ", "), ")")))
+    if(all(is.corpus(obj), isTRUE(as.df))){
+      result <- taggedText(obj)
       rownames(result) <-NULL
     } else {
       result <- obj

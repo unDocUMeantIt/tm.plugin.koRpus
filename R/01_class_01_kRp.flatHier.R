@@ -63,15 +63,20 @@ init_flatHier_TT.res <- function(hierarchy=list()){
 #' \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}}.
 #' 
 #' @slot lang A character string, naming the language that is assumed for the tokenized texts in this object.
-#' @slot desc A list of descriptive statistics of the tagged texts.
+#' @slot desc A named list of descriptive statistics of the tagged texts.
 #' @slot hierarchy A named list of named character vectors describing the directory hierarchy level by level.
 #' @slot meta A named list. Can be used to store meta information. Currently, no particular format is defined.
 #' @slot raw A list of objects of class \code{\link[tm]{Corpus}}.
 #' @slot TT.res A data frame as used for the \code{TT.res} slot in objects of class \code{kRp.taggedText}. In addition to the columns
 #'    usually found in those objects, this data frame also has a factor column for each hierarchical category defined (if any).
 #' @slot summary A summary data frame for the full corpus.
-#' @slot hyphen A list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.
-#' @slot readability A list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.
+#' @slot hyphen A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.
+#' @slot readability A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.
+#' @slot freq.analysis A list with information on the word frequencies of the analyzed text.
+#' @slot freq A list with two elements, \code{freq.analysis} and \code{corpus}. \code{freq.analysis} contains the
+#'    \code{freq.analysis} slot of a \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}} class object after
+#'    \code{\link[tm.plugin.koRpus:freq.analysis]{freq.analysis}} was called, whereas \code{corpus} holds the results of a call to
+#'    \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.
 #' @note There is also \code{\link[tm.plugin.koRpus:kRp.flatHier_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.flatHier,-class
 #' @aliases kRp.flatHier,-class kRp.flatHier-class
@@ -125,7 +130,7 @@ kRp_flatHier <- setClass("kRp.flatHier",
     hyphen=list(),
     readability=list(),
     TTR=list(),
-    freq=list(texts=list(), corpus=kRp_corp_freq())
+    freq=list(freq.analysis=list(), corpus=kRp_corp_freq())
   )
 )
 
@@ -140,10 +145,10 @@ setValidity("kRp.flatHier", function(object){
     freq <- slot(object, "freq")
 
     freq.names <- names(freq)
-    if(!all(c("texts", "corpus") %in% freq.names)){
-      stop(simpleError("Invalid object: Slot \"freq\" needs to have two entries called \"texts\" and \"corpus\"!"))
+    if(!all(c("freq.analysis", "corpus") %in% freq.names)){
+      stop(simpleError("Invalid object: Slot \"freq\" needs to have two entries called \"freq.analysis\" and \"corpus\"!"))
     } else {}
-    freq.texts <- freq[["texts"]]
+    freq.freq.analysis <- freq[["freq.analysis"]]
     if(!inherits(freq[["corpus"]], "kRp.corp.freq")){
       stop(simpleError(paste0("Invalid object: Item \"corpus\" in slot \"freq\" must have entries inheriting from class kRp.corp.freq!")))
     } else {}
@@ -164,8 +169,7 @@ setValidity("kRp.flatHier", function(object){
       "Corpus"=list(name="raw", obj=raw),
       "kRp.hyphen"=list(name="hyphen", obj=hyphen),
       "kRp.readability"=list(name="readability", obj=readability),
-      "kRp.TTR"=list(name="TTR", obj=TTR),
-      "kRp.corp.freq"=list(name="freq.texts", obj=freq.texts)
+      "kRp.TTR"=list(name="TTR", obj=TTR)
     )
     for (thisClassObj in names(classObj)) {
       if(!identical(classObj[[thisClassObj]][["obj"]], list()) && !all(sapply(classObj[[thisClassObj]][["obj"]], function(x) inherits(x, thisClassObj)))){
@@ -178,19 +182,27 @@ setValidity("kRp.flatHier", function(object){
 
 
 ## method flatHier2tagged()
-# fetches a single kRp.tagged object from an object of class kRp.flatHier by doc_id
-setGeneric("flatHier2tagged", function(obj, doc_id) standardGeneric("flatHier2tagged"))
+# returns a list of kRp.tagged objects from an object of class kRp.flatHier
+# element names are the doc_id
+setGeneric("flatHier2tagged", function(obj) standardGeneric("flatHier2tagged"))
 setMethod("flatHier2tagged",
   signature=signature(obj="kRp.flatHier"),
-  function(obj, doc_id){
-    flatHier_lang <- language(obj)
-    flatHier_desc <- describe(obj)[[doc_id]]
-    flatHier_df <- taggedText(obj)
-    result <- kRp_tagged(
-      lang=language(obj),
-      desc=describe(obj)[[doc_id]],
-      TT.res=flatHier_df[flatHier_df[["doc_id"]] == doc_id,]
+  function(obj){
+    tt_desc <- describe(obj)
+    tt_lang <- language(obj)
+    tt_tagged <- taggedText(obj)
+    tt_list <- split(tt_tagged, tt_tagged[["doc_id"]])
+    result <- lapply(
+      names(tt_list),
+      function(thisText){
+        kRp_tagged(
+          lang=tt_lang,
+          desc=tt_desc[[thisText]],
+          TT.res=tt_list[[thisText]]
+        )
+      }
     )
+    names(result) <- names(tt_desc)
     return(result)
   }
 ) ## end method flatHier2tagged()

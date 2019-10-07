@@ -1,4 +1,4 @@
-# Copyright 2015-2018 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -16,20 +16,22 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply freq.analysis() to all texts in kRp.hierarchy objects
+#' Apply freq.analysis() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:freq.analysis]{freq.analysis}} on all tagged text objects
-#' inside the given \code{txt.file} object (using \code{lapply}).
+#' inside the given \code{txt.file} object.
 #' 
-#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
-#' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
+#' If \cose{corp.freq} was not specified but a valid object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}}
+#' is found in the \code{freq} slot of \code{txt.file}, it is used automatically. That is the case if you called
+#' \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}} on the object previously.
+#' 
+#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param ... options to pass through to \code{\link[koRpus:freq.analysis]{freq.analysis}}.
 #' @return An object of the same class as \code{txt.file}.
-#' @importFrom parallel mclapply
 #' @importFrom koRpus freq.analysis
 #' @export
 #' @docType methods
-#' @aliases freq.analysis,kRp.hierarchy-method
+#' @aliases freq.analysis,kRp.flatHier-method
 #' @rdname freq.analysis
 #' @examples
 #' \dontrun{
@@ -44,20 +46,36 @@
 #'     )
 #'   )
 #' )
-#' # this will call read.corp.custom() recursively
+#' # this will call read.corp.custom()
 #' myCorpus <- read.corp.custom(myCorpus)
 #' myCorpus <- freq.analysis(myCorpus)
 #' }
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("freq.analysis", signature(txt.file="kRp.hierarchy"), function(txt.file, mc.cores=getOption("mc.cores", 1L), ...){
-    if(corpusLevel(txt.file) > 0){
-      corpusChildren(txt.file) <- lapply(corpusChildren(txt.file), freq.analysis, mc.cores=mc.cores, ...)
-    } else {
-      corpusTagged(txt.file) <- mclapply(corpusTagged(txt.file), function(thisText){
-        freq.analysis(thisText, ...)
-      }, mc.cores=mc.cores)
-    }
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("freq.analysis", signature(txt.file="kRp.flatHier"), function(txt.file, ...){
+    tagged_large <- kRp_tagged(
+      lang=language(txt.file),
+      TT.res=taggedText(txt.file)
+    )
 
+    use_default_args <- TRUE
+    if(is.null(list(...)[["corp.freq"]])){
+      if(is(corpusFreq(txt.file)[["corpus"]], "kRp.corp.freq")){
+        if(nrow(slot(corpusFreq(txt.file)[["corpus"]], "words")) > 1){
+          default <- list(txt.file=tagged_large, ...)
+          args <- modifyList(default, list(corp.freq=corpusFreq(txt.file)[["corpus"]]))
+          use_default_args <- FALSE
+          freq_ananlysis_results <- do.call(freq.analysis, args)
+        } else {}
+      } else {}
+    } else {}
+
+    if(isTRUE(use_default_args)){
+      freq_ananlysis_results <- freq.analysis(tagged_large, ...)
+    } else {}
+
+    taggedText(txt.file) <- taggedText(freq_ananlysis_results)
+    corpusMeta(txt.file, meta="freq.analysis") <- describe(freq_ananlysis_results)
+    corpusFreq(txt.file)[["freq.analysis"]] <- slot(freq_ananlysis_results, "freq.analysis")
     return(txt.file)
   }
 )

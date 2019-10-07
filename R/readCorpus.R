@@ -232,6 +232,7 @@ readCorpus <- function(
   }
 
   init_df <- init_flatHier_TT.res(hierarchy=hierarchy)
+  hier_cols <- names(full_hier_info[["hier_names"]])
   corpusTagged <- mclapply(
     seq_along(corpusTm(result)),
     function(thisTextNum){
@@ -239,9 +240,15 @@ readCorpus <- function(
       import_status(
         doc_id=all_files[thisTextNum,"doc_id"],
         all_files=all_files,
-        hier_cols=names(full_hier_info[["hier_names"]])
+        hier_cols=hier_cols
       )
-      tagged <- taggerFunction(text=thisText[["content"]], lang=lang, tagger=tagger, doc_id=all_files[thisTextNum,"doc_id"], ...)
+      tagged <- taggerFunction(
+        text=thisText[["content"]],
+        lang=lang,
+        tagger=tagger,
+        doc_id=all_files[thisTextNum,"doc_id"],
+        ...
+      )
       if(!identical(names(init_df), names(taggedText(tagged)))){
         tagged_df <- taggedText(tagged)
         missingCols <- names(init_df)[!names(init_df) %in% names(tagged_df)]
