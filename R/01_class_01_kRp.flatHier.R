@@ -208,7 +208,7 @@ setMethod("flatHier2tagged",
             lang=tt_lang,
             desc=tt_desc[[thisText]],
             TT.res=tt_list[[thisText]],
-            diff=tt_desc[[thisText]]
+            diff=tt_diff[[thisText]]
           )
         }
       )

@@ -67,9 +67,7 @@ setMethod("textTransform", signature(txt="kRp.flatHier"), function(txt, mc.cores
 # - trans_method: an object of class function
 text_transform_wrapper <- function(obj, trans_method, mc.cores=getOption("mc.cores", 1L), ...){
     tagged_list <- flatHier2tagged(obj)
-    transformed_texts <- mclapply(tagged_list, function(thisText){
-      trans_method(thisText, ...)
-    }, mc.cores=mc.cores)
+    transformed_texts <- mclapply(tagged_list, trans_method, ..., mc.cores=mc.cores)
     corpusTagged_df <- do.call(rbind, mclapply(transformed_texts, taggedText, mc.cores=mc.cores))
     row.names(corpusTagged_df) <- NULL
     taggedText(obj) <- corpusTagged_df
