@@ -77,6 +77,8 @@ init_flatHier_TT.res <- function(hierarchy=list()){
 #'    \code{freq.analysis} slot of a \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}} class object after
 #'    \code{\link[tm.plugin.koRpus:freq.analysis]{freq.analysis}} was called, whereas \code{corpus} holds the results of a call to
 #'    \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.
+#' @slot diff A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
+#'    a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.
 #' @note There is also \code{\link[tm.plugin.koRpus:kRp.flatHier_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.flatHier,-class
 #' @aliases kRp.flatHier,-class kRp.flatHier-class
@@ -117,7 +119,8 @@ kRp_flatHier <- setClass("kRp.flatHier",
     hyphen="list",
     readability="list",
     TTR="list",
-    freq="list"
+    freq="list",
+    diff="list"
   ),
   prototype=prototype(
     lang=character(),
@@ -130,7 +133,8 @@ kRp_flatHier <- setClass("kRp.flatHier",
     hyphen=list(),
     readability=list(),
     TTR=list(),
-    freq=list(freq.analysis=list(), corpus=kRp_corp_freq())
+    freq=list(freq.analysis=list(), corpus=kRp_corp_freq()),
+    diff=list()
   )
 )
 
@@ -190,18 +194,36 @@ setMethod("flatHier2tagged",
   function(obj){
     tt_desc <- describe(obj)
     tt_lang <- language(obj)
+    tt_diff <- diffText(obj)
     tt_tagged <- taggedText(obj)
     tt_list <- split(tt_tagged, tt_tagged[["doc_id"]])
-    result <- lapply(
-      names(tt_list),
-      function(thisText){
-        kRp_tagged(
-          lang=tt_lang,
-          desc=tt_desc[[thisText]],
-          TT.res=tt_list[[thisText]]
-        )
-      }
-    )
+    if(all(
+      length(tt_diff) > 0,
+      identical(names(tt_desc), names(tt_diff))
+    )){
+      result <- lapply(
+        names(tt_list),
+        function(thisText){
+          kRp_txt_trans(
+            lang=tt_lang,
+            desc=tt_desc[[thisText]],
+            TT.res=tt_list[[thisText]],
+            diff=tt_desc[[thisText]]
+          )
+        }
+      )
+    } else {
+      result <- lapply(
+        names(tt_list),
+        function(thisText){
+          kRp_tagged(
+            lang=tt_lang,
+            desc=tt_desc[[thisText]],
+            TT.res=tt_list[[thisText]]
+          )
+        }
+      )
+    }
     names(result) <- names(tt_desc)
     return(result)
   }

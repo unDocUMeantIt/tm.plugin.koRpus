@@ -21,7 +21,7 @@
 #' This method calls \code{\link[koRpus:freq.analysis]{freq.analysis}} on all tagged text objects
 #' inside the given \code{txt.file} object.
 #' 
-#' If \cose{corp.freq} was not specified but a valid object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}}
+#' If \code{corp.freq} was not specified but a valid object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}}
 #' is found in the \code{freq} slot of \code{txt.file}, it is used automatically. That is the case if you called
 #' \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}} on the object previously.
 #' 

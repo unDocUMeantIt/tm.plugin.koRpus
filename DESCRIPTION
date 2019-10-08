@@ -1,9 +1,8 @@
 Package: tm.plugin.koRpus
 Type: Package
 Title: A Compatibility Plugin Package for 'tm' and 'koRpus'
-Description: Provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages. To ask for help, report
-                    bugs, suggest feature improvements, or discuss the global development of the package, please subscribe to the koRpus-dev mailing list
-                    (<http://korpusml.reaktanz.de>).
+Description: Provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages. To ask for help, report bugs, suggest feature improvements, or discuss
+                         the global development of the package, please subscribe to the koRpus-dev mailing list (<http://korpusml.reaktanz.de>).
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends: R (>= 2.10.0),koRpus (>= 0.12-2),sylly
@@ -17,20 +16,17 @@ Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.4-1
-Date: 2019-10-05
+Date: 2019-10-08
 RoxygenNote: 6.1.1
 Collate: 
     '01_class_01_kRp.flatHier.R'
     '01_class_01_kRp.hierarchy.R'
     '02_method_01_kRp.corpus-class_readability.R'
-    '02_method_01b_kRp.corpus-class_readability_old.R'
     '02_method_02_kRp.corpus-class_hyphen.R'
     '02_method_03_kRp.corpus-class_lex.div.R'
-    '02_method_03b_kRp.corpus-class_lex.div_old.R'
     '02_method_04_kRp.corpus-class_read.corp.custom.R'
     '02_method_05_kRp.corpus-class_freq.analysis.R'
     '02_method_06_kRp.corpus-class_summary.R'
-    '02_method_06b_kRp.corpus-class_summary_old.R'
     '02_method_07_kRp.corpus-class_correct.R'
     '02_method_08_kRp.corpus-class_query.R'
     '02_method_09_kRp.corpus-class_filterByClass.R'
@@ -40,9 +36,7 @@ Collate:
     '02_method_13_kRp.corpus-class_textTransform.R'
     '02_method_14_kRp.corpus-class_docTermMatrix.R'
     '02_method_20_kRp.corpus_get_set_is.R'
-    '02_method_20b_kRp.corpus_get_set_is_old.R'
     '02_method_21_kRp.corpus-class_show.R'
-    '02_method_21b_kRp.corpus-class_show_old.R'
     'corpus_files.R'
     'deprecated.R'
     'kRpSource.R'

@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply jumbleWords() to all texts in kRp.hierarchy objects
+#' Apply jumbleWords() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:jumbleWords]{jumbleWords}} on all tagged text objects
 #' inside the given \code{words} object (using \code{lapply}).
 #' 
-#' @param words An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param words An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:jumbleWords]{jumbleWords}}.
 #' @return An object of the same class as \code{words}.
@@ -29,7 +29,7 @@
 #' @importFrom koRpus jumbleWords
 #' @export
 #' @docType methods
-#' @aliases jumbleWords,kRp.hierarchy-method
+#' @aliases jumbleWords,kRp.flatHier-method
 #' @rdname jumbleWords
 #' @examples
 #' \dontrun{
@@ -47,11 +47,16 @@
 #' # remove all punctuation
 #' myCorpus <- jumbleWords(myCorpus)
 #' }
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("jumbleWords", signature(words="kRp.hierarchy"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
-    corpusTagged(words) <- mclapply(corpusTagged(words), function(thisText){
-      jumbleWords(thisText, ...)
-    }, mc.cores=mc.cores)
-    return(words)
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("jumbleWords", signature(words="kRp.flatHier"), function(words, mc.cores=getOption("mc.cores", 1L), ...){
+    return(
+      # text_transform_wrapper() is defined in 02_method_13_kRp.corpus-class_textTransform.R
+      text_transform_wrapper(
+        obj=words,
+        trans_method=koRpus::jumbleWords,
+        mc.cores=mc.cores,
+        ...
+      )
+    )
   }
 )

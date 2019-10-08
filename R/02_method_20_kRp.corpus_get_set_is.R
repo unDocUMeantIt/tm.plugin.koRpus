@@ -462,6 +462,59 @@ setMethod("corpusFiles<-",
 )
 
 #' @rdname kRp.flatHier_get-methods
+#' @importFrom koRpus diffText
+#' @export
+#' @docType methods
+#' @aliases
+#'    diffText,-methods
+#'    diffText,kRp.flatHier-method
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("diffText",
+  signature=signature(obj="kRp.flatHier"),
+  function (obj){
+    result <- slot(obj, name="diff")
+    return(result)
+  }
+)
+
+#' @rdname kRp.flatHier_get-methods
+#' @importFrom koRpus diffText<-
+#' @export
+#' @docType methods
+#' @aliases
+#'    diffText<-,-methods
+#'    diffText<-,kRp.flatHier-method
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("diffText<-",
+  signature=signature(obj="kRp.flatHier"),
+  function (obj, value){
+    slot(obj, name="diff") <- value
+    return(obj)
+  }
+)
+
+
+#' @rdname kRp.flatHier_get-methods
+#' @importFrom koRpus originalText
+#' @export
+#' @docType methods
+#' @aliases
+#'    originalText,-methods
+#'    originalText,kRp.flatHier-method
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("originalText",
+  signature=signature(obj="kRp.flatHier"),
+  function (obj){
+    return(originalText(
+      kRp_txt_trans(
+        TT.res=taggedText(obj)
+      )
+    ))
+  }
+)
+
+
+#' @rdname kRp.flatHier_get-methods
 #' @export
 #' @include 01_class_01_kRp.flatHier.R
 is.corpus <- function(obj){

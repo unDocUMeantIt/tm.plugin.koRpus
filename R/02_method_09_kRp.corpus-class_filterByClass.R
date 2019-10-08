@@ -19,7 +19,7 @@
 #' Apply filterByClass() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:filterByClass]{filterByClass}} on all tagged text objects
-#' inside the given \code{txt} object (using \code{lapply}).
+#' inside the given \code{txt} object (using \code{mclapply}).
 #' 
 #' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
@@ -59,7 +59,7 @@ setMethod("filterByClass", signature(txt="kRp.flatHier"), function(txt, mc.cores
     corpusTagged_df <- do.call(rbind, mclapply(filtered_list, taggedText, mc.cores=mc.cores))
     row.names(corpusTagged_df) <- NULL
     taggedText(txt) <- corpusTagged_df
-    describe(txt) <- mclapply(filtered_list, describe)
+    describe(txt) <- mclapply(filtered_list, describe, mc.cores=mc.cores)
     return(txt)
   }
 )

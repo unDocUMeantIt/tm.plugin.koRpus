@@ -19,7 +19,7 @@ Objects should be created using the \code{\link[tm.plugin.koRpus:readCorpus]{rea
 \item{\code{lang}}{A character string,
       naming the language that is assumed for the tokenized texts in this object.}
 
-\item{\code{desc}}{A list of descriptive statistics of the tagged texts.}
+\item{\code{desc}}{A named list of descriptive statistics of the tagged texts.}
 
 \item{\code{hierarchy}}{A named list of named character vectors describing the directory hierarchy level by level.}
 
@@ -34,9 +34,21 @@ usually found in those objects,
 
 \item{\code{summary}}{A summary data frame for the full corpus.}
 
-\item{\code{hyphen}}{A list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.}
+\item{\code{hyphen}}{A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.}
 
-\item{\code{readability}}{A list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.}
+\item{\code{readability}}{A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.}
+
+\item{\code{freq.analysis}}{A list with information on the word frequencies of the analyzed text.}
+
+\item{\code{freq}}{A list with two elements,
+      \code{freq.analysis} and \code{corpus}. \code{freq.analysis} contains the
+\code{freq.analysis} slot of a \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}} class object after
+\code{\link[tm.plugin.koRpus:freq.analysis]{freq.analysis}} was called,
+      whereas \code{corpus} holds the results of a call to
+\code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.}
+
+\item{\code{diff}}{A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
+a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.}
 }}
 
 \note{

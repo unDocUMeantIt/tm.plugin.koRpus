@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply textTransform() to all texts in kRp.hierarchy objects
+#' Apply textTransform() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:textTransform]{textTransform}} on all tagged text objects
 #' inside the given \code{txt} object (using \code{lapply}).
 #' 
-#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:textTransform]{textTransform}}.
 #' @return An object of the same class as \code{txt}.
@@ -29,7 +29,7 @@
 #' @importFrom koRpus textTransform
 #' @export
 #' @docType methods
-#' @aliases textTransform,kRp.hierarchy-method
+#' @aliases textTransform,kRp.flatHier-method
 #' @rdname textTransform
 #' @examples
 #' \dontrun{
@@ -47,16 +47,33 @@
 #' # remove all punctuation
 #' myCorpus <- textTransform(myCorpus, scheme="minor")
 #' }
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("textTransform", signature(txt="kRp.hierarchy"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
-    if(corpusLevel(txt) > 0){
-      corpusChildren(txt) <- lapply(corpusChildren(txt), textTransform, mc.cores=mc.cores, ...)
-    } else {
-      corpusTagged(txt) <- mclapply(corpusTagged(txt), function(thisText){
-        textTransform(thisText, ...)
-      }, mc.cores=mc.cores)
-    }
-
-    return(txt)
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("textTransform", signature(txt="kRp.flatHier"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
+    return(
+      text_transform_wrapper(
+        obj=txt,
+        trans_method=koRpus::textTransform,
+        mc.cores=mc.cores,
+        ...
+      )
+    )
   }
 )
+
+## function text_transform_wrapper()
+# this wrapper can be called by all methods invoking text transformation,
+# e.g. textTransform(), cTest(), jumbleWords(), or clozeDelete()
+# - obj: an object of class kRp.flatHier
+# - trans_method: an object of class function
+text_transform_wrapper <- function(obj, trans_method, mc.cores=getOption("mc.cores", 1L), ...){
+    tagged_list <- flatHier2tagged(obj)
+    transformed_texts <- mclapply(tagged_list, function(thisText){
+      trans_method(thisText, ...)
+    }, mc.cores=mc.cores)
+    corpusTagged_df <- do.call(rbind, mclapply(transformed_texts, taggedText, mc.cores=mc.cores))
+    row.names(corpusTagged_df) <- NULL
+    taggedText(obj) <- corpusTagged_df
+    describe(obj) <- mclapply(transformed_texts, describe, mc.cores=mc.cores)
+    diffText(obj) <- mclapply(transformed_texts, diffText, mc.cores=mc.cores)
+    return(obj)
+} ## end function text_transform_wrapper()

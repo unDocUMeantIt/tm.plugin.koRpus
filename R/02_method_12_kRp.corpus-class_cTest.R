@@ -49,14 +49,14 @@
 #' }
 #' @include 01_class_01_kRp.hierarchy.R
 setMethod("cTest", signature(obj="kRp.hierarchy"), function(obj, mc.cores=getOption("mc.cores", 1L), ...){
-    if(corpusLevel(obj) > 0){
-      corpusChildren(obj) <- lapply(corpusChildren(obj), cTest, mc.cores=mc.cores, ...)
-    } else {
-      corpusTagged(obj) <- mclapply(corpusTagged(obj), function(thisText){
-        cTest(thisText, ...)
-      }, mc.cores=mc.cores)
-    }
-
-    return(obj)
+    return(
+      # text_transform_wrapper() is defined in 02_method_13_kRp.corpus-class_textTransform.R
+      text_transform_wrapper(
+        obj=obj,
+        trans_method=koRpus::cTest,
+        mc.cores=mc.cores,
+        ...
+      )
+    )
   }
 )

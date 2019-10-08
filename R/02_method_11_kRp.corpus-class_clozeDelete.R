@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply clozeDelete() to all texts in kRp.hierarchy objects
+#' Apply clozeDelete() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:clozeDelete]{clozeDelete}} on all tagged text objects
-#' inside the given \code{obj} object (using \code{lapply}).
+#' inside the given \code{obj} object (using \code{mclapply}).
 #' 
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:clozeDelete]{clozeDelete}}.
 #' @return An object of the same class as \code{obj}.
@@ -29,7 +29,7 @@
 #' @importFrom koRpus clozeDelete
 #' @export
 #' @docType methods
-#' @aliases clozeDelete,kRp.hierarchy-method
+#' @aliases clozeDelete,kRp.flatHier-method
 #' @rdname clozeDelete
 #' @examples
 #' \dontrun{
@@ -47,16 +47,16 @@
 #' # remove all punctuation
 #' myCorpus <- clozeDelete(myCorpus)
 #' }
-#' @include 01_class_01_kRp.hierarchy.R
-setMethod("clozeDelete", signature(obj="kRp.hierarchy"), function(obj, mc.cores=getOption("mc.cores", 1L), ...){
-    if(corpusLevel(obj) > 0){
-      corpusChildren(obj) <- lapply(corpusChildren(obj), clozeDelete, mc.cores=mc.cores, ...)
-    } else {
-      corpusTagged(obj) <- mclapply(corpusTagged(obj), function(thisText){
-        clozeDelete(thisText, ...)
-      }, mc.cores=mc.cores)
-    }
-
-    return(obj)
+#' @include 01_class_01_kRp.flatHier.R
+setMethod("clozeDelete", signature(obj="kRp.flatHier"), function(obj, mc.cores=getOption("mc.cores", 1L), ...){
+    return(
+      # text_transform_wrapper() is defined in 02_method_13_kRp.corpus-class_textTransform.R
+      text_transform_wrapper(
+        obj=obj,
+        trans_method=koRpus::clozeDelete,
+        mc.cores=mc.cores,
+        ...
+      )
+    )
   }
 )

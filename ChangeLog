@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2019-10-05)
+changes in version 0.4-1 (2019-10-08)
 unreleased:
   - this release is under development
 changed:
@@ -12,6 +12,8 @@ changed:
 added:
   - readCorpus(): the hierarchy levels of a text corpus can now be
     assumed directly from the directory structure by setting "hierarchy=TRUE"
+  - diffText(), diffText()<-, originalText(): new getter methods for
+    kRp.flatHier objects
 
 changes in version 0.3-1 (2019-05-14)
 fixed:

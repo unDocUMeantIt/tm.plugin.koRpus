@@ -2,15 +2,15 @@
 % Please edit documentation in
 %   R/02_method_04_kRp.corpus-class_read.corp.custom.R
 \docType{methods}
-\name{read.corp.custom,kRp.hierarchy-method}
-\alias{read.corp.custom,kRp.hierarchy-method}
-\title{Apply read.corp.custom() to all texts in kRp.hierarchy objects}
+\name{read.corp.custom,kRp.flatHier-method}
+\alias{read.corp.custom,kRp.flatHier-method}
+\title{Apply read.corp.custom() to all texts in kRp.flatHier objects}
 \usage{
-\S4method{read.corp.custom}{kRp.hierarchy}(corpus,
+\S4method{read.corp.custom}{kRp.flatHier}(corpus,
   mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
-\item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.}
+\item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.}
 
 \item{mc.cores}{The number of cores to use for parallelization,
       see \code{\link[parallel:mclapply]{mclapply}}.}
@@ -22,7 +22,7 @@ An object of the same class as \code{corpus}.
 }
 \description{
 This method calls \code{\link[koRpus:read.corp.custom]{read.corp.custom}} on all tagged text objects
-inside the given \code{corpus} object (using \code{lapply}).
+inside the given \code{corpus} object.
 }
 \examples{
 \dontrun{
