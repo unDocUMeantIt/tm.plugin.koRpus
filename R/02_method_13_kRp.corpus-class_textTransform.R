@@ -19,7 +19,7 @@
 #' Apply textTransform() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:textTransform]{textTransform}} on all tagged text objects
-#' inside the given \code{txt} object (using \code{lapply}).
+#' inside the given \code{txt} object (using \code{mclapply}).
 #' 
 #' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.

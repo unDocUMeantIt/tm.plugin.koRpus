@@ -19,7 +19,7 @@
 #' Apply cTest() to all texts in kRp.hierarchy objects
 #' 
 #' This method calls \code{\link[koRpus:cTest]{cTest}} on all tagged text objects
-#' inside the given \code{obj} object (using \code{lapply}).
+#' inside the given \code{obj} object (using \code{mclapply}).
 #' 
 #' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.

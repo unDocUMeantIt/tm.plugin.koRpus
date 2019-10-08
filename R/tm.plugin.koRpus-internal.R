@@ -15,11 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-# ensure consistency for text IDs
-## TODO: remove this function when hierarchy works
-textID <- function(src, topic, nameNum){paste0(src, topic, nameNum)}
-
-
 ## function fixMissingIndices()
 # used by summary() to not fail because of missing values in single texts
 # have: the actual named summary vector

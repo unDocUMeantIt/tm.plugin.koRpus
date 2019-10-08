@@ -21,7 +21,7 @@ An object of the same class as \code{txt}.
 }
 \description{
 This method calls \code{\link[koRpus:textTransform]{textTransform}} on all tagged text objects
-inside the given \code{txt} object (using \code{lapply}).
+inside the given \code{txt} object (using \code{mclapply}).
 }
 \examples{
 \dontrun{

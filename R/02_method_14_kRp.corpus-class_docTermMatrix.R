@@ -18,13 +18,13 @@
 #' Generate a document-term matrix from a corpus object
 #'
 #' Returns a sparse document-term matrix calculated from a given object of class
-#' \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}. You can also
+#' \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}. You can also
 #' calculate the term frequency inverted document frequency value (tf-idf) for each
 #' term.
 #' 
 #' See the examples to learn how to limit the analysis to desired word classes.
 #' 
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param terms A character string defining the \code{TT.res} column to be used for calculating the matrix.
 #' @param case.sens Logical, whether terms should be counted case sensitive.
 #' @param tfidf Logical, if \code{TRUE} calculates term frequency--inverse document frequency (tf-idf)
@@ -69,10 +69,10 @@ setGeneric("docTermMatrix", function(obj, terms="token", case.sens=FALSE, tfidf=
 #' @export
 #' @aliases
 #'    docTermMatrix,-methods
-#'    docTermMatrix,kRp.hierarchy-method
-#' @include 01_class_01_kRp.hierarchy.R
+#'    docTermMatrix,kRp.flatHier-method
+#' @include 01_class_01_kRp.flatHier.R
 setMethod("docTermMatrix",
-  signature=signature(obj="kRp.hierarchy"),
+  signature=signature(obj="kRp.flatHier"),
   function(obj, terms="token", case.sens=FALSE, tfidf=FALSE){
     tagged <- tif_as_tokens_df(obj)
     if(!isTRUE(case.sens)){

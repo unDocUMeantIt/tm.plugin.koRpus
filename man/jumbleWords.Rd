@@ -21,7 +21,7 @@ An object of the same class as \code{words}.
 }
 \description{
 This method calls \code{\link[koRpus:jumbleWords]{jumbleWords}} on all tagged text objects
-inside the given \code{words} object (using \code{lapply}).
+inside the given \code{words} object (using \code{mclapply}).
 }
 \examples{
 \dontrun{

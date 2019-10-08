@@ -20,15 +20,18 @@
 #' The function translates the hierarchy defintion given into a data frame with
 #' one row for each file, including the generated document ID.
 #' 
-#' @param dir File path to the root directory of the text corpus.
+#' @param dir File path to the root directory of the text corpus, or a TIF[1] compliant data frame.
 #' @param hierarchy A named list of named character vectors describing the directory hierarchy level by level.
 #'    If \code{TRUE} instead, the hierarchy structure is taken directly from the directory tree.
 #'    See section Hierarchy of \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}} for details.
 #' @param fsep Character string defining the path separator to use.
+#' @param full_list Logical, see return value.
 #' @return Either a data frame with columns \code{doc_id}, \code{file}, \code{path} and one further factor
 #'    column for each hierarchy level, or (if \code{full_list=TRUE}) a list containing that data frame
 #'    (\code{all_files}) and also data frames describing the hierarchy by given names (\code{hier_names}),
 #'    directories (\code{hier_dirs}) and relative paths (\code{hier_paths}).
+#' @references
+#'    [1] Text Interchange Formats (\url{https://github.com/ropensci/tif})
 #' @export
 #' @examples
 #' \dontrun{
@@ -78,34 +81,45 @@ corpus_files <- function(
   hier_dirs <- hier_dirs[hier_order,]
   hier_paths <- hier_paths[hier_order]
 
-  full_hier_paths <- normalizePath(file.path(dir, hier_paths), mustWork=TRUE)
-  
-  all_files <- as.data.frame(matrix(
-    character(),
-    ncol=3+ncol(hier_dirs),
-    dimnames=list(
-      c(),
-      c("doc_id", "file", "path", colnames(hier_dirs))
-    )
-  ), stringsAsFactors=FALSE)
-  for (thisPath in seq_along(hier_paths)){
-    hier_files <- list.files(full_hier_paths[thisPath])
-    this_cat <- hier_dirs[thisPath,]
-    row.names(this_cat) <- NULL
-    append_files <- data.frame(
-      doc_id=gsub(
-        "[^[:alnum:]_\\\\.-]+", "",
-          gsub(
-            "[[:space:]]+", "_",
-            apply(cbind(this_cat, hier_files), 1, paste0, collapse="-")
-          )
-        ),
-      file=hier_files,
-      path=full_hier_paths[thisPath],
+  if(is.data.frame(dir)){
+    full_hier_paths <- dir[["path"]]
+    
+    all_cols <- c("doc_id", "file", "path", colnames(hier_dirs))
+    available_cols <- all_cols[all_cols %in% colnames(dir)]
+    all_files <- dir[, available_cols]
+  } else {
+    full_hier_paths <- normalizePath(file.path(dir, hier_paths), mustWork=TRUE)
+    
+    all_files <- as.data.frame(
+      matrix(
+        character(),
+        ncol=3+ncol(hier_dirs),
+        dimnames=list(
+          c(),
+          c("doc_id", "file", "path", colnames(hier_dirs))
+        )
+      ),
       stringsAsFactors=FALSE
     )
-    append_files[,colnames(hier_dirs)] <- hier_names[thisPath,]
-    all_files <- rbind(all_files, append_files)
+    for (thisPath in seq_along(hier_paths)){
+      hier_files <- list.files(full_hier_paths[thisPath])
+      this_cat <- hier_dirs[thisPath,]
+      row.names(this_cat) <- NULL
+      append_files <- data.frame(
+        doc_id=gsub(
+          "[^[:alnum:]_\\\\.-]+", "",
+            gsub(
+              "[[:space:]]+", "_",
+              apply(cbind(this_cat, hier_files), 1, paste0, collapse="-")
+            )
+          ),
+        file=hier_files,
+        path=full_hier_paths[thisPath],
+        stringsAsFactors=FALSE
+      )
+      append_files[,colnames(hier_dirs)] <- hier_names[thisPath,]
+      all_files <- rbind(all_files, append_files)
+    }
   }
   for (thisCat in colnames(hier_dirs)){
     all_files[[thisCat]] <- as.factor(all_files[[thisCat]])

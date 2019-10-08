@@ -32,7 +32,7 @@ An object of the same class as \code{txt}.
 }
 \description{
 This method calls \code{\link[koRpus:lex.div]{lex.div}} on all tagged text objects
-inside the given \code{txt} object (using \code{lapply}).
+inside the given \code{txt} object (using \code{mclapply}).
 }
 \examples{
 \dontrun{

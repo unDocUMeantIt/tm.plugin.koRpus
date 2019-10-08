@@ -33,7 +33,6 @@
 #' @param ignore.case Logical, passed through to \code{grepl} if \code{var="regexp"}.
 #' @param perl Logical, passed through to \code{grepl} if \code{var="regexp"}.
 #' @param regexp_var A character string naming the column to query if \code{var="regexp"}.
-#' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @return Depending on the arguments, might include whole objects, lists, single values etc.
 #' @importMethodsFrom koRpus query
 #' @keywords methods

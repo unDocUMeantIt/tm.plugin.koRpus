@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Create kRp.hierarchy objects from text files or data frames
+#' Create kRp.flatHier objects from text files or data frames
 #' 
 #' You can either read a corpus from text files (one file per text, also see the Hierarchy section below)
 #' or from TIF compliant data frames (see the Data frames section below).
@@ -81,7 +81,7 @@
 #'    This value is passed through to simpleCorpus.
 #' @param id A character string describing the main subject/purpose of the text corpus.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
-#' @return An object of class \code{\link[tm.plugin.koRpus:kRp.hierarchy-class]{kRp.hierarchy}}.
+#' @return An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @importFrom tm VCorpus DirSource VectorSource DataframeSource
 #' @importFrom NLP meta<-
 #' @importFrom parallel mclapply
@@ -182,11 +182,12 @@ readCorpus <- function(
     if(all(!is.data.frame(dir), !is.character(dir))){
       stop(simpleError("\"dir\" must be a character vecor or data frame!"))
     } else {}
-    ## TODO: equivalent function to fetch info from a data frame given as 'dir'
-    full_hier_info <- corpus_files_df(
-      dir=dir
+    full_hier_info <- corpus_files(
+      dir=dir,
+      hierarchy=hierarchy,
+      full_list=TRUE
     )
-   do_object <- TRUE
+    do_object <- TRUE
   } else {
     stop(simpleError(paste0("invalid value for \"format\":\n  \"", format, "\"")))
   }

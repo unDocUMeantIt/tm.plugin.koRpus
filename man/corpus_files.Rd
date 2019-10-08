@@ -8,13 +8,16 @@ corpus_files(dir, hierarchy, fsep = .Platform$file.sep,
   full_list = FALSE)
 }
 \arguments{
-\item{dir}{File path to the root directory of the text corpus.}
+\item{dir}{File path to the root directory of the text corpus,
+      or a TIF[1] compliant data frame.}
 
 \item{hierarchy}{A named list of named character vectors describing the directory hierarchy level by level.
 If \code{TRUE} instead, the hierarchy structure is taken directly from the directory tree.
 See section Hierarchy of \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}} for details.}
 
 \item{fsep}{Character string defining the path separator to use.}
+
+\item{full_list}{Logical, see return value.}
 }
 \value{
 Either a data frame with columns \code{doc_id}, \code{file},
@@ -46,4 +49,7 @@ myCorpusFiles <- corpus_files(
   )
 )
 }
+}
+\references{
+[1] Text Interchange Formats (\url{https://github.com/ropensci/tif})
 }

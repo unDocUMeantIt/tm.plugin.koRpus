@@ -18,7 +18,7 @@
 #' Apply readability() to all texts in kRp.flatHier objects
 #' 
 #' This method calls \code{\link[koRpus:readability]{readability}} on all tagged text objects
-#' inside the given \code{txt.file} object (using \code{lapply}).
+#' inside the given \code{txt.file} object (using \code{mclapply}).
 #' 
 #' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
 #' @param summary Logical, determines if the \code{summary} slot should automatically be

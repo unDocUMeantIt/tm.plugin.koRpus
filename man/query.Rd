@@ -36,9 +36,6 @@ Must either be \code{"eq"} (equal, the default), \code{"gt"} (greater than),
 \item{perl}{Logical, passed through to \code{grepl} if \code{var="regexp"}.}
 
 \item{regexp_var}{A character string naming the column to query if \code{var="regexp"}.}
-
-\item{mc.cores}{The number of cores to use for parallelization,
-      see \code{\link[parallel:mclapply]{mclapply}}.}
 }
 \value{
 Depending on the arguments, might include whole objects, lists, single values etc.
