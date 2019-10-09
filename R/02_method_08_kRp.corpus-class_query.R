@@ -46,7 +46,7 @@ setMethod("query",
   function (obj, var, query, rel="eq", as.df=TRUE, ignore.case=TRUE, perl=FALSE, regexp_var="token"){
     tagged_large <- kRp_tagged(
       lang=language(obj),
-      TT.res=taggedText(obj)
+      tokens=taggedText(obj)
     )
     obj <- query(obj=tagged_large, var=var, query=query, rel=rel, as.df=FALSE, ignore.case=ignore.case, perl=perl, regexp_var=regexp_var)
 

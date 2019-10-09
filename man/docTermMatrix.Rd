@@ -15,7 +15,7 @@ docTermMatrix(obj, terms = "token", case.sens = FALSE, tfidf = FALSE)
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.}
 
-\item{terms}{A character string defining the \code{TT.res} column to be used for calculating the matrix.}
+\item{terms}{A character string defining the \code{tokens} column to be used for calculating the matrix.}
 
 \item{case.sens}{Logical, whether terms should be counted case sensitive.}
 

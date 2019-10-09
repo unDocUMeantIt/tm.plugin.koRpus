@@ -21,34 +21,37 @@ Objects should be created using the \code{\link[tm.plugin.koRpus:readCorpus]{rea
 
 \item{\code{desc}}{A named list of descriptive statistics of the tagged texts.}
 
-\item{\code{hierarchy}}{A named list of named character vectors describing the directory hierarchy level by level.}
-
 \item{\code{meta}}{A named list. Can be used to store meta information. Currently,
       no particular format is defined.}
 
 \item{\code{raw}}{A list of objects of class \code{\link[tm]{Corpus}}.}
 
-\item{\code{TT.res}}{A data frame as used for the \code{TT.res} slot in objects of class \code{kRp.taggedText}. In addition to the columns
+\item{\code{tokens}}{A data frame as used for the \code{TT.res} slot in objects of class \code{kRp.taggedText}. In addition to the columns
 usually found in those objects,
       this data frame also has a factor column for each hierarchical category defined (if any).}
 
-\item{\code{summary}}{A summary data frame for the full corpus.}
+\item{\code{features}}{A named logical vector,
+      indicating which features are available in this object's \code{feat_list} slot.
+Common features are listed in the description of the \code{feat_list} slot.}
 
-\item{\code{hyphen}}{A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.}
-
-\item{\code{readability}}{A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.}
-
-\item{\code{freq.analysis}}{A list with information on the word frequencies of the analyzed text.}
-
-\item{\code{freq}}{A list with two elements,
-      \code{freq.analysis} and \code{corpus}. \code{freq.analysis} contains the
-\code{freq.analysis} slot of a \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}} class object after
-\code{\link[tm.plugin.koRpus:freq.analysis]{freq.analysis}} was called,
-      whereas \code{corpus} holds the results of a call to
-\code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.}
-
-\item{\code{diff}}{A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
-a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.}
+\item{\code{feat_list}}{A named list with analysis results or other content as used by the defined \code{features}:
+\itemize{
+  \item{\code{hierarchy} }{A named list of named character vectors describing the directory hierarchy level by level.}
+  \item{\code{hyphen} }{A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.}
+  \item{\code{readability} }{A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.}
+  \item{\code{lex_div} }{A named list of objects of class \code{\link[koRpus:kRp.TTR-class]{kRp.TTR}}.}
+  \item{\code{freq} }{The \code{freq.analysis} slot of a \code{\link[koRpus:kRp.txt.freq-class]{kRp.txt.freq}} class object after
+    \code{\link[tm.plugin.koRpus:freq.analysis]{freq.analysis}} was called.}
+  \item{\code{corp_freq} }{An object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}},
+      e.g., results of a call to
+    \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.}
+  \item{\code{diff} }{A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
+    a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.}
+  \item{\code{summary} }{A summary data frame for the full corpus,
+      including descriptive statistics on all texts, as well as
+    results of analyses like readability and lexical diversity, if available.}
+}
+See the \code{\link[tm.plugin.koRpus:kRp.flatHier_get-methods]{getter and setter methods}} for easy access to these sub-slots.}
 }}
 
 \note{
@@ -81,6 +84,6 @@ myCorpus <- readCorpus(
 )
 }
 # manual creation
-emptyCorpus <- kRp_hierarchy()
+emptyCorpus <- kRp_flatHier()
 }
 \keyword{classes}

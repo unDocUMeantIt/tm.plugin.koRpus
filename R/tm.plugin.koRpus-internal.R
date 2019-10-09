@@ -50,47 +50,47 @@ whatIsAvailable <- function(all.corpora){
   # result is a list
   bottom_level <- corpusChildren(all.corpora, level=0)
   # now get all availability info from that list
-  available.rdb <- unique(unlist(lapply(
+  available_rdb <- unique(unlist(lapply(
     bottom_level,
     function(thisCorpus){
       unlist(corpusMeta(thisCorpus, "readability", fail=FALSE)[["index"]])
     }
   )))
-  available.TTR <- unique(unlist(lapply(
+  available_lex_div <- unique(unlist(lapply(
     bottom_level,
     function(thisCorpus){
-      unlist(corpusMeta(thisCorpus, "TTR", fail=FALSE)[["index"]])
+      unlist(corpusMeta(thisCorpus, "lex_div", fail=FALSE)[["index"]])
     }
   )))
-  available.rdb <- nullToList(available.rdb, entry="index")
-  available.TTR <- nullToList(available.TTR, entry="index")
-  return(list(available.rdb=available.rdb, available.TTR=available.TTR))
+  available_rdb <- nullToList(available_rdb, entry="index")
+  available_lex_div <- nullToList(available_lex_div, entry="index")
+  return(list(available_rdb=available_rdb, available_lex_div=available_lex_div))
 } ## end function whatIsAvailable()
 
 
 ## function availableFromOptions()
 availableFromOptions <- function(allOptions, object){
-  if("available.rdb" %in% names(allOptions)){
-    available.rdb <- allOptions[["available.rdb"]][["index"]]
+  if("available_rdb" %in% names(allOptions)){
+    available_rdb <- allOptions[["available_rdb"]][["index"]]
   } else {
     if(is.list(object)){
-      available.rdb <- object[["available.rdb"]][["index"]]
+      available_rdb <- object[["available_rdb"]][["index"]]
     } else {
-      available.rdb <- corpusMeta(object, "readability", fail=FALSE)[["index"]]
+      available_rdb <- corpusMeta(object, "readability", fail=FALSE)[["index"]]
     }
   }
-  if("available.TTR" %in% names(allOptions)){
-    available.TTR <- allOptions[["available.TTR"]][["index"]]
+  if("available_lex_div" %in% names(allOptions)){
+    available_lex_div <- allOptions[["available_lex_div"]][["index"]]
   } else {
     if(is.list(object)){
-      available.TTR <- object[["available.TTR"]][["index"]]
+      available_lex_div <- object[["available_lex_div"]][["index"]]
     } else {
-      available.TTR <- corpusMeta(object, "TTR", fail=FALSE)[["index"]]
+      available_lex_div <- corpusMeta(object, "lex_div", fail=FALSE)[["index"]]
     }
   }
-  available.rdb <- nullToList(available.rdb, entry="index")
-  available.TTR <- nullToList(available.TTR, entry="index")
-  return(list(available.rdb=available.rdb, available.TTR=available.TTR))
+  available_rdb <- nullToList(available_rdb, entry="index")
+  available_lex_div <- nullToList(available_lex_div, entry="index")
+  return(list(available_rdb=available_rdb, available_lex_div=available_lex_div))
 } ## end function availableFromOptions()
 
 

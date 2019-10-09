@@ -50,7 +50,7 @@
 #' @include 01_class_01_kRp.flatHier.R
 setMethod("read.corp.custom", signature(corpus="kRp.flatHier"), function(corpus, mc.cores=getOption("mc.cores", 1L), ...){
     tagged_list <- flatHier2tagged(corpus)
-    corpusFreq(corpus)[["corpus"]] <- read.corp.custom(tagged_list, ...)
+    corpusCorpFreq(corpus) <- read.corp.custom(tagged_list, ...)
     return(corpus)
   }
 )

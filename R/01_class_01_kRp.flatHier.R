@@ -16,9 +16,9 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-## function init_flatHier_TT.res()
-# initializes the TT.res data frame including columns with hierarchy information
-init_flatHier_TT.res <- function(hierarchy=list()){
+## function init_flatHier_tokens()
+# initializes the tokens data frame including columns with hierarchy information
+init_flatHier_tokens <- function(hierarchy=list()){
   kRp_df <- koRpus::taggedText(koRpus::kRp_tagged())
   if(length(hierarchy) > 0){
     hier_names <- names(hierarchy)
@@ -26,7 +26,7 @@ init_flatHier_TT.res <- function(hierarchy=list()){
     if(any(invalidNames)){
       stop(simpleError(
         paste0(
-          "Invalid hierarchy, names must not match column names in the TT.res slot:\n  \"",
+          "Invalid hierarchy, names must not match column names in the tokens slot:\n  \"",
           paste0(hier_names[invalidNames], collapse="\", \""),
           "\""
         )
@@ -64,21 +64,38 @@ init_flatHier_TT.res <- function(hierarchy=list()){
 #' 
 #' @slot lang A character string, naming the language that is assumed for the tokenized texts in this object.
 #' @slot desc A named list of descriptive statistics of the tagged texts.
-#' @slot hierarchy A named list of named character vectors describing the directory hierarchy level by level.
 #' @slot meta A named list. Can be used to store meta information. Currently, no particular format is defined.
 #' @slot raw A list of objects of class \code{\link[tm]{Corpus}}.
-#' @slot TT.res A data frame as used for the \code{TT.res} slot in objects of class \code{kRp.taggedText}. In addition to the columns
+#' @slot tokens A data frame as used for the \code{TT.res} slot in objects of class \code{kRp.taggedText}. In addition to the columns
 #'    usually found in those objects, this data frame also has a factor column for each hierarchical category defined (if any).
-#' @slot summary A summary data frame for the full corpus.
-#' @slot hyphen A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.
-#' @slot readability A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.
-#' @slot freq.analysis A list with information on the word frequencies of the analyzed text.
-#' @slot freq A list with two elements, \code{freq.analysis} and \code{corpus}. \code{freq.analysis} contains the
-#'    \code{freq.analysis} slot of a \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}} class object after
-#'    \code{\link[tm.plugin.koRpus:freq.analysis]{freq.analysis}} was called, whereas \code{corpus} holds the results of a call to
-#'    \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.
-#' @slot diff A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
-#'    a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.
+#' @slot features A named logical vector, indicating which features are available in this object's \code{feat_list} slot.
+#'    Common features are listed in the description of the \code{feat_list} slot.
+#' @slot feat_list A named list with analysis results or other content as used by the defined \code{features}:
+#'    \itemize{
+#'      \item{\code{hierarchy} }{A named list of named character vectors describing the directory hierarchy level by level.}
+#'      \item{\code{hyphen} }{A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.}
+#'      \item{\code{readability} }{A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.}
+#'      \item{\code{lex_div} }{A named list of objects of class \code{\link[koRpus:kRp.TTR-class]{kRp.TTR}}.}
+#'      \item{\code{freq} }{The \code{freq.analysis} slot of a \code{\link[koRpus:kRp.txt.freq-class]{kRp.txt.freq}} class object after
+#'        \code{\link[tm.plugin.koRpus:freq.analysis]{freq.analysis}} was called.}
+#'      \item{\code{corp_freq} }{An object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}}, e.g., results of a call to
+#'        \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.}
+#'      \item{\code{diff} }{A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
+#'        a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.}
+#'      \item{\code{summary} }{A summary data frame for the full corpus, including descriptive statistics on all texts, as well as
+#'        results of analyses like readability and lexical diversity, if available.}
+#      \item{\code{} }{}
+#'    }
+#'    See the \code{\link[tm.plugin.koRpus:kRp.flatHier_get-methods]{getter and setter methods}} for easy access to these sub-slots.
+# @slot summary A summary data frame for the full corpus.
+# @slot hyphen A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.
+# @slot readability A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.
+# @slot freq A list with two elements, \code{freq.analysis} and \code{corpus}. \code{freq.analysis} contains the
+#    \code{freq.analysis} slot of a \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}} class object after
+#    \code{\link[tm.plugin.koRpus:freq.analysis]{freq.analysis}} was called, whereas \code{corpus} holds the results of a call to
+#    \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.
+# @slot diff A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
+#    a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.
 #' @note There is also \code{\link[tm.plugin.koRpus:kRp.flatHier_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.flatHier,-class
 #' @aliases kRp.flatHier,-class kRp.flatHier-class
@@ -106,64 +123,83 @@ init_flatHier_TT.res <- function(hierarchy=list()){
 #' )
 #' }
 #' # manual creation
-#' emptyCorpus <- kRp_hierarchy()
+#' emptyCorpus <- kRp_flatHier()
 kRp_flatHier <- setClass("kRp.flatHier",
   representation=representation(
     lang="character",
     desc="list",
-    hierarchy="list",
     meta="list",
     raw="list",
-    TT.res="data.frame",
-    summary="data.frame",
-    hyphen="list",
-    readability="list",
-    TTR="list",
-    freq="list",
-    diff="list"
+    tokens="data.frame",
+    features="logical",
+    feat_list="list"
+#     summary="data.frame",
+#     hyphen="list",
+#     readability="list",
+#     TTR="list",
+#     freq="list",
+#     diff="list"
   ),
   prototype=prototype(
+    features=logical(),
     lang=character(),
     desc=list(),
-    hierarchy=list(),
     meta=list(),
     raw=list(),
-    TT.res=init_flatHier_TT.res(),
-    summary=data.frame(),
-    hyphen=list(),
-    readability=list(),
-    TTR=list(),
-    freq=list(freq.analysis=list(), corpus=kRp_corp_freq()),
-    diff=list()
+    tokens=init_flatHier_tokens(),
+    feat_list=list()
+#     summary=data.frame(),
+#     hyphen=list(),
+#     readability=list(),
+#     TTR=list(),
+#     freq=list(freq.analysis=list(), corpus=kRp_corp_freq()),
+#     diff=list()
   )
 )
 
 setValidity("kRp.flatHier", function(object){
-  # TODO: check if hierarchy is resembled by rows in tagged object
-    hierarchy <- slot(object, "hierarchy")
     raw <- slot(object, "raw")
-    TT.res <- slot(object, "TT.res")
-    hyphen <- slot(object, "hyphen")
-    readability <- slot(object, "readability")
-    TTR <- slot(object, "TTR")
-    freq <- slot(object, "freq")
+    tokens <- slot(object, "tokens")
+    features <- slot(object, "features")
+    feat_list <- slot(object, "feat_list")
+    hyphen <- feat_list[["hyphen"]]
+    readability <- feat_list[["readability"]]
+    lex_div <- feat_list[["lex_div"]]
+    freq <- feat_list[["freq"]]
+    corp_freq <- feat_list[["corp_freq"]]
+    obj_summary <- feat_list[["summary"]]
+  # TODO: check if hierarchy is resembled by rows in tagged object
+    hierarchy <- feat_list[["hierarchy"]]
 
-    freq.names <- names(freq)
-    if(!all(c("freq.analysis", "corpus") %in% freq.names)){
-      stop(simpleError("Invalid object: Slot \"freq\" needs to have two entries called \"freq.analysis\" and \"corpus\"!"))
+   missingFeatures <- sapply(
+      names(features),
+      function(this_feature){
+        if(
+          all(
+            isTRUE(features[[this_feature]]),
+            is.null(feat_list[[this_feature]])
+          )
+        ){
+          return(this_feature)
+        } else {}
+      }
+    )
+    if(length(missingFeatures) > 0) {
+      warning(
+        paste0(
+          "Invalid object: There's no data for activated \"features\":\n  ",
+          paste0(missingFeatures, collapse=", ")
+        ),
+        call.=FALSE
+      )
     } else {}
-    freq.freq.analysis <- freq[["freq.analysis"]]
-    if(!inherits(freq[["corpus"]], "kRp.corp.freq")){
-      stop(simpleError(paste0("Invalid object: Item \"corpus\" in slot \"freq\" must have entries inheriting from class kRp.corp.freq!")))
-    } else {}
-
-    TT.res.names <- colnames(TT.res)
-    standard.TT.res.names <- colnames(koRpus::taggedText(koRpus::kRp_tagged()))
-    missingCols <- standard.TT.res.names[!standard.TT.res.names %in% TT.res.names]
+    tokens.names <- colnames(tokens)
+    standard.tokens.names <- colnames(koRpus::taggedText(koRpus::kRp_tagged()))
+    missingCols <- standard.tokens.names[!standard.tokens.names %in% tokens.names]
     if(length(missingCols) > 0){
       warning(
         paste0(
-          "Invalid object: Missing columns in slot \"TT.res\":\n  ",
+          "Invalid object: Missing columns in slot \"tokens\":\n  ",
           paste0(missingCols, collapse=", ")
         ),
         call.=FALSE)
@@ -173,10 +209,18 @@ setValidity("kRp.flatHier", function(object){
       "Corpus"=list(name="raw", obj=raw),
       "kRp.hyphen"=list(name="hyphen", obj=hyphen),
       "kRp.readability"=list(name="readability", obj=readability),
-      "kRp.TTR"=list(name="TTR", obj=TTR)
+      "kRp.TTR"=list(name="lex_div", obj=lex_div),
+      "kRp.corp.freq"=list(name="corp_freq", obj=corp_freq),
+      "data.frame"=list(name="summary", obj=obj_summary)
     )
     for (thisClassObj in names(classObj)) {
-      if(!identical(classObj[[thisClassObj]][["obj"]], list()) && !all(sapply(classObj[[thisClassObj]][["obj"]], function(x) inherits(x, thisClassObj)))){
+      if(
+        all(
+          !identical(classObj[[thisClassObj]][["obj"]], list()),
+          !is.null(classObj[[thisClassObj]][["obj"]]),
+          !all(sapply(classObj[[thisClassObj]][["obj"]], function(x) inherits(x, thisClassObj)))
+        )
+      ){
         stop(simpleError(paste0("Invalid object: Slot \"", classObj[[thisClassObj]][["name"]], "\" must have entries inheriting from class ", thisClassObj, "!")))
       } else {}
     }
@@ -207,7 +251,7 @@ setMethod("flatHier2tagged",
           kRp_txt_trans(
             lang=tt_lang,
             desc=tt_desc[[thisText]],
-            TT.res=tt_list[[thisText]],
+            tokens=tt_list[[thisText]],
             diff=tt_diff[[thisText]]
           )
         }
@@ -219,7 +263,7 @@ setMethod("flatHier2tagged",
           kRp_tagged(
             lang=tt_lang,
             desc=tt_desc[[thisText]],
-            TT.res=tt_list[[thisText]]
+            tokens=tt_list[[thisText]]
           )
         }
       )

@@ -35,7 +35,7 @@ setMethod("show", signature(object="kRp.flatHier"), function(object){
 
   message(paste0("A corpus with ", num_texts, " ", txt, "." ))
   
-  hierarchy <- slot(object, "hierarchy")
+  hierarchy <- corpusHierarchy(object)
   txt_hier <- "\nThe texts are "
   if(length(hierarchy) > 0){
     txt_hier <- paste0(txt_hier, " hierarchically grouped:\n\n  ")

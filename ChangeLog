@@ -7,13 +7,24 @@ changed:
   - the nested object class kRp.hierarchy was replaced by kRp.flatHier;
     instead of reproducing the file hierarchy in the object structure,
     kRp.flatHier has a flat structure with all texts in one single data
-    frame
+    frame; this data frame was also renamed from "TT.res" into "tokens"
   - status messages are currently only shown when only one CPU is used
+  - corpusTagged(): now called taggedText() as in koRpus
+  - corpusDesc(): now called describe() as in koRpus
+  - [, [<-, [[ and [[<- methods no longer apply to the summary data
+    frame but tokens slot as in koRpus (where it applies to the TT.res
+    slot)
 added:
   - readCorpus(): the hierarchy levels of a text corpus can now be
     assumed directly from the directory structure by setting "hierarchy=TRUE"
-  - diffText(), diffText()<-, originalText(): new getter methods for
-    kRp.flatHier objects
+  - corpusHasFeatures(), corpusHasFeatures()<-, corpusFeatures(),
+    corpusFeatures()<-, corpusHierarchy(), corpusHierarchy()<-,
+    corpusCorpFreq(), corpusCorpFreq()<-, 
+    diffText(), diffText()<-, originalText(): new getter/setter methods
+    for kRp.flatHier objects
+removed:
+  - removed all classes and methods dealing with kRp.hierarchy
+  - removed deprecated methods of the pre-kRp.hierarchy era
 
 changes in version 0.3-1 (2019-05-14)
 fixed:

@@ -54,18 +54,16 @@
 setMethod("freq.analysis", signature(txt.file="kRp.flatHier"), function(txt.file, ...){
     tagged_large <- kRp_tagged(
       lang=language(txt.file),
-      TT.res=taggedText(txt.file)
+      tokens=taggedText(txt.file)
     )
 
     use_default_args <- TRUE
     if(is.null(list(...)[["corp.freq"]])){
-      if(is(corpusFreq(txt.file)[["corpus"]], "kRp.corp.freq")){
-        if(nrow(slot(corpusFreq(txt.file)[["corpus"]], "words")) > 1){
-          default <- list(txt.file=tagged_large, ...)
-          args <- modifyList(default, list(corp.freq=corpusFreq(txt.file)[["corpus"]]))
-          use_default_args <- FALSE
-          freq_ananlysis_results <- do.call(freq.analysis, args)
-        } else {}
+      if(corpusHasFeature(txt.file, "corp_freq")){
+        default <- list(txt.file=tagged_large, ...)
+        args <- modifyList(default, list(corp.freq=corpusCorpFreq(txt.file)))
+        use_default_args <- FALSE
+        freq_ananlysis_results <- do.call(freq.analysis, args)
       } else {}
     } else {}
 
@@ -75,7 +73,7 @@ setMethod("freq.analysis", signature(txt.file="kRp.flatHier"), function(txt.file
 
     taggedText(txt.file) <- taggedText(freq_ananlysis_results)
     corpusMeta(txt.file, meta="freq.analysis") <- describe(freq_ananlysis_results)
-    corpusFreq(txt.file)[["freq.analysis"]] <- slot(freq_ananlysis_results, "freq.analysis")
+    corpusFreq(txt.file) <- slot(freq_ananlysis_results, "freq.analysis")
     return(txt.file)
   }
 )

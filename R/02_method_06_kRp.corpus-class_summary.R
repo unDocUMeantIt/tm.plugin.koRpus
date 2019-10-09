@@ -28,10 +28,10 @@
 #' in kRp.flatHier objects directly.
 #' 
 #' @param object An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
-# @param available.rdb Character vector with the column names of all readability measures
+# @param available_rdb Character vector with the column names of all readability measures
 #    that are supposed to be available for all texts. Missings are automatically filled
 #    with the value of \code{missing}.
-# @param available.TTR Like \code{available.rdb}, only for lexical diversity measures.
+# @param available_lex_div Like \code{available_rdb}, only for lexical diversity measures.
 #' @param missing Character string to use for missing values.
 #' @param ... Used for internal processes.
 #' @return An object of the same class as \code{object}.
@@ -63,20 +63,20 @@
 setMethod("summary", signature(object="kRp.flatHier"), function(
   object, missing=NA, ...
 ){
-    available.rdb <- nullToList(unlist(corpusMeta(object, "readability", fail=FALSE)[["index"]]), entry="index")
-    available.TTR <- nullToList(unlist(corpusMeta(object, "TTR", fail=FALSE)[["index"]]), entry="index")
+    available_rdb <- nullToList(unlist(corpusMeta(object, "readability", fail=FALSE)[["index"]]), entry="index")
+    available_lex_div <- nullToList(unlist(corpusMeta(object, "lex_div", fail=FALSE)[["index"]]), entry="index")
 
     # initialize the data.frame
-    summary.info <- meta(corpusTm(object))[, c("doc_id", names(slot(object, "hierarchy")))]
+    summary.info <- meta(corpusTm(object))[, c("doc_id", names(corpusHierarchy(object)))]
     summary.info[["stopwords"]] <- corpusMeta(object, "stopwords")
 
     summary.rdb <- summary.lexdiv <- NULL
 
-    if(!is.null(available.rdb)){
-      if(length(available.rdb[["index"]]) > 0){
+    if(!is.null(available_rdb)){
+      if(length(available_rdb[["index"]]) > 0){
         summary.rdb <- t(as.data.frame(sapply(names(corpusReadability(object)), function(thisText){
             thisSummary <- summary(corpusReadability(object)[[thisText]], flat=TRUE)
-            return(fixMissingIndices(have=thisSummary, want=available.rdb[["index"]], missing=missing))
+            return(fixMissingIndices(have=thisSummary, want=available_rdb[["index"]], missing=missing))
         }, simplify=FALSE)))
         summary.info <- cbind(
           summary.info,
@@ -85,11 +85,11 @@ setMethod("summary", signature(object="kRp.flatHier"), function(
         )
       } else {}
     } else {}
-    if(!is.null(available.TTR)){
-      if(length(available.TTR[["index"]]) > 0){
-        summary.lexdiv <- t(as.data.frame(sapply(names(corpusTTR(object)), function(thisText){
-            thisSummary <- summary(corpusTTR(object)[[thisText]], flat=TRUE)
-            return(fixMissingIndices(have=thisSummary, want=available.TTR[["index"]], missing=missing))
+    if(!is.null(available_lex_div)){
+      if(length(available_lex_div[["index"]]) > 0){
+        summary.lexdiv <- t(as.data.frame(sapply(names(corpusLexDiv(object)), function(thisText){
+            thisSummary <- summary(corpusLexDiv(object)[[thisText]], flat=TRUE)
+            return(fixMissingIndices(have=thisSummary, want=available_lex_div[["index"]], missing=missing))
         }, simplify=FALSE)))
         # suppress a second TTR
         if("TTR" %in% colnames(summary.info) & "TTR" %in% colnames(summary.lexdiv)){
@@ -130,8 +130,7 @@ setGeneric("corpusSummary", function(obj) standardGeneric("corpusSummary"))
 setMethod("corpusSummary",
   signature=signature(obj="kRp.flatHier"),
   function (obj){
-    result <- slot(obj, name="summary")
-    return(result)
+    return(corpusFeature(obj, "summary"))
   }
 )
 
@@ -150,7 +149,7 @@ setGeneric("corpusSummary<-", function(obj, value) standardGeneric("corpusSummar
 setMethod("corpusSummary<-",
   signature=signature(obj="kRp.flatHier"),
   function (obj, value){
-    slot(obj, name="summary") <- value
+    corpusFeature(obj, "summary") <- value
     return(obj)
   }
 )

@@ -50,7 +50,7 @@
 #' @include 01_class_01_kRp.flatHier.R
 setMethod("filterByClass", signature(txt="kRp.flatHier"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
     # filterByClass() by default updates the desc slot, and since that is still split into
-    # individual texts, we must get individual calculations and merge the TT.res data frames
+    # individual texts, we must get individual calculations and merge the tokens data frames
     # again afterwards
     tagged_list <- flatHier2tagged(txt)
     filtered_list <- mclapply(tagged_list, function(thisText){
