@@ -174,7 +174,7 @@ setGeneric("corpusHasFeature", function(obj, feature, ...) standardGeneric("corp
 setMethod("corpusHasFeature",
   signature=signature(obj="kRp.flatHier"),
   function (obj, feature){
-    return(isTRUE(slot(obj, name="feature")[[feature]]))
+    return(isTRUE(slot(obj, name="features")[feature]))
   }
 )
 
@@ -197,7 +197,12 @@ setMethod("corpusHasFeature<-",
     if(!is.logical(value)){
       stop(simpleError("The \"feature\" value must be logical!"))
     } else {}
-    slot(obj, name="feature")[[feature]] <- value
+    if(isTRUE(value)){
+      slot(obj, name="features")[feature] <- value
+    } else {
+      current_features <- slot(obj, name="features")
+      slot(obj, name="features") <- current_features[!names(current_features) %in% feature]
+    }
     return(obj)
   }
 )

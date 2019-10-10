@@ -238,13 +238,9 @@ setMethod("flatHier2tagged",
   function(obj){
     tt_desc <- describe(obj)
     tt_lang <- language(obj)
-    tt_diff <- diffText(obj)
     tt_tagged <- taggedText(obj)
     tt_list <- split(tt_tagged, tt_tagged[["doc_id"]])
-    if(all(
-      length(tt_diff) > 0,
-      identical(names(tt_desc), names(tt_diff))
-    )){
+    if(corpusHasFeature(obj, "diff")){
       result <- lapply(
         names(tt_list),
         function(thisText){
@@ -252,7 +248,7 @@ setMethod("flatHier2tagged",
             lang=tt_lang,
             desc=tt_desc[[thisText]],
             tokens=tt_list[[thisText]],
-            diff=tt_diff[[thisText]]
+            TT.res=diffText(obj)[[thisText]]
           )
         }
       )
@@ -263,7 +259,7 @@ setMethod("flatHier2tagged",
           kRp_tagged(
             lang=tt_lang,
             desc=tt_desc[[thisText]],
-            tokens=tt_list[[thisText]]
+            TT.res=tt_list[[thisText]]
           )
         }
       )

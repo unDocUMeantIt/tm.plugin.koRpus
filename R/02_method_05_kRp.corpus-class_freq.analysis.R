@@ -54,7 +54,7 @@
 setMethod("freq.analysis", signature(txt.file="kRp.flatHier"), function(txt.file, ...){
     tagged_large <- kRp_tagged(
       lang=language(txt.file),
-      tokens=taggedText(txt.file)
+      TT.res=taggedText(txt.file)
     )
 
     use_default_args <- TRUE
