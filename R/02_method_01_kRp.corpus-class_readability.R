@@ -56,14 +56,18 @@
 setMethod("readability", signature(txt.file="kRp.flatHier"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
     tagged_list <- flatHier2tagged(txt.file)
     corpusReadability(txt.file) <- mclapply(names(tagged_list), function(thisText){
-      if(thisText %in% names(corpusHyphen(txt.file)) & is.null(list(...)[["hyphen"]])){
+      dot_args <- list(...)
+      if(!is.null(dot_args[["keep.input"]])){
+        stop(simpleError("The argument \"keep.input\" is FALSE by default and can't be changed!"))
+      } else {}
+      if(thisText %in% names(corpusHyphen(txt.file)) & is.null(dot_args[["hyphen"]])){
         # we probably need to drop one of two hyphen arguments if
         # readability was called from one of the wrapper functions
-        default <- list(txt.file=tagged_list[[thisText]], ...)
+        default <- list(txt.file=tagged_list[[thisText]], keep.input=FALSE, ...)
         args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
         rdb <- do.call(readability, args)
       } else {
-        rdb <- readability(tagged_list[[thisText]], quiet=quiet, ...)
+        rdb <- readability(tagged_list[[thisText]], quiet=quiet, keep.input=FALSE, ...)
       }
       return(rdb)
     }, mc.cores=mc.cores)
