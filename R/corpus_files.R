@@ -53,33 +53,38 @@
 #' }
 corpus_files <- function(
   dir,
-  hierarchy,
+  hierarchy=list(),
   fsep=.Platform$file.sep,
   full_list=FALSE
 ){
-  # generate a data frame listing all path combinations to expect
-  # expand.grid() actually returns the reverse order we want, but
-  # we'll fix that later simply by sorting all generated paths
-  hier_names <- expand.grid(
-    hierarchy,
-    KEEP.OUT.ATTRS=FALSE,
-    stringsAsFactors=FALSE
-  )
-  hier_dirs <- expand.grid(
-    lapply(hierarchy, names),
-    KEEP.OUT.ATTRS=FALSE,
-    stringsAsFactors=FALSE
-  )
-  hier_paths <- apply(
-    hier_dirs,
-    MARGIN=1,
-    paste0,
-    collapse=.Platform$file.sep
-  )
-  hier_order <- order(hier_paths)
-  hier_names <- hier_names[hier_order,]
-  hier_dirs <- hier_dirs[hier_order,]
-  hier_paths <- hier_paths[hier_order]
+  if(length(hierarchy) > 0){
+    # generate a data frame listing all path combinations to expect
+    # expand.grid() actually returns the reverse order we want, but
+    # we'll fix that later simply by sorting all generated paths
+    hier_names <- expand.grid(
+      hierarchy,
+      KEEP.OUT.ATTRS=FALSE,
+      stringsAsFactors=FALSE
+    )
+    hier_dirs <- expand.grid(
+      lapply(hierarchy, names),
+      KEEP.OUT.ATTRS=FALSE,
+      stringsAsFactors=FALSE
+    )
+    hier_paths <- apply(
+      hier_dirs,
+      MARGIN=1,
+      paste0,
+      collapse=.Platform$file.sep
+    )
+    hier_order <- order(hier_paths)
+    hier_names <- hier_names[hier_order,, drop=FALSE]
+    hier_dirs <- hier_dirs[hier_order,, drop=FALSE]
+    hier_paths <- hier_paths[hier_order]
+  } else {
+    hier_names <- hier_dirs <- data.frame()
+    hier_paths <- ""
+  }
 
   if(is.data.frame(dir)){
     full_hier_paths <- dir[["path"]]
