@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply filterByClass() to all texts in kRp.flatHier objects
+#' Apply filterByClass() to all texts in kRp.corpus objects
 #' 
 #' This method calls \code{\link[koRpus:filterByClass]{filterByClass}} on all tagged text objects
 #' inside the given \code{txt} object (using \code{mclapply}).
 #' 
-#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:filterByClass]{filterByClass}}.
 #' @return An object of the same class as \code{txt}.
@@ -29,7 +29,7 @@
 #' @importFrom koRpus filterByClass
 #' @export
 #' @docType methods
-#' @aliases filterByClass,kRp.flatHier-method
+#' @aliases filterByClass,kRp.corpus-method
 #' @rdname filterByClass
 #' @examples
 #' \dontrun{
@@ -47,12 +47,12 @@
 #' # remove all punctuation
 #' myCorpus <- filterByClass(myCorpus)
 #' }
-#' @include 01_class_01_kRp.flatHier.R
-setMethod("filterByClass", signature(txt="kRp.flatHier"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
+#' @include 01_class_01_kRp.corpus.R
+setMethod("filterByClass", signature(txt="kRp.corpus"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
     # filterByClass() by default updates the desc slot, and since that is still split into
     # individual texts, we must get individual calculations and merge the tokens data frames
     # again afterwards
-    tagged_list <- flatHier2tagged(txt)
+    tagged_list <- corpus2tagged(txt)
     filtered_list <- mclapply(tagged_list, function(thisText){
       filterByClass(thisText, ...)
     }, mc.cores=mc.cores)

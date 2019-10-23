@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Apply query() to all texts in kRp.flatHier objects
+#' Apply query() to all texts in kRp.corpus objects
 #' 
 #' This method calls \code{\link[koRpus:query]{query}} on all tagged text objects
 #' inside the given object.
 #' 
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param var A character string naming a column in the tagged text. If set to
 #'    \code{"regexp"}, \code{grepl} is called on the column specified by \code{regexp_var}.
 #' @param query A character vector (for words), regular expression, or single number naming values to be matched in the variable.
@@ -40,9 +40,9 @@
 #' @docType methods
 #' @rdname query
 #' @aliases query,kRp.hierarch-method
-#' @include 01_class_01_kRp.flatHier.R
+#' @include 01_class_01_kRp.corpus.R
 setMethod("query",
-  signature(obj="kRp.flatHier"),
+  signature(obj="kRp.corpus"),
   function (obj, var, query, rel="eq", as.df=TRUE, ignore.case=TRUE, perl=FALSE, regexp_var="token"){
     tagged_large <- kRp_tagged(
       lang=language(obj),

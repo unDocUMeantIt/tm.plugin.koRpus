@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Apply summary() to all texts in kRp.flatHier objects
+#' Apply summary() to all texts in kRp.corpus objects
 #' 
 #' This method performs a \code{summary} call on all text objects inside the given
 #' \code{object} object. Contrary to what other summary methods do, this method
@@ -25,9 +25,9 @@
 #' all texts that the respective object contains.
 #' 
 #' \code{corpusSummary} is a simple method to get or set the \code{summary} slot
-#' in kRp.flatHier objects directly.
+#' in kRp.corpus objects directly.
 #' 
-#' @param object An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param object An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 # @param available_rdb Character vector with the column names of all readability measures
 #    that are supposed to be available for all texts. Missings are automatically filled
 #    with the value of \code{missing}.
@@ -38,7 +38,7 @@
 #' @importFrom NLP meta
 #' @export
 #' @docType methods
-#' @aliases summary,kRp.flatHier-method
+#' @aliases summary,kRp.corpus-method
 #' @rdname summary
 #' @examples
 #' \dontrun{
@@ -59,8 +59,8 @@
 #' myCorpus <- summary(myCorpus)
 #' corpusSummary(myCorpus)
 #' }
-#' @include 01_class_01_kRp.flatHier.R
-setMethod("summary", signature(object="kRp.flatHier"), function(
+#' @include 01_class_01_kRp.corpus.R
+setMethod("summary", signature(object="kRp.corpus"), function(
   object, missing=NA, ...
 ){
     available_rdb <- nullToList(unlist(corpusMeta(object, "readability", fail=FALSE)[["index"]]), entry="index")
@@ -116,7 +116,7 @@ setMethod("summary", signature(object="kRp.flatHier"), function(
 
 
 #' @rdname summary
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @docType methods
 #' @export
 setGeneric("corpusSummary", function(obj) standardGeneric("corpusSummary"))
@@ -125,10 +125,10 @@ setGeneric("corpusSummary", function(obj) standardGeneric("corpusSummary"))
 #' @export
 #' @aliases
 #'    corpusSummary,-methods
-#'    corpusSummary,kRp.flatHier-method
-#' @include 01_class_01_kRp.flatHier.R
+#'    corpusSummary,kRp.corpus-method
+#' @include 01_class_01_kRp.corpus.R
 setMethod("corpusSummary",
-  signature=signature(obj="kRp.flatHier"),
+  signature=signature(obj="kRp.corpus"),
   function (obj){
     return(corpusFeature(obj, "summary"))
   }
@@ -144,10 +144,10 @@ setGeneric("corpusSummary<-", function(obj, value) standardGeneric("corpusSummar
 #' @docType methods
 #' @aliases
 #'    corpusSummary<-,-methods
-#'    corpusSummary<-,kRp.flatHier-method
-#' @include 01_class_01_kRp.flatHier.R
+#'    corpusSummary<-,kRp.corpus-method
+#' @include 01_class_01_kRp.corpus.R
 setMethod("corpusSummary<-",
-  signature=signature(obj="kRp.flatHier"),
+  signature=signature(obj="kRp.corpus"),
   function (obj, value){
     corpusFeature(obj, "summary") <- value
     return(obj)

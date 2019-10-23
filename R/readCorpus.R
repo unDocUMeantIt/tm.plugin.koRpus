@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Create kRp.flatHier objects from text files or data frames
+#' Create kRp.corpus objects from text files or data frames
 #' 
 #' You can either read a corpus from text files (one file per text, also see the Hierarchy section below)
 #' or from TIF compliant data frames (see the Data frames section below).
@@ -81,7 +81,7 @@
 #'    This value is passed through to simpleCorpus.
 #' @param id A character string describing the main subject/purpose of the text corpus.
 #' @param ... Additional options which are passed through to the defined \code{tagger}.
-#' @return An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @return An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @importFrom tm VCorpus DirSource VectorSource DataframeSource
 #' @importFrom NLP meta<-
 #' @importFrom parallel mclapply
@@ -197,7 +197,7 @@ readCorpus <- function(
     lang <- get.kRp.env(lang=TRUE)
   } else {}
 
-  result <- kRp_flatHier(
+  result <- kRp.corpus(
     lang=lang
   )
   corpusHierarchy(result) <- hierarchy
@@ -232,7 +232,7 @@ readCorpus <- function(
     meta(corpusTm(result), tag=thisCol, type="indexed") <- meta(corpusTm(result), tag=thisCol, type="local") <- as.character(all_files[[thisCol]])
   }
 
-  init_df <- init_flatHier_tokens(hierarchy=hierarchy)
+  init_df <- init_corpus_tokens(hierarchy=hierarchy)
   hier_cols <- names(full_hier_info[["hier_names"]])
   corpusTagged <- mclapply(
     seq_along(corpusTm(result)),

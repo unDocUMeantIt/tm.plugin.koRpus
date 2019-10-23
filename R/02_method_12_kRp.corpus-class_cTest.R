@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply cTest() to all texts in kRp.flatHier objects
+#' Apply cTest() to all texts in kRp.corpus objects
 #' 
 #' This method calls \code{\link[koRpus:cTest]{cTest}} on all tagged text objects
 #' inside the given \code{obj} object (using \code{mclapply}).
 #' 
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:cTest]{cTest}}.
 #' @return An object of the same class as \code{obj}.
@@ -29,7 +29,7 @@
 #' @importFrom koRpus cTest
 #' @export
 #' @docType methods
-#' @aliases cTest,kRp.flatHier-method
+#' @aliases cTest,kRp.corpus-method
 #' @rdname cTest
 #' @examples
 #' \dontrun{
@@ -47,8 +47,8 @@
 #' # remove all punctuation
 #' myCorpus <- cTest(myCorpus)
 #' }
-#' @include 01_class_01_kRp.flatHier.R
-setMethod("cTest", signature(obj="kRp.flatHier"), function(obj, mc.cores=getOption("mc.cores", 1L), ...){
+#' @include 01_class_01_kRp.corpus.R
+setMethod("cTest", signature(obj="kRp.corpus"), function(obj, mc.cores=getOption("mc.cores", 1L), ...){
     return(
       # text_transform_wrapper() is defined in 02_method_13_kRp.corpus-class_textTransform.R
       text_transform_wrapper(

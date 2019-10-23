@@ -16,9 +16,9 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-## function init_flatHier_tokens()
+## function init_corpus_tokens()
 # initializes the tokens data frame including columns with hierarchy information
-init_flatHier_tokens <- function(hierarchy=list()){
+init_corpus_tokens <- function(hierarchy=list()){
   kRp_df <- koRpus::taggedText(koRpus::kRp_tagged())
   if(length(hierarchy) > 0){
     hier_names <- names(hierarchy)
@@ -46,10 +46,10 @@ init_flatHier_tokens <- function(hierarchy=list()){
   } else {
     return(kRp_df)
   }
-} ## end function init_flatHier()
+} ## end function init_corpus_tokens()
 
 
-#' S4 Class kRp.flatHier
+#' S4 Class kRp.corpus
 #'
 #' Objects of this class can contain full text corpora in a hierachical structure. It supports both the \code{tm} package's
 #' \code{\link[tm]{Corpus}} class and \code{koRpus}' own object classes and stores them in separated slots.
@@ -58,8 +58,8 @@ init_flatHier_tokens <- function(hierarchy=list()){
 #' 
 #' @section Contructor function:
 #' Should you need to manually generate objects of this class (which should rarely be the case), the contructor function 
-#' \code{kRp_flatHier(...)} can be used instead of
-#' \code{new("kRp.flatHier", ...)}. Whenever possible, stick to
+#' \code{kRp.corpus(...)} can be used instead of
+#' \code{new("kRp.corpus", ...)}. Whenever possible, stick to
 #' \code{\link[tm.plugin.koRpus:readCorpus]{readCorpus}}.
 #' 
 #' @slot lang A character string, naming the language that is assumed for the tokenized texts in this object.
@@ -86,7 +86,7 @@ init_flatHier_tokens <- function(hierarchy=list()){
 #'        results of analyses like readability and lexical diversity, if available.}
 #      \item{\code{} }{}
 #'    }
-#'    See the \code{\link[tm.plugin.koRpus:kRp.flatHier_get-methods]{getter and setter methods}} for easy access to these sub-slots.
+#'    See the \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for easy access to these sub-slots.
 # @slot summary A summary data frame for the full corpus.
 # @slot hyphen A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.
 # @slot readability A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.
@@ -96,18 +96,18 @@ init_flatHier_tokens <- function(hierarchy=list()){
 #    \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.
 # @slot diff A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
 #    a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.
-#' @note There is also \code{\link[tm.plugin.koRpus:kRp.flatHier_get-methods]{getter and setter methods}} for objects of this class.
-#' @name kRp.flatHier,-class
-#' @aliases kRp.flatHier,-class kRp.flatHier-class
+#' @note There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
+#' @name kRp.corpus,-class
+#' @aliases kRp.corpus,-class kRp.corpus-class
 #' @import methods koRpus
 #' @importFrom tm as.VCorpus
 #' @keywords classes
-#' @export kRp_flatHier
-#' @exportClass kRp.flatHier
-#' @rdname kRp.flatHier
+#' @export kRp.corpus
+#' @exportClass kRp.corpus
+#' @rdname kRp.corpus
 #' @examples
 #' \dontrun{
-#' # use readCorpus() to create objects of class kRp.flatHier
+#' # use readCorpus() to create objects of class kRp.corpus
 #' myCorpus <- readCorpus(
 #'   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
 #'   hierarchy=list(
@@ -123,8 +123,8 @@ init_flatHier_tokens <- function(hierarchy=list()){
 #' )
 #' }
 #' # manual creation
-#' emptyCorpus <- kRp_flatHier()
-kRp_flatHier <- setClass("kRp.flatHier",
+#' emptyCorpus <- kRp.corpus()
+kRp.corpus <- setClass("kRp.corpus",
   representation=representation(
     lang="character",
     desc="list",
@@ -146,7 +146,7 @@ kRp_flatHier <- setClass("kRp.flatHier",
     desc=list(),
     meta=list(),
     raw=list(),
-    tokens=init_flatHier_tokens(),
+    tokens=init_corpus_tokens(),
     feat_list=list()
 #     summary=data.frame(),
 #     hyphen=list(),
@@ -157,7 +157,7 @@ kRp_flatHier <- setClass("kRp.flatHier",
   )
 )
 
-setValidity("kRp.flatHier", function(object){
+setValidity("kRp.corpus", function(object){
     raw <- slot(object, "raw")
     tokens <- slot(object, "tokens")
     features <- slot(object, "features")
@@ -229,12 +229,12 @@ setValidity("kRp.flatHier", function(object){
 })
 
 
-## method flatHier2tagged()
-# returns a list of kRp.tagged objects from an object of class kRp.flatHier
+## method corpus2tagged()
+# returns a list of kRp.tagged objects from an object of class kRp.corpus
 # element names are the doc_id
-setGeneric("flatHier2tagged", function(obj) standardGeneric("flatHier2tagged"))
-setMethod("flatHier2tagged",
-  signature=signature(obj="kRp.flatHier"),
+setGeneric("corpus2tagged", function(obj) standardGeneric("corpus2tagged"))
+setMethod("corpus2tagged",
+  signature=signature(obj="kRp.corpus"),
   function(obj){
     tt_desc <- describe(obj)
     tt_lang <- language(obj)
@@ -267,4 +267,4 @@ setMethod("flatHier2tagged",
     names(result) <- names(tt_desc)
     return(result)
   }
-) ## end method flatHier2tagged()
+) ## end method corpus2tagged()

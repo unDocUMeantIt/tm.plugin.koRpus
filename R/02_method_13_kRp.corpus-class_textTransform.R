@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply textTransform() to all texts in kRp.flatHier objects
+#' Apply textTransform() to all texts in kRp.corpus objects
 #' 
 #' This method calls \code{\link[koRpus:textTransform]{textTransform}} on all tagged text objects
 #' inside the given \code{txt} object (using \code{mclapply}).
 #' 
-#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param ... options to pass through to \code{\link[koRpus:textTransform]{textTransform}}.
 #' @return An object of the same class as \code{txt}.
@@ -29,7 +29,7 @@
 #' @importFrom koRpus textTransform
 #' @export
 #' @docType methods
-#' @aliases textTransform,kRp.flatHier-method
+#' @aliases textTransform,kRp.corpus-method
 #' @rdname textTransform
 #' @examples
 #' \dontrun{
@@ -47,8 +47,8 @@
 #' # remove all punctuation
 #' myCorpus <- textTransform(myCorpus, scheme="minor")
 #' }
-#' @include 01_class_01_kRp.flatHier.R
-setMethod("textTransform", signature(txt="kRp.flatHier"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
+#' @include 01_class_01_kRp.corpus.R
+setMethod("textTransform", signature(txt="kRp.corpus"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
     return(
       text_transform_wrapper(
         obj=txt,
@@ -63,10 +63,10 @@ setMethod("textTransform", signature(txt="kRp.flatHier"), function(txt, mc.cores
 ## function text_transform_wrapper()
 # this wrapper can be called by all methods invoking text transformation,
 # e.g. textTransform(), cTest(), jumbleWords(), or clozeDelete()
-# - obj: an object of class kRp.flatHier
+# - obj: an object of class kRp.corpus
 # - trans_method: an object of class function
 text_transform_wrapper <- function(obj, trans_method, mc.cores=getOption("mc.cores", 1L), ...){
-    tagged_list <- flatHier2tagged(obj)
+    tagged_list <- corpus2tagged(obj)
     transformed_texts <- mclapply(tagged_list, trans_method, ..., mc.cores=mc.cores)
     corpusTagged_df <- do.call(rbind, mclapply(transformed_texts, taggedText, mc.cores=mc.cores))
     row.names(corpusTagged_df) <- NULL

@@ -4,7 +4,7 @@
 \alias{corpus_files}
 \title{Get a comprehensive data frame describing the files of your corpus}
 \usage{
-corpus_files(dir, hierarchy, fsep = .Platform$file.sep,
+corpus_files(dir, hierarchy = list(), fsep = .Platform$file.sep,
   full_list = FALSE)
 }
 \arguments{

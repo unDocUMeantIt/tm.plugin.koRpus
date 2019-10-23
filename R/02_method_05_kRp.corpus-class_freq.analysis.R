@@ -16,7 +16,7 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply freq.analysis() to all texts in kRp.flatHier objects
+#' Apply freq.analysis() to all texts in kRp.corpus objects
 #' 
 #' This method calls \code{\link[koRpus:freq.analysis]{freq.analysis}} on all tagged text objects
 #' inside the given \code{txt.file} object.
@@ -25,13 +25,13 @@
 #' is found in the \code{freq} slot of \code{txt.file}, it is used automatically. That is the case if you called
 #' \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}} on the object previously.
 #' 
-#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param ... options to pass through to \code{\link[koRpus:freq.analysis]{freq.analysis}}.
 #' @return An object of the same class as \code{txt.file}.
 #' @importFrom koRpus freq.analysis
 #' @export
 #' @docType methods
-#' @aliases freq.analysis,kRp.flatHier-method
+#' @aliases freq.analysis,kRp.corpus-method
 #' @rdname freq.analysis
 #' @examples
 #' \dontrun{
@@ -50,8 +50,8 @@
 #' myCorpus <- read.corp.custom(myCorpus)
 #' myCorpus <- freq.analysis(myCorpus)
 #' }
-#' @include 01_class_01_kRp.flatHier.R
-setMethod("freq.analysis", signature(txt.file="kRp.flatHier"), function(txt.file, ...){
+#' @include 01_class_01_kRp.corpus.R
+setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, ...){
     tagged_large <- kRp_tagged(
       lang=language(txt.file),
       TT.res=taggedText(txt.file)

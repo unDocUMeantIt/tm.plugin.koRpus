@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply lex.div() to all texts in kRp.flatHier objects
+#' Apply lex.div() to all texts in kRp.corpus objects
 #' 
 #' This method calls \code{\link[koRpus:lex.div]{lex.div}} on all tagged text objects
 #' inside the given \code{txt} object (using \code{mclapply}).
 #' 
-#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param txt An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
@@ -35,7 +35,7 @@
 #' @importMethodsFrom koRpus summary lex.div
 #' @export
 #' @docType methods
-#' @aliases lex.div,kRp.flatHier-method
+#' @aliases lex.div,kRp.corpus-method
 #' @rdname lex.div
 #' @examples
 #' \dontrun{
@@ -54,9 +54,9 @@
 #' )
 #' myCorpus <- lex.div(myCorpus)
 #' }
-#' @include 01_class_01_kRp.flatHier.R
-setMethod("lex.div", signature(txt="kRp.flatHier"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
-    tagged_list <- flatHier2tagged(txt)
+#' @include 01_class_01_kRp.corpus.R
+setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
+    tagged_list <- corpus2tagged(txt)
     corpusLexDiv(txt) <- mclapply(names(describe(txt)), function(thisText){
       lex.div(tagged_list[[thisText]], char=char, quiet=quiet, ...)
     }, mc.cores=mc.cores)

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Methods to correct kRp.flatHier objects
+#' Methods to correct kRp.corpus objects
 #' 
 #' These methods enable you to correct errors that occurred during automatic processing,
 #' e.g., wrong hyphenation.
@@ -24,7 +24,7 @@
 #' documentation of \code{\link[sylly:correct.hyph]{correct.hyph}} in the \code{sylly}
 #' package.
 #' 
-#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 # @param row Integer, the row number of the entry to be changed. Can be an integer vector
 #    to change several rows in one go.
 #' @param word A character string, the (possibly incorrectly hyphenated) \code{word} entry to be replaced with \code{hyphen}.
@@ -42,12 +42,12 @@
 #' @export
 #' @docType methods
 #' @rdname correct
-#' @aliases correct.hyph correct.hyph,kRp.flatHier-method
+#' @aliases correct.hyph correct.hyph,kRp.corpus-method
 #' @importFrom sylly correct.hyph
 #' @export
-#' @include 01_class_01_kRp.flatHier.R
+#' @include 01_class_01_kRp.corpus.R
 setMethod("correct.hyph",
-  signature(obj="kRp.flatHier"),
+  signature(obj="kRp.corpus"),
   function (obj, word=NULL, hyphen=NULL, cache=TRUE){
     corpusHyphen(obj) <- lapply(corpusHyphen(obj), function(thisText){
         correct.hyph(thisText, word=word, hyphen=hyphen, cache=cache)

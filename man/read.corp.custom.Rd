@@ -2,15 +2,15 @@
 % Please edit documentation in
 %   R/02_method_04_kRp.corpus-class_read.corp.custom.R
 \docType{methods}
-\name{read.corp.custom,kRp.flatHier-method}
-\alias{read.corp.custom,kRp.flatHier-method}
-\title{Apply read.corp.custom() to all texts in kRp.flatHier objects}
+\name{read.corp.custom,kRp.corpus-method}
+\alias{read.corp.custom,kRp.corpus-method}
+\title{Apply read.corp.custom() to all texts in kRp.corpus objects}
 \usage{
-\S4method{read.corp.custom}{kRp.flatHier}(corpus,
+\S4method{read.corp.custom}{kRp.corpus}(corpus,
   mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
-\item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.}
+\item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}
 
 \item{mc.cores}{The number of cores to use for parallelization,
       see \code{\link[parallel:mclapply]{mclapply}}.}

@@ -16,12 +16,12 @@
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Apply hyphen() to all texts in kRp.flatHier objects
+#' Apply hyphen() to all texts in kRp.corpus objects
 #' 
 #' This method calls \code{\link[sylly:hyphen]{hyphen}} on all tagged text objects
 #' inside the given \code{words} object (using \code{mclapply}).
 #' 
-#' @param words An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param words An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
 #' @param quiet Logical, if \code{FALSE} shows a status bar for the hyphenation process of each text.
 #' @param ... options to pass through to \code{\link[sylly:hyphen]{hyphen}}.
@@ -30,7 +30,7 @@
 #' @importFrom sylly hyphen
 #' @export
 #' @docType methods
-#' @aliases hyphen,kRp.flatHier-method
+#' @aliases hyphen,kRp.corpus-method
 #' @rdname hyphen
 #' @examples
 #' \dontrun{
@@ -41,9 +41,9 @@
 #' )
 #' myCorpus <- hyphen(myCorpus)
 #' }
-#' @include 01_class_01_kRp.flatHier.R
-setMethod("hyphen", signature(words="kRp.flatHier"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
-    tagged_list <- flatHier2tagged(words)
+#' @include 01_class_01_kRp.corpus.R
+setMethod("hyphen", signature(words="kRp.corpus"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
+    tagged_list <- corpus2tagged(words)
     corpusHyphen(words) <- mclapply(tagged_list, function(thisText){
       hyphen(thisText, quiet=quiet, ...)
     }, mc.cores=mc.cores)

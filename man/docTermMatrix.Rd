@@ -3,17 +3,17 @@
 \docType{methods}
 \name{docTermMatrix}
 \alias{docTermMatrix}
-\alias{docTermMatrix,kRp.flatHier-method}
+\alias{docTermMatrix,kRp.corpus-method}
 \alias{docTermMatrix,-methods}
 \title{Generate a document-term matrix from a corpus object}
 \usage{
 docTermMatrix(obj, terms = "token", case.sens = FALSE, tfidf = FALSE)
 
-\S4method{docTermMatrix}{kRp.flatHier}(obj, terms = "token",
+\S4method{docTermMatrix}{kRp.corpus}(obj, terms = "token",
   case.sens = FALSE, tfidf = FALSE)
 }
 \arguments{
-\item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.}
+\item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}
 
 \item{terms}{A character string defining the \code{tokens} column to be used for calculating the matrix.}
 
@@ -28,7 +28,7 @@ A sparse matrix of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.
 }
 \description{
 Returns a sparse document-term matrix calculated from a given object of class
-\code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}. You can also
+\code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}. You can also
 calculate the term frequency inverted document frequency value (tf-idf) for each
 term.
 }

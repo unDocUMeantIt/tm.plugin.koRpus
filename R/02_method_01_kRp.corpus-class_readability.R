@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with tm.plugin.koRpus.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Apply readability() to all texts in kRp.flatHier objects
+#' Apply readability() to all texts in kRp.corpus objects
 #' 
 #' This method calls \code{\link[koRpus:readability]{readability}} on all tagged text objects
 #' inside the given \code{txt.file} object (using \code{mclapply}).
 #' 
-#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+#' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param summary Logical, determines if the \code{summary} slot should automatically be
 #'    updated by calling \code{\link[tm.plugin.koRpus:summary]{summary}} on the result.
 #' @param mc.cores The number of cores to use for parallelization, see \code{\link[parallel:mclapply]{mclapply}}.
@@ -32,7 +32,7 @@
 #' @importFrom parallel mclapply
 #' @importMethodsFrom koRpus readability summary
 #' @docType methods
-#' @aliases readability,kRp.flatHier-method
+#' @aliases readability,kRp.corpus-method
 #' @rdname readability
 #' @export
 #' @examples
@@ -52,18 +52,18 @@
 #' )
 #' myTexts <- readability(myCorpus)
 #' }
-#' @include 01_class_01_kRp.flatHier.R
-setMethod("readability", signature(txt.file="kRp.flatHier"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
-    tagged_list <- flatHier2tagged(txt.file)
+#' @include 01_class_01_kRp.corpus.R
+setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
+    tagged_list <- corpus2tagged(txt.file)
     corpusReadability(txt.file) <- mclapply(names(tagged_list), function(thisText){
       dot_args <- list(...)
       if(!is.null(dot_args[["keep.input"]])){
         stop(simpleError("The argument \"keep.input\" is FALSE by default and can't be changed!"))
       } else {}
-      if(thisText %in% names(corpusHyphen(txt.file)) & is.null(dot_args[["hyphen"]])){
+      if(all(thisText %in% names(corpusHyphen(txt.file)), is.null(dot_args[["hyphen"]]))){
         # we probably need to drop one of two hyphen arguments if
         # readability was called from one of the wrapper functions
-        default <- list(txt.file=tagged_list[[thisText]], keep.input=FALSE, ...)
+        default <- list(txt.file=tagged_list[[thisText]], quiet=quiet, keep.input=FALSE, ...)
         args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
         rdb <- do.call(readability, args)
       } else {

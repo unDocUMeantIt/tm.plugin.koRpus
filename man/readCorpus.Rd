@@ -2,7 +2,7 @@
 % Please edit documentation in R/readCorpus.R
 \name{readCorpus}
 \alias{readCorpus}
-\title{Create kRp.flatHier objects from text files or data frames}
+\title{Create kRp.corpus objects from text files or data frames}
 \usage{
 readCorpus(dir, hierarchy = list(), lang = "kRp.env",
   tagger = "kRp.env", encoding = "", pattern = NULL,
@@ -64,7 +64,7 @@ This value is passed through to simpleCorpus.}
 \item{...}{Additional options which are passed through to the defined \code{tagger}.}
 }
 \value{
-An object of class \code{\link[tm.plugin.koRpus:kRp.flatHier-class]{kRp.flatHier}}.
+An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 }
 \description{
 You can either read a corpus from text files (one file per text,
