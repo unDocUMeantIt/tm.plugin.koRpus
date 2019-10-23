@@ -60,14 +60,19 @@ setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, su
       if(!is.null(dot_args[["keep.input"]])){
         stop(simpleError("The argument \"keep.input\" is FALSE by default and can't be changed!"))
       } else {}
-      if(all(thisText %in% names(corpusHyphen(txt.file)), is.null(dot_args[["hyphen"]]))){
-        # we probably need to drop one of two hyphen arguments if
-        # readability was called from one of the wrapper functions
-        default <- list(txt.file=tagged_list[[thisText]], quiet=quiet, keep.input=FALSE, ...)
-        args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
-        rdb <- do.call(readability, args)
+      if(thisText %in% names(corpusHyphen(txt.file))){
+          # we probably need to drop one of two hyphen arguments if
+          # readability was called from one of the wrapper functions
+          default <- list(txt.file=tagged_list[[thisText]], quiet=quiet, keep.input=FALSE, ...)
+          args <- modifyList(default, list(hyphen=corpusHyphen(txt.file)[[thisText]]))
+          rdb <- do.call(readability, args)
       } else {
-        rdb <- readability(tagged_list[[thisText]], quiet=quiet, keep.input=FALSE, ...)
+        rdb <- readability(
+          tagged_list[[thisText]],
+          quiet=quiet,
+          keep.input=FALSE,
+          ...
+        )
       }
       return(rdb)
     }, mc.cores=mc.cores)
