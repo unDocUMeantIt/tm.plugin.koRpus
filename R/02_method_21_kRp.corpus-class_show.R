@@ -37,7 +37,7 @@ setMethod("show", signature(object="kRp.corpus"), function(object){
   
   hierarchy <- corpusHierarchy(object)
   txt_hier <- "\nThe texts are "
-  if(length(hierarchy) > 0){
+  if(isTRUE(corpusHasFeature(object, "hierarchy"))){
     txt_hier <- paste0(txt_hier, " hierarchically grouped:\n\n  ")
     groups <- paste0(sapply(
       names(hierarchy),
@@ -50,7 +50,15 @@ setMethod("show", signature(object="kRp.corpus"), function(object){
   } else {
     txt_hier <- paste0(txt_hier, "not hierarchically grouped.")
   }
-  
+
+  features <- slot(object, "features")
+  features <- features[features]
+  # hierarchy was already checked
+  features <- features[!names(features) %in% "hierarchy"]
+  if(length(features) > 0){
+    txt_hier <- paste0(txt_hier, "\n\nAdditional features:\n  \"", paste0(names(features), collapse="\", \""), "\"")
+  } else {}
+
   message(txt_hier)
-  
+
 })

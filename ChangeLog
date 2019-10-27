@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2019-10-23)
+changes in version 0.4-1 (2019-10-27)
 unreleased:
   - this release is under development
 changed:
@@ -16,6 +16,8 @@ changed:
   - [, [<-, [[ and [[<- methods no longer apply to the summary data
     frame but tokens slot as in koRpus (where it applies to the TT.res
     slot)
+  - show(): kRp.corpus objects now list all available features
+  - read.corp.custom(): removed unused mc.cores argument
 added:
   - readCorpus(): the hierarchy levels of a text corpus can now be
     assumed directly from the directory structure by setting "hierarchy=TRUE"
