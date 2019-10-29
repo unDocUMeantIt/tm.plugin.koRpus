@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2019-10-27)
+changes in version 0.4-1 (2019-10-29)
 unreleased:
   - this release is under development
 changed:
@@ -26,6 +26,8 @@ added:
     corpusCorpFreq(), corpusCorpFreq()<-, 
     diffText(), diffText()<-, originalText(): new getter/setter methods
     for kRp.corpus objects
+  - corpus2tagged(): new method transforms a kRp.corpus object into a
+    list of kRp.tagged objects
 removed:
   - removed all classes and methods dealing with kRp.hierarchy
   - removed deprecated methods of the pre-kRp.hierarchy era

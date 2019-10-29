@@ -16,7 +16,7 @@ Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.4-1
-Date: 2019-10-23
+Date: 2019-10-29
 RoxygenNote: 6.1.1
 Collate: 
     '01_class_01_kRp.corpus.R'
@@ -34,6 +34,7 @@ Collate:
     '02_method_12_kRp.corpus-class_cTest.R'
     '02_method_13_kRp.corpus-class_textTransform.R'
     '02_method_14_kRp.corpus-class_docTermMatrix.R'
+    '02_method_15_kRp.corpus-class_corpus2tagged.R'
     '02_method_20_kRp.corpus_get_set_is.R'
     '02_method_21_kRp.corpus-class_show.R'
     'corpus_files.R'

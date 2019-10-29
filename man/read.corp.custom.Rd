@@ -6,14 +6,10 @@
 \alias{read.corp.custom,kRp.corpus-method}
 \title{Apply read.corp.custom() to all texts in kRp.corpus objects}
 \usage{
-\S4method{read.corp.custom}{kRp.corpus}(corpus,
-  mc.cores = getOption("mc.cores", 1L), ...)
+\S4method{read.corp.custom}{kRp.corpus}(corpus, ...)
 }
 \arguments{
 \item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}
-
-\item{mc.cores}{The number of cores to use for parallelization,
-      see \code{\link[parallel:mclapply]{mclapply}}.}
 
 \item{...}{options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.}
 }
