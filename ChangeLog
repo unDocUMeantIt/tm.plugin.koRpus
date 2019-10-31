@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2019-10-29)
+changes in version 0.4-1 (2019-10-31)
 unreleased:
   - this release is under development
 changed:
@@ -18,6 +18,8 @@ changed:
     slot)
   - show(): kRp.corpus objects now list all available features
   - read.corp.custom(): removed unused mc.cores argument
+  - docTermMatrix(): by default behaves like most other methods and adds
+    its result to the input object rather than returning just the matrix
 added:
   - readCorpus(): the hierarchy levels of a text corpus can now be
     assumed directly from the directory structure by setting "hierarchy=TRUE"
@@ -28,6 +30,8 @@ added:
     for kRp.corpus objects
   - corpus2tagged(): new method transforms a kRp.corpus object into a
     list of kRp.tagged objects
+  - corpusDocTermMatrix(): new method to get/set the sparse document term
+    matrix in kRp.corpus objects
 removed:
   - removed all classes and methods dealing with kRp.hierarchy
   - removed deprecated methods of the pre-kRp.hierarchy era

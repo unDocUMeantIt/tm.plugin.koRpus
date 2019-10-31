@@ -28,7 +28,10 @@
 #' @param terms A character string defining the \code{tokens} column to be used for calculating the matrix.
 #' @param case.sens Logical, whether terms should be counted case sensitive.
 #' @param tfidf Logical, if \code{TRUE} calculates term frequency--inverse document frequency (tf-idf)
-#'   values instead of absolute frequency.
+#'    values instead of absolute frequency.
+#' @param asMatrix Logical, whether the output should be just the sprase matrix or the input object with
+#'    that matrix added as a feature. Use \code{\link[tm.plugin.koRpus:corpusDocTermMatrix]{corpusDocTermMatrix}}
+#'    to get the matrix from such an aggregated object.
 #' @return A sparse matrix of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.
 #' @importFrom Matrix Matrix
 #' @export
@@ -62,7 +65,16 @@
 #'   tfidf=TRUE
 #' )
 #' }
-setGeneric("docTermMatrix", function(obj, terms="token", case.sens=FALSE, tfidf=FALSE) standardGeneric("docTermMatrix"))
+setGeneric(
+  "docTermMatrix",
+  function(
+    obj,
+    terms="token",
+    case.sens=FALSE,
+    tfidf=FALSE,
+    asMatrix=FALSE
+  ) standardGeneric("docTermMatrix")
+)
 
 #' @rdname docTermMatrix
 #' @docType methods
@@ -73,7 +85,13 @@ setGeneric("docTermMatrix", function(obj, terms="token", case.sens=FALSE, tfidf=
 #' @include 01_class_01_kRp.corpus.R
 setMethod("docTermMatrix",
   signature=signature(obj="kRp.corpus"),
-  function(obj, terms="token", case.sens=FALSE, tfidf=FALSE){
+  function(
+    obj,
+    terms="token",
+    case.sens=FALSE,
+    tfidf=FALSE,
+    asMatrix=FALSE
+  ){
     tagged <- tif_as_tokens_df(obj)
     if(!isTRUE(case.sens)){
       tagged[[terms]] <- tolower(tagged[[terms]])
@@ -106,6 +124,12 @@ setMethod("docTermMatrix",
     } else {
       result <- Matrix(dt_mtx, sparse=TRUE)
     }
-    return(result)
+
+    if(isTRUE(asMatrix)){
+      return(result)
+    } else {
+      corpusDocTermMatrix(obj) <- result
+      return(obj)
+    }
   }
 )

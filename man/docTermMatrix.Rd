@@ -7,10 +7,11 @@
 \alias{docTermMatrix,-methods}
 \title{Generate a document-term matrix from a corpus object}
 \usage{
-docTermMatrix(obj, terms = "token", case.sens = FALSE, tfidf = FALSE)
+docTermMatrix(obj, terms = "token", case.sens = FALSE, tfidf = FALSE,
+  asMatrix = FALSE)
 
 \S4method{docTermMatrix}{kRp.corpus}(obj, terms = "token",
-  case.sens = FALSE, tfidf = FALSE)
+  case.sens = FALSE, tfidf = FALSE, asMatrix = FALSE)
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}
@@ -22,6 +23,11 @@ docTermMatrix(obj, terms = "token", case.sens = FALSE, tfidf = FALSE)
 \item{tfidf}{Logical,
       if \code{TRUE} calculates term frequency--inverse document frequency (tf-idf)
 values instead of absolute frequency.}
+
+\item{asMatrix}{Logical,
+      whether the output should be just the sprase matrix or the input object with
+that matrix added as a feature. Use \code{\link[tm.plugin.koRpus:corpusDocTermMatrix]{corpusDocTermMatrix}}
+to get the matrix from such an aggregated object.}
 }
 \value{
 A sparse matrix of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.
