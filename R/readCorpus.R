@@ -200,7 +200,9 @@ readCorpus <- function(
   result <- kRp.corpus(
     lang=lang
   )
-  corpusHierarchy(result) <- hierarchy
+  if(all(is.list(hierarchy), length(hierarchy) > 0)){
+    corpusHierarchy(result) <- hierarchy
+  } else {}
 
   message("Processing corpus...")
   if(do_files){
