@@ -34,7 +34,7 @@ usually found in those objects,
       indicating which features are available in this object's \code{feat_list} slot.
 Common features are listed in the description of the \code{feat_list} slot.}
 
-\item{\code{feat_list}}{A named list with analysis results or other content as used by the defined \code{features}:
+\item{\code{feat_list}}{A named list with optional analysis results or other content as used by the defined \code{features}:
 \itemize{
   \item{\code{hierarchy} }{A named list of named character vectors describing the directory hierarchy level by level.}
   \item{\code{hyphen} }{A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.}
@@ -50,8 +50,14 @@ Common features are listed in the description of the \code{feat_list} slot.}
   \item{\code{summary} }{A summary data frame for the full corpus,
       including descriptive statistics on all texts, as well as
     results of analyses like readability and lexical diversity, if available.}
+  \item{\code{doc_term_matrix} }{A sparse document-term matrix,
+      as produced by \code{\link[tm.plugin.koRpus:docTermMatrix]{docTermMatrix}}.}
+  \item{\code{stopwords} }{A numeric vector with the total number of stopwords in each text,
+      if stopwords were analyzed during tokenizing or POS tagging.}
 }
-See the \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for easy access to these sub-slots.}
+See the \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for easy access to these sub-slots.
+There can actually be any number of additional features,
+      the above is just a list of those already defined by this package.}
 }}
 
 \note{

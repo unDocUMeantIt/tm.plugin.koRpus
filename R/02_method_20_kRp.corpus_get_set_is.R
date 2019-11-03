@@ -34,7 +34,8 @@
 #'   \item{\code{corpusFreq()} }{returns the frequency analysis data from the \code{feat_list} slot.}
 #'   \item{\code{corpusCorpFreq()} }{returns the \code{kRp.corp.freq} object of the \code{feat_list} slot.}
 #'   \item{\code{corpusHierarchy()} }{returns the corpus' hierarchy structure.}
-#'   \item{\code{corpusDocTermMatrix()} }{returns the sparse document erm matrix of the \code{feat_list} slot.}
+#'   \item{\code{corpusDocTermMatrix()} }{returns the sparse document term matrix of the \code{feat_list} slot.}
+#'   \item{\code{corpusStopwords()} }{returns the number of stopwords found in each text (if analyzed) from the \code{feat_list} slot.}
 #'   \item{\code{diffText()} }{returns the \code{diff} element of the \code{feat_list} slot.}
 #'   \item{\code{originalText} }{regenerates the original text before text transformations and returns it as a data frame.}
 #'   \item{\code{[}/\code{[[} }{can be used as a shortcut to index the results of \code{taggedText()}.}
@@ -641,6 +642,7 @@ setMethod("corpusFiles<-",
   }
 )
 
+
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -659,7 +661,6 @@ setMethod("corpusDocTermMatrix",
   }
 )
 
-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -676,6 +677,45 @@ setMethod("corpusDocTermMatrix<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
     corpusFeature(obj, "doc_term_matrix") <- value
+    return(obj)
+  }
+)
+
+
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+setGeneric("corpusStopwords", function(obj, ...) standardGeneric("corpusStopwords"))
+#' @rdname kRp.corpus_get-methods
+#' @docType methods
+#' @export
+#' @aliases
+#'    corpusStopwords,-methods
+#'    corpusStopwords,kRp.corpus-method
+#' @include 01_class_01_kRp.corpus.R
+setMethod("corpusStopwords",
+  signature=signature(obj="kRp.corpus"),
+  function (obj){
+    return(corpusFeature(obj, "stopwords"))
+  }
+)
+
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+# @param value The new value to replace the current with.
+setGeneric("corpusStopwords<-", function(obj, value) standardGeneric("corpusStopwords<-"))
+#' @rdname kRp.corpus_get-methods
+#' @export
+#' @docType methods
+#' @aliases
+#'    corpusStopwords<-,-methods
+#'    corpusStopwords<-,kRp.corpus-method
+#' @include 01_class_01_kRp.corpus.R
+setMethod("corpusStopwords<-",
+  signature=signature(obj="kRp.corpus"),
+  function (obj, value){
+    corpusFeature(obj, "stopwords") <- value
     return(obj)
   }
 )

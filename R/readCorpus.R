@@ -268,13 +268,24 @@ readCorpus <- function(
     mc.cores=mc.cores
   )
   names(corpusTagged) <- all_files[["doc_id"]]
-  corpusMeta(result, "stopwords") <- unlist(mclapply(
+  stopwords_found <- unlist(mclapply(
     corpusTagged,
     function(thisTaggedText){
       sum(thisTaggedText[["stop"]])
     },
     mc.cores=mc.cores
   ))
+  stopwords_list <- list(...)[["stopwords"]]
+  if(any(
+    length(stopwords_list) > 0,
+    sum(stopwords_found) > 0,
+    na.rm=TRUE
+  )){
+    corpusStopwords(result) <- list(
+      stopwords=stopwords_list,
+      sum=stopwords_found
+    )
+  } else {}
 
   corpusTagged_df <- do.call(rbind, mclapply(corpusTagged, taggedText, mc.cores=mc.cores))
   row.names(corpusTagged_df) <- NULL

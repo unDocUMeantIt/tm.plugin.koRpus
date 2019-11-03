@@ -70,7 +70,7 @@ init_corpus_tokens <- function(hierarchy=list()){
 #'    usually found in those objects, this data frame also has a factor column for each hierarchical category defined (if any).
 #' @slot features A named logical vector, indicating which features are available in this object's \code{feat_list} slot.
 #'    Common features are listed in the description of the \code{feat_list} slot.
-#' @slot feat_list A named list with analysis results or other content as used by the defined \code{features}:
+#' @slot feat_list A named list with optional analysis results or other content as used by the defined \code{features}:
 #'    \itemize{
 #'      \item{\code{hierarchy} }{A named list of named character vectors describing the directory hierarchy level by level.}
 #'      \item{\code{hyphen} }{A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.}
@@ -84,9 +84,12 @@ init_corpus_tokens <- function(hierarchy=list()){
 #'        a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.}
 #'      \item{\code{summary} }{A summary data frame for the full corpus, including descriptive statistics on all texts, as well as
 #'        results of analyses like readability and lexical diversity, if available.}
+#'      \item{\code{doc_term_matrix} }{A sparse document-term matrix, as produced by \code{\link[tm.plugin.koRpus:docTermMatrix]{docTermMatrix}}.}
+#'      \item{\code{stopwords} }{A numeric vector with the total number of stopwords in each text, if stopwords were analyzed during tokenizing or POS tagging.}
 #      \item{\code{} }{}
 #'    }
 #'    See the \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for easy access to these sub-slots.
+#'    There can actually be any number of additional features, the above is just a list of those already defined by this package.
 # @slot summary A summary data frame for the full corpus.
 # @slot hyphen A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.
 # @slot readability A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.
