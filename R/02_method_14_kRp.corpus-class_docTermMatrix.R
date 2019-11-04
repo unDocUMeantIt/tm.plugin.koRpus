@@ -29,7 +29,7 @@
 #' @param case.sens Logical, whether terms should be counted case sensitive.
 #' @param tfidf Logical, if \code{TRUE} calculates term frequency--inverse document frequency (tf-idf)
 #'    values instead of absolute frequency.
-#' @param asMatrix Logical, whether the output should be just the sprase matrix or the input object with
+#' @param asMatrix Logical, whether the output should be just the sparse matrix or the input object with
 #'    that matrix added as a feature. Use \code{\link[tm.plugin.koRpus:corpusDocTermMatrix]{corpusDocTermMatrix}}
 #'    to get the matrix from such an aggregated object.
 #' @return A sparse matrix of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.

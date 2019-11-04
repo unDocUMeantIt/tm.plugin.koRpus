@@ -67,8 +67,10 @@ setMethod("summary", signature(object="kRp.corpus"), function(
     available_lex_div <- nullToList(unlist(corpusMeta(object, "lex_div", fail=FALSE)[["index"]]), entry="index")
 
     # initialize the data.frame
-    summary.info <- meta(corpusTm(object))[, c("doc_id", names(corpusHierarchy(object)))]
-    summary.info[["stopwords"]] <- corpusMeta(object, "stopwords")
+    summary.info <- meta(corpusTm(object))[, c("doc_id", names(corpusHierarchy(object))), drop=FALSE]
+    if(corpusHasFeature(object, "stopwords")){
+      summary.info[["stopwords"]] <- corpusStopwords(object)[["sum"]]
+    } else {}
 
     summary.rdb <- summary.lexdiv <- NULL
 
