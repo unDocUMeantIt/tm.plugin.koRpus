@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2019-10-31)
+changes in version 0.4-1 (2019-11-04)
 unreleased:
   - this release is under development
 changed:
@@ -19,7 +19,9 @@ changed:
   - show(): kRp.corpus objects now list all available features
   - read.corp.custom(): removed unused mc.cores argument
   - docTermMatrix(): by default behaves like most other methods and adds
-    its result to the input object rather than returning just the matrix
+    its result to the input object rather than returning just the matrix;
+    also, the generic is now defined by the koRpus package and was removed,
+    including all of the actual function code
 added:
   - readCorpus(): the hierarchy levels of a text corpus can now be
     assumed directly from the directory structure by setting "hierarchy=TRUE"

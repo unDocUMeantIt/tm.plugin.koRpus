@@ -32,11 +32,15 @@
 #' @param asMatrix Logical, whether the output should be just the sparse matrix or the input object with
 #'    that matrix added as a feature. Use \code{\link[tm.plugin.koRpus:corpusDocTermMatrix]{corpusDocTermMatrix}}
 #'    to get the matrix from such an aggregated object.
-#' @return A sparse matrix of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.
-#' @importFrom Matrix Matrix
+#' @return Either an object of the input class or a sparse matrix of class
+#'    \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.
 #' @export
+#' @aliases
+#'    docTermMatrix,-methods
+#'    docTermMatrix,kRp.corpus-method
 #' @docType methods
 #' @rdname docTermMatrix
+#' @include 01_class_01_kRp.corpus.R
 #' @examples
 #' \dontrun{
 #' myCorpus <- readCorpus(
@@ -54,35 +58,18 @@
 #' )
 #' 
 #' # get the document-term frequencies in a sparse matrix
-#' myDTMatrix <- docTermMatrix(myCorpus)
+#' myDTMatrix <- docTermMatrix(myCorpus, asMatrix=TRUE)
 #' 
 #' # combine with filterByClass() to, e.g.,  exclude all punctuation
-#' myDTMatrix <- docTermMatrix(filterByClass(myCorpus))
+#' myDTMatrix <- docTermMatrix(filterByClass(myCorpus), asMatrix=TRUE)
 #' 
 #' # instead of absolute frequencies, get the tf-idf values
 #' myDTMatrix <- docTermMatrix(
 #'   filterByClass(myCorpus),
-#'   tfidf=TRUE
+#'   tfidf=TRUE,
+#'   asMatrix=TRUE
 #' )
 #' }
-setGeneric(
-  "docTermMatrix",
-  function(
-    obj,
-    terms="token",
-    case.sens=FALSE,
-    tfidf=FALSE,
-    asMatrix=FALSE
-  ) standardGeneric("docTermMatrix")
-)
-
-#' @rdname docTermMatrix
-#' @docType methods
-#' @export
-#' @aliases
-#'    docTermMatrix,-methods
-#'    docTermMatrix,kRp.corpus-method
-#' @include 01_class_01_kRp.corpus.R
 setMethod("docTermMatrix",
   signature=signature(obj="kRp.corpus"),
   function(
@@ -92,38 +79,12 @@ setMethod("docTermMatrix",
     tfidf=FALSE,
     asMatrix=FALSE
   ){
-    tagged <- tif_as_tokens_df(obj)
-    if(!isTRUE(case.sens)){
-      tagged[[terms]] <- tolower(tagged[[terms]])
-    } else {}
-    uniqueTerms <- unique(tagged[[terms]])
-    doc_ids <- unique(as.character(tagged[["doc_id"]]))
-
-    dt_mtx <- matrix(
-      0,
-      nrow=length(doc_ids),
-      ncol=length(uniqueTerms),
-      dimnames=list(doc_ids, uniqueTerms)
+    result <- docTermMatrix(
+      obj=tif_as_tokens_df(obj),
+      terms=terms,
+      case.sens=case.sens,
+      tfidf=tfidf
     )
-    if(isTRUE(tfidf)){
-      tf_mtx <- dt_mtx
-    } else {}
-
-    for (thisDoc in doc_ids){
-      relevantTerms <- tagged[tagged[["doc_id"]] %in% thisDoc, terms]
-      termsInDoc <- table(relevantTerms)
-      if(isTRUE(tfidf)){
-        tf_mtx[rownames(tf_mtx) %in% thisDoc, colnames(tf_mtx) %in% names(termsInDoc)] <- termsInDoc/length(relevantTerms)
-      } else {}
-      dt_mtx[rownames(dt_mtx) %in% thisDoc, colnames(dt_mtx) %in% names(termsInDoc)] <- termsInDoc
-    }
-
-    if(isTRUE(tfidf)){
-      idf <- log(nrow(dt_mtx)/colSums(dt_mtx > 0))
-      result <- Matrix(t(t(tf_mtx) * idf), sparse=TRUE)
-    } else {
-      result <- Matrix(dt_mtx, sparse=TRUE)
-    }
 
     if(isTRUE(asMatrix)){
       return(result)
