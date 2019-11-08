@@ -1,8 +1,11 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2019-11-04)
+changes in version 0.4-1 (2019-11-07)
 unreleased:
   - this release is under development
+fixed:
+  - docTermMatrix(): results were wrong because numbers were assigned
+   to wrong columns; now fixed in koRpus
 changed:
   - the nested object class kRp.hierarchy was replaced by kRp.corpus;
     instead of reproducing the file hierarchy in the object structure,
