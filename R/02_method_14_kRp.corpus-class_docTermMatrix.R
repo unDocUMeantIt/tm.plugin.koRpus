@@ -17,10 +17,13 @@
 
 #' Generate a document-term matrix from a corpus object
 #'
-#' Returns a sparse document-term matrix calculated from a given object of class
-#' \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}. You can also
-#' calculate the term frequency inverted document frequency value (tf-idf) for each
+#' Calculates a sparse document-term matrix calculated from a given object of class
+#' \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}} and adds it to the object's feature list.
+#' You can also calculate the term frequency inverted document frequency value (tf-idf) for each
 #' term.
+#' 
+#' The settings of \code{terms}, \code{case.sens}, and \code{tfidf} will be stored in the object's \code{meta} slot,
+#' so you can use \code{corpusMeta(..., "doc_term_matrix")} to fetch it.
 #' 
 #' See the examples to learn how to limit the analysis to desired word classes.
 #' 
@@ -89,7 +92,12 @@ setMethod("docTermMatrix",
     if(isTRUE(asMatrix)){
       return(result)
     } else {
-      corpusDocTermMatrix(obj) <- result
+      corpusDocTermMatrix(
+        obj,
+        terms=terms,
+        case.sens=case.sens,
+        tfidf=tfidf
+      ) <- result
       return(obj)
     }
   }

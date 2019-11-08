@@ -665,7 +665,22 @@ setMethod("corpusDocTermMatrix",
 #' @export
 #' @docType methods
 # @param value The new value to replace the current with.
-setGeneric("corpusDocTermMatrix<-", function(obj, value) standardGeneric("corpusDocTermMatrix<-"))
+setGeneric("corpusDocTermMatrix<-", function(
+    obj,
+    value,
+    terms=NULL,
+    case.sens=NULL,
+    tfidf=NULL
+  )
+  standardGeneric("corpusDocTermMatrix<-")
+)
+#' @param terms A character string defining the \code{tokens} used for calculating the matrix.
+#'    Stored in object's meta data slot.
+#' @param case.sens Logical, whether terms were counted case sensitive.
+#'    Stored in object's meta data slot.
+#' @param tfidf Logical, use \code{TRUE} if the term frequency--inverse document frequency (tf-idf)
+#'    values were calculated instead of absolute frequency.
+#'    Stored in object's meta data slot.
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -675,8 +690,19 @@ setGeneric("corpusDocTermMatrix<-", function(obj, value) standardGeneric("corpus
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusDocTermMatrix<-",
   signature=signature(obj="kRp.corpus"),
-  function (obj, value){
+  function (
+    obj,
+    value,
+    terms=NULL,
+    case.sens=NULL,
+    tfidf=NULL
+  ){
     corpusFeature(obj, "doc_term_matrix") <- value
+    corpusMeta(obj, meta="doc_term_matrix") <- list(
+      terms=terms,
+      case.sens=case.sens,
+      tfidf=tfidf
+    )
     return(obj)
   }
 )
