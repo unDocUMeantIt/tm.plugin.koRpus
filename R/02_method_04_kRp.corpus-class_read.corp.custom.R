@@ -21,7 +21,16 @@
 #' This method calls \code{\link[koRpus:read.corp.custom]{read.corp.custom}} on all tagged text objects
 #' inside the given \code{corpus} object.
 #' 
+#' Since the analysis is based on a document term matrix, a pre-existing matrix as a feature of the \code{corpus} object 
+#' will be used if it matches the case sensitivity setting. Otherwise a new matrix will be generated (but not replace the
+#' existing one). If no document term matrix is present yet, also one will be generated and can be kept as an additional feature
+#' of the resulting object.
+#' 
 #' @param corpus An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
+#' @param caseSens Logical. If \code{FALSE}, all tokens will be matched in their lower case form.
+#' @param keep_dtm Logical. If \code{TRUE} and \code{corpus} does not yet provide a
+#'    \code{\link[koRpus:docTermMatrix]{document term matrix}}, the one generated during calculation
+#'    will be added to the resulting object.
 #' @param ... options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.
 #' @return An object of the same class as \code{corpus}.
 #' @export
@@ -46,9 +55,36 @@
 #' myCorpus <- read.corp.custom(myCorpus)
 #' }
 #' @include 01_class_01_kRp.corpus.R
-setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, ...){
-    tagged_list <- corpus2tagged(corpus)
-    corpusCorpFreq(corpus) <- read.corp.custom(tagged_list, ...)
+setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, caseSens=TRUE, keep_dtm=FALSE, ...){
+    tagged_large <- kRp_tagged(
+      lang=language(corpus),
+      TT.res=taggedText(corpus)
+    )
+    if(corpusHasFeature(corpus, "doc_term_matrix")){
+      reanalyze <- FALSE
+      dtm_meta <- corpusMeta(obj, meta="doc_term_matrix")
+      if(!identical(dtm_meta[["case.sens"]], caseSens)){
+        warning("Object features a document term matrix, but with different case sensitivity, need to re-analyze.")
+        reanalyze <- TRUE
+      } else {}
+      if(isTRUE(dtm_meta[["tfidf"]])){
+        warning("Object features a document term matrix, but with tf-idf values, need to re-analyze.")
+        reanalyze <- TRUE
+      } else {}
+      if(isTRUE(reanalyze)){
+        dtm <- docTermMatrix(corpus, case.sens=caseSens)
+      } else {
+        dtm <- corpusDocTermMatrix(corpus)
+      }
+    } else {
+      if(isTRUE(keep_dtm)){
+        corpus <- docTermMatrix(corpus, case.sens=caseSens)
+        dtm <- corpusDocTermMatrix(corpus)
+      } else {
+        dtm <- corpusDocTermMatrix(docTermMatrix(corpus, case.sens=caseSens))
+      }
+    }
+    corpusCorpFreq(corpus) <- read.corp.custom(tagged_large, caseSens=caseSens, dtm=dtm, ...)
     return(corpus)
   }
 )

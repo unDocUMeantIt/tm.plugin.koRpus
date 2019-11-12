@@ -223,9 +223,11 @@ corpusDocTermMatrix(obj, ...)
 
 \S4method{corpusDocTermMatrix}{kRp.corpus}(obj)
 
-corpusDocTermMatrix(obj) <- value
+corpusDocTermMatrix(obj, terms = NULL, case.sens = NULL,
+  tfidf = NULL) <- value
 
-\S4method{corpusDocTermMatrix}{kRp.corpus}(obj) <- value
+\S4method{corpusDocTermMatrix}{kRp.corpus}(obj, terms = NULL,
+  case.sens = NULL, tfidf = NULL) <- value
 
 corpusStopwords(obj, ...)
 
@@ -275,6 +277,17 @@ If set to \code{FALSE}, returns \code{invisible(NULL)} instead.}
 
 \item{paths}{Logical,
       indicates for \code{corpusFiles()} whether full paths should be returned, or just the actual file name.}
+
+\item{terms}{A character string defining the \code{tokens} used for calculating the matrix.
+Stored in object's meta data slot.}
+
+\item{case.sens}{Logical, whether terms were counted case sensitive.
+Stored in object's meta data slot.}
+
+\item{tfidf}{Logical,
+      use \code{TRUE} if the term frequency--inverse document frequency (tf-idf)
+values were calculated instead of absolute frequency.
+Stored in object's meta data slot.}
 
 \item{x}{See \code{obj}.}
 

@@ -6,10 +6,19 @@
 \alias{read.corp.custom,kRp.corpus-method}
 \title{Apply read.corp.custom() to all texts in kRp.corpus objects}
 \usage{
-\S4method{read.corp.custom}{kRp.corpus}(corpus, ...)
+\S4method{read.corp.custom}{kRp.corpus}(corpus, caseSens = TRUE,
+  keep_dtm = FALSE, ...)
 }
 \arguments{
 \item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}
+
+\item{caseSens}{Logical. If \code{FALSE},
+      all tokens will be matched in their lower case form.}
+
+\item{keep_dtm}{Logical. If \code{TRUE} and \code{corpus} does not yet provide a
+\code{\link[koRpus:docTermMatrix]{document term matrix}},
+      the one generated during calculation
+will be added to the resulting object.}
 
 \item{...}{options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.}
 }
@@ -19,6 +28,14 @@ An object of the same class as \code{corpus}.
 \description{
 This method calls \code{\link[koRpus:read.corp.custom]{read.corp.custom}} on all tagged text objects
 inside the given \code{corpus} object.
+}
+\details{
+Since the analysis is based on a document term matrix,
+      a pre-existing matrix as a feature of the \code{corpus} object 
+will be used if it matches the case sensitivity setting. Otherwise a new matrix will be generated (but not replace the
+existing one). If no document term matrix is present yet,
+      also one will be generated and can be kept as an additional feature
+of the resulting object.
 }
 \examples{
 \dontrun{
