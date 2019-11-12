@@ -62,7 +62,7 @@ setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, c
     )
     if(corpusHasFeature(corpus, "doc_term_matrix")){
       reanalyze <- FALSE
-      dtm_meta <- corpusMeta(obj, meta="doc_term_matrix")
+      dtm_meta <- corpusMeta(corpus, meta="doc_term_matrix")
       if(!identical(dtm_meta[["case.sens"]], caseSens)){
         warning("Object features a document term matrix, but with different case sensitivity, need to re-analyze.")
         reanalyze <- TRUE
