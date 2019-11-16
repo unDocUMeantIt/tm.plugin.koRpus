@@ -28,10 +28,13 @@
 #' 
 #' @param corpus An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param caseSens Logical. If \code{FALSE}, all tokens will be matched in their lower case form.
+#' @param log.base A numeric value defining the base of the logarithm used for inverse document frequency (idf). See
+#'    \code{\link[base:log]{log}} for details.
 #' @param keep_dtm Logical. If \code{TRUE} and \code{corpus} does not yet provide a
 #'    \code{\link[koRpus:docTermMatrix]{document term matrix}}, the one generated during calculation
 #'    will be added to the resulting object.
-#' @param ... options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.
+#' @param ... Options to pass through to the \code{\link[koRpus:read.corp.custom]{read.corp.custom}} method
+#'    for objects of the class union \code{kRp.taggedText}.
 #' @return An object of the same class as \code{corpus}.
 #' @export
 #' @importFrom koRpus read.corp.custom
@@ -55,7 +58,7 @@
 #' myCorpus <- read.corp.custom(myCorpus)
 #' }
 #' @include 01_class_01_kRp.corpus.R
-setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, caseSens=TRUE, keep_dtm=FALSE, ...){
+setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, caseSens=TRUE, log.base=10, keep_dtm=FALSE, ...){
     tagged_large <- kRp_tagged(
       lang=language(corpus),
       TT.res=taggedText(corpus)
@@ -84,7 +87,7 @@ setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, c
         dtm <- corpusDocTermMatrix(docTermMatrix(corpus, case.sens=caseSens))
       }
     }
-    corpusCorpFreq(corpus) <- read.corp.custom(tagged_large, caseSens=caseSens, dtm=dtm, ...)
+    corpusCorpFreq(corpus) <- read.corp.custom(tagged_large, caseSens=caseSens, log.base=log.base, dtm=dtm, ...)
     return(corpus)
   }
 )

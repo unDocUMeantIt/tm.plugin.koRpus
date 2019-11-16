@@ -7,7 +7,7 @@
 \title{Apply read.corp.custom() to all texts in kRp.corpus objects}
 \usage{
 \S4method{read.corp.custom}{kRp.corpus}(corpus, caseSens = TRUE,
-  keep_dtm = FALSE, ...)
+  log.base = 10, keep_dtm = FALSE, ...)
 }
 \arguments{
 \item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}
@@ -15,12 +15,16 @@
 \item{caseSens}{Logical. If \code{FALSE},
       all tokens will be matched in their lower case form.}
 
+\item{log.base}{A numeric value defining the base of the logarithm used for inverse document frequency (idf). See
+\code{\link[base:log]{log}} for details.}
+
 \item{keep_dtm}{Logical. If \code{TRUE} and \code{corpus} does not yet provide a
 \code{\link[koRpus:docTermMatrix]{document term matrix}},
       the one generated during calculation
 will be added to the resulting object.}
 
-\item{...}{options to pass through to \code{\link[koRpus:read.corp.custom]{read.corp.custom}}.}
+\item{...}{Options to pass through to the \code{\link[koRpus:read.corp.custom]{read.corp.custom}} method
+for objects of the class union \code{kRp.taggedText}.}
 }
 \value{
 An object of the same class as \code{corpus}.

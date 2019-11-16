@@ -1,11 +1,12 @@
 Package: tm.plugin.koRpus
 Type: Package
 Title: A Compatibility Plugin Package for 'tm' and 'koRpus'
-Description: Provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages. To ask for help, report bugs, suggest feature improvements, or discuss
-                         the global development of the package, please subscribe to the koRpus-dev mailing list (<http://korpusml.reaktanz.de>).
+Description: Provides classes and methods to enhance the ability to use the 'koRpus' package together with the 'tm' package. It is in its early stages. To ask for help, report
+                    bugs, suggest feature improvements, or discuss the global development of the package, please subscribe to the koRpus-dev mailing list
+                    (<http://korpusml.reaktanz.de>).
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Depends: R (>= 2.10.0),koRpus (>= 0.12-2),sylly
+Depends: R (>= 2.10.0),koRpus (>= 0.13-1),sylly
 Imports: methods,parallel,tm,NLP
 Suggests: testthat,knitr,rmarkdown
 VignetteBuilder: knitr
@@ -16,7 +17,7 @@ Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.4-1
-Date: 2019-11-12
+Date: 2019-11-16
 RoxygenNote: 6.1.1
 Collate: 
     '01_class_01_kRp.corpus.R'
