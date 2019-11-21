@@ -69,7 +69,7 @@ setMethod("corpus2tagged",
             lang=tt_lang,
             desc=tt_desc[[thisText]],
             tokens=tt_list[[thisText]],
-            TT.res=diffText(obj)[[thisText]]
+            diff=diffText(obj)[[thisText]]
           )
         }
       )
@@ -80,7 +80,7 @@ setMethod("corpus2tagged",
           kRp_tagged(
             lang=tt_lang,
             desc=tt_desc[[thisText]],
-            TT.res=tt_list[[thisText]]
+            tokens=tt_list[[thisText]]
           )
         }
       )

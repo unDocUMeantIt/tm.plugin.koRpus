@@ -61,7 +61,7 @@
 setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, caseSens=TRUE, log.base=10, keep_dtm=FALSE, ...){
     tagged_large <- kRp_tagged(
       lang=language(corpus),
-      TT.res=taggedText(corpus)
+      tokens=taggedText(corpus)
     )
     if(corpusHasFeature(corpus, "doc_term_matrix")){
       reanalyze <- FALSE

@@ -54,7 +54,7 @@
 setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, ...){
     tagged_large <- kRp_tagged(
       lang=language(txt.file),
-      TT.res=taggedText(txt.file)
+      tokens=taggedText(txt.file)
     )
 
     use_default_args <- TRUE

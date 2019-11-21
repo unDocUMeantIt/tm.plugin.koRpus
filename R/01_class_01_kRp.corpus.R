@@ -66,7 +66,7 @@ init_corpus_tokens <- function(hierarchy=list()){
 #' @slot desc A named list of descriptive statistics of the tagged texts.
 #' @slot meta A named list. Can be used to store meta information. Currently, no particular format is defined.
 #' @slot raw A list of objects of class \code{\link[tm]{Corpus}}.
-#' @slot tokens A data frame as used for the \code{TT.res} slot in objects of class \code{kRp.taggedText}. In addition to the columns
+#' @slot tokens A data frame as used for the \code{tokens} slot in objects of class \code{kRp.taggedText}. In addition to the columns
 #'    usually found in those objects, this data frame also has a factor column for each hierarchical category defined (if any).
 #' @slot features A named logical vector, indicating which features are available in this object's \code{feat_list} slot.
 #'    Common features are listed in the description of the \code{feat_list} slot.
