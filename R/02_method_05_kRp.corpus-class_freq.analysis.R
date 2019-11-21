@@ -59,7 +59,7 @@ setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, 
 
     use_default_args <- TRUE
     if(is.null(list(...)[["corp.freq"]])){
-      if(corpusHasFeature(txt.file, "corp_freq")){
+      if(hasFeature(txt.file, "corp_freq")){
         default <- list(txt.file=tagged_large, ...)
         args <- modifyList(default, list(corp.freq=corpusCorpFreq(txt.file)))
         use_default_args <- FALSE

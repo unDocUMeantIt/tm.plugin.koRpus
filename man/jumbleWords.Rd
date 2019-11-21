@@ -5,8 +5,7 @@
 \alias{jumbleWords,kRp.corpus-method}
 \title{Apply jumbleWords() to all texts in kRp.corpus objects}
 \usage{
-\S4method{jumbleWords}{kRp.corpus}(words,
-  mc.cores = getOption("mc.cores", 1L), ...)
+\S4method{jumbleWords}{kRp.corpus}(words, mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
 \item{words}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}

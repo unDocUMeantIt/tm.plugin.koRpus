@@ -6,8 +6,16 @@
 \alias{query,kRp.hierarch-method}
 \title{Apply query() to all texts in kRp.corpus objects}
 \usage{
-\S4method{query}{kRp.corpus}(obj, var, query, rel = "eq", as.df = TRUE,
-  ignore.case = TRUE, perl = FALSE, regexp_var = "token")
+\S4method{query}{kRp.corpus}(
+  obj,
+  var,
+  query,
+  rel = "eq",
+  as.df = TRUE,
+  ignore.case = TRUE,
+  perl = FALSE,
+  regexp_var = "token"
+)
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}

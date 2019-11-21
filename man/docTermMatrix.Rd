@@ -6,8 +6,13 @@
 \alias{docTermMatrix,-methods}
 \title{Generate a document-term matrix from a corpus object}
 \usage{
-\S4method{docTermMatrix}{kRp.corpus}(obj, terms = "token",
-  case.sens = FALSE, tfidf = FALSE, asMatrix = FALSE)
+\S4method{docTermMatrix}{kRp.corpus}(
+  obj,
+  terms = "token",
+  case.sens = FALSE,
+  tfidf = FALSE,
+  asMatrix = FALSE
+)
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}

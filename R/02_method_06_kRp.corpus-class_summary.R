@@ -68,7 +68,7 @@ setMethod("summary", signature(object="kRp.corpus"), function(
 
     # initialize the data.frame
     summary.info <- meta(corpusTm(object))[, c("doc_id", names(corpusHierarchy(object))), drop=FALSE]
-    if(corpusHasFeature(object, "stopwords")){
+    if(hasFeature(object, "stopwords")){
       summary.info[["stopwords"]] <- corpusStopwords(object)[["sum"]]
     } else {}
 
@@ -132,7 +132,7 @@ setGeneric("corpusSummary", function(obj) standardGeneric("corpusSummary"))
 setMethod("corpusSummary",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "summary"))
+    return(feature(obj, "summary"))
   }
 )
 
@@ -151,7 +151,7 @@ setGeneric("corpusSummary<-", function(obj, value) standardGeneric("corpusSummar
 setMethod("corpusSummary<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
-    corpusFeature(obj, "summary") <- value
+    feature(obj, "summary") <- value
     return(obj)
   }
 )

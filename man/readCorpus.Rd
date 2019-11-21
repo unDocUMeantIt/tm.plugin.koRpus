@@ -4,11 +4,21 @@
 \alias{readCorpus}
 \title{Create kRp.corpus objects from text files or data frames}
 \usage{
-readCorpus(dir, hierarchy = list(), lang = "kRp.env",
-  tagger = "kRp.env", encoding = "", pattern = NULL,
-  recursive = FALSE, ignore.case = FALSE, mode = "text",
-  format = "file", mc.cores = getOption("mc.cores", 1L), id = "",
-  ...)
+readCorpus(
+  dir,
+  hierarchy = list(),
+  lang = "kRp.env",
+  tagger = "kRp.env",
+  encoding = "",
+  pattern = NULL,
+  recursive = FALSE,
+  ignore.case = FALSE,
+  mode = "text",
+  format = "file",
+  mc.cores = getOption("mc.cores", 1L),
+  id = "",
+  ...
+)
 }
 \arguments{
 \item{dir}{Either a file path to the root directory of the text corpus,

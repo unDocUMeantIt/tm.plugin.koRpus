@@ -5,8 +5,13 @@
 \alias{readability,kRp.corpus-method}
 \title{Apply readability() to all texts in kRp.corpus objects}
 \usage{
-\S4method{readability}{kRp.corpus}(txt.file, summary = TRUE,
-  mc.cores = getOption("mc.cores", 1L), quiet = TRUE, ...)
+\S4method{readability}{kRp.corpus}(
+  txt.file,
+  summary = TRUE,
+  mc.cores = getOption("mc.cores", 1L),
+  quiet = TRUE,
+  ...
+)
 }
 \arguments{
 \item{txt.file}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}

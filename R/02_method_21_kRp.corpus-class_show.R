@@ -37,7 +37,7 @@ setMethod("show", signature(object="kRp.corpus"), function(object){
   
   hierarchy <- corpusHierarchy(object)
   txt_hier <- "\nThe texts are "
-  if(isTRUE(corpusHasFeature(object, "hierarchy"))){
+  if(isTRUE(hasFeature(object, "hierarchy"))){
     txt_hier <- paste0(txt_hier, " hierarchically grouped:\n\n  ")
     groups <- paste0(sapply(
       names(hierarchy),

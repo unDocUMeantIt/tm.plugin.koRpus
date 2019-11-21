@@ -5,8 +5,14 @@
 \alias{lex.div,kRp.corpus-method}
 \title{Apply lex.div() to all texts in kRp.corpus objects}
 \usage{
-\S4method{lex.div}{kRp.corpus}(txt, summary = TRUE,
-  mc.cores = getOption("mc.cores", 1L), char = "", quiet = TRUE, ...)
+\S4method{lex.div}{kRp.corpus}(
+  txt,
+  summary = TRUE,
+  mc.cores = getOption("mc.cores", 1L),
+  char = "",
+  quiet = TRUE,
+  ...
+)
 }
 \arguments{
 \item{txt}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}

@@ -5,8 +5,8 @@
 \alias{hyphen,kRp.corpus-method}
 \title{Apply hyphen() to all texts in kRp.corpus objects}
 \usage{
-\S4method{hyphen}{kRp.corpus}(words, mc.cores = getOption("mc.cores",
-  1L), quiet = TRUE, ...)
+\S4method{hyphen}{kRp.corpus}(words, mc.cores = getOption("mc.cores", 1L), quiet = TRUE,
+      ...)
 }
 \arguments{
 \item{words}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}

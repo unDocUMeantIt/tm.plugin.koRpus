@@ -4,8 +4,12 @@
 \alias{corpus_files}
 \title{Get a comprehensive data frame describing the files of your corpus}
 \usage{
-corpus_files(dir, hierarchy = list(), fsep = .Platform$file.sep,
-  full_list = FALSE)
+corpus_files(
+  dir,
+  hierarchy = list(),
+  fsep = .Platform$file.sep,
+  full_list = FALSE
+)
 }
 \arguments{
 \item{dir}{File path to the root directory of the text corpus,

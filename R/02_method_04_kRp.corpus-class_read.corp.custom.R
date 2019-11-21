@@ -63,7 +63,7 @@ setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, c
       lang=language(corpus),
       tokens=taggedText(corpus)
     )
-    if(corpusHasFeature(corpus, "doc_term_matrix")){
+    if(hasFeature(corpus, "doc_term_matrix")){
       reanalyze <- FALSE
       dtm_meta <- corpusMeta(corpus, meta="doc_term_matrix")
       if(!identical(dtm_meta[["case.sens"]], caseSens)){

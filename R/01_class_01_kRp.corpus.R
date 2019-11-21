@@ -90,15 +90,6 @@ init_corpus_tokens <- function(hierarchy=list()){
 #'    }
 #'    See the \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for easy access to these sub-slots.
 #'    There can actually be any number of additional features, the above is just a list of those already defined by this package.
-# @slot summary A summary data frame for the full corpus.
-# @slot hyphen A named list of objects of class \code{\link[sylly:kRp.hyphen-class]{kRp.hyphen}}.
-# @slot readability A named list of objects of class \code{\link[koRpus:kRp.readability-class]{kRp.readability}}.
-# @slot freq A list with two elements, \code{freq.analysis} and \code{corpus}. \code{freq.analysis} contains the
-#    \code{freq.analysis} slot of a \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}} class object after
-#    \code{\link[tm.plugin.koRpus:freq.analysis]{freq.analysis}} was called, whereas \code{corpus} holds the results of a call to
-#    \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.
-# @slot diff A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
-#    a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.
 #' @note There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.corpus,-class
 #' @aliases kRp.corpus,-class kRp.corpus-class

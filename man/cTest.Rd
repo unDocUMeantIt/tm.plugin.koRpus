@@ -5,8 +5,7 @@
 \alias{cTest,kRp.corpus-method}
 \title{Apply cTest() to all texts in kRp.corpus objects}
 \usage{
-\S4method{cTest}{kRp.corpus}(obj, mc.cores = getOption("mc.cores", 1L),
-  ...)
+\S4method{cTest}{kRp.corpus}(obj, mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}

@@ -23,8 +23,8 @@
 #' \itemize{
 #'   \item{\code{taggedText()} }{returns the \code{tokens} slot.}
 #'   \item{\code{describe()} }{returns the \code{desc} slot.}
-#'   \item{\code{corpusHasFeature()} }{returns \code{TRUE} or code{FALSE}, depending on whether the requested feature is present or not.}
-#'   \item{\code{corpusFeature()} }{returns the list entry of the \code{feat_list} slot for the requested feature.}
+#'   \item{\code{hasFeature()} }{returns \code{TRUE} or code{FALSE}, depending on whether the requested feature is present or not.}
+#'   \item{\code{feature()} }{returns the list entry of the \code{feat_list} slot for the requested feature.}
 #'   \item{\code{corpusReadability()} }{returns the list of \code{kRp.readability} objects.}
 #'   \item{\code{corpusTm()} }{returns the \code{VCorpus} object.}
 #'   \item{\code{corpusMeta()} }{returns the list with meta information.}
@@ -162,18 +162,15 @@ setMethod("language<-",
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @docType methods
-#' @export
-setGeneric("corpusHasFeature", function(obj, feature, ...) standardGeneric("corpusHasFeature"))
+#' @importFrom koRpus hasFeature
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
 #' @aliases
-#'    corpusHasFeature,-methods
-#'    corpusHasFeature,kRp.corpus-method
+#'    hasFeature,-methods
+#'    hasFeature,kRp.corpus-method
 #' @include 01_class_01_kRp.corpus.R
-setMethod("corpusHasFeature",
+setMethod("hasFeature",
   signature=signature(obj="kRp.corpus"),
   function (obj, feature){
     return(isTRUE(slot(obj, name="features")[feature]))
@@ -181,19 +178,15 @@ setMethod("corpusHasFeature",
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @export
-#' @docType methods
-# @param value The new value to replace the current with.
-setGeneric("corpusHasFeature<-", function(obj, feature, value) standardGeneric("corpusHasFeature<-"))
+#' @importFrom koRpus hasFeature<-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
 #' @aliases
-#'    corpusHasFeature<-,-methods
-#'    corpusHasFeature<-,kRp.corpus-method
+#'    hasFeature<-,-methods
+#'    hasFeature<-,kRp.corpus-method
 #' @include 01_class_01_kRp.corpus.R
-setMethod("corpusHasFeature<-",
+setMethod("hasFeature<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, feature, value){
     if(!is.logical(value)){
@@ -210,18 +203,15 @@ setMethod("corpusHasFeature<-",
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @docType methods
-#' @export
-setGeneric("corpusFeature", function(obj, feature, ...) standardGeneric("corpusFeature"))
+#' @importFrom koRpus feature
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
 #' @aliases
-#'    corpusFeature,-methods
-#'    corpusFeature,kRp.corpus-method
+#'    feature,-methods
+#'    feature,kRp.corpus-method
 #' @include 01_class_01_kRp.corpus.R
-setMethod("corpusFeature",
+setMethod("feature",
   signature=signature(obj="kRp.corpus"),
   function (obj, feature){
     return(slot(obj, name="feat_list")[[feature]])
@@ -229,36 +219,29 @@ setMethod("corpusFeature",
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @export
-#' @docType methods
-# @param value The new value to replace the current with.
-setGeneric("corpusFeature<-", function(obj, feature, value) standardGeneric("corpusFeature<-"))
+#' @importFrom koRpus feature<-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
 #' @aliases
-#'    corpusFeature<-,-methods
-#'    corpusFeature<-,kRp.corpus-method
+#'    feature<-,-methods
+#'    feature<-,kRp.corpus-method
 #' @include 01_class_01_kRp.corpus.R
-setMethod("corpusFeature<-",
+setMethod("feature<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, feature, value){
     slot(obj, name="feat_list")[[feature]] <- value
     if(is.null(value)){
-      corpusHasFeature(obj, feature) <- FALSE
+      hasFeature(obj, feature) <- FALSE
     } else {
-      corpusHasFeature(obj, feature) <- TRUE
+      hasFeature(obj, feature) <- TRUE
     }
     return(obj)
   }
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @docType methods
-#' @export
-setGeneric("corpusReadability", function(obj, ...) standardGeneric("corpusReadability"))
+#' @importFrom koRpus corpusReadability
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -269,15 +252,11 @@ setGeneric("corpusReadability", function(obj, ...) standardGeneric("corpusReadab
 setMethod("corpusReadability",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "readability"))
+    return(feature(obj, "readability"))
   }
 )
 
-#' @rdname kRp.corpus_get-methods
-#' @export
-#' @docType methods
-# @param value The new value to replace the current with.
-setGeneric("corpusReadability<-", function(obj, value) standardGeneric("corpusReadability<-"))
+#' @importFrom koRpus corpusReadability<-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -288,7 +267,7 @@ setGeneric("corpusReadability<-", function(obj, value) standardGeneric("corpusRe
 setMethod("corpusReadability<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
-    corpusFeature(obj, "readability") <- value
+    feature(obj, "readability") <- value
     return(obj)
   }
 )
@@ -393,10 +372,8 @@ setMethod("corpusMeta<-",
   }
 )
 
-#' @rdname kRp.corpus_get-methods
-#' @docType methods
-#' @export
-setGeneric("corpusHyphen", function(obj, ...) standardGeneric("corpusHyphen"))
+
+#' @importFrom koRpus corpusHyphen
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -407,15 +384,11 @@ setGeneric("corpusHyphen", function(obj, ...) standardGeneric("corpusHyphen"))
 setMethod("corpusHyphen",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "hyphen"))
+    return(feature(obj, "hyphen"))
   }
 )
 
-#' @rdname kRp.corpus_get-methods
-#' @export
-#' @docType methods
-# @param value The new value to replace the current with.
-setGeneric("corpusHyphen<-", function(obj, value) standardGeneric("corpusHyphen<-"))
+#' @importFrom koRpus corpusHyphen<-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -426,15 +399,13 @@ setGeneric("corpusHyphen<-", function(obj, value) standardGeneric("corpusHyphen<
 setMethod("corpusHyphen<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
-    corpusFeature(obj, "hyphen") <- value
+    feature(obj, "hyphen") <- value
     return(obj)
   }
 )
 
-#' @rdname kRp.corpus_get-methods
-#' @docType methods
-#' @export
-setGeneric("corpusLexDiv", function(obj, ...) standardGeneric("corpusLexDiv"))
+
+#' @importFrom koRpus corpusLexDiv
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -445,16 +416,11 @@ setGeneric("corpusLexDiv", function(obj, ...) standardGeneric("corpusLexDiv"))
 setMethod("corpusLexDiv",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "lex_div"))
+    return(feature(obj, "lex_div"))
   }
 )
 
-
-#' @rdname kRp.corpus_get-methods
-#' @export
-#' @docType methods
-# @param value The new value to replace the current with.
-setGeneric("corpusLexDiv<-", function(obj, value) standardGeneric("corpusLexDiv<-"))
+#' @importFrom koRpus corpusLexDiv<-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -465,16 +431,13 @@ setGeneric("corpusLexDiv<-", function(obj, value) standardGeneric("corpusLexDiv<
 setMethod("corpusLexDiv<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
-    corpusFeature(obj, "lex_div") <- value
+    feature(obj, "lex_div") <- value
     return(obj)
   }
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @docType methods
-#' @export
-setGeneric("corpusFreq", function(obj, ...) standardGeneric("corpusFreq"))
+#' @importFrom koRpus corpusFreq
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -485,16 +448,12 @@ setGeneric("corpusFreq", function(obj, ...) standardGeneric("corpusFreq"))
 setMethod("corpusFreq",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "freq"))
+    return(feature(obj, "freq"))
   }
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @export
-#' @docType methods
-# @param value The new value to replace the current with.
-setGeneric("corpusFreq<-", function(obj, value) standardGeneric("corpusFreq<-"))
+#' @importFrom koRpus corpusFreq<-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -505,16 +464,13 @@ setGeneric("corpusFreq<-", function(obj, value) standardGeneric("corpusFreq<-"))
 setMethod("corpusFreq<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
-    corpusFeature(obj, "freq") <- value
+    feature(obj, "freq") <- value
     return(obj)
   }
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @docType methods
-#' @export
-setGeneric("corpusCorpFreq", function(obj, ...) standardGeneric("corpusCorpFreq"))
+#' @importFrom koRpus corpusCorpFreq
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -525,16 +481,12 @@ setGeneric("corpusCorpFreq", function(obj, ...) standardGeneric("corpusCorpFreq"
 setMethod("corpusCorpFreq",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "corp_freq"))
+    return(feature(obj, "corp_freq"))
   }
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @export
-#' @docType methods
-# @param value The new value to replace the current with.
-setGeneric("corpusCorpFreq<-", function(obj, value) standardGeneric("corpusCorpFreq<-"))
+#' @importFrom koRpus corpusCorpFreq<-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -545,7 +497,7 @@ setGeneric("corpusCorpFreq<-", function(obj, value) standardGeneric("corpusCorpF
 setMethod("corpusCorpFreq<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
-    corpusFeature(obj, "corp_freq") <- value
+    feature(obj, "corp_freq") <- value
     return(obj)
   }
 )
@@ -565,7 +517,7 @@ setGeneric("corpusHierarchy", function(obj, ...) standardGeneric("corpusHierarch
 setMethod("corpusHierarchy",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "hierarchy"))
+    return(feature(obj, "hierarchy"))
   }
 )
 
@@ -585,7 +537,7 @@ setGeneric("corpusHierarchy<-", function(obj, value) standardGeneric("corpusHier
 setMethod("corpusHierarchy<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
-    corpusFeature(obj, "hierarchy") <- value
+    feature(obj, "hierarchy") <- value
     return(obj)
   }
 )
@@ -657,7 +609,7 @@ setGeneric("corpusDocTermMatrix", function(obj, ...) standardGeneric("corpusDocT
 setMethod("corpusDocTermMatrix",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "doc_term_matrix"))
+    return(feature(obj, "doc_term_matrix"))
   }
 )
 
@@ -697,7 +649,7 @@ setMethod("corpusDocTermMatrix<-",
     case.sens=NULL,
     tfidf=NULL
   ){
-    corpusFeature(obj, "doc_term_matrix") <- value
+    feature(obj, "doc_term_matrix") <- value
     corpusMeta(obj, meta="doc_term_matrix") <- list(
       terms=terms,
       case.sens=case.sens,
@@ -708,10 +660,7 @@ setMethod("corpusDocTermMatrix<-",
 )
 
 
-#' @rdname kRp.corpus_get-methods
-#' @docType methods
-#' @export
-setGeneric("corpusStopwords", function(obj, ...) standardGeneric("corpusStopwords"))
+#' @importFrom koRpus corpusStopwords
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -722,15 +671,11 @@ setGeneric("corpusStopwords", function(obj, ...) standardGeneric("corpusStopword
 setMethod("corpusStopwords",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "stopwords"))
+    return(feature(obj, "stopwords"))
   }
 )
 
-#' @rdname kRp.corpus_get-methods
-#' @export
-#' @docType methods
-# @param value The new value to replace the current with.
-setGeneric("corpusStopwords<-", function(obj, value) standardGeneric("corpusStopwords<-"))
+#' @importFrom koRpus corpusStopwords<-
 #' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
@@ -741,7 +686,7 @@ setGeneric("corpusStopwords<-", function(obj, value) standardGeneric("corpusStop
 setMethod("corpusStopwords<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
-    corpusFeature(obj, "stopwords") <- value
+    feature(obj, "stopwords") <- value
     return(obj)
   }
 )
@@ -758,7 +703,7 @@ setMethod("corpusStopwords<-",
 setMethod("diffText",
   signature=signature(obj="kRp.corpus"),
   function (obj){
-    return(corpusFeature(obj, "diff"))
+    return(feature(obj, "diff"))
   }
 )
 
@@ -773,7 +718,7 @@ setMethod("diffText",
 setMethod("diffText<-",
   signature=signature(obj="kRp.corpus"),
   function (obj, value){
-    corpusFeature(obj, "diff") <- value
+    feature(obj, "diff") <- value
     return(obj)
   }
 )

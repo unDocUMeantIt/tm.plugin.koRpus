@@ -26,7 +26,7 @@ Objects should be created using the \code{\link[tm.plugin.koRpus:readCorpus]{rea
 
 \item{\code{raw}}{A list of objects of class \code{\link[tm]{Corpus}}.}
 
-\item{\code{tokens}}{A data frame as used for the \code{TT.res} slot in objects of class \code{kRp.taggedText}. In addition to the columns
+\item{\code{tokens}}{A data frame as used for the \code{tokens} slot in objects of class \code{kRp.taggedText}. In addition to the columns
 usually found in those objects,
       this data frame also has a factor column for each hierarchical category defined (if any).}
 

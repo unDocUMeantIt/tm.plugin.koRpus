@@ -6,8 +6,8 @@
 \alias{read.corp.custom,kRp.corpus-method}
 \title{Apply read.corp.custom() to all texts in kRp.corpus objects}
 \usage{
-\S4method{read.corp.custom}{kRp.corpus}(corpus, caseSens = TRUE,
-  log.base = 10, keep_dtm = FALSE, ...)
+\S4method{read.corp.custom}{kRp.corpus}(corpus, caseSens = TRUE, log.base = 10,
+      keep_dtm = FALSE, ...)
 }
 \arguments{
 \item{corpus}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}

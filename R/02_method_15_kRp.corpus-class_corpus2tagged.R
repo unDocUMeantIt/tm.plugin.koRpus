@@ -61,7 +61,7 @@ setMethod("corpus2tagged",
     tt_lang <- language(obj)
     tt_tagged <- taggedText(obj)
     tt_list <- split(tt_tagged, tt_tagged[["doc_id"]])
-    if(corpusHasFeature(obj, "diff")){
+    if(hasFeature(obj, "diff")){
       result <- lapply(
         names(tt_list),
         function(thisText){

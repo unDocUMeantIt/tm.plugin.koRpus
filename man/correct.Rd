@@ -6,8 +6,7 @@
 \alias{correct.hyph}
 \title{Methods to correct kRp.corpus objects}
 \usage{
-\S4method{correct.hyph}{kRp.corpus}(obj, word = NULL, hyphen = NULL,
-  cache = TRUE)
+\S4method{correct.hyph}{kRp.corpus}(obj, word = NULL, hyphen = NULL, cache = TRUE)
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}

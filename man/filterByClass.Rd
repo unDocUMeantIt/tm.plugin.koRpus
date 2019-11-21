@@ -5,8 +5,7 @@
 \alias{filterByClass,kRp.corpus-method}
 \title{Apply filterByClass() to all texts in kRp.corpus objects}
 \usage{
-\S4method{filterByClass}{kRp.corpus}(txt,
-  mc.cores = getOption("mc.cores", 1L), ...)
+\S4method{filterByClass}{kRp.corpus}(txt, mc.cores = getOption("mc.cores", 1L), ...)
 }
 \arguments{
 \item{txt}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}
