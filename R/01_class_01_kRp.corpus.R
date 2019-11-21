@@ -136,27 +136,15 @@ kRp.corpus <- setClass("kRp.corpus",
     tokens="data.frame",
     features="logical",
     feat_list="list"
-#     summary="data.frame",
-#     hyphen="list",
-#     readability="list",
-#     TTR="list",
-#     freq="list",
-#     diff="list"
   ),
   prototype=prototype(
-    features=logical(),
     lang=character(),
     desc=list(),
     meta=list(),
     raw=list(),
     tokens=init_corpus_tokens(),
+    features=logical(),
     feat_list=list()
-#     summary=data.frame(),
-#     hyphen=list(),
-#     readability=list(),
-#     TTR=list(),
-#     freq=list(freq.analysis=list(), corpus=kRp_corp_freq()),
-#     diff=list()
   )
 )
 
