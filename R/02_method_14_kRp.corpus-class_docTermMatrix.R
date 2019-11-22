@@ -32,7 +32,7 @@
 #' @param case.sens Logical, whether terms should be counted case sensitive.
 #' @param tfidf Logical, if \code{TRUE} calculates term frequency--inverse document frequency (tf-idf)
 #'    values instead of absolute frequency.
-#' @param asFeature Logical, whether the output should be just the sparse matrix or the input object with
+#' @param as.feature Logical, whether the output should be just the sparse matrix or the input object with
 #'    that matrix added as a feature. Use \code{\link[tm.plugin.koRpus:corpusDocTermMatrix]{corpusDocTermMatrix}}
 #'    to get the matrix from such an aggregated object.
 #' @return Either an object of the input class or a sparse matrix of class
@@ -61,16 +61,16 @@
 #' )
 #' 
 #' # get the document-term frequencies in a sparse matrix
-#' myDTMatrix <- docTermMatrix(myCorpus, asFeature=FALSE)
+#' myDTMatrix <- docTermMatrix(myCorpus, as.feature=FALSE)
 #' 
 #' # combine with filterByClass() to, e.g.,  exclude all punctuation
-#' myDTMatrix <- docTermMatrix(filterByClass(myCorpus), asFeature=FALSE)
+#' myDTMatrix <- docTermMatrix(filterByClass(myCorpus), as.feature=FALSE)
 #' 
 #' # instead of absolute frequencies, get the tf-idf values
 #' myDTMatrix <- docTermMatrix(
 #'   filterByClass(myCorpus),
 #'   tfidf=TRUE,
-#'   asFeature=FALSE
+#'   as.feature=FALSE
 #' )
 #' }
 setMethod("docTermMatrix",
@@ -80,7 +80,7 @@ setMethod("docTermMatrix",
     terms="token",
     case.sens=FALSE,
     tfidf=FALSE,
-    asFeature=TRUE
+    as.feature=TRUE
   ){
     result <- docTermMatrix(
       obj=tif_as_tokens_df(obj),
@@ -89,7 +89,7 @@ setMethod("docTermMatrix",
       tfidf=tfidf
     )
 
-    if(isTRUE(asFeature)){
+    if(isTRUE(as.feature)){
       corpusDocTermMatrix(
         obj,
         terms=terms,
