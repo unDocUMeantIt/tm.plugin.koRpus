@@ -53,14 +53,23 @@
 #' myTexts <- readability(myCorpus)
 #' }
 #' @include 01_class_01_kRp.corpus.R
-setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, summary=TRUE, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
+setMethod(
+  "readability",
+  signature(txt.file="kRp.corpus"),
+  function(
+    txt.file,
+    summary=TRUE,
+    mc.cores=getOption("mc.cores", 1L),
+    quiet=TRUE,
+    ...
+  ){
     tagged_list <- corpus2tagged(txt.file)
     corpusReadability(txt.file) <- mclapply(names(tagged_list), function(thisText){
       dot_args <- list(...)
-      if(!is.null(dot_args[["keep.input"]])){
-        stop(simpleError("The argument \"keep.input\" is FALSE by default and can't be changed!"))
+      if(any(!is.null(dot_args[["keep.input"]]), !is.null(dot_args[["as.feature"]]))){
+        stop(simpleError("The arguments \"keep.input\" and \"as.feature\" are FALSE by default and can't be changed!"))
       } else {}
-      if(thisText %in% names(corpusHyphen(txt.file))){
+      if(any(names(corpusHyphen(txt.file)) == thisText)){
           # we probably need to drop one of two hyphen arguments if
           # readability was called from one of the wrapper functions
           default <- list(txt.file=tagged_list[[thisText]], quiet=quiet, keep.input=FALSE, ...)
@@ -71,6 +80,7 @@ setMethod("readability", signature(txt.file="kRp.corpus"), function(txt.file, su
           tagged_list[[thisText]],
           quiet=quiet,
           keep.input=FALSE,
+          as.feature=FALSE,
           ...
         )
       }

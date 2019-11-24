@@ -73,7 +73,7 @@ setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, 
 
     taggedText(txt.file) <- taggedText(freq_ananlysis_results)
     corpusMeta(txt.file, meta="freq.analysis") <- describe(freq_ananlysis_results)
-    corpusFreq(txt.file) <- slot(freq_ananlysis_results, "freq.analysis")
+    corpusFreq(txt.file) <- corpusFreq(freq_ananlysis_results)
     return(txt.file)
   }
 )

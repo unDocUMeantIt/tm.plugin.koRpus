@@ -56,6 +56,10 @@
 #' }
 #' @include 01_class_01_kRp.corpus.R
 setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc.cores=getOption("mc.cores", 1L), char="", quiet=TRUE, ...){
+    dot_args <- list(...)
+    if(!is.null(dot_args[["as.feature"]])){
+      stop(simpleError("The argument \"as.feature\" is FALSE by default and can't be changed!"))
+    } else {}
     tagged_list <- corpus2tagged(txt)
     corpusLexDiv(txt) <- mclapply(names(describe(txt)), function(thisText){
       lex.div(tagged_list[[thisText]], char=char, quiet=quiet, ...)

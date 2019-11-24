@@ -42,7 +42,15 @@
 #' myCorpus <- hyphen(myCorpus)
 #' }
 #' @include 01_class_01_kRp.corpus.R
-setMethod("hyphen", signature(words="kRp.corpus"), function(words, mc.cores=getOption("mc.cores", 1L), quiet=TRUE, ...){
+setMethod(
+  "hyphen",
+  signature(words="kRp.corpus"),
+  function(
+    words,
+    mc.cores=getOption("mc.cores", 1L),
+    quiet=TRUE,
+    ...
+  ){
     tagged_list <- corpus2tagged(words)
     corpusHyphen(words) <- mclapply(tagged_list, function(thisText){
       hyphen(thisText, quiet=quiet, ...)
