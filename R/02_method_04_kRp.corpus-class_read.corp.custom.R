@@ -34,7 +34,7 @@
 #'    \code{\link[koRpus:docTermMatrix]{document term matrix}}, the one generated during calculation
 #'    will be added to the resulting object.
 #' @param ... Options to pass through to the \code{\link[koRpus:read.corp.custom]{read.corp.custom}} method
-#'    for objects of the class union \code{kRp.taggedText}.
+#'    for objects of the class union \code{\link[koRpus:kRp.text-class]{kRp.text}}.
 #' @return An object of the same class as \code{corpus}.
 #' @export
 #' @importFrom koRpus read.corp.custom
@@ -63,7 +63,7 @@ setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, c
     if(!is.null(dot_args[["as.feature"]])){
       stop(simpleError("The argument \"as.feature\" is FALSE by default and can't be changed!"))
     } else {}
-    tagged_large <- kRp_tagged(
+    tagged_large <- kRp_text(
       lang=language(corpus),
       tokens=taggedText(corpus)
     )

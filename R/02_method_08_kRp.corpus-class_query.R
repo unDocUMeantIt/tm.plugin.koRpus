@@ -44,7 +44,7 @@
 setMethod("query",
   signature(obj="kRp.corpus"),
   function (obj, var, query, rel="eq", as.df=TRUE, ignore.case=TRUE, perl=FALSE, regexp_var="token"){
-    tagged_large <- kRp_tagged(
+    tagged_large <- kRp_text(
       lang=language(obj),
       tokens=taggedText(obj)
     )

@@ -24,7 +24,7 @@
 will be added to the resulting object.}
 
 \item{...}{Options to pass through to the \code{\link[koRpus:read.corp.custom]{read.corp.custom}} method
-for objects of the class union \code{kRp.taggedText}.}
+for objects of the class union \code{\link[koRpus:kRp.text-class]{kRp.text}}.}
 }
 \value{
 An object of the same class as \code{corpus}.

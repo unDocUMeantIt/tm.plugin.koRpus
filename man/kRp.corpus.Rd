@@ -26,7 +26,7 @@ Objects should be created using the \code{\link[tm.plugin.koRpus:readCorpus]{rea
 
 \item{\code{raw}}{A list of objects of class \code{\link[tm]{Corpus}}.}
 
-\item{\code{tokens}}{A data frame as used for the \code{tokens} slot in objects of class \code{kRp.taggedText}. In addition to the columns
+\item{\code{tokens}}{A data frame as used for the \code{tokens} slot in objects of class \code{\link[koRpus:kRp.text-class]{kRp.text}}. In addition to the columns
 usually found in those objects,
       this data frame also has a factor column for each hierarchical category defined (if any).}
 
@@ -45,7 +45,7 @@ Common features are listed in the description of the \code{feat_list} slot.}
   \item{\code{corp_freq} }{An object of class \code{\link[koRpus:kRp.corp.freq-class]{kRp.corp.freq}},
       e.g., results of a call to
     \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}}.}
-  \item{\code{diff} }{A named list of \code{diff} slots of a \code{\link[sylly:kRp.text.trans-class]{kRp.text.trans}} object after
+  \item{\code{diff} }{A named list of \code{diff} features of a \code{\link[koRpus:kRp.text-class]{kRp.text}} object after
     a method like \code{\link[tm.plugin.koRpus:textTransform]{textTransform}} was called.}
   \item{\code{summary} }{A summary data frame for the full corpus,
       including descriptive statistics on all texts, as well as

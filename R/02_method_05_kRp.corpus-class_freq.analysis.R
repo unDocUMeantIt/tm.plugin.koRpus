@@ -52,7 +52,7 @@
 #' }
 #' @include 01_class_01_kRp.corpus.R
 setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, ...){
-    tagged_large <- kRp_tagged(
+    tagged_large <- kRp_text(
       lang=language(txt.file),
       tokens=taggedText(txt.file)
     )

@@ -77,7 +77,7 @@ setMethod("corpus2tagged",
       result <- lapply(
         names(tt_list),
         function(thisText){
-          kRp_tagged(
+          kRp_text(
             lang=tt_lang,
             desc=tt_desc[[thisText]],
             tokens=tt_list[[thisText]]

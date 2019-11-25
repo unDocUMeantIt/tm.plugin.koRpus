@@ -11,7 +11,7 @@
   terms = "token",
   case.sens = FALSE,
   tfidf = FALSE,
-  asMatrix = FALSE
+  as.feature = TRUE
 )
 }
 \arguments{
@@ -25,7 +25,7 @@
       if \code{TRUE} calculates term frequency--inverse document frequency (tf-idf)
 values instead of absolute frequency.}
 
-\item{asMatrix}{Logical,
+\item{as.feature}{Logical,
       whether the output should be just the sparse matrix or the input object with
 that matrix added as a feature. Use \code{\link[tm.plugin.koRpus:corpusDocTermMatrix]{corpusDocTermMatrix}}
 to get the matrix from such an aggregated object.}
@@ -64,16 +64,16 @@ myCorpus <- readCorpus(
 )
 
 # get the document-term frequencies in a sparse matrix
-myDTMatrix <- docTermMatrix(myCorpus, asMatrix=TRUE)
+myDTMatrix <- docTermMatrix(myCorpus, as.feature=FALSE)
 
 # combine with filterByClass() to, e.g.,  exclude all punctuation
-myDTMatrix <- docTermMatrix(filterByClass(myCorpus), asMatrix=TRUE)
+myDTMatrix <- docTermMatrix(filterByClass(myCorpus), as.feature=FALSE)
 
 # instead of absolute frequencies, get the tf-idf values
 myDTMatrix <- docTermMatrix(
   filterByClass(myCorpus),
   tfidf=TRUE,
-  asMatrix=TRUE
+  as.feature=FALSE
 )
 }
 }
