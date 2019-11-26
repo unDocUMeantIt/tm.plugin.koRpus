@@ -810,10 +810,6 @@ setMethod("[[<-",
 
 #' @rdname kRp.corpus_get-methods
 #' @param tokens An object of class \code{kRp.corpus}.
-#' @docType methods
-#' @export
-setGeneric("tif_as_tokens_df", function(tokens) standardGeneric("tif_as_tokens_df"))
-#' @rdname kRp.corpus_get-methods
 #' @export
 #' @docType methods
 #' @aliases

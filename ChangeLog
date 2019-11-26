@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2019-11-07)
+changes in version 0.4-1 (2019-11-26)
 unreleased:
   - this release is under development
 fixed:
@@ -13,6 +13,7 @@ changed:
     frame; this data frame was also renamed from "TT.res" into "tokens"
     the class name kRp.corpus was used in tm.plugin.koRpus before and
     is just being recycled ;)
+    kRp.corpus inherits from class kRp.text as defined in the koRpus package
   - status messages are currently only shown when only one CPU is used
   - corpusTagged(): now called taggedText() as in koRpus
   - corpusDesc(): now called describe() as in koRpus
@@ -40,6 +41,7 @@ added:
 removed:
   - removed all classes and methods dealing with kRp.hierarchy
   - removed deprecated methods of the pre-kRp.hierarchy era
+  - removed generic of tif_as_tokens_df() as it was moved to the koRpus package
 
 changes in version 0.3-1 (2019-05-14)
 fixed:

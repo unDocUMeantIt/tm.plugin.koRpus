@@ -93,7 +93,6 @@
 \alias{[[<-,kRp.corpus-method}
 \alias{[[<-,-methods}
 \alias{[[<-,kRp.corpus,ANY,ANY-method}
-\alias{tif_as_tokens_df}
 \alias{tif_as_tokens_df,kRp.corpus-method}
 \alias{tif_as_tokens_df,-methods}
 \alias{tif_as_tokens_df,hierarchy-method}
@@ -203,8 +202,6 @@ is.corpus(obj)
 \S4method{[[}{kRp.corpus}(x, i)
 
 \S4method{[[}{kRp.corpus}(x, i) <- value
-
-tif_as_tokens_df(tokens)
 
 \S4method{tif_as_tokens_df}{kRp.corpus}(tokens)
 

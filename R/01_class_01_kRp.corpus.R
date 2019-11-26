@@ -93,7 +93,7 @@ init_corpus_tokens <- function(hierarchy=list()){
 #' @note There is also \code{\link[tm.plugin.koRpus:kRp.corpus_get-methods]{getter and setter methods}} for objects of this class.
 #' @name kRp.corpus,-class
 #' @aliases kRp.corpus,-class kRp.corpus-class
-#' @import methods koRpus
+#' @import methods
 #' @importFrom tm as.VCorpus
 #' @keywords classes
 #' @export kRp.corpus
@@ -120,13 +120,8 @@ init_corpus_tokens <- function(hierarchy=list()){
 #' emptyCorpus <- kRp.corpus()
 kRp.corpus <- setClass("kRp.corpus",
   representation=representation(
-    lang="character",
-    desc="list",
     meta="list",
-    raw="list",
-    tokens="data.frame",
-    features="logical",
-    feat_list="list"
+    raw="list"
   ),
   prototype=prototype(
     lang=character(),
@@ -136,7 +131,8 @@ kRp.corpus <- setClass("kRp.corpus",
     tokens=init_corpus_tokens(),
     features=logical(),
     feat_list=list()
-  )
+  ),
+  contains="kRp.text"
 )
 
 setValidity("kRp.corpus", function(object){
