@@ -66,7 +66,7 @@ setMethod("textTransform", signature(txt="kRp.corpus"), function(txt, mc.cores=g
 # - obj: an object of class kRp.corpus
 # - trans_method: an object of class function
 text_transform_wrapper <- function(obj, trans_method, mc.cores=getOption("mc.cores", 1L), ...){
-    tagged_list <- corpus2tagged(obj)
+    tagged_list <- split_by_doc_id(obj)
     transformed_texts <- mclapply(tagged_list, trans_method, ..., mc.cores=mc.cores)
     corpusTagged_df <- do.call(rbind, mclapply(transformed_texts, taggedText, mc.cores=mc.cores))
     row.names(corpusTagged_df) <- NULL

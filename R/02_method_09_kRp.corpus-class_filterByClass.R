@@ -52,7 +52,7 @@ setMethod("filterByClass", signature(txt="kRp.corpus"), function(txt, mc.cores=g
     # filterByClass() by default updates the desc slot, and since that is still split into
     # individual texts, we must get individual calculations and merge the tokens data frames
     # again afterwards
-    tagged_list <- corpus2tagged(txt)
+    tagged_list <- split_by_doc_id(txt)
     filtered_list <- mclapply(tagged_list, function(thisText){
       filterByClass(thisText, ...)
     }, mc.cores=mc.cores)

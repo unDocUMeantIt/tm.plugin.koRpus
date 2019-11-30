@@ -6,6 +6,8 @@
 \alias{taggedText,-methods}
 \alias{taggedText<-,kRp.corpus-method}
 \alias{taggedText<-,-methods}
+\alias{doc_id,kRp.corpus-method}
+\alias{doc_id,-methods}
 \alias{describe,kRp.corpus-method}
 \alias{describe,-methods}
 \alias{describe<-,kRp.corpus-method}
@@ -106,6 +108,8 @@
 
 \S4method{taggedText}{kRp.corpus}(obj) <- value
 
+\S4method{doc_id}{kRp.corpus}(obj, has_id = NULL)
+
 \S4method{describe}{kRp.corpus}(obj)
 
 \S4method{describe}{kRp.corpus}(obj) <- value
@@ -114,15 +118,15 @@
 
 \S4method{language}{kRp.corpus}(obj) <- value
 
-\S4method{hasFeature}{kRp.corpus}(obj, feature)
+\S4method{hasFeature}{kRp.corpus}(obj, feature = NULL)
 
 \S4method{hasFeature}{kRp.corpus}(obj, feature) <- value
 
-\S4method{feature}{kRp.corpus}(obj, feature)
+\S4method{feature}{kRp.corpus}(obj, feature, doc_id = NULL)
 
 \S4method{feature}{kRp.corpus}(obj, feature) <- value
 
-\S4method{corpusReadability}{kRp.corpus}(obj)
+\S4method{corpusReadability}{kRp.corpus}(obj, doc_id = NULL)
 
 \S4method{corpusReadability}{kRp.corpus}(obj) <- value
 
@@ -142,11 +146,11 @@ corpusMeta(obj, meta = NULL) <- value
 
 \S4method{corpusMeta}{kRp.corpus}(obj, meta = NULL) <- value
 
-\S4method{corpusHyphen}{kRp.corpus}(obj)
+\S4method{corpusHyphen}{kRp.corpus}(obj, doc_id = NULL)
 
 \S4method{corpusHyphen}{kRp.corpus}(obj) <- value
 
-\S4method{corpusLexDiv}{kRp.corpus}(obj)
+\S4method{corpusLexDiv}{kRp.corpus}(obj, doc_id = NULL)
 
 \S4method{corpusLexDiv}{kRp.corpus}(obj) <- value
 
@@ -187,7 +191,7 @@ corpusDocTermMatrix(obj, terms = NULL, case.sens = NULL, tfidf = NULL) <- value
 
 \S4method{corpusStopwords}{kRp.corpus}(obj) <- value
 
-\S4method{diffText}{kRp.corpus}(obj)
+\S4method{diffText}{kRp.corpus}(obj, doc_id = NULL)
 
 \S4method{diffText}{kRp.corpus}(obj) <- value
 
@@ -211,6 +215,10 @@ tif_as_corpus_df(corpus)
 }
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}
+
+\item{has_id}{A character vector with \code{doc_id}s to look for in the object. The return value
+is then a logical vector of the same length,
+      indicating if the respective id was found or not.}
 
 \item{id}{Character value specifying the category ID of child objects you want to get.
 If \code{NULL} then the child objects of the current top level are returned,

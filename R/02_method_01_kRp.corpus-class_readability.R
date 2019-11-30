@@ -63,7 +63,7 @@ setMethod(
     quiet=TRUE,
     ...
   ){
-    tagged_list <- corpus2tagged(txt.file)
+    tagged_list <- split_by_doc_id(txt.file)
     corpusReadability(txt.file) <- mclapply(names(tagged_list), function(thisText){
       dot_args <- list(...)
       if(any(!is.null(dot_args[["keep.input"]]), !is.null(dot_args[["as.feature"]]))){

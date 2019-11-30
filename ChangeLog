@@ -1,11 +1,11 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2019-11-26)
+changes in version 0.4-1 (2019-11-30)
 unreleased:
   - this release is under development
 fixed:
   - docTermMatrix(): results were wrong because numbers were assigned
-   to wrong columns; now fixed in koRpus
+    to wrong columns; now fixed in koRpus
 changed:
   - the nested object class kRp.hierarchy was replaced by kRp.corpus;
     instead of reproducing the file hierarchy in the object structure,
@@ -34,8 +34,8 @@ added:
     corpusCorpFreq(), corpusCorpFreq()<-, 
     diffText(), diffText()<-, originalText(): new getter/setter methods
     for kRp.corpus objects
-  - corpus2tagged(): new method transforms a kRp.corpus object into a
-    list of kRp.tagged objects
+  - split_by_doc_id(): new method transforms a kRp.corpus object into a
+    list of kRp.text objects
   - corpusDocTermMatrix(): new method to get/set the sparse document term
     matrix in kRp.corpus objects
 removed:

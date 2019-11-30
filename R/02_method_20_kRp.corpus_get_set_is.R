@@ -94,6 +94,29 @@ setMethod("taggedText<-",
   }
 )
 
+## the standard generic for doc_id() is defined in the sylly package
+#' @rdname kRp.corpus_get-methods
+#' @param has_id A character vector with \code{doc_id}s to look for in the object. The return value
+#'    is then a logical vector of the same length, indicating if the respective id was found or not.
+#' @export
+#' @docType methods
+#' @aliases
+#'    doc_id,-methods
+#'    doc_id,kRp.corpus-method
+setMethod("doc_id",
+  signature=signature(obj="kRp.corpus"),
+  function (obj, has_id=NULL){
+    result <- unique(as.character(slot(obj, name="tokens")[["doc_id"]]))
+    if(is.null(has_id)){
+      return(result)
+    } else if(length(has_id) > 1) {
+      return(has_id %in% result)
+    } else {
+      return(any(result == has_id))
+    }
+  }
+)
+
 ## the standard generic for describe() is defined in the sylly package
 #' @rdname kRp.corpus_get-methods
 #' @importFrom sylly describe
@@ -172,8 +195,13 @@ setMethod("language<-",
 #' @include 01_class_01_kRp.corpus.R
 setMethod("hasFeature",
   signature=signature(obj="kRp.corpus"),
-  function (obj, feature){
-    return(isTRUE(slot(obj, name="features")[feature]))
+  function (obj, feature=NULL){
+    if(is.null(feature)){
+      features <- slot(obj, "features")
+      return(names(features[features]))
+    } else {
+      return(isTRUE(slot(obj, name="features")[feature]))
+    }
   }
 )
 
@@ -213,8 +241,21 @@ setMethod("hasFeature<-",
 #' @include 01_class_01_kRp.corpus.R
 setMethod("feature",
   signature=signature(obj="kRp.corpus"),
-  function (obj, feature){
-    return(slot(obj, name="feat_list")[[feature]])
+  function (obj, feature, doc_id=NULL){
+    if(is.null(doc_id)){
+      return(slot(obj, name="feat_list")[[feature]])
+    } else {
+      doc_ids_in_obj <- doc_id(obj, has_id=doc_id)
+      if(all(doc_ids_in_obj)){
+        return(slot(obj, name="feat_list")[[feature]][doc_id])
+      } else {
+        warning(
+          paste0("Invalid doc_id, omitted:\n  \"", paste0(doc_id[!doc_ids_in_obj], collapse="\", \""), "\""),
+          call.=FALSE
+        )
+        return(slot(obj, name="feat_list")[[feature]][doc_id[doc_ids_in_obj]])
+      }
+    }
   }
 )
 
@@ -251,8 +292,8 @@ setMethod("feature<-",
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusReadability",
   signature=signature(obj="kRp.corpus"),
-  function (obj){
-    return(feature(obj, "readability"))
+  function (obj, doc_id=NULL){
+    return(feature(obj, "readability", doc_id=doc_id))
   }
 )
 
@@ -383,8 +424,8 @@ setMethod("corpusMeta<-",
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusHyphen",
   signature=signature(obj="kRp.corpus"),
-  function (obj){
-    return(feature(obj, "hyphen"))
+  function (obj, doc_id=NULL){
+    return(feature(obj, "hyphen", doc_id=doc_id))
   }
 )
 
@@ -415,8 +456,8 @@ setMethod("corpusHyphen<-",
 #' @include 01_class_01_kRp.corpus.R
 setMethod("corpusLexDiv",
   signature=signature(obj="kRp.corpus"),
-  function (obj){
-    return(feature(obj, "lex_div"))
+  function (obj, doc_id=NULL){
+    return(feature(obj, "lex_div", doc_id=doc_id))
   }
 )
 
@@ -702,8 +743,8 @@ setMethod("corpusStopwords<-",
 #' @include 01_class_01_kRp.corpus.R
 setMethod("diffText",
   signature=signature(obj="kRp.corpus"),
-  function (obj){
-    return(feature(obj, "diff"))
+  function (obj, doc_id=NULL){
+    return(feature(obj, "diff", doc_id=doc_id))
   }
 )
 

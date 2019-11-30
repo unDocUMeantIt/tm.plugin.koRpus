@@ -51,7 +51,7 @@ setMethod(
     quiet=TRUE,
     ...
   ){
-    tagged_list <- corpus2tagged(words)
+    tagged_list <- split_by_doc_id(words)
     corpusHyphen(words) <- mclapply(tagged_list, function(thisText){
       hyphen(thisText, quiet=quiet, ...)
     }, mc.cores=mc.cores)

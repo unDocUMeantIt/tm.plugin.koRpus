@@ -60,7 +60,7 @@ setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc
     if(!is.null(dot_args[["as.feature"]])){
       stop(simpleError("The argument \"as.feature\" is FALSE by default and can't be changed!"))
     } else {}
-    tagged_list <- corpus2tagged(txt)
+    tagged_list <- split_by_doc_id(txt)
     corpusLexDiv(txt) <- mclapply(names(describe(txt)), function(thisText){
       lex.div(tagged_list[[thisText]], char=char, quiet=quiet, ...)
     }, mc.cores=mc.cores)
