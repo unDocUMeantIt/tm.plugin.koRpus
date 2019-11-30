@@ -88,13 +88,13 @@ corpus_files <- function(
 
   if(is.data.frame(dir)){
     full_hier_paths <- dir[["path"]]
-    
+
     all_cols <- c("doc_id", "file", "path", colnames(hier_dirs))
     available_cols <- all_cols[all_cols %in% colnames(dir)]
     all_files <- dir[, available_cols]
   } else {
     full_hier_paths <- normalizePath(file.path(dir, hier_paths), mustWork=TRUE)
-    
+
     all_files <- as.data.frame(
       matrix(
         character(),
@@ -129,7 +129,7 @@ corpus_files <- function(
   for (thisCat in colnames(hier_dirs)){
     all_files[[thisCat]] <- as.factor(all_files[[thisCat]])
   }
-  
+
   if(isTRUE(full_list)){
     return(list(
       all_files=all_files,
