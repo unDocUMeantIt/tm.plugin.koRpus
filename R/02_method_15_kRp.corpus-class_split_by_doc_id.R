@@ -60,8 +60,8 @@ setMethod("split_by_doc_id",
           lang=language(obj),
           desc=describe(obj),
           tokens=taggedText(obj),
-          feat_list=slot(obj, "feat_list"),
-          features=slot(obj, "features")
+          features=slot(obj, "features"),
+          feat_list=slot(obj, "feat_list")
         ),
         keepFeatures=keepFeatures
       )
