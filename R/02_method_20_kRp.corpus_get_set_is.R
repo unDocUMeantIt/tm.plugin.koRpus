@@ -47,6 +47,7 @@
 #' 
 #' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param level Either the integer value or name (character string) of the target level. If \code{NULL} the top level is used.
+#' @param doc_id A character vector to limit the scope to one or more particular document IDs.
 #' @param id Character value specifying the category ID of child objects you want to get.
 #'    If \code{NULL} then the child objects of the current top level are returned,
 #'    otherwise all children with the ID specified. Only interpreted if \code{level=NULL}
@@ -317,7 +318,7 @@ setMethod("corpusReadability<-",
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
-setGeneric("corpusTm", function(obj, id=NULL) standardGeneric("corpusTm"))
+setGeneric("corpusTm", function(obj) standardGeneric("corpusTm"))
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @export
@@ -830,8 +831,22 @@ setMethod("[<-",
 #'    [[,kRp.corpus,ANY-method
 setMethod("[[",
   signature=signature(x="kRp.corpus"),
-  function (x, i){
-    return(taggedText(x)[[i]])
+  function (x, i, doc_id=NULL){
+    if(is.null(doc_id)){
+      return(taggedText(x)[[i]])
+    } else {
+      doc_ids_in_obj <- doc_id(x, has_id=doc_id)
+      tt <- taggedText(x)
+      if(all(doc_ids_in_obj)){
+        return(tt[tt[["doc_id"]] %in% doc_id, i])
+      } else {
+        warning(
+          paste0("Invalid doc_id, omitted:\n  \"", paste0(doc_id[!doc_ids_in_obj], collapse="\", \""), "\""),
+          call.=FALSE
+        )
+        return(tt[tt[["doc_id"]] %in% doc_id[doc_ids_in_obj], i])
+      }
+    }
   }
 )
 
@@ -843,8 +858,21 @@ setMethod("[[",
 #'    [[<-,kRp.corpus,ANY,ANY-method
 setMethod("[[<-",
   signature=signature(x="kRp.corpus"),
-  function (x, i, value){
-    taggedText(x)[[i]] <- value
+  function (x, i, doc_id=NULL, value){
+    if(is.null(doc_id)){
+      taggedText(x)[[i]] <- value
+    } else {
+      doc_ids_in_obj <- doc_id(x, has_id=doc_id)
+      tt <- taggedText(x)
+      if(all(doc_ids_in_obj)){
+        tt[tt[["doc_id"]] %in% doc_id, i] <- value
+        taggedText(x) <- tt
+      } else {
+        stop(simpleError(
+          paste0("Invalid doc_id:\n  \"", paste0(doc_id[!doc_ids_in_obj], collapse="\", \""), "\"!")
+        ))
+      }
+    }
     return(x)
   }
 )

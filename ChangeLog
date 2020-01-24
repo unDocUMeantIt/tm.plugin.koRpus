@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2019-11-30)
+changes in version 0.4-1 (2020-01-24)
 unreleased:
   - this release is under development
 fixed:
@@ -38,6 +38,8 @@ added:
     list of kRp.text objects
   - corpusDocTermMatrix(): new method to get/set the sparse document term
     matrix in kRp.corpus objects
+  - [[/[[<-: gained new argument "doc_id" to limit the scope to particular
+    documents
 removed:
   - removed all classes and methods dealing with kRp.hierarchy
   - removed deprecated methods of the pre-kRp.hierarchy era
