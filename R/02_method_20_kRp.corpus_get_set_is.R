@@ -129,7 +129,7 @@ setMethod("doc_id",
 #' @include 01_class_01_kRp.corpus.R
 setMethod("describe",
   signature=signature(obj="kRp.corpus"),
-  function (obj, doc_id=NULL){
+  function (obj, doc_id=NULL, simplify=TRUE, ...){
     result <- slot(obj, name="desc")
     if(!is.null(doc_id)){
       doc_ids_in_obj <- doc_id(obj, has_id=doc_id)
@@ -146,6 +146,10 @@ setMethod("describe",
       }
     } else {}
 
+    if(all(isTRUE(simplify), length(result) == 1)){
+      result <- result[[1]]
+    } else {}
+    
     return(result)
   }
 )
@@ -161,7 +165,7 @@ setMethod("describe",
 #' @include 01_class_01_kRp.corpus.R
 setMethod("describe<-",
   signature=signature(obj="kRp.corpus"),
-  function (obj, doc_id=NULL, value){
+  function (obj, doc_id=NULL, ..., value){
     if(is.null(doc_id)){
       slot(obj, name="desc") <- value
     } else {
@@ -835,8 +839,8 @@ is.corpus <- function(obj){
 #'    [,kRp.corpus,ANY,ANY,ANY-method
 setMethod("[",
   signature=signature(x="kRp.corpus"),
-  function (x, i, j){
-    return(taggedText(x)[i, j])
+  function (x, i, j, ...){
+    return(taggedText(x)[i, j, ...])
   }
 )
 
@@ -848,8 +852,8 @@ setMethod("[",
 #'    [<-,kRp.corpus,ANY,ANY,ANY-method
 setMethod("[<-",
   signature=signature(x="kRp.corpus"),
-  function (x, i, j, value){
-    taggedText(x)[i, j] <- value
+  function (x, i, j, ..., value){
+    taggedText(x)[i, j, ...] <- value
     return(x)
   }
 )
@@ -862,7 +866,7 @@ setMethod("[<-",
 #'    [[,kRp.corpus,ANY-method
 setMethod("[[",
   signature=signature(x="kRp.corpus"),
-  function (x, i, doc_id=NULL){
+  function (x, i, doc_id=NULL, ...){
     if(is.null(doc_id)){
       return(taggedText(x)[[i]])
     } else {
@@ -889,7 +893,7 @@ setMethod("[[",
 #'    [[<-,kRp.corpus,ANY,ANY-method
 setMethod("[[<-",
   signature=signature(x="kRp.corpus"),
-  function (x, i, doc_id=NULL, value){
+  function (x, i, doc_id=NULL, ..., value){
     if(is.null(doc_id)){
       taggedText(x)[[i]] <- value
     } else {
