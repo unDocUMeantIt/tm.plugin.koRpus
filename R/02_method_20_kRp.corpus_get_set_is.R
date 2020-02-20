@@ -134,11 +134,7 @@ setMethod("describe",
     if(!is.null(doc_id)){
       doc_ids_in_obj <- doc_id(obj, has_id=doc_id)
       if(all(doc_ids_in_obj)){
-        if(length(doc_id) > 1){
-          result <- result[names(result) %in% doc_id]
-        } else {
-          result <- result[[doc_id]]
-        }
+        result <- result[names(result) %in% doc_id]
       } else {
         stop(simpleError(
           paste0("Invalid doc_id:\n  \"", paste0(doc_id[!doc_ids_in_obj], collapse="\", \""), "\"!")
