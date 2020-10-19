@@ -13,7 +13,7 @@ More information on tm.plugin.koRpus is available on the [project homepage](http
 
 The latest stable release is available from the project's own repository:
 
-```
+```r
 install.packages("tm.plugin.koRpus", repo=c(getOption("repos"), "https://reaktanz.de/R"))
 ```
 
@@ -25,19 +25,18 @@ If you're running a Debian based operating system, you might be interested in th
 
 ### Installation via GitHub
 
-To install the package directly from GitHub, you can use `install_github()` from the [devtools](https://github.com/hadley/devtools) package:
+To install the package directly from GitHub, you can use `install_github()` from the [devtools](https://github.com/r-lib/devtools) package:
 
-```
-library(devtools)
-install_github("unDocUMeantIt/tm.plugin.koRpus") # stable release
-install_github("unDocUMeantIt/tm.plugin.koRpus", ref="develop") # development release
+```r
+devtools::install_github("unDocUMeantIt/tm.plugin.koRpus") # stable release
+devtools::install_github("unDocUMeantIt/tm.plugin.koRpus", ref="develop") # development release
 ```
 
 ## Contributing
 
 To ask for help, report bugs, suggest feature improvements, or discuss the global
 development of the package, please either subscribe to the
-[koRpus-dev mailing list](https://ml06.ispgateway.de/mailman/listinfo/korpus-dev_r.reaktanz.de), or
+[koRpus-dev mailing list](https://korpusml.reaktanz.de), or
 use the [issue tracker](https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues) on GitHub.
 
 ### Branches
@@ -47,7 +46,7 @@ branch will be rejected, as it is reserved for the current stable release.
 
 ## License
 
-Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
+Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
 
 tm.plugin.koRpus is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
