@@ -201,6 +201,42 @@ test_that("importing a TIF data frame as a kRp.hierarchy class object", {
     myTopicCorpus_from_df.test
   )
 })
+
+# TODO
+test_that("importing a minimal TIF data frame as a kRp.hierarchy class object", {
+  load("myTopicCorpus_TIF_df_min.RData")
+  load("myTopicCorpus_from_df_min.RData")
+  
+  myTopicCorpus_from_df_min.test <- readCorpus(
+    dir=myTopicCorpus_TIF_df_min,
+    lang="xy",
+    tagger="tokenize",
+    format="obj"
+  )
+  
+  # same correctzions as with myTopicCorpus.test above
+  corpusPath(myTopicCorpus_from_df.test) <- "tm.plugin.koRpus/tests/testthat/samples"
+  corpusPath(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]]) <- "tm.plugin.koRpus/tests/testthat/samples/C3S"
+  corpusPath(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]]) <- "tm.plugin.koRpus/tests/testthat/samples/GEMA"
+  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
+  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
+  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
+  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  
+  expect_equal(
+    myTopicCorpus_from_df,
+    myTopicCorpus_from_df.test
+  )
+})
+
 # # new test standards
 # myTopicCorpus_from_df <- myTopicCorpus_from_df.test
 # save(myTopicCorpus_from_df,
