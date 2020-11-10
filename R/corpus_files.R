@@ -1,4 +1,4 @@
-# Copyright 2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -87,11 +87,9 @@ corpus_files <- function(
   }
 
   if(is.data.frame(dir)){
-    full_hier_paths <- dir[["path"]]
-
     all_cols <- c("doc_id", "file", "path", colnames(hier_dirs))
     available_cols <- all_cols[all_cols %in% colnames(dir)]
-    all_files <- dir[, available_cols]
+    all_files <- dir[, available_cols, drop=FALSE]
   } else {
     full_hier_paths <- normalizePath(file.path(dir, hier_paths), mustWork=TRUE)
 
