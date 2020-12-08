@@ -61,7 +61,7 @@
 setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, caseSens=TRUE, log.base=10, keep_dtm=FALSE, ...){
     dot_args <- list(...)
     if(!is.null(dot_args[["as.feature"]])){
-      stop(simpleError("The argument \"as.feature\" is FALSE by default and can't be changed!"))
+      stop(simpleError("The argument \"as.feature\" can't be used!"))
     } else {}
     tagged_large <- kRp_text(
       lang=language(corpus),

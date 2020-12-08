@@ -1,13 +1,13 @@
-## ----setup, include=FALSE-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## ----setup, include=FALSE-------------------------------------------------------------------------
 header_con <- file("vignette_header.html")
 writeLines('<meta name="flattr:id" content="4zdzgd" />', header_con)
 close(header_con)
 
-## ---- include=FALSE, cache=FALSE----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## ---- include=FALSE, cache=FALSE------------------------------------------------------------------
 # load knitr for better graphics support
 library(knitr)
 
-## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------
 #  library(tm.plugin.koRpus)
 #  library(koRpus.lang.de)
 #  # set the root path to the sample files
@@ -30,20 +30,16 @@ library(knitr)
 #    lang="de"
 #  )
 
-## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#  allC3SSources <- corpusSources(corpusTopics(sampleTexts, "C3S"))
-#  names(allC3SSources)
-
-## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------
 #  sampleTexts <- lex.div(sampleTexts)
 #  corpusSummary(sampleTexts)
 
-## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------
 #  library(sciplot)
 #  lineplot.CI(
-#    x.factor=sampleTexts[["Source"]],
-#    response=sampleTexts[["MTLD"]],
-#    group=sampleTexts[["Topic"]],
+#    x.factor=corpusSummary(sampleTexts)[["Source"]],
+#    response=corpusSummary(sampleTexts)[["MTLD"]],
+#    group=corpusSummary(sampleTexts)[["Topic"]],
 #    type="l",
 #    main="MTLD",
 #    xlab="Media source",
@@ -52,16 +48,16 @@ library(knitr)
 #    lwd=2
 #  )
 
-## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#  sampleTexts <- read.corp.custom(sampleTexts, caseSens=FALSE)
+## ---- eval=FALSE----------------------------------------------------------------------------------
+#  sampleTexts <- read.corp.custom(sampleTexts, case.sens=FALSE)
 #  sampleTextsWordFreq <- query(
-#    corpusFreq(sampleTexts)[["corpus"]],
+#    corpusCorpFreq(sampleTexts),
 #    var="wclass",
 #    query=kRp.POS.tags(lang="de", list.classes=TRUE, tags="words")
 #  )
 #  head(sampleTextsWordFreq, 10)
 
-## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------------------------------------
 #  require(wordcloud)
 #  colors <- brewer.pal(8, "RdGy")
 #  wordcloud(
