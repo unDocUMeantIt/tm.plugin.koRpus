@@ -1,4 +1,4 @@
-# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -42,30 +42,6 @@ nullToList <- function(obj, entry="index"){
   }
   return(obj)
 } ## end function nullToList()
-
-
-## function whatIsAvailable()
-whatIsAvailable <- function(all.corpora){
-  # this fetches all level 0 objects from the nested corpus
-  # result is a list
-  bottom_level <- corpusChildren(all.corpora, level=0)
-  # now get all availability info from that list
-  available_rdb <- unique(unlist(lapply(
-    bottom_level,
-    function(thisCorpus){
-      unlist(corpusMeta(thisCorpus, "readability", fail=FALSE)[["index"]])
-    }
-  )))
-  available_lex_div <- unique(unlist(lapply(
-    bottom_level,
-    function(thisCorpus){
-      unlist(corpusMeta(thisCorpus, "lex_div", fail=FALSE)[["index"]])
-    }
-  )))
-  available_rdb <- nullToList(available_rdb, entry="index")
-  available_lex_div <- nullToList(available_lex_div, entry="index")
-  return(list(available_rdb=available_rdb, available_lex_div=available_lex_div))
-} ## end function whatIsAvailable()
 
 
 ## function availableFromOptions()

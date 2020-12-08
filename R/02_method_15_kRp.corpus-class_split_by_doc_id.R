@@ -1,4 +1,4 @@
-# Copyright 2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -26,6 +26,7 @@
 #'    of names of features to keep if present.
 #' @return A named list of objects of class \code{\link[koRpus:kRp.text-class]{kRp.text}}.
 #'    Elements are named by their \code{doc_id}.
+#' @importFrom koRpus split_by_doc_id kRp_text
 #' @export
 #' @docType methods
 #' @rdname split_by_doc_id

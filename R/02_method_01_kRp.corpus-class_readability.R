@@ -1,4 +1,4 @@
-# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -30,7 +30,7 @@
 #' @return An object of the same class as \code{txt.file}.
 #' @importFrom utils modifyList
 #' @importFrom parallel mclapply
-#' @importMethodsFrom koRpus readability summary
+#' @importFrom koRpus readability summary split_by_doc_id
 #' @docType methods
 #' @aliases readability,kRp.corpus-method
 #' @rdname readability

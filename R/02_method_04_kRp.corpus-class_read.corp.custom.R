@@ -1,4 +1,4 @@
-# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -37,7 +37,7 @@
 #'    for objects of the class union \code{\link[koRpus:kRp.text-class]{kRp.text}}.
 #' @return An object of the same class as \code{corpus}.
 #' @export
-#' @importFrom koRpus read.corp.custom
+#' @importFrom koRpus read.corp.custom kRp_text docTermMatrix
 #' @docType methods
 #' @aliases read.corp.custom,kRp.corpus-method
 #' @rdname read.corp.custom

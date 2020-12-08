@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2020-02-18)
+changes in version 0.4-1 (2020-12-08)
 unreleased:
   - this release is under development
 fixed:
@@ -26,6 +26,7 @@ changed:
     its result to the input object rather than returning just the matrix;
     also, the generic is now defined by the koRpus package and was removed,
     including all of the actual function code
+  - adjusted unit tests
 added:
   - readCorpus(): the hierarchy levels of a text corpus can now be
     assumed directly from the directory structure by setting "hierarchy=TRUE"

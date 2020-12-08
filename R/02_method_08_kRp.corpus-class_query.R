@@ -1,4 +1,4 @@
-# Copyright 2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -34,7 +34,7 @@
 #' @param perl Logical, passed through to \code{grepl} if \code{var="regexp"}.
 #' @param regexp_var A character string naming the column to query if \code{var="regexp"}.
 #' @return Depending on the arguments, might include whole objects, lists, single values etc.
-#' @importMethodsFrom koRpus query
+#' @importFrom koRpus query kRp_text
 #' @keywords methods
 #' @export
 #' @docType methods

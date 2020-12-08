@@ -1,4 +1,4 @@
-# Copyright 2018-2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2018-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -85,6 +85,7 @@
 #' @importFrom tm VCorpus DirSource VectorSource DataframeSource
 #' @importFrom NLP meta<-
 #' @importFrom parallel mclapply
+#' @importFrom koRpus get.kRp.env
 #' @references
 #'    [1] Text Interchange Formats (\url{https://github.com/ropensci/tif})
 #' @export
@@ -299,6 +300,7 @@ readCorpus <- function(
 
 
 ## function taggerFunction()
+#' @importFrom koRpus tokenize treetag
 taggerFunction <- function(text, lang, tagger=tagger, doc_id=NA, ...) {
   if(identical(tagger, "tokenize")){
     return(tokenize(txt=text, format="obj", lang=lang, doc_id=doc_id, ...))

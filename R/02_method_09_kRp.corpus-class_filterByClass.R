@@ -1,4 +1,4 @@
-# Copyright 2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -26,7 +26,7 @@
 #' @param ... options to pass through to \code{\link[koRpus:filterByClass]{filterByClass}}.
 #' @return An object of the same class as \code{txt}.
 #' @importFrom parallel mclapply
-#' @importFrom koRpus filterByClass
+#' @importFrom koRpus filterByClass split_by_doc_id
 #' @export
 #' @docType methods
 #' @aliases filterByClass,kRp.corpus-method

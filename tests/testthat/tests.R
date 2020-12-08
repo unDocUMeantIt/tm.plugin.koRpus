@@ -17,13 +17,13 @@ set.lang.support("kRp.POS.tags",
   )
 )
 
-context("class kRp.hierarchy")
+context("class kRp.corpus")
 
-test_that("creating a 'flat' kRp.hierarchy class object", {
+test_that("creating a 'flat' kRp.corpus class object, one single text", {
   sampleTextDir <- normalizePath(file.path("samples","C3S","Wikipedia_alt"))
-  load("mySimpleCorpus.RData")
+  load("sampleCorpusHier0Txt1.RData")
 
-  mySimpleCorpus.test <- readCorpus(
+  sampleCorpusHier0Txt1.test <- readCorpus(
     dir=sampleTextDir,
     lang="xy",
     tagger="tokenize"
@@ -31,29 +31,29 @@ test_that("creating a 'flat' kRp.hierarchy class object", {
 
   # we have to manually set the paths because they would reference the
   # test environment which would cause a string mismatch
-  corpusPath(mySimpleCorpus.test) <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
-  meta(corpusTm(mySimpleCorpus.test))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
+  meta(corpusTm(sampleCorpusHier0Txt1.test)[[1]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier0Txt1.test))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
   # manually set the timetamps of the tm objects, these can't be equal
-  meta(corpusTm(mySimpleCorpus.test)[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(sampleCorpusHier0Txt1.test)[[1]])[["datetimestamp"]] <- as.POSIXlt("2020-12-08 01:01:01", tz="GMT")
 
   expect_equal(
-    mySimpleCorpus.test,
-    mySimpleCorpus
+    sampleCorpusHier0Txt1.test,
+    sampleCorpusHier0Txt1
   )
 })
 # # new test standards
 # main.root <- file.path("path/to/tm.plugin.koRpus")
-# mySimpleCorpus <- mySimpleCorpus.test
-# save(mySimpleCorpus,
-#   file=file.path(main.root,"tests","testthat","mySimpleCorpus.RData"),
+# sampleCorpusHier0Txt1 <- sampleCorpusHier0Txt1.test
+# save(sampleCorpusHier0Txt1,
+#   file=file.path(main.root,"tests","testthat","sampleCorpusHier0Txt1.RData"),
 #   compress="xz",
 #   compression_level=-9)
 
-test_that("creating a kRp.hierarchy class object", {
+test_that("creating a kRp.corpus class object, one hierarchy level", {
   sampleTextDir <- normalizePath(file.path("samples","C3S"))
-  load("mySourcesCorpus.RData")
+  load("sampleCorpusHier1Txt2.RData")
 
-  mySourcesCorpus.test <- readCorpus(
+  sampleCorpusHier1Txt2.test <- readCorpus(
     dir=sampleTextDir,
     hierarchy=list(
       Source=c(
@@ -67,32 +67,31 @@ test_that("creating a kRp.hierarchy class object", {
 
   # we have to manually set the paths because they would reference the
   # test environment which would cause a string mismatch
-  corpusPath(mySourcesCorpus.test) <- "tm.plugin.koRpus/tests/testthat/samples/C3S"
-  slot(corpusChildren(mySourcesCorpus.test)[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
-  slot(corpusChildren(mySourcesCorpus.test)[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
-  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
+  meta(corpusTm(sampleCorpusHier1Txt2.test)[[1]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier1Txt2.test))[1,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
+  meta(corpusTm(sampleCorpusHier1Txt2.test)[[2]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier1Txt2.test))[2,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
   # the same for the timetamps of the tm objects
-  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(mySourcesCorpus.test)[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(sampleCorpusHier1Txt2.test)[[1]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier1Txt2.test)[[2]])[["datetimestamp"]] <- as.POSIXlt("2020-12-08 01:01:01", tz="GMT")
 
   expect_equal(
-    mySourcesCorpus,
-    mySourcesCorpus.test
+    sampleCorpusHier1Txt2,
+    sampleCorpusHier1Txt2.test
   )
 })
 # # new test standards
-# mySourcesCorpus <- mySourcesCorpus.test
-# save(mySourcesCorpus,
-#   file=file.path(main.root,"tests","testthat","mySourcesCorpus.RData"),
+# sampleCorpusHier1Txt2 <- sampleCorpusHier1Txt2.test
+# save(sampleCorpusHier1Txt2,
+#   file=file.path(main.root,"tests","testthat","sampleCorpusHier1Txt2.RData"),
 #   compress="xz",
 #   compression_level=-9)
 
-test_that("creating a kRp.hierarchy class object with two levels", {
+test_that("creating a kRp.corpus class object, two hierarchy levels", {
   sampleTextDir <- normalizePath(file.path("samples"))
-  load("myTopicCorpus.RData")
+  load("sampleCorpusHier2Txt4.RData")
 
-  myTopicCorpus.test <- readCorpus(
+  sampleCorpusHier2Txt4.test <- readCorpus(
     dir=sampleTextDir,
     hierarchy=list(
       Topic=c(
@@ -110,60 +109,103 @@ test_that("creating a kRp.hierarchy class object with two levels", {
 
   # we have to manually set the paths because they would reference the
   # test environment which would cause a string mismatch
-  corpusPath(myTopicCorpus.test) <- "tm.plugin.koRpus/tests/testthat/samples"
-  corpusPath(corpusChildren(myTopicCorpus.test)[["C3S"]]) <- "tm.plugin.koRpus/tests/testthat/samples/C3S"
-  corpusPath(corpusChildren(myTopicCorpus.test)[["GEMA"]]) <- "tm.plugin.koRpus/tests/testthat/samples/GEMA"
-  slot(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
-  slot(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
-  slot(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
-  slot(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
+  meta(corpusTm(sampleCorpusHier2Txt4.test)[[1]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4.test))[1,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
+  meta(corpusTm(sampleCorpusHier2Txt4.test)[[2]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4.test))[2,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
+  meta(corpusTm(sampleCorpusHier2Txt4.test)[[3]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4.test))[3,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
+  meta(corpusTm(sampleCorpusHier2Txt4.test)[[4]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4.test))[4,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
 
   # the same for the timetamps of the tm objects
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["C3S"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus.test)[["GEMA"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  meta(corpusTm(sampleCorpusHier2Txt4.test)[[1]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4.test)[[2]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4.test)[[3]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4.test)[[4]])[["datetimestamp"]] <- as.POSIXlt("2020-12-08 01:01:01", tz="GMT")
 
   expect_equal(
-    myTopicCorpus,
-    myTopicCorpus.test
+    sampleCorpusHier2Txt4,
+    sampleCorpusHier2Txt4.test
   )
 })
 # # new test standards
-# myTopicCorpus <- myTopicCorpus.test
-# save(myTopicCorpus,
-#   file=file.path(main.root,"tests","testthat","myTopicCorpus.RData"),
+# sampleCorpusHier2Txt4 <- sampleCorpusHier2Txt4.test
+# save(sampleCorpusHier2Txt4,
+#   file=file.path(main.root,"tests","testthat","sampleCorpusHier2Txt4.RData"),
+#   compress="xz",
+#   compression_level=-9)
+
+test_that("creating a kRp.corpus class object, autodetect hierarchy levels", {
+  sampleTextDir <- normalizePath(file.path("samples"))
+  load("sampleCorpusHier2Txt4_auto.RData")
+
+  sampleCorpusHier2Txt4_auto.test <- readCorpus(
+    dir=sampleTextDir,
+    hierarchy=TRUE,
+    lang="xy",
+    tagger="tokenize"
+  )
+
+  # we have to manually set the paths because they would reference the
+  # test environment which would cause a string mismatch
+  meta(corpusTm(sampleCorpusHier2Txt4_auto.test)[[1]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_auto.test))[1,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
+  meta(corpusTm(sampleCorpusHier2Txt4_auto.test)[[2]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_auto.test))[2,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
+  meta(corpusTm(sampleCorpusHier2Txt4_auto.test)[[3]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_auto.test))[3,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
+  meta(corpusTm(sampleCorpusHier2Txt4_auto.test)[[4]])[["path"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_auto.test))[4,"path"] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
+
+  # the same for the timetamps of the tm objects
+  meta(corpusTm(sampleCorpusHier2Txt4_auto.test)[[1]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_auto.test)[[2]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_auto.test)[[3]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_auto.test)[[4]])[["datetimestamp"]] <- as.POSIXlt("2020-12-08 01:01:01", tz="GMT")
+
+  expect_equal(
+    sampleCorpusHier2Txt4_auto,
+    sampleCorpusHier2Txt4_auto.test
+  )
+})
+# # new test standards
+# sampleCorpusHier2Txt4_auto <- sampleCorpusHier2Txt4_auto.test
+# save(sampleCorpusHier2Txt4_auto,
+#   file=file.path(main.root,"tests","testthat","sampleCorpusHier2Txt4_auto.RData"),
 #   compress="xz",
 #   compression_level=-9)
 
 
 context("export to TIF")
 
-test_that("exporting a kRp.hierarchy class object to TIF data frame", {
-  load("myTopicCorpus.RData")
-  load("myTopicCorpus_TIF_df.RData")
-  
-  myTopicCorpus_TIF_df.test <- tif_as_corpus_df(myTopicCorpus)
+test_that("exporting a kRp.corpus class object to TIF data frame", {
+  load("sampleCorpusHier2Txt4.RData")
+  load("sampleCorpusHier2Txt4_TIF_df.RData")
+
+  sampleCorpusHier2Txt4_TIF_df.test <- tif_as_corpus_df(sampleCorpusHier2Txt4)
 
   expect_equal(
-    myTopicCorpus_TIF_df,
-    myTopicCorpus_TIF_df.test
+    sampleCorpusHier2Txt4_TIF_df,
+    sampleCorpusHier2Txt4_TIF_df.test
   )
 })
+# # new test standards
+# sampleCorpusHier2Txt4_TIF_df <- sampleCorpusHier2Txt4_TIF_df.test
+# save(sampleCorpusHier2Txt4_TIF_df,
+#   file=file.path(main.root,"tests","testthat","sampleCorpusHier2Txt4_TIF_df.RData"),
+#   compress="xz",
+#   compression_level=-9)
 
 
 context("import from TIF")
 
-test_that("importing a TIF data frame as a kRp.hierarchy class object", {
-  load("myTopicCorpus_TIF_df.RData")
-  load("myTopicCorpus_from_df.RData")
+test_that("importing a TIF data frame as a kRp.corpus class object", {
+  load("sampleCorpusHier2Txt4_TIF_df.RData")
+  load("sampleCorpusHier2Txt4_from_df.RData")
   
-  myTopicCorpus_from_df.test <- readCorpus(
-    dir=myTopicCorpus_TIF_df,
+  sampleCorpusHier2Txt4_from_df.test <- readCorpus(
+    dir=sampleCorpusHier2Txt4_TIF_df,
     hierarchy=list(
       Topic=c(
         C3S="C3S",
@@ -179,67 +221,50 @@ test_that("importing a TIF data frame as a kRp.hierarchy class object", {
     format="obj"
   )
   
-  # same correctzions as with myTopicCorpus.test above
-  corpusPath(myTopicCorpus_from_df.test) <- "tm.plugin.koRpus/tests/testthat/samples"
-  corpusPath(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]]) <- "tm.plugin.koRpus/tests/testthat/samples/C3S"
-  corpusPath(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]]) <- "tm.plugin.koRpus/tests/testthat/samples/GEMA"
-  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
-  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
-  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
-  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
+  # path should be preserved
+  # the same for the timetamps of the tm objects
+  meta(corpusTm(sampleCorpusHier2Txt4_from_df.test)[[1]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_from_df.test)[[2]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_from_df.test)[[3]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpusHier2Txt4_from_df.test)[[4]])[["datetimestamp"]] <- as.POSIXlt("2020-12-08 01:01:01", tz="GMT")
   
   expect_equal(
-    myTopicCorpus_from_df,
-    myTopicCorpus_from_df.test
+    sampleCorpusHier2Txt4_from_df,
+    sampleCorpusHier2Txt4_from_df.test
   )
 })
+# # new test standards
+# sampleCorpusHier2Txt4_from_df <- sampleCorpusHier2Txt4_from_df.test
+# save(sampleCorpusHier2Txt4_from_df,
+#   file=file.path(main.root,"tests","testthat","sampleCorpusHier2Txt4_from_df.RData"),
+#   compress="xz",
+#   compression_level=-9)
 
-# TODO
-test_that("importing a minimal TIF data frame as a kRp.hierarchy class object", {
-  load("myTopicCorpus_TIF_df_min.RData")
-  load("myTopicCorpus_from_df_min.RData")
+test_that("importing a minimal TIF data frame as a kRp.corpus class object", {
+  load("sampleCorpus_TIF_df_min.RData")
+  load("sampleCorpus_from_df_min.RData")
   
-  myTopicCorpus_from_df_min.test <- readCorpus(
-    dir=myTopicCorpus_TIF_df_min,
+  sampleCorpus_from_df_min.test <- readCorpus(
+    dir=sampleCorpus_TIF_df_min,
     lang="xy",
     tagger="tokenize",
     format="obj"
   )
   
-  # same correctzions as with myTopicCorpus.test above
-  corpusPath(myTopicCorpus_from_df.test) <- "tm.plugin.koRpus/tests/testthat/samples"
-  corpusPath(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]]) <- "tm.plugin.koRpus/tests/testthat/samples/C3S"
-  corpusPath(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]]) <- "tm.plugin.koRpus/tests/testthat/samples/GEMA"
-  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
-  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
-  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
-  slot(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]], "path") <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_alt"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/C3S/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_alt"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]]))[["path"]] <- "tm.plugin.koRpus/tests/testthat/samples/GEMA/Wikipedia_neu"
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["C3S"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (alt)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  meta(corpusTm(corpusChildren(corpusChildren(myTopicCorpus_from_df.test)[["GEMA"]])[["Wikipedia (neu)"]])[[1]])$datetimestamp <- as.POSIXlt("2019-04-09 01:01:01", tz="GMT")
-  
+  # same corrections as above
+  meta(corpusTm(sampleCorpus_from_df_min.test)[[1]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpus_from_df_min.test)[[2]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpus_from_df_min.test)[[3]])[["datetimestamp"]] <-
+      meta(corpusTm(sampleCorpus_from_df_min.test)[[4]])[["datetimestamp"]] <- as.POSIXlt("2020-12-08 01:01:01", tz="GMT")
+
   expect_equal(
-    myTopicCorpus_from_df,
-    myTopicCorpus_from_df.test
+    sampleCorpus_from_df_min,
+    sampleCorpus_from_df_min.test
   )
 })
-
 # # new test standards
-# myTopicCorpus_from_df <- myTopicCorpus_from_df.test
-# save(myTopicCorpus_from_df,
-#   file=file.path(main.root,"tests","testthat","myTopicCorpus_from_df.RData"),
+# sampleCorpus_from_df_min <- sampleCorpus_from_df_min.test
+# save(sampleCorpus_from_df_min,
+#   file=file.path(main.root,"tests","testthat","sampleCorpus_from_df_min.RData"),
 #   compress="xz",
 #   compression_level=-9)

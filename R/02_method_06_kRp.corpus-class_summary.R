@@ -1,4 +1,4 @@
-# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -95,7 +95,7 @@ setMethod("summary", signature(object="kRp.corpus"), function(
         }, simplify=FALSE)))
         # suppress a second TTR
         if("TTR" %in% colnames(summary.info) & "TTR" %in% colnames(summary.lexdiv)){
-          summary.lexdiv <- subset(summary.lexdiv, select=-TTR)
+          summary.lexdiv <- summary.lexdiv[, !(names(summary.lexdiv) %in% "TTR")]
         } else {}
         summary.info <- cbind(
           summary.info,

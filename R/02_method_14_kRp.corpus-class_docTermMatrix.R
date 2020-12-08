@@ -1,4 +1,4 @@
-# Copyright 2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -37,6 +37,7 @@
 #'    to get the matrix from such an aggregated object.
 #' @return Either an object of the input class or a sparse matrix of class
 #'    \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.
+#' @importFrom koRpus docTermMatrix tif_as_tokens_df
 #' @export
 #' @aliases
 #'    docTermMatrix,-methods

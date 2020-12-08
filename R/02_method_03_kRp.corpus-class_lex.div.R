@@ -1,4 +1,4 @@
-# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -32,7 +32,7 @@
 #' @param ... options to pass through to \code{\link[koRpus:lex.div]{lex.div}}.
 #' @return An object of the same class as \code{txt}.
 #' @importFrom parallel mclapply
-#' @importMethodsFrom koRpus summary lex.div
+#' @importFrom koRpus summary lex.div split_by_doc_id
 #' @export
 #' @docType methods
 #' @aliases lex.div,kRp.corpus-method

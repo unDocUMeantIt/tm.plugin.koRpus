@@ -1,4 +1,4 @@
-# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -28,7 +28,7 @@
 #' @param txt.file An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
 #' @param ... options to pass through to \code{\link[koRpus:freq.analysis]{freq.analysis}}.
 #' @return An object of the same class as \code{txt.file}.
-#' @importFrom koRpus freq.analysis
+#' @importFrom koRpus freq.analysis kRp_text
 #' @export
 #' @docType methods
 #' @aliases freq.analysis,kRp.corpus-method

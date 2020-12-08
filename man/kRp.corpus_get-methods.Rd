@@ -110,9 +110,9 @@
 
 \S4method{doc_id}{kRp.corpus}(obj, has_id = NULL)
 
-\S4method{describe}{kRp.corpus}(obj)
+\S4method{describe}{kRp.corpus}(obj, doc_id = NULL, simplify = TRUE, ...)
 
-\S4method{describe}{kRp.corpus}(obj) <- value
+\S4method{describe}{kRp.corpus}(obj, doc_id = NULL, ...) <- value
 
 \S4method{language}{kRp.corpus}(obj)
 
@@ -130,7 +130,7 @@
 
 \S4method{corpusReadability}{kRp.corpus}(obj) <- value
 
-corpusTm(obj, id = NULL)
+corpusTm(obj)
 
 \S4method{corpusTm}{kRp.corpus}(obj)
 
@@ -199,13 +199,13 @@ corpusDocTermMatrix(obj, terms = NULL, case.sens = NULL, tfidf = NULL) <- value
 
 is.corpus(obj)
 
-\S4method{[}{kRp.corpus,ANY,ANY,ANY}(x, i, j)
+\S4method{[}{kRp.corpus,ANY,ANY,ANY}(x, i, j, ..., drop = TRUE)
 
-\S4method{[}{kRp.corpus,ANY,ANY,ANY}(x, i, j) <- value
+\S4method{[}{kRp.corpus,ANY,ANY,ANY}(x, i, j, ...) <- value
 
-\S4method{[[}{kRp.corpus}(x, i)
+\S4method{[[}{kRp.corpus}(x, i, doc_id = NULL, ...)
 
-\S4method{[[}{kRp.corpus}(x, i) <- value
+\S4method{[[}{kRp.corpus}(x, i, doc_id = NULL, ...) <- value
 
 \S4method{tif_as_tokens_df}{kRp.corpus}(tokens)
 
@@ -216,14 +216,19 @@ tif_as_corpus_df(corpus)
 \arguments{
 \item{obj}{An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.}
 
+\item{value}{A new value to replace the current with.}
+
 \item{has_id}{A character vector with \code{doc_id}s to look for in the object. The return value
 is then a logical vector of the same length,
       indicating if the respective id was found or not.}
 
-\item{id}{Character value specifying the category ID of child objects you want to get.
-If \code{NULL} then the child objects of the current top level are returned,
-otherwise all children with the ID specified. Only interpreted if \code{level=NULL}
-(you can't use both at the same time).}
+\item{doc_id}{A character vector to limit the scope to one or more particular document IDs.}
+
+\item{simplify}{If \code{TRUE} and result is a list of length 1, return the list element.}
+
+\item{...}{Additional arguments to pass through, depending on the method.}
+
+\item{feature}{Character string naming the object feature to look for.}
 
 \item{meta}{If not NULL, the \code{meta} list entry of the given name.}
 
@@ -251,11 +256,11 @@ Stored in object's meta data slot.}
 
 \item{j}{Defines the column selector in the tokens slot.}
 
+\item{drop}{See \code{\link[base:Extract]{[}}.}
+
 \item{tokens}{An object of class \code{kRp.corpus}.}
 
 \item{corpus}{An object of class \code{kRp.corpus}.}
-
-\item{level}{Either the integer value or name (character string) of the target level. If \code{NULL} the top level is used.}
 }
 \description{
 These methods should be used to get or set values of text objects

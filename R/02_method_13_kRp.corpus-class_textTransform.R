@@ -1,4 +1,4 @@
-# Copyright 2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -65,6 +65,7 @@ setMethod("textTransform", signature(txt="kRp.corpus"), function(txt, mc.cores=g
 # e.g. textTransform(), cTest(), jumbleWords(), or clozeDelete()
 # - obj: an object of class kRp.corpus
 # - trans_method: an object of class function
+#' @importFrom koRpus split_by_doc_id
 text_transform_wrapper <- function(obj, trans_method, mc.cores=getOption("mc.cores", 1L), ...){
     tagged_list <- split_by_doc_id(obj)
     transformed_texts <- mclapply(tagged_list, trans_method, ..., mc.cores=mc.cores)

@@ -1,4 +1,4 @@
-# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -46,12 +46,9 @@
 #' }
 #' 
 #' @param obj An object of class \code{\link[tm.plugin.koRpus:kRp.corpus-class]{kRp.corpus}}.
-#' @param level Either the integer value or name (character string) of the target level. If \code{NULL} the top level is used.
+#' @param value A new value to replace the current with.
 #' @param doc_id A character vector to limit the scope to one or more particular document IDs.
-#' @param id Character value specifying the category ID of child objects you want to get.
-#'    If \code{NULL} then the child objects of the current top level are returned,
-#'    otherwise all children with the ID specified. Only interpreted if \code{level=NULL}
-#'    (you can't use both at the same time).
+#' @param ... Additional arguments to pass through, depending on the method.
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
 #' @references
@@ -119,6 +116,7 @@ setMethod("doc_id",
 )
 
 ## the standard generic for describe() is defined in the sylly package
+#' @param simplify If \code{TRUE} and result is a list of length 1, return the list element.
 #' @rdname kRp.corpus_get-methods
 #' @importFrom sylly describe
 #' @docType methods
@@ -217,6 +215,7 @@ setMethod("language<-",
 )
 
 
+#' @param feature Character string naming the object feature to look for.
 #' @importFrom koRpus hasFeature
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
@@ -692,10 +691,10 @@ setMethod("corpusDocTermMatrix",
 # @param value The new value to replace the current with.
 setGeneric("corpusDocTermMatrix<-", function(
     obj,
-    value,
     terms=NULL,
     case.sens=NULL,
-    tfidf=NULL
+    tfidf=NULL,
+    value
   )
   standardGeneric("corpusDocTermMatrix<-")
 )
@@ -717,10 +716,10 @@ setMethod("corpusDocTermMatrix<-",
   signature=signature(obj="kRp.corpus"),
   function (
     obj,
-    value,
     terms=NULL,
     case.sens=NULL,
-    tfidf=NULL
+    tfidf=NULL,
+    value
   ){
     feature(obj, "doc_term_matrix") <- value
     corpusMeta(obj, meta="doc_term_matrix") <- list(
@@ -798,7 +797,7 @@ setMethod("diffText<-",
 
 
 #' @rdname kRp.corpus_get-methods
-#' @importFrom koRpus originalText
+#' @importFrom koRpus originalText kRp_txt_trans
 #' @export
 #' @docType methods
 #' @aliases
@@ -828,6 +827,7 @@ is.corpus <- function(obj){
 #' @param x See \code{obj}.
 #' @param i Defines the row selector (\code{[}) or the name to match (\code{[[}) in the tokens slot.
 #' @param j Defines the column selector in the tokens slot.
+#' @param drop See \code{\link[base:Extract]{[}}.
 #' @export
 #' @docType methods
 #' @aliases
@@ -835,8 +835,8 @@ is.corpus <- function(obj){
 #'    [,kRp.corpus,ANY,ANY,ANY-method
 setMethod("[",
   signature=signature(x="kRp.corpus"),
-  function (x, i, j, ...){
-    return(taggedText(x)[i, j, ...])
+  function (x, i, j, ..., drop=TRUE){
+    return(taggedText(x)[i, j, ..., drop=drop])
   }
 )
 

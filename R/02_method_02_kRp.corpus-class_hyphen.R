@@ -1,4 +1,4 @@
-# Copyright 2015-2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -28,6 +28,7 @@
 #' @return An object of the same class as \code{words}.
 #' @importFrom parallel mclapply
 #' @importFrom sylly hyphen
+#' @importFrom koRpus split_by_doc_id
 #' @export
 #' @docType methods
 #' @aliases hyphen,kRp.corpus-method
