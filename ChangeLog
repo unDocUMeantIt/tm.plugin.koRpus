@@ -4,39 +4,36 @@ changes in version 0.4-1 (2020-12-08)
 unreleased:
   - this release is under development
 fixed:
-  - docTermMatrix(): results were wrong because numbers were assigned
-    to wrong columns; now fixed in koRpus
+  - docTermMatrix(): results were wrong because numbers were assigned to
+    wrong columns; now fixed in koRpus
 changed:
-  - the nested object class kRp.hierarchy was replaced by kRp.corpus;
-    instead of reproducing the file hierarchy in the object structure,
-    kRp.corpus has a flat structure with all texts in one single data
-    frame; this data frame was also renamed from "TT.res" into "tokens"
-    the class name kRp.corpus was used in tm.plugin.koRpus before and
-    is just being recycled ;)
-    kRp.corpus inherits from class kRp.text as defined in the koRpus package
+  - the nested object class kRp.hierarchy was replaced by kRp.corpus; instead
+    of reproducing the file hierarchy in the object structure, kRp.corpus has
+    a flat structure with all texts in one single data frame; this data frame
+    was also renamed from "TT.res" into "tokens" the class name kRp.corpus
+    was used in tm.plugin.koRpus before and is just being recycled ;) kRp.corpus
+    inherits from class kRp.text as defined in the koRpus package
   - status messages are currently only shown when only one CPU is used
   - corpusTagged(): now called taggedText() as in koRpus
   - corpusDesc(): now called describe() as in koRpus
-  - [, [<-, [[ and [[<- methods no longer apply to the summary data
-    frame but tokens slot as in koRpus (where it applies to the TT.res
-    slot)
+  - [, [<-, [[ and [[<- methods no longer apply to the summary data frame but
+    tokens slot as in koRpus (where it applies to the TT.res slot)
   - show(): kRp.corpus objects now list all available features
   - read.corp.custom(): removed unused mc.cores argument
-  - docTermMatrix(): by default behaves like most other methods and adds
-    its result to the input object rather than returning just the matrix;
-    also, the generic is now defined by the koRpus package and was removed,
-    including all of the actual function code
+  - docTermMatrix(): by default behaves like most other methods and adds its
+    result to the input object rather than returning just the matrix; also,
+    the generic is now defined by the koRpus package and was removed, including
+    all of the actual function code
   - adjusted unit tests
 added:
-  - readCorpus(): the hierarchy levels of a text corpus can now be
-    assumed directly from the directory structure by setting "hierarchy=TRUE"
+  - readCorpus(): the hierarchy levels of a text corpus can now be assumed
+    directly from the directory structure by setting "hierarchy=TRUE"
   - corpusHasFeatures(), corpusHasFeatures()<-, corpusFeatures(),
-    corpusFeatures()<-, corpusHierarchy(), corpusHierarchy()<-,
-    corpusCorpFreq(), corpusCorpFreq()<-, 
-    diffText(), diffText()<-, originalText(): new getter/setter methods
-    for kRp.corpus objects
-  - split_by_doc_id(): new method transforms a kRp.corpus object into a
-    list of kRp.text objects
+    corpusFeatures()<-, corpusHierarchy(), corpusHierarchy()<-, corpusCorpFreq(),
+    corpusCorpFreq()<-, diffText(), diffText()<-, originalText(): new getter/setter
+    methods for kRp.corpus objects
+  - split_by_doc_id(): new method transforms a kRp.corpus object into a list
+    of kRp.text objects
   - corpusDocTermMatrix(): new method to get/set the sparse document term
     matrix in kRp.corpus objects
   - [[/[[<-: gained new argument "doc_id" to limit the scope to particular
@@ -45,7 +42,8 @@ added:
 removed:
   - removed all classes and methods dealing with kRp.hierarchy
   - removed deprecated methods of the pre-kRp.hierarchy era
-  - removed generic of tif_as_tokens_df() as it was moved to the koRpus package
+  - removed generic of tif_as_tokens_df() as it was moved to the koRpus
+    package
 
 changes in version 0.3-1 (2019-05-14)
 fixed:

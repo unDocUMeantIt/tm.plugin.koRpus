@@ -1,6 +1,66 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
+\section{Changes in tm.plugin.koRpus version 0.4-1 (2020-12-08)}{
+  \subsection{unreleased}{
+    \itemize{
+      \item this release is under development
+    }
+  }
+  \subsection{fixed}{
+    \itemize{
+      \item \code{docTermMatrix()}: results were wrong because numbers were assigned to
+        wrong columns; now fixed in koRpus
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item the nested object class kRp.hierarchy was replaced by kRp.corpus; instead
+        of reproducing the file hierarchy in the object structure, kRp.corpus has
+        a flat structure with all texts in one single data frame; this data frame
+        was also renamed from \code{"TT.res"} into \code{"tokens"} the class name kRp.corpus
+        was used in tm.plugin.koRpus before and is just being recycled ;) kRp.corpus
+        inherits from class kRp.text as defined in the koRpus package
+      \item status messages are currently only shown when only one CPU is used
+      \item \code{corpusTagged()}: now called \code{taggedText()} as in koRpus
+      \item \code{corpusDesc()}: now called \code{describe()} as in koRpus
+      \item [, [<-, [[ and [[<- methods no longer apply to the summary data frame but
+        tokens slot as in koRpus (where it applies to the TT.res slot)
+      \item \code{show()}: kRp.corpus objects now list all available features
+      \item \code{read.corp.custom()}: removed unused mc.cores argument
+      \item \code{docTermMatrix()}: by default behaves like most other methods and adds its
+        result to the input object rather than returning just the matrix; also,
+        the generic is now defined by the koRpus package and was removed, including
+        all of the actual function code
+      \item adjusted unit tests
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item \code{readCorpus()}: the hierarchy levels of a text corpus can now be assumed
+        directly from the directory structure by setting "hierarchy=TRUE"
+      \item \code{corpusHasFeatures()}, \code{corpusHasFeatures()}<-, \code{corpusFeatures()},
+        \code{corpusFeatures()}<-, \code{corpusHierarchy()}, \code{corpusHierarchy()}<-, \code{corpusCorpFreq()},
+        \code{corpusCorpFreq()}<-, \code{diffText()}, \code{diffText()}<-, \code{originalText()}: new getter/setter
+        methods for kRp.corpus objects
+      \item \code{split_by_doc_id()}: new method transforms a kRp.corpus object into a list
+        of kRp.text objects
+      \item \code{corpusDocTermMatrix()}: new method to get/set the sparse document term
+        matrix in kRp.corpus objects
+      \item [[/[[<-: gained new argument \code{"doc_id"} to limit the scope to particular
+        documents
+      \item \code{describe()}/describe()<-: now support filtering by doc_id
+    }
+  }
+  \subsection{removed}{
+    \itemize{
+      \item removed all classes and methods dealing with kRp.hierarchy
+      \item removed deprecated methods of the pre-kRp.hierarchy era
+      \item removed generic of \code{tif_as_tokens_df()} as it was moved to the koRpus
+        package
+    }
+  }
+}
 \section{Changes in tm.plugin.koRpus version 0.3-1 (2019-05-14)}{
   \subsection{fixed}{
     \itemize{

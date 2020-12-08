@@ -1,7 +1,9 @@
 # tm.plugin.koRpus
 
-This package provides classes and methods to enhance the ability to use the ['koRpus'](https://reaktanz.de/?c=hacking&s=koRpus)
-package together with the ['tm'](https://CRAN.R-project.org/package=tm) package.
+This package enhances the ['koRpus'](https://reaktanz.de/?c=hacking&s=koRpus) text object classes and methods to also
+support large corpora. Hierarchical ordering of corpus texts into arbitrary categories will be preserved.
+The pProvided classes and methods also improve the ability of using the 'koRpus' package together with the
+['tm'](https://CRAN.R-project.org/package=tm) package.
 Not all planned features are fully implemented, but it is already a recommended addition to 'koRpus' of you want to analyze
 full text corpora instead of single texts.
 
