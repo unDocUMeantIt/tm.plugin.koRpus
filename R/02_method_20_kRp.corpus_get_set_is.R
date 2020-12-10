@@ -92,10 +92,11 @@ setMethod("taggedText<-",
   }
 )
 
-## the standard generic for doc_id() is defined in the sylly package
+## the standard generic for doc_id() is defined in the koRpus package
 #' @rdname kRp.corpus_get-methods
 #' @param has_id A character vector with \code{doc_id}s to look for in the object. The return value
 #'    is then a logical vector of the same length, indicating if the respective id was found or not.
+#' @importFrom koRpus doc_id
 #' @export
 #' @docType methods
 #' @aliases
@@ -215,6 +216,7 @@ setMethod("language<-",
 )
 
 
+## the standard generic for hasFeature() is defined in the koRpus package
 #' @param feature Character string naming the object feature to look for.
 #' @importFrom koRpus hasFeature
 #' @rdname kRp.corpus_get-methods
@@ -237,6 +239,7 @@ setMethod("hasFeature",
 )
 
 
+## the standard generic for hasFeature()<- is defined in the koRpus package
 #' @importFrom koRpus hasFeature<-
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -262,6 +265,7 @@ setMethod("hasFeature<-",
 )
 
 
+## the standard generic for feature() is defined in the koRpus package
 #' @importFrom koRpus feature
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
@@ -291,6 +295,7 @@ setMethod("feature",
 )
 
 
+## the standard generic for feature()<- is defined in the koRpus package
 #' @importFrom koRpus feature<-
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -313,6 +318,7 @@ setMethod("feature<-",
 )
 
 
+## the standard generic for corpusReadability() is defined in the koRpus package
 #' @importFrom koRpus corpusReadability
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
@@ -328,6 +334,7 @@ setMethod("corpusReadability",
   }
 )
 
+## the standard generic for corpusReadability()<- is defined in the koRpus package
 #' @importFrom koRpus corpusReadability<-
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -445,6 +452,7 @@ setMethod("corpusMeta<-",
 )
 
 
+## the standard generic for corpusHyphen() is defined in the koRpus package
 #' @importFrom koRpus corpusHyphen
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
@@ -460,6 +468,7 @@ setMethod("corpusHyphen",
   }
 )
 
+## the standard generic for corpusHyphen()<- is defined in the koRpus package
 #' @importFrom koRpus corpusHyphen<-
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -477,6 +486,7 @@ setMethod("corpusHyphen<-",
 )
 
 
+## the standard generic for corpusLexDiv() is defined in the koRpus package
 #' @importFrom koRpus corpusLexDiv
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
@@ -492,6 +502,7 @@ setMethod("corpusLexDiv",
   }
 )
 
+## the standard generic for corpusLexDiv()<- is defined in the koRpus package
 #' @importFrom koRpus corpusLexDiv<-
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -509,6 +520,7 @@ setMethod("corpusLexDiv<-",
 )
 
 
+## the standard generic for corpusFreq() is defined in the koRpus package
 #' @importFrom koRpus corpusFreq
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
@@ -525,6 +537,7 @@ setMethod("corpusFreq",
 )
 
 
+## the standard generic for corpusFreq()<- is defined in the koRpus package
 #' @importFrom koRpus corpusFreq<-
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -542,6 +555,7 @@ setMethod("corpusFreq<-",
 )
 
 
+## the standard generic for corpusCorpFreq() is defined in the koRpus package
 #' @importFrom koRpus corpusCorpFreq
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
@@ -558,6 +572,7 @@ setMethod("corpusCorpFreq",
 )
 
 
+## the standard generic for corpusCorpFreq()<- is defined in the koRpus package
 #' @importFrom koRpus corpusCorpFreq<-
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -732,6 +747,7 @@ setMethod("corpusDocTermMatrix<-",
 )
 
 
+## the standard generic for corpusStopwords() is defined in the koRpus package
 #' @importFrom koRpus corpusStopwords
 #' @rdname kRp.corpus_get-methods
 #' @docType methods
@@ -747,6 +763,7 @@ setMethod("corpusStopwords",
   }
 )
 
+## the standard generic for corpusStopwords()<- is defined in the koRpus package
 #' @importFrom koRpus corpusStopwords<-
 #' @rdname kRp.corpus_get-methods
 #' @export
@@ -764,6 +781,7 @@ setMethod("corpusStopwords<-",
 )
 
 
+## the standard generic for diffText() is defined in the koRpus package
 #' @rdname kRp.corpus_get-methods
 #' @importFrom koRpus diffText
 #' @export
@@ -779,6 +797,7 @@ setMethod("diffText",
   }
 )
 
+## the standard generic for diffText()<- is defined in the koRpus package
 #' @rdname kRp.corpus_get-methods
 #' @importFrom koRpus diffText<-
 #' @export
@@ -796,6 +815,7 @@ setMethod("diffText<-",
 )
 
 
+## the standard generic for originalText() is defined in the koRpus package
 #' @rdname kRp.corpus_get-methods
 #' @importFrom koRpus originalText kRp_txt_trans
 #' @export

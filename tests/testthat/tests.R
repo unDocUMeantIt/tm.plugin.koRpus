@@ -26,7 +26,8 @@ test_that("creating a 'flat' kRp.corpus class object, one single text", {
   sampleCorpusHier0Txt1.test <- readCorpus(
     dir=sampleTextDir,
     lang="xy",
-    tagger="tokenize"
+    tagger="tokenize",
+    encoding="UTF-8"
   )
 
   # we have to manually set the paths because they would reference the
@@ -62,7 +63,8 @@ test_that("creating a kRp.corpus class object, one hierarchy level", {
       )
     ),
     lang="xy",
-    tagger="tokenize"
+    tagger="tokenize",
+    encoding="UTF-8"
   )
 
   # we have to manually set the paths because they would reference the
@@ -104,7 +106,8 @@ test_that("creating a kRp.corpus class object, two hierarchy levels", {
       )
     ),
     lang="xy",
-    tagger="tokenize"
+    tagger="tokenize",
+    encoding="UTF-8"
   )
 
   # we have to manually set the paths because they would reference the
@@ -144,7 +147,8 @@ test_that("creating a kRp.corpus class object, autodetect hierarchy levels", {
     dir=sampleTextDir,
     hierarchy=TRUE,
     lang="xy",
-    tagger="tokenize"
+    tagger="tokenize",
+    encoding="UTF-8"
   )
 
   # we have to manually set the paths because they would reference the
