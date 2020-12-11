@@ -1,16 +1,12 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
-\section{Changes in tm.plugin.koRpus version 0.4-1 (2020-12-08)}{
-  \subsection{unreleased}{
-    \itemize{
-      \item this release is under development
-    }
-  }
+\section{Changes in tm.plugin.koRpus version 0.4-1 (2020-12-11)}{
   \subsection{fixed}{
     \itemize{
       \item \code{docTermMatrix()}: results were wrong because numbers were assigned to
         wrong columns; now fixed in koRpus
+      \item unit tests failed on windows due to an UTF-8 issue
     }
   }
   \subsection{changed}{
@@ -32,7 +28,7 @@
         result to the input object rather than returning just the matrix; also,
         the generic is now defined by the koRpus package and was removed, including
         all of the actual function code
-      \item adjusted unit tests
+      \item adjusted unit tests and vignette
     }
   }
   \subsection{added}{

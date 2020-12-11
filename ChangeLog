@@ -1,11 +1,10 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2020-12-08)
-unreleased:
-  - this release is under development
+changes in version 0.4-1 (2020-12-11)
 fixed:
   - docTermMatrix(): results were wrong because numbers were assigned to
     wrong columns; now fixed in koRpus
+  - unit tests failed on windows due to an UTF-8 issue
 changed:
   - the nested object class kRp.hierarchy was replaced by kRp.corpus; instead
     of reproducing the file hierarchy in the object structure, kRp.corpus has
@@ -24,7 +23,7 @@ changed:
     result to the input object rather than returning just the matrix; also,
     the generic is now defined by the koRpus package and was removed, including
     all of the actual function code
-  - adjusted unit tests
+  - adjusted unit tests and vignette
 added:
   - readCorpus(): the hierarchy levels of a text corpus can now be assumed
     directly from the directory structure by setting "hierarchy=TRUE"
