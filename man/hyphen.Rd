@@ -27,12 +27,18 @@ This method calls \code{\link[sylly:hyphen]{hyphen}} on all tagged text objects
 inside the given \code{words} object (using \code{mclapply}).
 }
 \examples{
-\donttest{
-myCorpus <- readCorpus(
-  dir=file.path(
-    path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_prev"
+# use readCorpus() to create an object of class kRp.corpus
+# code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  myCorpus <- readCorpus(
+    dir=file.path(
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_prev"
+    ),
+    # use tokenize() so examples run without a TreeTagger installation
+    tagger="tokenize",
+    lang="en"
   )
-)
-myCorpus <- hyphen(myCorpus)
-}
+
+  myCorpus <- hyphen(myCorpus)
+} else {}
 }

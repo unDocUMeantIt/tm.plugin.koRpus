@@ -1,4 +1,4 @@
-# Copyright 2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -27,27 +27,19 @@
 #' @return An object of the same class as \code{obj}.
 #' @importFrom parallel mclapply
 #' @importFrom koRpus clozeDelete
+#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @docType methods
 #' @aliases clozeDelete,kRp.corpus-method
 #' @rdname clozeDelete
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_2_texts.R
 #' @examples
-#' \dontrun{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-#'   ),
-#'   hierarchy=list(
-#'     Source=c(
-#'       Wikipedia_prev="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
-#'   )
-#' )
-#' # remove all punctuation
-#' myCorpus <- clozeDelete(myCorpus)
-#' }
-#' @include 01_class_01_kRp.corpus.R
+#'
+#'   head(taggedText(myCorpus), n=10)
+#'   myCorpus <- clozeDelete(myCorpus)
+#'   head(taggedText(myCorpus), n=10)
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod("clozeDelete", signature(obj="kRp.corpus"), function(obj, mc.cores=getOption("mc.cores", 1L), ...){
     return(
       # text_transform_wrapper() is defined in 02_method_13_kRp.corpus-class_textTransform.R

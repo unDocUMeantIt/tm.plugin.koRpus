@@ -36,30 +36,23 @@
 #' @param ... Used for internal processes.
 #' @return An object of the same class as \code{object}.
 #' @importFrom NLP meta
+#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @docType methods
 #' @aliases summary,kRp.corpus-method
 #' @rdname summary
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_2_texts.R
 #' @examples
-#' \dontrun{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-#'   ),
-#'   hierarchy=list(
-#'     Source=c(
-#'       Wikipedia_prev="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
-#'   )
-#' )
-#' myCorpus <- readability(myCorpus, summary=FALSE)
-#' corpusSummary(myCorpus)
-#' # add summaries
-#' myCorpus <- summary(myCorpus)
-#' corpusSummary(myCorpus)
-#' }
-#' @include 01_class_01_kRp.corpus.R
+#'
+#'   # calculate readability, but prevent a summary table from being added
+#'   myCorpus <- readability(myCorpus, summary=FALSE)
+#'   corpusSummary(myCorpus)
+#'
+#'   # add summaries
+#'   myCorpus <- summary(myCorpus)
+#'   corpusSummary(myCorpus)
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod("summary", signature(object="kRp.corpus"), function(
   object, missing=NA, ...
 ){

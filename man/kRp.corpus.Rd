@@ -94,7 +94,6 @@ if(require("koRpus.lang.en", quietly = TRUE)){
   )
 } else {}
 
-
 # manual creation
 emptyCorpus <- kRp.corpus()
 }

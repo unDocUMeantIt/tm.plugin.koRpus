@@ -59,14 +59,17 @@
 #'    taggedText,-methods
 #'    taggedText,kRp.corpus-method
 #' @include 01_class_01_kRp.corpus.R
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_1_text.R
 #' @examples
-#' \donttest{
-#' taggedText(myCorpus)
-#' corpusMeta(myCorpus, "note") <- "an interesting read!"
+#'
+#'   taggedText(myCorpus)
+#'
+#'   corpusMeta(myCorpus, "note") <- "an interesting read!"
 #' 
-#' # export object to TIF compliant data frame
-#' myCorpus_df <- tif_as_corpus_df(myCorpus)
-#' }
+#'   # export object to TIF compliant data frame
+#'   myCorpus_df <- tif_as_corpus_df(myCorpus)
+#' @example inst/examples/if_lang_en_clause_end.R
 ## the standard generic for taggedText() is defined in the koRpus package
 setMethod("taggedText",
   signature=signature(obj="kRp.corpus"),

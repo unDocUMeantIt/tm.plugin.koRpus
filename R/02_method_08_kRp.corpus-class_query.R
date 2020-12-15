@@ -35,12 +35,18 @@
 #' @param regexp_var A character string naming the column to query if \code{var="regexp"}.
 #' @return Depending on the arguments, might include whole objects, lists, single values etc.
 #' @importFrom koRpus query kRp_text
+#' @include 01_class_01_kRp.corpus.R
 #' @keywords methods
 #' @export
 #' @docType methods
 #' @rdname query
 #' @aliases query,kRp.hierarch-method
-#' @include 01_class_01_kRp.corpus.R
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_2_texts.R
+#' @examples
+#'
+#'   query(myCorpus, var="lttr", query="7", rel="gt")
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod("query",
   signature(obj="kRp.corpus"),
   function (obj, var, query, rel="eq", as.df=TRUE, ignore.case=TRUE, perl=FALSE, regexp_var="token"){

@@ -48,22 +48,30 @@ all texts that the respective object contains.
 in kRp.corpus objects directly.
 }
 \examples{
-\dontrun{
-myCorpus <- readCorpus(
-  dir=file.path(
-    path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-  ),
-  hierarchy=list(
-    Source=c(
-      Wikipedia_prev="Wikipedia (old)",
-      Wikipedia_new="Wikipedia (new)"
-    )
+# use readCorpus() to create an object of class kRp.corpus
+# code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  myCorpus <- readCorpus(
+    dir=file.path(
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
+    ),
+    hierarchy=list(
+      Source=c(
+        Wikipedia_prev="Wikipedia (old)",
+        Wikipedia_new="Wikipedia (new)"
+      )
+    ),
+    # use tokenize() so examples run without a TreeTagger installation
+    tagger="tokenize",
+    lang="en"
   )
-)
-myCorpus <- readability(myCorpus, summary=FALSE)
-corpusSummary(myCorpus)
-# add summaries
-myCorpus <- summary(myCorpus)
-corpusSummary(myCorpus)
-}
+
+  # calculate readability, but prevent a summary table from being added
+  myCorpus <- readability(myCorpus, summary=FALSE)
+  corpusSummary(myCorpus)
+
+  # add summaries
+  myCorpus <- summary(myCorpus)
+  corpusSummary(myCorpus)
+} else {}
 }

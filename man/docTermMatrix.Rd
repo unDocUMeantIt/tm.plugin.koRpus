@@ -48,32 +48,37 @@ so you can use \code{corpusMeta(..., "doc_term_matrix")} to fetch it.
 See the examples to learn how to limit the analysis to desired word classes.
 }
 \examples{
-\dontrun{
-myCorpus <- readCorpus(
-  dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
-  hierarchy=list(
-    Topic=c(
-      Winner="Reality Winner",
-      Edwards="Natalie Edwards"
+# use readCorpus() to create an object of class kRp.corpus
+# code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  myCorpus <- readCorpus(
+    dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
+    hierarchy=list(
+      Topic=c(
+        Winner="Reality Winner",
+        Edwards="Natalie Edwards"
+      ),
+      Source=c(
+        Wikipedia_prev="Wikipedia (old)",
+        Wikipedia_new="Wikipedia (new)"
+      )
     ),
-    Source=c(
-      Wikipedia_prev="Wikipedia (old)",
-      Wikipedia_new="Wikipedia (new)"
-    )
+    # use tokenize() so examples run without a TreeTagger installation
+    tagger="tokenize",
+    lang="en"
   )
-)
 
-# get the document-term frequencies in a sparse matrix
-myDTMatrix <- docTermMatrix(myCorpus, as.feature=FALSE)
+  # get the document-term frequencies in a sparse matrix
+  myDTMatrix <- docTermMatrix(myCorpus, as.feature=FALSE)
 
-# combine with filterByClass() to, e.g.,  exclude all punctuation
-myDTMatrix <- docTermMatrix(filterByClass(myCorpus), as.feature=FALSE)
+  # combine with filterByClass() to, e.g.,  exclude all punctuation
+  myDTMatrix <- docTermMatrix(filterByClass(myCorpus), as.feature=FALSE)
 
-# instead of absolute frequencies, get the tf-idf values
-myDTMatrix <- docTermMatrix(
-  filterByClass(myCorpus),
-  tfidf=TRUE,
-  as.feature=FALSE
-)
-}
+  # instead of absolute frequencies, get the tf-idf values
+  myDTMatrix <- docTermMatrix(
+    filterByClass(myCorpus),
+    tfidf=TRUE,
+    as.feature=FALSE
+  )
+} else {}
 }

@@ -38,26 +38,17 @@
 #' @return An object of the same class as \code{corpus}.
 #' @export
 #' @importFrom koRpus read.corp.custom kRp_text docTermMatrix
+#' @include 01_class_01_kRp.corpus.R
 #' @docType methods
 #' @aliases read.corp.custom,kRp.corpus-method
 #' @rdname read.corp.custom
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_2_texts.R
 #' @examples
-#' \donttest{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-#'   ),
-#'   hierarchy=list(
-#'     Source=c(
-#'       Wikipedia_prev="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
-#'   )
-#' )
-#' # this will call read.corp.custom() recursively
-#' myCorpus <- read.corp.custom(myCorpus)
-#' }
-#' @include 01_class_01_kRp.corpus.R
+#'
+#'   myCorpus <- read.corp.custom(myCorpus)
+#'   corpusCorpFreq(myCorpus)
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod("read.corp.custom", signature(corpus="kRp.corpus"), function(corpus, caseSens=TRUE, log.base=10, keep_dtm=FALSE, ...){
     dot_args <- list(...)
     if(!is.null(dot_args[["as.feature"]])){

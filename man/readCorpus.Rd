@@ -126,64 +126,78 @@ Note that the special column names \code{path} and \code{file} will also be impo
 }
 
 \examples{
-\dontrun{
-# "flat" corpus, parse all texts in the given dir
-myCorpus <- readCorpus(
-  dir=file.path(
-    path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_prev"
-  )
-)
-
-# corpus with one category names "Source"
-myCorpus <- readCorpus(
-  dir=file.path(
-    path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-  ),
-  hierarchy=list(
-    Source=c(
-      Wikipedia_prev="Wikipedia (old)",
-      Wikipedia_new="Wikipedia (new)"
-    )
-  )
-)
-
-# two hieraryhical levels, "Topic" and "Source"
-myCorpus <- readCorpus(
-  dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
-  hierarchy=list(
-    Topic=c(
-      Winner="Reality Winner",
-      Edwards="Natalie Edwards"
+# use readCorpus() to create an object of class kRp.corpus
+# code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  # "flat" corpus, parse all texts in the given dir
+  myCorpus <- readCorpus(
+    dir=file.path(
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_prev"
     ),
-    Source=c(
-      Wikipedia_prev="Wikipedia (old)",
-      Wikipedia_new="Wikipedia (new)"
-    )
+    # use tokenize() so examples run without a TreeTagger installation
+    tagger="tokenize",
+    lang="en"
   )
-)
-
-# get hierarchy from directory tree
-myCorpus <- readCorpus(
-  dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
-  hierarchy=TRUE
-)
-
-# if the same corpus is available as TIF compliant data frame
-myCorpus <- readCorpus(
-  dir=myCorpus_df,
-  hierarchy=list(
-    Topic=c(
-      Winner="Reality Winner",
-      Edwards="Natalie Edwards"
+ 
+  # corpus with one category names "Source"
+  myCorpus <- readCorpus(
+    dir=file.path(
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
     ),
-    Source=c(
-      Wikipedia_prev="Wikipedia (old)",
-      Wikipedia_new="Wikipedia (new)"
+    hierarchy=list(
+      Source=c(
+        Wikipedia_prev="Wikipedia (old)",
+        Wikipedia_new="Wikipedia (new)"
+      )
+    ),
+    tagger="tokenize",
+    lang="en"
+  )
+ 
+  # two hieraryhical levels, "Topic" and "Source"
+  myCorpus <- readCorpus(
+    dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
+    hierarchy=list(
+      Topic=c(
+        Winner="Reality Winner",
+        Edwards="Natalie Edwards"
+      ),
+      Source=c(
+        Wikipedia_prev="Wikipedia (old)",
+        Wikipedia_new="Wikipedia (new)"
+      )
+    ),
+    tagger="tokenize",
+    lang="en"
+  )
+ 
+  # get hierarchy from directory tree
+  myCorpus <- readCorpus(
+    dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
+    hierarchy=TRUE,
+    tagger="tokenize",
+    lang="en"
+  )
+  
+  \dontrun{
+    # if the same corpus is available as TIF compliant data frame
+    myCorpus <- readCorpus(
+      dir=myCorpus_df,
+      hierarchy=list(
+        Topic=c(
+          Winner="Reality Winner",
+          Edwards="Natalie Edwards"
+        ),
+        Source=c(
+          Wikipedia_prev="Wikipedia (old)",
+          Wikipedia_new="Wikipedia (new)"
+        )
+      ),
+      lang="en",
+      format="obj"
     )
-  ),
-  format="obj"
-)
-}
+  }
+} else {}
 }
 \references{
 [1] Text Interchange Formats (\url{https://github.com/ropensci/tif})

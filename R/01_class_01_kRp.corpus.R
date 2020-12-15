@@ -99,7 +99,9 @@ init_corpus_tokens <- function(hierarchy=list()){
 #' @export kRp.corpus
 #' @exportClass kRp.corpus
 #' @rdname kRp.corpus
+#' @example inst/examples/if_lang_en_clause_start.R
 #' @example inst/examples/generate_myCorpus_4_texts.R
+#' @example inst/examples/if_lang_en_clause_end.R
 #' @examples
 #'
 #' # manual creation

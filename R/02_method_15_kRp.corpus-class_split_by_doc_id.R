@@ -27,31 +27,19 @@
 #' @return A named list of objects of class \code{\link[koRpus:kRp.text-class]{kRp.text}}.
 #'    Elements are named by their \code{doc_id}.
 #' @importFrom koRpus split_by_doc_id kRp_text
+#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @docType methods
 #' @rdname split_by_doc_id
 #' @aliases
 #'    split_by_doc_id,-methods
 #'    split_by_doc_id,kRp.corpus-method
-#' @include 01_class_01_kRp.corpus.R
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_4_texts.R
 #' @examples
-#' \dontrun{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
-#'   hierarchy=list(
-#'     Topic=c(
-#'       Winner="Reality Winner",
-#'       Edwards="Natalie Edwards"
-#'     ),
-#'     Source=c(
-#'       Wikipedia_prev="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
-#'   )
-#' )
-#' 
-#' myCorpusList <- split_by_doc_id(myCorpus)
-#' }
+#'
+#'   myCorpusList <- split_by_doc_id(myCorpus)
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod("split_by_doc_id",
   signature=signature(obj="kRp.corpus"),
   function(obj, keepFeatures=TRUE){

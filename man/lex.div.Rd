@@ -41,20 +41,26 @@ This method calls \code{\link[koRpus:lex.div]{lex.div}} on all tagged text objec
 inside the given \code{txt} object (using \code{mclapply}).
 }
 \examples{
-\dontrun{
-myCorpus <- readCorpus(
-  dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
-  hierarchy=list(
-    Topic=c(
-      Winner="Reality Winner",
-      Edwards="Natalie Edwards"
+# use readCorpus() to create an object of class kRp.corpus
+# code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  myCorpus <- readCorpus(
+    dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
+    hierarchy=list(
+      Topic=c(
+        Winner="Reality Winner",
+        Edwards="Natalie Edwards"
+      ),
+      Source=c(
+        Wikipedia_prev="Wikipedia (old)",
+        Wikipedia_new="Wikipedia (new)"
+      )
     ),
-    Source=c(
-      Wikipedia_prev="Wikipedia (old)",
-      Wikipedia_new="Wikipedia (new)"
-    )
+    # use tokenize() so examples run without a TreeTagger installation
+    tagger="tokenize",
+    lang="en"
   )
-)
-myCorpus <- lex.div(myCorpus)
-}
+  myCorpus <- lex.div(myCorpus)
+  corpusSummary(myCorpus)
+} else {}
 }

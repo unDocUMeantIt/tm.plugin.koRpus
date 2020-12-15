@@ -27,27 +27,20 @@
 #' @return An object of the same class as \code{txt}.
 #' @importFrom parallel mclapply
 #' @importFrom koRpus filterByClass split_by_doc_id
+#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @docType methods
 #' @aliases filterByClass,kRp.corpus-method
 #' @rdname filterByClass
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_2_texts.R
 #' @examples
-#' \dontrun{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-#'   ),
-#'   hierarchy=list(
-#'     Source=c(
-#'       Wikipedia_prev="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
-#'   )
-#' )
-#' # remove all punctuation
-#' myCorpus <- filterByClass(myCorpus)
-#' }
-#' @include 01_class_01_kRp.corpus.R
+#'
+#'   head(taggedText(myCorpus), n=10)
+#'   # remove all punctuation
+#'   myCorpus <- filterByClass(myCorpus)
+#'   head(taggedText(myCorpus), n=10)
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod("filterByClass", signature(txt="kRp.corpus"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
     # filterByClass() by default updates the desc slot, and since that is still split into
     # individual texts, we must get individual calculations and merge the tokens data frames

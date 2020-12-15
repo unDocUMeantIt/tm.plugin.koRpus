@@ -27,27 +27,19 @@
 #' @return An object of the same class as \code{txt}.
 #' @importFrom parallel mclapply
 #' @importFrom koRpus textTransform
+#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @docType methods
 #' @aliases textTransform,kRp.corpus-method
 #' @rdname textTransform
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_2_texts.R
 #' @examples
-#' \dontrun{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-#'   ),
-#'   hierarchy=list(
-#'     Source=c(
-#'       Wikipedia_prev="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
-#'   )
-#' )
-#' # remove all punctuation
-#' myCorpus <- textTransform(myCorpus, scheme="minor")
-#' }
-#' @include 01_class_01_kRp.corpus.R
+#'
+#'   head(taggedText(myCorpus), n=10)
+#'   myCorpus <- textTransform(myCorpus, scheme="minor")
+#'   head(taggedText(myCorpus), n=10)
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod("textTransform", signature(txt="kRp.corpus"), function(txt, mc.cores=getOption("mc.cores", 1L), ...){
     return(
       text_transform_wrapper(

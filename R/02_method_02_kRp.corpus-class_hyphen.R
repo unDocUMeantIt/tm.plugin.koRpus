@@ -29,20 +29,17 @@
 #' @importFrom parallel mclapply
 #' @importFrom sylly hyphen
 #' @importFrom koRpus split_by_doc_id
+#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @docType methods
 #' @aliases hyphen,kRp.corpus-method
 #' @rdname hyphen
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_1_text.R
 #' @examples
-#' \donttest{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_prev"
-#'   )
-#' )
-#' myCorpus <- hyphen(myCorpus)
-#' }
-#' @include 01_class_01_kRp.corpus.R
+#'
+#'   myCorpus <- hyphen(myCorpus)
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod(
   "hyphen",
   signature(words="kRp.corpus"),

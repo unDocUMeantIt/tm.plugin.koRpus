@@ -31,28 +31,18 @@
 #' @importFrom utils modifyList
 #' @importFrom parallel mclapply
 #' @importFrom koRpus readability summary split_by_doc_id
+#' @include 01_class_01_kRp.corpus.R
 #' @docType methods
 #' @aliases readability,kRp.corpus-method
 #' @rdname readability
 #' @export
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_4_texts.R
 #' @examples
-#' \dontrun{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
-#'   hierarchy=list(
-#'     Topic=c(
-#'       Winner="Reality Winner",
-#'       Edwards="Natalie Edwards"
-#'     ),
-#'     Source=c(
-#'       Wikipedia_prev="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
-#'   )
-#' )
-#' myTexts <- readability(myCorpus)
-#' }
-#' @include 01_class_01_kRp.corpus.R
+#'
+#'   myTexts <- readability(myCorpus)
+#'   corpusSummary(myCorpus)
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod(
   "readability",
   signature(txt.file="kRp.corpus"),

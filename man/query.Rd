@@ -51,4 +51,26 @@ Depending on the arguments, might include whole objects, lists, single values et
 This method calls \code{\link[koRpus:query]{query}} on all tagged text objects
 inside the given object.
 }
+\examples{
+# use readCorpus() to create an object of class kRp.corpus
+# code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  myCorpus <- readCorpus(
+    dir=file.path(
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
+    ),
+    hierarchy=list(
+      Source=c(
+        Wikipedia_prev="Wikipedia (old)",
+        Wikipedia_new="Wikipedia (new)"
+      )
+    ),
+    # use tokenize() so examples run without a TreeTagger installation
+    tagger="tokenize",
+    lang="en"
+  )
+
+  query(myCorpus, var="lttr", query="7", rel="gt")
+} else {}
+}
 \keyword{methods}

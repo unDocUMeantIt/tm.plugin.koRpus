@@ -1,10 +1,8 @@
   myCorpus <- readCorpus(
-    dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
+    dir=file.path(
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
+    ),
     hierarchy=list(
-      Topic=c(
-        Winner="Reality Winner",
-        Edwards="Natalie Edwards"
-      ),
       Source=c(
         Wikipedia_prev="Wikipedia (old)",
         Wikipedia_new="Wikipedia (new)"

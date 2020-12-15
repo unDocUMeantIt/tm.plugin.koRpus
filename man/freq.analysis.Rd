@@ -26,20 +26,26 @@ is found in the \code{freq} slot of \code{txt.file},
 \code{\link[tm.plugin.koRpus:read.corp.custom]{read.corp.custom}} on the object previously.
 }
 \examples{
-\dontrun{
-myCorpus <- readCorpus(
-  dir=file.path(
-    path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-  ),
-  hierarchy=list(
-    Source=c(
-      Wikipedia_prev="Wikipedia (old)",
-      Wikipedia_new="Wikipedia (new)"
-    )
+# use readCorpus() to create an object of class kRp.corpus
+# code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  myCorpus <- readCorpus(
+    dir=file.path(
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
+    ),
+    hierarchy=list(
+      Source=c(
+        Wikipedia_prev="Wikipedia (old)",
+        Wikipedia_new="Wikipedia (new)"
+      )
+    ),
+    # use tokenize() so examples run without a TreeTagger installation
+    tagger="tokenize",
+    lang="en"
   )
-)
-# this will call read.corp.custom()
-myCorpus <- read.corp.custom(myCorpus)
-myCorpus <- freq.analysis(myCorpus)
-}
+
+  myCorpus <- read.corp.custom(myCorpus)
+  myCorpus <- freq.analysis(myCorpus)
+  corpusFreq(myCorpus)
+} else {}
 }

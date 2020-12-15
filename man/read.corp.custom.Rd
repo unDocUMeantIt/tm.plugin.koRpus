@@ -42,19 +42,25 @@ existing one). If no document term matrix is present yet,
 of the resulting object.
 }
 \examples{
-\donttest{
-myCorpus <- readCorpus(
-  dir=file.path(
-    path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-  ),
-  hierarchy=list(
-    Source=c(
-      Wikipedia_prev="Wikipedia (old)",
-      Wikipedia_new="Wikipedia (new)"
-    )
+# use readCorpus() to create an object of class kRp.corpus
+# code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  myCorpus <- readCorpus(
+    dir=file.path(
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
+    ),
+    hierarchy=list(
+      Source=c(
+        Wikipedia_prev="Wikipedia (old)",
+        Wikipedia_new="Wikipedia (new)"
+      )
+    ),
+    # use tokenize() so examples run without a TreeTagger installation
+    tagger="tokenize",
+    lang="en"
   )
-)
-# this will call read.corp.custom() recursively
-myCorpus <- read.corp.custom(myCorpus)
-}
+
+  myCorpus <- read.corp.custom(myCorpus)
+  corpusCorpFreq(myCorpus)
+} else {}
 }

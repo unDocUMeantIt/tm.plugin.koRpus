@@ -29,28 +29,19 @@
 #' @param ... options to pass through to \code{\link[koRpus:freq.analysis]{freq.analysis}}.
 #' @return An object of the same class as \code{txt.file}.
 #' @importFrom koRpus freq.analysis kRp_text
+#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @docType methods
 #' @aliases freq.analysis,kRp.corpus-method
 #' @rdname freq.analysis
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_2_texts.R
 #' @examples
-#' \dontrun{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
-#'   ),
-#'   hierarchy=list(
-#'     Source=c(
-#'       Wikipedia_prev="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
-#'   )
-#' )
-#' # this will call read.corp.custom()
-#' myCorpus <- read.corp.custom(myCorpus)
-#' myCorpus <- freq.analysis(myCorpus)
-#' }
-#' @include 01_class_01_kRp.corpus.R
+#'
+#'   myCorpus <- read.corp.custom(myCorpus)
+#'   myCorpus <- freq.analysis(myCorpus)
+#'   corpusFreq(myCorpus)
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, ...){
     tagged_large <- kRp_text(
       lang=language(txt.file),

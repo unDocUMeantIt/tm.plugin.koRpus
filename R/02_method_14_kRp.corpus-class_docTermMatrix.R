@@ -38,42 +38,30 @@
 #' @return Either an object of the input class or a sparse matrix of class
 #'    \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}}.
 #' @importFrom koRpus docTermMatrix tif_as_tokens_df
+#' @include 01_class_01_kRp.corpus.R
 #' @export
 #' @aliases
 #'    docTermMatrix,-methods
 #'    docTermMatrix,kRp.corpus-method
 #' @docType methods
 #' @rdname docTermMatrix
-#' @include 01_class_01_kRp.corpus.R
+#' @example inst/examples/if_lang_en_clause_start.R
+#' @example inst/examples/generate_myCorpus_4_texts.R
 #' @examples
-#' \dontrun{
-#' myCorpus <- readCorpus(
-#'   dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
-#'   hierarchy=list(
-#'     Topic=c(
-#'       Winner="Reality Winner",
-#'       Edwards="Natalie Edwards"
-#'     ),
-#'     Source=c(
-#'       Wikipedia_prev="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
+#'
+#'   # get the document-term frequencies in a sparse matrix
+#'   myDTMatrix <- docTermMatrix(myCorpus, as.feature=FALSE)
+#' 
+#'   # combine with filterByClass() to, e.g.,  exclude all punctuation
+#'   myDTMatrix <- docTermMatrix(filterByClass(myCorpus), as.feature=FALSE)
+#' 
+#'   # instead of absolute frequencies, get the tf-idf values
+#'   myDTMatrix <- docTermMatrix(
+#'     filterByClass(myCorpus),
+#'     tfidf=TRUE,
+#'     as.feature=FALSE
 #'   )
-#' )
-#' 
-#' # get the document-term frequencies in a sparse matrix
-#' myDTMatrix <- docTermMatrix(myCorpus, as.feature=FALSE)
-#' 
-#' # combine with filterByClass() to, e.g.,  exclude all punctuation
-#' myDTMatrix <- docTermMatrix(filterByClass(myCorpus), as.feature=FALSE)
-#' 
-#' # instead of absolute frequencies, get the tf-idf values
-#' myDTMatrix <- docTermMatrix(
-#'   filterByClass(myCorpus),
-#'   tfidf=TRUE,
-#'   as.feature=FALSE
-#' )
-#' }
+#' @example inst/examples/if_lang_en_clause_end.R
 setMethod("docTermMatrix",
   signature=signature(obj="kRp.corpus"),
   function(
