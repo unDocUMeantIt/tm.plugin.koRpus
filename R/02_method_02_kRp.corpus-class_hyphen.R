@@ -34,10 +34,10 @@
 #' @aliases hyphen,kRp.corpus-method
 #' @rdname hyphen
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' myCorpus <- readCorpus(
 #'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S", "Wikipedia_alt"
+#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_old"
 #'   )
 #' )
 #' myCorpus <- hyphen(myCorpus)

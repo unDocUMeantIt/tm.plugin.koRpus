@@ -94,41 +94,41 @@
 #' # "flat" corpus, parse all texts in the given dir
 #' myCorpus <- readCorpus(
 #'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S", "Wikipedia_alt"
+#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_old"
 #'   )
 #' )
 #'
 #' # corpus with one category names "Source"
 #' myCorpus <- readCorpus(
 #'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S"
+#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
 #'   ),
 #'   hierarchy=list(
 #'     Source=c(
-#'       Wikipedia_alt="Wikipedia (alt)",
-#'       Wikipedia_neu="Wikipedia (neu)"
+#'       Wikipedia_old="Wikipedia (old)",
+#'       Wikipedia_new="Wikipedia (new)"
 #'     )
 #'   )
 #' )
 #'
 #' # two hieraryhical levels, "Topic" and "Source"
 #' myCorpus <- readCorpus(
-#'   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+#'   dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
 #'   hierarchy=list(
 #'     Topic=c(
-#'       C3S="C3S",
-#'       GEMA="GEMA"
+#'       Winner="Reality Winner",
+#'       Edwards="Natalie Edwards"
 #'     ),
 #'     Source=c(
-#'       Wikipedia_alt="Wikipedia (alt)",
-#'       Wikipedia_neu="Wikipedia (neu)"
+#'       Wikipedia_old="Wikipedia (old)",
+#'       Wikipedia_new="Wikipedia (new)"
 #'     )
 #'   )
 #' )
 #'
 #' # get hierarchy from directory tree
 #' myCorpus <- readCorpus(
-#'   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+#'   dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
 #'   hierarchy=TRUE
 #' )
 #' 
@@ -137,12 +137,12 @@
 #'   dir=myCorpus_df,
 #'   hierarchy=list(
 #'     Topic=c(
-#'       C3S="C3S",
-#'       GEMA="GEMA"
+#'       Winner="Reality Winner",
+#'       Edwards="Natalie Edwards"
 #'     ),
 #'     Source=c(
-#'       Wikipedia_alt="Wikipedia (alt)",
-#'       Wikipedia_neu="Wikipedia (neu)"
+#'       Wikipedia_old="Wikipedia (old)",
+#'       Wikipedia_new="Wikipedia (new)"
 #'     )
 #'   ),
 #'   format="obj"

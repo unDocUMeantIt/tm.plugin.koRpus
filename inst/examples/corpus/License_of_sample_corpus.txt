@@ -1,0 +1,16 @@
+All sample texts are available under the Creative Commons Attribution-ShareAlike License:
+https://creativecommons.org/licenses/by-sa/3.0/
+
+They were obtained from these URLs:
+
+Natalie_Edwards_2020-06-04.txt
+https://en.wikipedia.org/w/index.php?title=Natalie_Edwards&oldid=960706351
+
+Natalie_Edwards_2020-12-15.txt
+https://en.wikipedia.org/w/index.php?title=Natalie_Edwards&oldid=994114334
+
+Reality_Winner_2017-06-07.txt
+https://en.wikipedia.org/w/index.php?title=Reality_Winner&oldid=784226509
+
+Reality_Winner_2020-12-15.txt
+https://en.wikipedia.org/w/index.php?title=Reality_Winner&oldid=991926645

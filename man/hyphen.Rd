@@ -27,11 +27,10 @@ This method calls \code{\link[sylly:hyphen]{hyphen}} on all tagged text objects
 inside the given \code{words} object (using \code{mclapply}).
 }
 \examples{
-\dontrun{
+\donttest{
 myCorpus <- readCorpus(
   dir=file.path(
-    path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S",
-      "Wikipedia_alt"
+    path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_old"
   )
 )
 myCorpus <- hyphen(myCorpus)

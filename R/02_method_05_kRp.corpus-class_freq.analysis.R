@@ -37,12 +37,12 @@
 #' \dontrun{
 #' myCorpus <- readCorpus(
 #'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples", "C3S"
+#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
 #'   ),
 #'   hierarchy=list(
 #'     Source=c(
-#'       Wikipedia_alt="Wikipedia (alt)",
-#'       Wikipedia_neu="Wikipedia (neu)"
+#'       Wikipedia_old="Wikipedia (old)",
+#'       Wikipedia_new="Wikipedia (new)"
 #'     )
 #'   )
 #' )

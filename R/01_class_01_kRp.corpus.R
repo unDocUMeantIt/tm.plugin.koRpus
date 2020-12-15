@@ -103,15 +103,15 @@ init_corpus_tokens <- function(hierarchy=list()){
 #' \dontrun{
 #' # use readCorpus() to create objects of class kRp.corpus
 #' myCorpus <- readCorpus(
-#'   dir=file.path(path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"),
+#'   dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
 #'   hierarchy=list(
 #'     Topic=c(
-#'       C3S="C3S",
-#'       GEMA="GEMA"
+#'       Winner="Reality Winner",
+#'       Edwards="Natalie Edwards"
 #'     ),
 #'     Source=c(
-#'       Wikipedia_alt="Wikipedia (alt)",
-#'       Wikipedia_neu="Wikipedia (neu)"
+#'       Wikipedia_old="Wikipedia (old)",
+#'       Wikipedia_new="Wikipedia (new)"
 #'     )
 #'   )
 #' )

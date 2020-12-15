@@ -34,23 +34,21 @@
 #'    [1] Text Interchange Formats (\url{https://github.com/ropensci/tif})
 #' @export
 #' @examples
-#' \dontrun{
 #' myCorpusFiles <- corpus_files(
 #'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "tests", "testthat", "samples"
+#'     path.package("tm.plugin.koRpus"), "examples", "corpus"
 #'   ),
 #'   hierarchy=list(
 #'     Topic=c(
-#'       C3S="C3S",
-#'       GEMA="GEMA"
+#'       Winner="Reality Winner",
+#'       Edwards="Natalie Edwards"
 #'     ),
 #'     Source=c(
-#'       Wikipedia_alt="Wikipedia (alt)",
-#'       Wikipedia_neu="Wikipedia (neu)"
+#'       Wikipedia_old="Wikipedia (old)",
+#'       Wikipedia_new="Wikipedia (new)"
 #'     )
 #'   )
 #' )
-#' }
 corpus_files <- function(
   dir,
   hierarchy=list(),
