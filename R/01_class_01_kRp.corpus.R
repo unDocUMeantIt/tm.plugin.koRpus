@@ -1,4 +1,4 @@
-# Copyright 2019 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -99,23 +99,9 @@ init_corpus_tokens <- function(hierarchy=list()){
 #' @export kRp.corpus
 #' @exportClass kRp.corpus
 #' @rdname kRp.corpus
+#' @example inst/examples/generate_myCorpus_4_texts.R
 #' @examples
-#' \dontrun{
-#' # use readCorpus() to create objects of class kRp.corpus
-#' myCorpus <- readCorpus(
-#'   dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
-#'   hierarchy=list(
-#'     Topic=c(
-#'       Winner="Reality Winner",
-#'       Edwards="Natalie Edwards"
-#'     ),
-#'     Source=c(
-#'       Wikipedia_old="Wikipedia (old)",
-#'       Wikipedia_new="Wikipedia (new)"
-#'     )
-#'   )
-#' )
-#' }
+#'
 #' # manual creation
 #' emptyCorpus <- kRp.corpus()
 kRp.corpus <- setClass("kRp.corpus",

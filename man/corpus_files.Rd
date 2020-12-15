@@ -46,7 +46,7 @@ myCorpusFiles <- corpus_files(
       Edwards="Natalie Edwards"
     ),
     Source=c(
-      Wikipedia_old="Wikipedia (old)",
+      Wikipedia_prev="Wikipedia (old)",
       Wikipedia_new="Wikipedia (new)"
     )
   )

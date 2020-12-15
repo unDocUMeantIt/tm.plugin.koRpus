@@ -10,9 +10,9 @@ Description: Enhances 'koRpus' text object classes and methods to also support l
           (<https://korpusml.reaktanz.de>).
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Depends: R (>= 3.0.0),koRpus (>= 0.13-1),sylly (>= 0.1-6)
+Depends: R (>= 3.5.0),koRpus (>= 0.13-1),sylly (>= 0.1-6)
 Imports: methods,parallel,tm,NLP
-Suggests: testthat,knitr,rmarkdown
+Suggests: koRpus.lang.en,testthat,knitr,rmarkdown
 VignetteBuilder: knitr
 URL: https://reaktanz.de/?c=hacking&s=koRpus
 BugReports: https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues

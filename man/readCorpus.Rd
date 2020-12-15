@@ -130,7 +130,7 @@ Note that the special column names \code{path} and \code{file} will also be impo
 # "flat" corpus, parse all texts in the given dir
 myCorpus <- readCorpus(
   dir=file.path(
-    path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_old"
+    path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_prev"
   )
 )
 
@@ -141,7 +141,7 @@ myCorpus <- readCorpus(
   ),
   hierarchy=list(
     Source=c(
-      Wikipedia_old="Wikipedia (old)",
+      Wikipedia_prev="Wikipedia (old)",
       Wikipedia_new="Wikipedia (new)"
     )
   )
@@ -156,7 +156,7 @@ myCorpus <- readCorpus(
       Edwards="Natalie Edwards"
     ),
     Source=c(
-      Wikipedia_old="Wikipedia (old)",
+      Wikipedia_prev="Wikipedia (old)",
       Wikipedia_new="Wikipedia (new)"
     )
   )
@@ -177,7 +177,7 @@ myCorpus <- readCorpus(
       Edwards="Natalie Edwards"
     ),
     Source=c(
-      Wikipedia_old="Wikipedia (old)",
+      Wikipedia_prev="Wikipedia (old)",
       Wikipedia_new="Wikipedia (new)"
     )
   ),

@@ -73,22 +73,28 @@ Should you need to manually generate objects of this class (which should rarely 
 }
 
 \examples{
-\dontrun{
-# use readCorpus() to create objects of class kRp.corpus
-myCorpus <- readCorpus(
-  dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
-  hierarchy=list(
-    Topic=c(
-      Winner="Reality Winner",
-      Edwards="Natalie Edwards"
+# use readCorpus() to create an object of class kRp.corpus
+# code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  myCorpus <- readCorpus(
+    dir=file.path(path.package("tm.plugin.koRpus"), "examples", "corpus"),
+    hierarchy=list(
+      Topic=c(
+        Winner="Reality Winner",
+        Edwards="Natalie Edwards"
+      ),
+      Source=c(
+        Wikipedia_prev="Wikipedia (old)",
+        Wikipedia_new="Wikipedia (new)"
+      )
     ),
-    Source=c(
-      Wikipedia_old="Wikipedia (old)",
-      Wikipedia_new="Wikipedia (new)"
-    )
+    # use tokenize() so examples run without a TreeTagger installation
+    tagger="tokenize",
+    lang="en"
   )
-)
-}
+} else {}
+
+
 # manual creation
 emptyCorpus <- kRp.corpus()
 }

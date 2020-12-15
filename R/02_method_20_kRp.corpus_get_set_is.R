@@ -60,7 +60,7 @@
 #'    taggedText,kRp.corpus-method
 #' @include 01_class_01_kRp.corpus.R
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' taggedText(myCorpus)
 #' corpusMeta(myCorpus, "note") <- "an interesting read!"
 #' 

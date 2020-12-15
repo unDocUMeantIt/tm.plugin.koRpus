@@ -37,7 +37,7 @@
 #' \donttest{
 #' myCorpus <- readCorpus(
 #'   dir=file.path(
-#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_old"
+#'     path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner", "Wikipedia_prev"
 #'   )
 #' )
 #' myCorpus <- hyphen(myCorpus)
