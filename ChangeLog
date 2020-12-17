@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-1 (2020-12-11)
+changes in version 0.4-1 (2020-12-17)
 fixed:
   - docTermMatrix(): results were wrong because numbers were assigned to
     wrong columns; now fixed in koRpus
@@ -24,6 +24,8 @@ changed:
     the generic is now defined by the koRpus package and was removed, including
     all of the actual function code
   - adjusted unit tests and vignette
+  - updated all examples to use a new sample corpus (see added), to the
+    benefit that many "\dontrun{}" cases could be removed
 added:
   - readCorpus(): the hierarchy levels of a text corpus can now be assumed
     directly from the directory structure by setting "hierarchy=TRUE"
@@ -38,6 +40,7 @@ added:
   - [[/[[<-: gained new argument "doc_id" to limit the scope to particular
     documents
   - describe()/describe()<-: now support filtering by doc_id
+  - new sample corpus for use in examples
 removed:
   - removed all classes and methods dealing with kRp.hierarchy
   - removed deprecated methods of the pre-kRp.hierarchy era

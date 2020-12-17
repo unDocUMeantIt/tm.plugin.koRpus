@@ -1,6 +1,6 @@
   myCorpus <- readCorpus(
     dir=file.path(
-      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Edwards"
     ),
     hierarchy=list(
       Source=c(

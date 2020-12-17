@@ -28,7 +28,7 @@ inside the given \code{obj} object (using \code{mclapply}).
 if(require("koRpus.lang.en", quietly = TRUE)){
   myCorpus <- readCorpus(
     dir=file.path(
-      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Edwards"
     ),
     hierarchy=list(
       Source=c(
@@ -41,11 +41,8 @@ if(require("koRpus.lang.en", quietly = TRUE)){
     lang="en"
   )
 
-  head(taggedText(myCorpus), n=10)
-  # TODO: currently broken
-  \dontrun{
+  taggedText(myCorpus)[20:30,]
   myCorpus <- cTest(myCorpus)
-  }
-  head(taggedText(myCorpus), n=10)
+  taggedText(myCorpus)[20:30,]
 } else {}
 }

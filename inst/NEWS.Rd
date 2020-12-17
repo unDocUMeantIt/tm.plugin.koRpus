@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
-\section{Changes in tm.plugin.koRpus version 0.4-1 (2020-12-11)}{
+\section{Changes in tm.plugin.koRpus version 0.4-1 (2020-12-17)}{
   \subsection{fixed}{
     \itemize{
       \item \code{docTermMatrix()}: results were wrong because numbers were assigned to
@@ -29,6 +29,8 @@
         the generic is now defined by the koRpus package and was removed, including
         all of the actual function code
       \item adjusted unit tests and vignette
+      \item updated all examples to use a new sample corpus (see added), to the
+        benefit that many "\\dontrun\{\}" cases could be removed
     }
   }
   \subsection{added}{
@@ -46,6 +48,7 @@
       \item [[/[[<-: gained new argument \code{"doc_id"} to limit the scope to particular
         documents
       \item \code{describe()}/describe()<-: now support filtering by doc_id
+      \item new sample corpus for use in examples
     }
   }
   \subsection{removed}{

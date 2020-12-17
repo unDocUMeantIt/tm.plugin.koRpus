@@ -36,12 +36,9 @@
 #' @example inst/examples/generate_myCorpus_2_texts.R
 #' @examples
 #'
-#'   head(taggedText(myCorpus), n=10)
-#'   # TODO: currently broken
-#'   \dontrun{
+#'   taggedText(myCorpus)[20:30,]
 #'   myCorpus <- cTest(myCorpus)
-#'   }
-#'   head(taggedText(myCorpus), n=10)
+#'   taggedText(myCorpus)[20:30,]
 #' @example inst/examples/if_lang_en_clause_end.R
 setMethod("cTest", signature(obj="kRp.corpus"), function(obj, mc.cores=getOption("mc.cores", 1L), ...){
     return(

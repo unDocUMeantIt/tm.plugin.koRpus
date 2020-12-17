@@ -47,7 +47,7 @@ of the resulting object.
 if(require("koRpus.lang.en", quietly = TRUE)){
   myCorpus <- readCorpus(
     dir=file.path(
-      path.package("tm.plugin.koRpus"), "examples", "corpus", "Winner"
+      path.package("tm.plugin.koRpus"), "examples", "corpus", "Edwards"
     ),
     hierarchy=list(
       Source=c(
