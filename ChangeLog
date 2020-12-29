@@ -1,5 +1,9 @@
 ChangeLog for package tm.plugin.koRpus
 
+changes in version 0.4-2 (2020-12-29)
+unreleased:
+  - this release is under development
+
 changes in version 0.4-1 (2020-12-17)
 fixed:
   - docTermMatrix(): results were wrong because numbers were assigned to

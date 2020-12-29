@@ -8,6 +8,8 @@ Description: Enhances 'koRpus' text object classes and methods to also support l
           bugs, suggest feature improvements, or discuss the global development of the
           package, please subscribe to the koRpus-dev mailing list
           (<https://korpusml.reaktanz.de>).
+Author: m.eik michalke [aut, cre]
+Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends: R (>= 3.5.0),koRpus (>= 0.13-1),sylly (>= 0.1-6)
 Imports: methods,parallel,tm,NLP
 Suggests: koRpus.lang.en,testthat,knitr,rmarkdown
@@ -19,8 +21,8 @@ Encoding: UTF-8
 LazyLoad: yes
 Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de",
           role=c("aut", "cre")))
-Version: 0.4-1
-Date: 2020-12-17
+Version: 0.4-2
+Date: 2020-12-29
 RoxygenNote: 7.1.1
 Collate: 
     '01_class_01_kRp.corpus.R'
