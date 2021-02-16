@@ -1,8 +1,11 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-2 (2020-12-29)
+changes in version 0.4-2 (2021-02-16)
 unreleased:
   - this release is under development
+changed:
+  - kRp.corpus: replaced prototype() in class definition with initialize
+    method
 
 changes in version 0.4-1 (2020-12-17)
 fixed:

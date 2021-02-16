@@ -1,4 +1,4 @@
-# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2021 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -111,7 +111,13 @@ kRp.corpus <- setClass("kRp.corpus",
     meta="list",
     raw="list"
   ),
-  prototype=prototype(
+  contains="kRp.text"
+)
+
+
+setMethod("initialize", "kRp.corpus",
+  function(
+    .Object,
     lang=character(),
     desc=list(),
     meta=list(),
@@ -119,9 +125,19 @@ kRp.corpus <- setClass("kRp.corpus",
     tokens=init_corpus_tokens(),
     features=logical(),
     feat_list=list()
-  ),
-  contains="kRp.text"
+  ){
+    slot(.Object, "lang") <- lang
+    slot(.Object, "desc") <- desc
+    slot(.Object, "meta") <- meta
+    slot(.Object, "raw") <- raw
+    slot(.Object, "tokens") <- tokens
+    slot(.Object, "features") <- features
+    slot(.Object, "feat_list") <- feat_list
+    validObject(.Object)
+    return(.Object)
+  }
 )
+
 
 setValidity("kRp.corpus", function(object){
     raw <- slot(object, "raw")
