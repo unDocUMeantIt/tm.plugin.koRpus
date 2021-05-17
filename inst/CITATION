@@ -1,13 +1,13 @@
 bibentry("Manual",
     title="tm.plugin.koRpus: Full Corpus Support for the 'koRpus' Package",
     author="m.eik michalke",
-    year="2020",
-    note="(Version 0.4-1)",
+    year="2021",
+    note="(Version 0.4-2)",
     url="https://reaktanz.de/?c=hacking&s=koRpus",
 
     textVersion =
-    paste("michalke, m. (2020). ",
-        "tm.plugin.koRpus: Full Corpus Support for the 'koRpus' Package (Version 0.4-1). ",
+    paste("michalke, m. (2021). ",
+        "tm.plugin.koRpus: Full Corpus Support for the 'koRpus' Package (Version 0.4-2). ",
         "Available from https://reaktanz.de/?c=hacking&s=koRpus",
         sep=""),
 

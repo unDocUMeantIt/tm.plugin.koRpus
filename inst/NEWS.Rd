@@ -1,6 +1,20 @@
 \name{NEWS}
 \title{News for Package 'tm.plugin.koRpus'}
 \encoding{UTF-8}
+\section{Changes in tm.plugin.koRpus version 0.4-2 (2021-05-17)}{
+  \subsection{fixed}{
+    \itemize{
+      \item updated test standards after changes to koRpus' internal calculations
+        of numer of lines in texts imported from TIF data frames
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item kRp.corpus: replaced \code{prototype()} in class definition with initialize
+        method
+    }
+  }
+}
 \section{Changes in tm.plugin.koRpus version 0.4-1 (2020-12-17)}{
   \subsection{fixed}{
     \itemize{

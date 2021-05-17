@@ -43,7 +43,7 @@ test_that("creating a 'flat' kRp.corpus class object, one single text", {
   )
 })
 # # new test standards
-# main.root <- file.path("path/to/tm.plugin.koRpus")
+# main.root <- file.path(getwd(), "..", "..") # file.path("path/to/tm.plugin.koRpus")
 # sampleCorpusHier0Txt1 <- sampleCorpusHier0Txt1.test
 # save(sampleCorpusHier0Txt1,
 #   file=file.path(main.root,"tests","testthat","sampleCorpusHier0Txt1.RData"),
