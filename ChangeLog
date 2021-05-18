@@ -1,9 +1,13 @@
 ChangeLog for package tm.plugin.koRpus
 
+changes in version 0.4-3 (2021-05-18)
+unreleased:
+  - this release is under development
+
 changes in version 0.4-2 (2021-05-17)
 fixed:
-  - updated test standards after changes to koRpus' internal calculations
-    of numer of lines in texts imported from TIF data frames
+  - updated test standards after changes to koRpus' internal calculations of
+    numer of lines in texts imported from TIF data frames
 changed:
   - kRp.corpus: replaced prototype() in class definition with initialize
     method
