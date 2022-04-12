@@ -1,4 +1,4 @@
-# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2022 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -63,7 +63,7 @@ setMethod("freq.analysis", signature(txt.file="kRp.corpus"), function(txt.file, 
     } else {}
 
     taggedText(txt.file) <- taggedText(freq_ananlysis_results)
-    corpusMeta(txt.file, meta="freq.analysis") <- describe(freq_ananlysis_results)
+    corpusMeta(txt.file, meta="freq.analysis") <- describe(freq_ananlysis_results, simplify=FALSE)
     corpusFreq(txt.file) <- corpusFreq(freq_ananlysis_results)
     return(txt.file)
   }

@@ -1,4 +1,4 @@
-# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2022 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -47,7 +47,7 @@ setMethod("split_by_doc_id",
       split_by_doc_id(
         kRp_text(
           lang=language(obj),
-          desc=describe(obj),
+          desc=describe(obj, simplify=FALSE),
           tokens=taggedText(obj),
           features=slot(obj, "features"),
           feat_list=slot(obj, "feat_list")

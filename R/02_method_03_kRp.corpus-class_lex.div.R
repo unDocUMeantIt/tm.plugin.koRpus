@@ -1,4 +1,4 @@
-# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2022 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -50,7 +50,7 @@ setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc
       stop(simpleError("The argument \"as.feature\" is FALSE by default and can't be changed!"))
     } else {}
     tagged_list <- split_by_doc_id(txt)
-    corpusLexDiv(txt) <- mclapply(names(describe(txt)), function(thisText){
+    corpusLexDiv(txt) <- mclapply(names(describe(txt, simplify=FALSE)), function(thisText){
       lex.div(tagged_list[[thisText]], char=char, quiet=quiet, ...)
     }, mc.cores=mc.cores)
     # store meta-information on the maximum of available indices.
@@ -65,7 +65,7 @@ setMethod("lex.div", signature(txt="kRp.corpus"), function(txt, summary=TRUE, mc
         )
       )
     )
-    names(corpusLexDiv(txt)) <- names(describe(txt))
+    names(corpusLexDiv(txt)) <- names(describe(txt, simplify=FALSE))
 
     if(isTRUE(summary)){
       txt <- summary(txt)

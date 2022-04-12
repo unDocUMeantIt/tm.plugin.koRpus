@@ -1,4 +1,4 @@
-# Copyright 2015-2020 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2015-2022 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -88,7 +88,7 @@ setMethod(
         )
       )
     )
-    names(corpusReadability(txt.file)) <- names(describe(txt.file))
+    names(corpusReadability(txt.file)) <- names(describe(txt.file, simplify=FALSE))
 
     if(isTRUE(summary)){
       txt.file <- summary(txt.file)
