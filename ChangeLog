@@ -1,12 +1,14 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-3 (2022-04-12)
+changes in version 0.4-3 (2022-05-13)
 unreleased:
   - this release is under development
 fixed:
   - readability(), lex.div(), freq.analysis(), split_by_doc_id(): fixed a
     bug in the "desc" slot for corpora with only one text by properly using
     "describe(..., simplify=FALSE)" where needed
+  - summary(): don't accidently remove results of lex.div() from summary table
+    when TTR is already present
 
 changes in version 0.4-2 (2021-05-17)
 fixed:
