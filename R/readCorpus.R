@@ -192,7 +192,7 @@ readCorpus <- function(
     do_files <- TRUE
   } else if(identical(format, "obj")){
     if(all(!is.data.frame(dir), !is.character(dir))){
-      stop(simpleError("\"dir\" must be a character vecor or data frame!"))
+      stop(simpleError("\"dir\" must be a character vector or data frame!"))
     } else {}
     full_hier_info <- corpus_files(
       dir=dir,
