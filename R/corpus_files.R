@@ -1,4 +1,4 @@
-# Copyright 2019-2020 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2019-2023 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package tm.plugin.koRpus.
 #
@@ -104,22 +104,24 @@ corpus_files <- function(
     )
     for (thisPath in seq_along(hier_paths)){
       hier_files <- list.files(full_hier_paths[thisPath])
-      this_cat <- hier_dirs[thisPath,]
-      row.names(this_cat) <- NULL
-      append_files <- data.frame(
-        doc_id=gsub(
-          "[^[:alnum:]_\\\\.-]+", "",
-            gsub(
-              "[[:space:]]+", "_",
-              apply(cbind(this_cat, hier_files), 1, paste0, collapse="-")
-            )
-          ),
-        file=hier_files,
-        path=full_hier_paths[thisPath],
-        stringsAsFactors=FALSE
-      )
-      append_files[,colnames(hier_dirs)] <- hier_names[thisPath,]
-      all_files <- rbind(all_files, append_files)
+      if(length(hier_files) > 0){
+        this_cat <- hier_dirs[thisPath,]
+        row.names(this_cat) <- NULL
+        append_files <- data.frame(
+          doc_id=gsub(
+            "[^[:alnum:]_\\\\.-]+", "",
+              gsub(
+                "[[:space:]]+", "_",
+                apply(cbind(this_cat, hier_files), 1, paste0, collapse="-")
+              )
+            ),
+          file=hier_files,
+          path=full_hier_paths[thisPath],
+          stringsAsFactors=FALSE
+        )
+        append_files[,colnames(hier_dirs)] <- hier_names[thisPath,]
+        all_files <- rbind(all_files, append_files)
+      } else {}
     }
   }
   for (thisCat in colnames(hier_dirs)){

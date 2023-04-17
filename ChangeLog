@@ -1,6 +1,6 @@
 ChangeLog for package tm.plugin.koRpus
 
-changes in version 0.4-3 (2022-05-13)
+changes in version 0.4-3 (2023-04-17)
 unreleased:
   - this release is under development
 fixed:
@@ -9,6 +9,7 @@ fixed:
     "describe(..., simplify=FALSE)" where needed
   - summary(): don't accidently remove results of lex.div() from summary table
     when TTR is already present
+  - corpus_files(): allow empty directories in hierarchy structures
 
 changes in version 0.4-2 (2021-05-17)
 fixed:

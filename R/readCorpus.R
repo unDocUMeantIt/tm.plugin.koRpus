@@ -252,8 +252,9 @@ readCorpus <- function(
     seq_along(corpusTm(result)),
     function(thisTextNum){
       thisText <- corpusTm(result)[[thisTextNum]]
+      this_doc_id <- all_files[thisTextNum,"doc_id"]
       import_status(
-        doc_id=all_files[thisTextNum,"doc_id"],
+        doc_id=this_doc_id,
         all_files=all_files,
         hier_cols=hier_cols
       )
@@ -261,7 +262,7 @@ readCorpus <- function(
         text=thisText[["content"]],
         lang=lang,
         tagger=tagger,
-        doc_id=all_files[thisTextNum,"doc_id"],
+        doc_id=this_doc_id,
         ...
       )
       if(!identical(names(init_df), names(taggedText(tagged)))){
@@ -269,7 +270,7 @@ readCorpus <- function(
         missingCols <- names(init_df)[!names(init_df) %in% names(tagged_df)]
         for (thisCat in missingCols) {
           tagged_df[[thisCat]] <- factor(
-            all_files[all_files[["doc_id"]] == all_files[thisTextNum,"doc_id"], thisCat],
+            all_files[all_files[["doc_id"]] == this_doc_id, thisCat],
             levels=levels(init_df[[thisCat]])
           )
         }
