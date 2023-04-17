@@ -1,13 +1,9 @@
 Package: tm.plugin.koRpus
 Type: Package
 Title: Full Corpus Support for the 'koRpus' Package
-Description: Enhances 'koRpus' text object classes and methods to also support large
-          corpora. Hierarchical ordering of corpus texts into arbitrary categories will
-          be preserved. Provided classes and methods also improve the ability of using
-          the 'koRpus' package together with the 'tm' package. To ask for help, report
-          bugs, suggest feature improvements, or discuss the global development of the
-          package, please subscribe to the koRpus-dev mailing list
-          (<https://korpusml.reaktanz.de>).
+Description: Enhances 'koRpus' text object classes and methods to also support large corpora. Hierarchical ordering of corpus texts into arbitrary categories will be preserved.
+                    Provided classes and methods also improve the ability of using the 'koRpus' package together with the 'tm' package. To ask for help, report bugs, suggest
+                    feature improvements, or discuss the global development of the package, please subscribe to the koRpus-dev mailing list (<https://korpusml.reaktanz.de>).
 Author: m.eik michalke [aut, cre]
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends: R (>= 3.5.0),koRpus (>= 0.13-1),sylly (>= 0.1-6)
@@ -19,11 +15,10 @@ BugReports: https://github.com/unDocUMeantIt/tm.plugin.koRpus/issues
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
-Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de",
-          role=c("aut", "cre")))
+Authors@R: c(person(given="m.eik", family="michalke", email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.4-3
-Date: 2022-04-12
-RoxygenNote: 7.1.2
+Date: 2023-04-17
+RoxygenNote: 7.2.2
 Collate: 
     '01_class_01_kRp.corpus.R'
     '02_method_01_kRp.corpus-class_readability.R'
