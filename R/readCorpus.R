@@ -346,7 +346,7 @@ import_status <- function(doc_id, all_files, hier_cols){
   file_num <- match(doc_id, all_files[["doc_id"]])
   for (hier_level in seq_len(length(hier_cols))){
     if (hier_level > 1){
-      # subset the all_files data frame to get the mathes we're interested in
+      # subset the all_files data frame to get the matches we're interested in
       for (this_cat_num in 1:(hier_level - 1)){
         this_cat <- hier_cols[this_cat_num]
         this_cat_name <- all_files[file_num, this_cat]
