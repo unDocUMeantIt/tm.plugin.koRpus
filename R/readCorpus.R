@@ -175,7 +175,7 @@ readCorpus <- function(
   id="",
   ...
 ){
-  # try to get the hierarchy directly from te directory tree
+  # try to get the hierarchy directly from the directory tree
   if(isTRUE(hierarchy)){
     hierarchy <- hierarchy_from_dirtree(dir)
   } else {}
